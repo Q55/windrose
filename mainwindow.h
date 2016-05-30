@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+public slots:
+    void preProcessConfig();
+    void postProcessConfig();
 };
 
 #endif // MAINWINDOW_H
