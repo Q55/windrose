@@ -17,13 +17,18 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     rawdatafromdb.cpp \
     preprocesswidget.cpp \
-    postprocesswidget.cpp
+    postprocesswidget.cpp \
+    dataprocess.cpp \
+    utils.cpp
 
 HEADERS  += mainwindow.h \
     rawdatafromdb.h \
     preprocesswidget.h \
-    postprocesswidget.h
+    postprocesswidget.h \
+    dataprocess.h \
+    utils.h
 
 FORMS    += mainwindow.ui \
     preprocesswidget.ui \
-    postprocesswidget.ui
+    postprocesswidget.ui \
+    dialog.ui

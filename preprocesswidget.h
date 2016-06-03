@@ -2,10 +2,22 @@
 #define PREPROCESSWIDGET_H
 
 #include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class PreProcessWidget;
+class Dialog;
 }
+
+class Dialog : public QDialog
+{
+public:
+    explicit Dialog(QDialog *parent = 0);
+    ~Dialog();
+
+private:
+    Ui::Dialog *ui;
+};
 
 class PreProcessWidget : public QWidget
 {

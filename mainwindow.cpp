@@ -14,7 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::preProcessConfig() {
-    PreProcessWidget *pre_process = new PreProcessWidget();
+//    PreProcessWidget *pre_process = new PreProcessWidget();
+    Dialog *pre_process = new Dialog();
     pre_process->show();
 }
 

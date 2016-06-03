@@ -1,8 +1,8 @@
 #include "postprocesswidget.h"
 #include "ui_postprocesswidget.h"
 
-PostProcessWidget::PostProcessWidget(QWidget *parent) :
-    QWidget(parent),
+PostProcessWidget::PostProcessWidget(QMainWindow *parent) :
+    QMainWindow(parent),
     ui(new Ui::PostProcessWidget)
 {
     ui->setupUi(this);
