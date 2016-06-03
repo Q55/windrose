@@ -2,7 +2,6 @@
 
 Utils::Utils()
 {
-
 }
 
 double Utils::cycleMax(QVector<double> data)

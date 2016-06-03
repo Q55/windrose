@@ -14,21 +14,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     rawdatafromdb.cpp \
-    preprocesswidget.cpp \
-    postprocesswidget.cpp \
     dataprocess.cpp \
-    utils.cpp
+    utils.cpp \
+    dialog.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     rawdatafromdb.h \
-    preprocesswidget.h \
-    postprocesswidget.h \
     dataprocess.h \
-    utils.h
+    utils.h \
+    dialog.h
 
-FORMS    += mainwindow.ui \
-    preprocesswidget.ui \
-    postprocesswidget.ui \
+FORMS    += \
     dialog.ui
