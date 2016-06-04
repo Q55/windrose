@@ -1,9 +1,11 @@
 #ifndef PREPROCESSWIDGET_H
 #define PREPROCESSWIDGET_H
 
+#include "dataprocess.h"
 #include <QDialog>
 class QWidget;
 class QStringList;
+class QString;
 
 namespace Ui {
 class Dialog;
@@ -26,6 +28,7 @@ signals:
 */
 public slots:
     void setDataTable( int );
+    void setDataList( QString );
 
 
 public:
@@ -40,6 +43,8 @@ private:
     QStringList table111;
     QStringList table112;
     QStringList table118;
+
+    DataProcess dpclass;
 
 };
 

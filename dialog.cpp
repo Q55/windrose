@@ -2,7 +2,6 @@
 #include "ui_dialog.h"
 
 #include <QDebug>
-
 #include <QErrorMessage>
 
 Dialog::Dialog(QWidget *parent) :
@@ -10,7 +9,6 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
  //
-
     ui->setupUi(this);
 
     //initial Table list
@@ -39,6 +37,8 @@ Dialog::Dialog(QWidget *parent) :
 
  //   connect(ui->comboBox_database, SIGNAL(currentIndexChanged(int)), this, SIGNAL(comboboxDatabase_changed(int) ) );
     connect(ui->comboBox_database, SIGNAL( currentIndexChanged(int) ), this, SLOT( setDataTable(int) ) );
+    connect(ui->comboBox_dababaseT, SIGNAL( currentIndexChanged(QString) ), this, SLOT( setDataList(QString) ) );
+
 }
 
 void Dialog::iniTableList(int index, QStringList strings)
@@ -75,7 +75,6 @@ void Dialog::setDataTable( int style )
         ui->comboBox_dababaseT->addItems(table112);
     } else if ( style == FPSO118 )
     {
-        qDebug() << "int the function setDataTable:" << endl;
         ui->comboBox_dababaseT->clear();
         ui->comboBox_dababaseT->addItems(table118);
     } else {
@@ -84,6 +83,17 @@ void Dialog::setDataTable( int style )
         return;
     }
     ui->comboBox_dababaseT->setCurrentIndex(0);
+    repaint();
+}
+
+void Dialog::setDataList(QString tablename)
+{
+    if (tablename == "")
+        return;
+    ui->dbTableList->clear();
+    QString dbName = ui->comboBox_database->currentText();
+    QStringList dbListItems = dpclass.tableData(dbName, tablename);
+    ui->dbTableList->addItems(dbListItems);
     repaint();
 }
 

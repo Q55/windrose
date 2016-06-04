@@ -346,7 +346,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="listWidget">
+          <widget class="QListWidget" name="dbTableList">
            <property name="alternatingRowColors">
             <bool>false</bool>
            </property>
@@ -414,7 +414,7 @@ color: rgb(0, 0, 127);</string>
           </layout>
          </item>
          <item>
-          <widget class="QListWidget" name="listWidget_2">
+          <widget class="QListWidget" name="selectedDataList">
            <property name="selectionMode">
             <enum>QAbstractItemView::ExtendedSelection</enum>
            </property>
