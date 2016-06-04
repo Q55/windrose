@@ -27,7 +27,7 @@ public:
     //function:
     //input : list name
     //output: list data
-    QVector<double> getData(QString list);
+    QVector<double> getData(QString list_name);
     QStringList queryTableNameListbyDBName(QString db_name);
     QStringList queryColumnNameListInTable(QString db_name, QString table_name);
 
@@ -35,7 +35,6 @@ public slots:
 
     //FIXME: parameter not sure.
     QStringList selectedData(QStringList lists);
-    QStringList tableData(QString index, QString table);
 
     //FIXME: input may be QStringList
     void exportToFile(QString data);
