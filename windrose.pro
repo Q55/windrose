@@ -50,7 +50,9 @@ HEADERS  += \
     libs/cycle_max/sum.h \
     libs/cycle_max/xgeqp3.h \
     libs/cycle_max/xnrm2.h \
-    queryDB.h
+    queryDB.h \
+    analyseparas.h \
+    filtercond.h
 
 FORMS    += \
     dialog.ui
