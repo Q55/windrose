@@ -32,28 +32,19 @@ QStringList DataProcess::queryColumnNameListInTable(QString db_name, QString tab
     return qsl;
 }
 
-void DataProcess::setQuery(QStringList lists)
+void DataProcess::preProcess(QStringList tb_col_name, QVector<AnalyseParas>, QVector<FilterCond>)
 {
 
 }
 
-QVector<double> DataProcess::getData(QString list)
+QVector<double> DataProcess::getFromRawDataMap(QString list)
 {
-
+    return raw_data_map[list];
 }
 
-QStringList DataProcess::selectedData(QStringList lists)
+QVector<double> DataProcess::getFromAfterProcessDataMap(QString list)
 {
-
-}
-
-QStringList DataProcess::tableData(QString database, QString table)
-{
-    qDebug() << "the database is" << database << " ";
-    qDebug() << "the table is " << table << endl;
-    QStringList ret;
-    ret << "hello" << "world" << "test";
-    return ret;
+    return after_process_data_map[list];
 }
 
 void DataProcess::exportToFile(QString data)
@@ -61,7 +52,4 @@ void DataProcess::exportToFile(QString data)
 
 }
 
-QStringList importFromFile(QFile *fileName)
-{
 
-}

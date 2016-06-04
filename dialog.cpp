@@ -13,18 +13,21 @@ Dialog::Dialog(QWidget *parent) :
     ui->setupUi(this);
     curSelectedListSet.clear();
 
+
     //initial Table list
     QStringList strings;
-    strings << "calcforce" << "gpsfpd" << "gpsimu" << "inclinometer" << "statistics" << "warning" << "wgpacurrentspeed";
-    strings << "wgpawave" << "windsensor";
+//    strings << "calcforce" << "gpsfpd" << "gpsimu" << "inclinometer" << "statistics" << "warning" << "wgpacurrentspeed";
+//    strings << "wgpawave" << "windsensor";
+    strings = dpclass.queryTableNameListbyDBName("111");
     iniTableList(0, strings);
 
     strings.clear();
 
     //QStringList strings2;
-    strings << "bar" << "enlight1" << "enlight2" << "enlight3" << "enlight4" << "enlight5" << "enlight6" << "enlight7";;
-    strings << "enlight8" << "fbg" << "foxboro" << "gps" << "inclinometer1" << "inv12" << "inv4" << "spm" << "warnings";
-    strings << "wgpacurrentspeed" << "wgpawave" << "windsensor";
+    //strings << "bar" << "enlight1" << "enlight2" << "enlight3" << "enlight4" << "enlight5" << "enlight6" << "enlight7";;
+    //strings << "enlight8" << "fbg" << "foxboro" << "gps" << "inclinometer1" << "inv12" << "inv4" << "spm" << "warnings";
+    //strings << "wgpacurrentspeed" << "wgpawave" << "windsensor";
+    strings = dpclass.queryTableNameListbyDBName("112");
     iniTableList(1, strings);
 
     strings.clear();
@@ -97,7 +100,7 @@ void Dialog::setDataList(QString tablename)
         return;
     ui->dbTableList->clear();
     QString dbName = ui->comboBox_database->currentText();
-    QStringList dbListItems = dpclass.tableData(dbName, tablename);
+    QStringList dbListItems = dpclass.queryColumnNameListInTable(dbName, tablename);
     ui->dbTableList->addItems(dbListItems);
     repaint();
 }
