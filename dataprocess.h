@@ -9,6 +9,7 @@
 #include <QList>
 #include <QFile>
 #include <QString>
+#include <QStringList>
 #include <QMap>
 
 //author: zyn
@@ -27,6 +28,8 @@ public:
     //input : list name
     //output: list data
     QVector<double> getData(QString list);
+    QStringList queryTableNameListbyDBName(QString db_name);
+    QStringList queryColumnNameListInTable(QString db_name, QString table_name);
 
 public slots:
 
