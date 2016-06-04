@@ -3,9 +3,12 @@
 
 #include "dataprocess.h"
 #include <QDialog>
+#include <QSet>
+#include <QListWidgetItem>
+#include <QStringList>
+#include <QString>
+
 class QWidget;
-class QStringList;
-class QString;
 
 namespace Ui {
 class Dialog;
@@ -29,7 +32,7 @@ signals:
 public slots:
     void setDataTable( int );
     void setDataList( QString );
-
+    void setSelectedDataList();
 
 public:
     Dialog(QWidget *parent = 0);
@@ -46,6 +49,7 @@ private:
 
     DataProcess dpclass;
 
+    QSet<QListWidgetItem *> curSelectedListSet;
 };
 
 #endif // PREPROCESSWIDGET_H

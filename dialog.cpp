@@ -4,12 +4,14 @@
 #include <QDebug>
 #include <QErrorMessage>
 
+
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
  //
     ui->setupUi(this);
+    curSelectedListSet.clear();
 
     //initial Table list
     QStringList strings;
@@ -34,11 +36,14 @@ Dialog::Dialog(QWidget *parent) :
     ui->comboBox_database->setCurrentIndex(1);
     int database = ui->comboBox_database->currentIndex();
     setDataTable(database);
+    setDataList(ui->comboBox_dababaseT->currentText());
 
  //   connect(ui->comboBox_database, SIGNAL(currentIndexChanged(int)), this, SIGNAL(comboboxDatabase_changed(int) ) );
     connect(ui->comboBox_database, SIGNAL( currentIndexChanged(int) ), this, SLOT( setDataTable(int) ) );
     connect(ui->comboBox_dababaseT, SIGNAL( currentIndexChanged(QString) ), this, SLOT( setDataList(QString) ) );
 
+    connect(ui->pushButton_add, SIGNAL(clicked()), this, SLOT( setSelectedDataList()));
+    //connect(ui->)
 }
 
 void Dialog::iniTableList(int index, QStringList strings)
@@ -94,6 +99,26 @@ void Dialog::setDataList(QString tablename)
     QString dbName = ui->comboBox_database->currentText();
     QStringList dbListItems = dpclass.tableData(dbName, tablename);
     ui->dbTableList->addItems(dbListItems);
+    repaint();
+}
+
+void Dialog::setSelectedDataList()
+{
+    qDebug() << "enter the function" << endl;
+    QList<QListWidgetItem*> selItem = ui->dbTableList->selectedItems();
+    QList<QListWidgetItem*>::iterator it;
+    QStringList selDataList;
+
+    for(it = selItem.begin(); it != selItem.end(); ++it)
+    {
+        if (curSelectedListSet.find(*it) == curSelectedListSet.end())
+        {
+            selDataList << (*it)->text();
+            //ui->selectedDataList->addItem(*it);
+            curSelectedListSet.insert(*it);
+        }
+    }
+    ui->selectedDataList->addItems(selDataList);
     repaint();
 }
 
