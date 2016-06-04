@@ -32,28 +32,51 @@ QStringList DataProcess::queryColumnNameListInTable(QString db_name, QString tab
     return qsl;
 }
 
-void DataProcess::setQuery(QStringList lists)
-{
+QVector<double> DataProcess::queryRawDataBySelTableColName(QString db_name, QString tb_name, QString col_name,
+                                                                QDate start_time, QDate end_time) {
 
+    QString sql = "select " + col_name + " from " + tb_name + " where DateTime > " + start_time.toString() +
+                " and DateTime < " + end_time.toString() + ";";
+    QueryDB qdb;
+    QSqlQuery query = qdb.queryDB(db_name, sql);
+    QVector<double> result;
+    while(query.next()) {
+        result.push_back(query.value(0).toDouble());
+    }
+    return result;
 }
 
-QVector<double> DataProcess::getData(QString list)
-{
+void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
 
-}
+    for (QMap<QString, AnalyseParas>::Iterator it = analyse_paras.begin(); it != analyse_paras.end(); it++) {
 
-QStringList DataProcess::selectedData(QStringList lists)
-{
+//        QVector<double> col_raw_data = queryRawDataBySelTableColName(it->db_name, it->tb_name, it->col_name,
+//                                                                 it->start_time, it->end_time);
+//        QString str = it->tb_name + "." + it->col_name;
+//        raw_data_map[str] = col_raw_data;
 
-}
+//        QVector<double> result;
 
-QStringList DataProcess::tableData(QString database, QString table)
-{
-    qDebug() << "the database is" << database << " ";
-    qDebug() << "the table is " << table << endl;
-    QStringList ret;
-    ret << "hello" << "world" << "test";
-    return ret;
+//        // range filter
+
+//        // time cont
+
+//        // data cont
+
+//        // consist check
+
+//        // process type
+
+//        // max
+
+//        // minimal
+
+//        // average
+
+//        after_process_data_map[str] = result;
+
+    }
+
 }
 
 void DataProcess::exportToFile(QString data)

@@ -97,8 +97,8 @@ void Dialog::setDataList(QString tablename)
         return;
     ui->dbTableList->clear();
     QString dbName = ui->comboBox_database->currentText();
-    QStringList dbListItems = dpclass.tableData(dbName, tablename);
-    ui->dbTableList->addItems(dbListItems);
+    //QStringList dbListItems = dpclass.tableData(dbName, tablename);
+    //ui->dbTableList->addItems(dbListItems);
     repaint();
 }
 

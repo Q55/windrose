@@ -9,8 +9,9 @@
 #include <QString>
 #include <QStringList>
 #include <QMap>
+#include <QPair>
 #include "analyseparas.h"
-#include "filtercond.h"
+//#include "filtercond.h"
 
 //author: zyn
 //time  : 2016-06-02
@@ -26,10 +27,10 @@ public:
     // interact with database
     QStringList queryTableNameListbyDBName(QString db_name);
     QStringList queryColumnNameListInTable(QString db_name, QString table_name);
-    void queryRawDataBySelTableColName(QStringList tb_col_name, QDate start_time, QDate end_time);
+    QVector<double> queryRawDataBySelTableColName(QString db_name, QString tb_name, QString col_name, QDate start_time, QDate end_time);
 
-    void preProcess(QStringList tb_col_name, QVector<AnalyseParas>, QVector<FilterCond>);
-
+//    void preProccess(QString db_name, QStringList tb_name, QVector<AnalyseParas>, QVector<FilterCond>);
+    void preProccess(QMap<QString, AnalyseParas> analyse_paras);
 
     // get data from QMap(db_raw_data), raw_data, queried from database, for pre-process
     QVector<double> getFromRawDataMap(QString list);
