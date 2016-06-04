@@ -11,7 +11,7 @@ class Dialog;
 
 class Dialog : public QDialog
 {
-//    Q_OBJECT
+    Q_OBJECT
 
 public:
     enum DataBase

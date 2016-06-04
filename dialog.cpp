@@ -1,6 +1,8 @@
 #include "dialog.h"
 #include "ui_dialog.h"
 
+#include <QDebug>
+
 #include <QErrorMessage>
 
 Dialog::Dialog(QWidget *parent) :
@@ -29,7 +31,6 @@ Dialog::Dialog(QWidget *parent) :
 
     strings << "calcforce" << "gpsfpd" << "gpsimu" << "heave" << "inclinometer" << "statistics" << "temperature" << "warning";
     strings << "waveradar" << "waveradarsp" << "windsensor";
-    strings.clear();
     iniTableList(2, strings);
 
     ui->comboBox_database->setCurrentIndex(1);
@@ -74,6 +75,7 @@ void Dialog::setDataTable( int style )
         ui->comboBox_dababaseT->addItems(table112);
     } else if ( style == FPSO118 )
     {
+        qDebug() << "int the function setDataTable:" << endl;
         ui->comboBox_dababaseT->clear();
         ui->comboBox_dababaseT->addItems(table118);
     } else {
