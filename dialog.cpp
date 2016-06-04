@@ -100,8 +100,13 @@ void Dialog::setDataList(QString tablename)
         return;
     ui->dbTableList->clear();
     QString dbName = ui->comboBox_database->currentText();
+<<<<<<< HEAD
     QStringList dbListItems = dpclass.queryColumnNameListInTable(dbName, tablename);
     ui->dbTableList->addItems(dbListItems);
+=======
+    //QStringList dbListItems = dpclass.tableData(dbName, tablename);
+    //ui->dbTableList->addItems(dbListItems);
+>>>>>>> c21708daa156b8e4673da8415e38bea1e313438e
     repaint();
 }
 
