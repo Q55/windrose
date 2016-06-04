@@ -11,30 +11,33 @@ Dialog::Dialog(QWidget *parent) :
 {
  //
     ui->setupUi(this);
+
+    /***************************************
+     * initial DataBase Index to Name Map
+     ***************************************/
+    dbIndexNameMap[0] = "111";
+    dbIndexNameMap[1] = "112";
+    dbIndexNameMap[2] = "118";
+
     curSelectedListSet.clear();
 
 
-    //initial Table list
+    /*********************************
+     * initial Table list
+     *********************************/
     QStringList strings;
-//    strings << "calcforce" << "gpsfpd" << "gpsimu" << "inclinometer" << "statistics" << "warning" << "wgpacurrentspeed";
-//    strings << "wgpawave" << "windsensor";
-    strings = dpclass.queryTableNameListbyDBName("111");
-    iniTableList(0, strings);
+    strings = dpclass.queryTableNameListbyDBName(dbIndexNameMap[0]);
+    initTableList(0, strings);
 
     strings.clear();
 
-    //QStringList strings2;
-    //strings << "bar" << "enlight1" << "enlight2" << "enlight3" << "enlight4" << "enlight5" << "enlight6" << "enlight7";;
-    //strings << "enlight8" << "fbg" << "foxboro" << "gps" << "inclinometer1" << "inv12" << "inv4" << "spm" << "warnings";
-    //strings << "wgpacurrentspeed" << "wgpawave" << "windsensor";
-    strings = dpclass.queryTableNameListbyDBName("112");
-    iniTableList(1, strings);
+    strings = dpclass.queryTableNameListbyDBName(dbIndexNameMap[1]);
+    initTableList(1, strings);
 
     strings.clear();
 
-    strings << "calcforce" << "gpsfpd" << "gpsimu" << "heave" << "inclinometer" << "statistics" << "temperature" << "warning";
-    strings << "waveradar" << "waveradarsp" << "windsensor";
-    iniTableList(2, strings);
+    strings = dpclass.queryTableNameListbyDBName(dbIndexNameMap[2]);
+    initTableList(2, strings);
 
     ui->comboBox_database->setCurrentIndex(1);
     int database = ui->comboBox_database->currentIndex();
@@ -49,7 +52,7 @@ Dialog::Dialog(QWidget *parent) :
     //connect(ui->)
 }
 
-void Dialog::iniTableList(int index, QStringList strings)
+void Dialog::initTableList(int index, QStringList strings)
 {
     switch (index) {
     case 0:
@@ -99,7 +102,8 @@ void Dialog::setDataList(QString tablename)
     if (tablename == "")
         return;
     ui->dbTableList->clear();
-    QString dbName = ui->comboBox_database->currentText();
+    int dbIndex = ui->comboBox_database->currentIndex();
+    QString dbName = dbIndexNameMap[dbIndex];
     QStringList dbListItems = dpclass.queryColumnNameListInTable(dbName, tablename);
     ui->dbTableList->addItems(dbListItems);
     repaint();
@@ -116,7 +120,10 @@ void Dialog::setSelectedDataList()
     {
         if (curSelectedListSet.find(*it) == curSelectedListSet.end())
         {
-            selDataList << (*it)->text();
+            QString dbName = dbIndexNameMap[ui->comboBox_database->currentIndex()];
+            QString tableName = ui->comboBox_dababaseT->currentText();
+            QString selColName = dbName + "." + tableName + "." + (*it)->text();
+            selDataList << selColName;
             //ui->selectedDataList->addItem(*it);
             curSelectedListSet.insert(*it);
         }

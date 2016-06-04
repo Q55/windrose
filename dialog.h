@@ -38,7 +38,7 @@ public:
     Dialog(QWidget *parent = 0);
     ~Dialog();
 
-    void iniTableList(int index, QStringList strings);
+    void initTableList(int index, QStringList strings);
 
 private:
     Ui::Dialog *ui;
@@ -50,6 +50,8 @@ private:
     DataProcess dpclass;
 
     QSet<QListWidgetItem *> curSelectedListSet;
+
+    QMap<int, QString> dbIndexNameMap;
 };
 
 #endif // PREPROCESSWIDGET_H

@@ -84,6 +84,7 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
 //        // average
 
 //        after_process_data_map[str] = result;
+    }
 
 }
 
