@@ -6,12 +6,25 @@
 class AnalyseParas
 {
 public:
+    enum Pre_AnalyseType
+    {
+        NONEANALYSE,
+        MAXVALUE,
+        MINVALUE,
+        AVERAGEVALUE
+    };
+
+    enum Pre_FilterType
+    {
+        NONEFILTER,
+        LOWERPASSFILTER
+    };
     AnalyseParas() {
 
         this->frequency = 1;
         this->time_interval = 1;
-        this->analyse_type = "";
-        this->filter_type = "";
+        this->analyse_type = 0;
+        this->filter_type = 0;
 
         this->range_filter = false;
         this->max = 0.0;
@@ -19,7 +32,7 @@ public:
         this->time_cont = false;
         this->data_cont = false;
         this->consist_check = false;
-        this->process_type = "";
+        this->process_type = 0;
 
         //精确到日期还是小时
         this->start_time.setDate(QDate(2000,1,1));
@@ -36,6 +49,7 @@ public:
         this->filter_type = filter_type;
     }
     */
+
     ~AnalyseParas(){}
 
 public:
@@ -45,8 +59,8 @@ public:
 
     int frequency;
     int time_interval;
-    QString analyse_type;
-    QString filter_type;
+    int analyse_type;
+    int filter_type;
 
     bool range_filter;
     double max;
@@ -54,7 +68,7 @@ public:
     bool time_cont;
     bool data_cont;
     bool consist_check;
-    QString process_type;
+    int process_type;
 
     QDateTime start_time;
     QDateTime end_time;

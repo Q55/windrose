@@ -27,20 +27,6 @@ public:
         FPSO118
     };
 
-    enum Pre_AnalyseType
-    {
-        NONEANALYSE,
-        MAXVALUE,
-        MINVALUE,
-        AVERAGEVALUE
-    };
-
-    enum Pre_FilterType
-    {
-        NONEFILTER,
-        LOWERPASSFILTER
-    };
-
 /*
 signals:
     void comboboxDatabase_changed(int);
@@ -60,6 +46,7 @@ public slots:
      * pre-process: analysis configuration
      ****************************************/
     void saveConfigtoMap();
+    void showItemCurConfigInfo(QListWidgetItem*);
 
 
     //==========================================
@@ -87,6 +74,10 @@ private:
     QSet<QString> curSelectedListSet;
 
     QMap<int, QString> dbIndexNameMap;
+
+//    QMap<QString, Pre_AnalyseType> analyse_type_map;
+//    QMap<QString, Pre_FilterType> filter_type_map;
+    void initComboboxMap();
 };
 
 #endif // PREPROCESSWIDGET_H
