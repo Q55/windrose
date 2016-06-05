@@ -26,13 +26,56 @@ Utils::Utils()
 {
 }
 
+QVector<double> Utils::calcMax(QVector<double> data, int freq, int internal_time) {
+    QVector<double> result;
+    int window_size = freq * internal_time;
+    for (int i = 0; i < data.size(); i = i + window_size) {
+        double max_val = 0;
+        for (int j = i; j < i + window_size && j < data.size(); j++) {
+            if (max_val < data[j])
+                max_val = data[j];
+        }
+        result.push_back(max_val);
+    }
+    return result;
+}
+
+QVector<double> Utils::calcMin(QVector<double> data, int freq, int internal_time) {
+    QVector<double> result;
+    int window_size = freq * internal_time;
+    for (int i = 0; i < data.size(); i = i + window_size) {
+        double min_val = 0;
+        for (int j = i; j < i + window_size && j < data.size(); j++) {
+            if (min_val > data[j])
+                min_val = data[j];
+        }
+        result.push_back(min_val);
+    }
+    return result;
+}
+
+QVector<double> Utils::calcAvg(QVector<double> data, int freq, int internal_time) {
+    QVector<double> result;
+    int window_size = freq * internal_time;
+    if (window_size <= 0) return result;
+    for (int i = 0; i < data.size(); i = i + window_size) {
+        double sum = 0;
+        for (int j = i; j < i + window_size && j < data.size(); j++) {
+            sum += data[j];
+        }
+        double avg = sum / window_size;
+        result.push_back(avg);
+    }
+    return result;
+}
+
 //void range_check(emxArray_real_T *data, const emxArray_real_T *b_max,
 //                 const emxArray_real_T *b_min, const emxArray_real_T *check_list, double check)
-QVector<double> Utils::rangeCheck(QVector<double> data, double max, double min, QString process_type) {
+QVector<double> Utils::rangeCheck(QVector<double> data, double max, double min, int process_type) {
     QVector<double> result;
     emxArray_real_T *deal_data, *b_max, *b_min, *check_list;
     double check = 0.0;
-    if (process_type == "标注")
+    if (process_type == 0) // 标注--0   插值--1
         check = 1.0;
 
     range_check_initialize();
@@ -76,11 +119,11 @@ QVector<double> Utils::rangeCheck(QVector<double> data, double max, double min, 
 
 //void range_cont(emxArray_real_T *data, const emxArray_real_T *gsd, double
 //                time_step, const emxArray_real_T *check_list, double check)
-QVector<double> Utils::rangeCont(QVector<double> data, double gsd, double time_step, QString process_type) {
+QVector<double> Utils::rangeCont(QVector<double> data, double gsd, double time_step, int process_type) {
     QVector<double> result;
     emxArray_real_T *deal_data, *array_gsd, *check_list;
     double check = 2.0;
-    if (process_type == "标注")
+    if (process_type == 0) // 标注--0   插值--1
         check = 1.0;
 
     range_cont_initialize();
