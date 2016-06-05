@@ -21,6 +21,9 @@
        <pointsize>9</pointsize>
       </font>
      </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
      <property name="tabShape">
       <enum>QTabWidget::Rounded</enum>
      </property>
@@ -478,7 +481,7 @@ color: rgb(0, 0, 127);</string>
         </item>
        </layout>
       </widget>
-      <widget class="QPushButton" name="pushButton_search">
+      <widget class="QPushButton" name="pushButton_startDeal">
        <property name="geometry">
         <rect>
          <x>330</x>
@@ -494,7 +497,7 @@ color: rgb(0, 0, 127);</string>
         <string>开始处理</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_export">
+      <widget class="QPushButton" name="pushButton_saveData">
        <property name="geometry">
         <rect>
          <x>470</x>
@@ -713,22 +716,6 @@ color: rgb(0, 0, 127);</string>
         </widget>
        </widget>
       </widget>
-      <widget class="QProgressBar" name="progressBar">
-       <property name="geometry">
-        <rect>
-         <x>60</x>
-         <y>610</y>
-         <width>761</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="value">
-        <number>0</number>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="lineEdit_tips">
        <property name="geometry">
         <rect>
@@ -781,6 +768,19 @@ color: rgb(0, 0, 127);</string>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>600</y>
+         <width>731</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <number>0</number>
        </property>
       </widget>
      </widget>

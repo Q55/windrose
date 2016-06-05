@@ -48,6 +48,10 @@ public slots:
     void saveConfigtoMap();
     void showItemCurConfigInfo(QListWidgetItem*);
 
+    void startPreProcess();
+
+    void setProgressTips(int);
+    void initProgress();
 
     //==========================================
 

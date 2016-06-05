@@ -1,7 +1,10 @@
 #include "dataprocess.h"
 #include "queryDB.h"
 
-DataProcess::DataProcess()
+#include <QErrorMessage>
+
+DataProcess::DataProcess(QObject *parent) :
+    QObject(parent)
 {
 }
 
@@ -33,7 +36,7 @@ QStringList DataProcess::queryColumnNameListInTable(QString db_name, QString tab
 }
 
 QVector<double> DataProcess::queryRawDataBySelTableColName(QString db_name, QString tb_name, QString col_name,
-                                                                QDate start_time, QDate end_time) {
+                                                                QDateTime start_time, QDateTime end_time) {
 
     QString sql = "select " + col_name + " from " + tb_name + " where DateTime > " + start_time.toString() +
                 " and DateTime < " + end_time.toString() + ";";
@@ -58,6 +61,24 @@ QVector<double> DataProcess::getFromAfterProcessDataMap(QString list)
 
 void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
 
+    if (analyse_paras.empty()) {
+        QErrorMessage * errDialog = new QErrorMessage();
+        errDialog->showMessage("No column data is selected.");
+        return;
+    }
+
+    for (int i = 0; i <= 1000000; ++i)
+    {
+//        QDateTime n2=QDateTime::currentDateTime();
+//        QDateTime now;
+//        do{
+//            now=QDateTime::currentDateTime();
+//        } while (n2.secsTo(now)<=1);
+        //qDebug() << ""
+
+        emit preProcessRate((i/10000));
+    }
+
     for (QMap<QString, AnalyseParas>::Iterator it = analyse_paras.begin(); it != analyse_paras.end(); it++) {
 
         QVector<double> col_raw_data =
@@ -68,6 +89,8 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         qDebug()<<col_raw_data.size();
 
         QVector<double> result;
+
+
 
         // range filter
 
@@ -88,6 +111,7 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         after_process_data_map[str] = result;
 
     }
+
 }
 
 

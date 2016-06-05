@@ -10,6 +10,7 @@
 #include <QStringList>
 #include <QMap>
 #include <QPair>
+#include <QObject>
 #include "analyseparas.h"
 //#include "filtercond.h"
 
@@ -19,15 +20,16 @@
 //      process the data from mysql.
 //      provide interface for graphic.
 
-class DataProcess
+class DataProcess : public QObject
 {
+     Q_OBJECT
 public:
-    DataProcess();
+    explicit DataProcess(QObject *parent = 0);
 
     // interact with database
     QStringList queryTableNameListbyDBName(QString db_name);
     QStringList queryColumnNameListInTable(QString db_name, QString table_name);
-    QVector<double> queryRawDataBySelTableColName(QString db_name, QString tb_name, QString col_name, QDate start_time, QDate end_time);
+    QVector<double> queryRawDataBySelTableColName(QString db_name, QString tb_name, QString col_name, QDateTime start_time, QDateTime end_time);
 
 //    void preProccess(QString db_name, QStringList tb_name, QVector<AnalyseParas>, QVector<FilterCond>);
     void preProccess(QMap<QString, AnalyseParas> analyse_paras);

@@ -4,6 +4,16 @@
 #include <QDebug>
 #include <QErrorMessage>
 
+void Dialog::initComboboxMap()
+{
+    /***************************************
+     * initial DataBase Index to Name Map
+     ***************************************/
+    dbIndexNameMap[0] = "111";
+    dbIndexNameMap[1] = "112";
+    dbIndexNameMap[2] = "118";
+
+}
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -53,6 +63,28 @@ Dialog::Dialog(QWidget *parent) :
      * set analyse parameter corresponds to selected column data.
      **************************************************************/
     connect(ui->pushButton_saveConfig, SIGNAL(clicked()), this, SLOT( saveConfigtoMap() ) );
+
+    connect(ui->pushButton_startDeal, SIGNAL(clicked()), this, SLOT( startPreProcess() ) );
+//    connect(ui->pushButton_startDeal, SIGNAL(clicked()), this, SLOT( initProgress() ) );
+
+    connect(&dpclass, SIGNAL( preProcessRate(int) ), ui->progressBar, SLOT( setValue(int) ) );
+ //   connect(&dpclass, SIGNAL( preProcessRate(int) ), this, SLOT( setProgressBar(int) ) );
+    connect(&dpclass, SIGNAL( preProcessRate(int) ), this, SLOT( setProgressTips(int) ) );
+}
+
+void Dialog::setProgressTips(int i)
+{
+    QString progress_tips = QString::number(i, 10);
+    progress_tips += " %";
+    ui->lineEdit_tips->setText(progress_tips);
+    //qDebug() << ui->progressBar->value();
+
+}
+
+void Dialog::initProgress()
+{
+    ui->progressBar->setValue(0);
+    setProgressTips(0);
 }
 
 void Dialog::initTableList(int index, QStringList strings)
@@ -218,19 +250,7 @@ void Dialog::showItemCurConfigInfo(QListWidgetItem * item)
     if (map_col_list_analyse_paras.find(curSelItem) == map_col_list_analyse_paras.end()) {
         AnalyseParas prime_analyse_paras;
         map_col_list_analyse_paras.insert(curSelItem, prime_analyse_paras);
-//        ui->comboBox_anaType->setCurrentIndex(0);
-//        ui->comboBox_filterType->setCurrentIndex(0);
-//        ui->comboBox_processType->setCurrentIndex(0);
-//    } else
-//    {
-//        ui->comboBox_anaType->setCurrentText(map_col_list_analyse_paras[curSelItem].analyse_type);
-//        ui->comboBox_filterType->setCurrentText(map_col_list_analyse_paras[curSelItem].filter_type);
-//        ui->comboBox_processType->setCurrentText(map_col_list_analyse_paras[curSelItem].process_type);
     }
-//    ui->comboBox_anaType->setCurrentText(map_col_list_analyse_paras[curSelItem].analyse_type);
-//    ui->comboBox_filterType->setCurrentText(map_col_list_analyse_paras[curSelItem].filter_type);
-//    ui->comboBox_processType->setCurrentText(map_col_list_analyse_paras[curSelItem].process_type);
-
     ui->comboBox_anaType->setCurrentIndex(map_col_list_analyse_paras[curSelItem].analyse_type);
     ui->comboBox_filterType->setCurrentIndex(map_col_list_analyse_paras[curSelItem].filter_type);
     ui->comboBox_processType->setCurrentIndex(map_col_list_analyse_paras[curSelItem].process_type);
@@ -272,26 +292,29 @@ void Dialog::showItemCurConfigInfo(QListWidgetItem * item)
     ui->dateTimeEdit_endTime->setDateTime(map_col_list_analyse_paras[curSelItem].end_time);
 }
 
-void Dialog::initComboboxMap()
+void Dialog::startPreProcess()
 {
-    /***************************************
-     * initial DataBase Index to Name Map
-     ***************************************/
-    dbIndexNameMap[0] = "111";
-    dbIndexNameMap[1] = "112";
-    dbIndexNameMap[2] = "118";
-
-    /****************************************
-     * initial ComboBox text to index Map
-     ****************************************/
-//    analyse_type_map.insert(ui->comboBox_anaType->itemText(0), NONEANALYSE);
-//    analyse_type_map.insert(ui->comboBox_anaType->itemText(1), MAXVALUE);
-//    analyse_type_map.insert(ui->comboBox_anaType->itemText(2), MINVALUE);
-//    analyse_type_map.insert(ui->comboBox_anaType->itemText(3), AVERAGEVALUE);
-
-//    filter_type_map.insert(ui->comboBox_filterType->itemText(0), NONEFILTER);
-//    filter_type_map.insert(ui->comboBox_filterType->itemText(1), LOWERPASSFILTER);
-
+    int all_sel_col_row = ui->selectedDataList->count();
+    //qDebug() << all_sel_col_row;
+    for (int cur_row = 0; cur_row < all_sel_col_row; ++cur_row)
+    {
+        QString sel_col_name = ui->selectedDataList->item(cur_row)->text();
+        if (map_col_list_analyse_paras.find(sel_col_name) == map_col_list_analyse_paras.end())
+        {
+            AnalyseParas init_analyse_paras;
+            init_analyse_paras.db_name = sel_col_name.section('.', 0, 0);
+            init_analyse_paras.tb_name = sel_col_name.section('.', 1, 1);
+            init_analyse_paras.col_name = sel_col_name.section('.', 2, 2);
+            map_col_list_analyse_paras.insert(sel_col_name, init_analyse_paras);
+        }
+    }
+    //for test
+//    qDebug() << map_col_list_analyse_paras.size();
+//    for (auto it = map_col_list_analyse_paras.begin(); it != map_col_list_analyse_paras.end(); ++it)
+//    {
+//        it.value().printfConfigInfo();
+//    }
+    dpclass.preProccess(map_col_list_analyse_paras);
 }
 
 Dialog::~Dialog()
