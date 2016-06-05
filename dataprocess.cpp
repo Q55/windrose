@@ -70,8 +70,9 @@ QStringList DataProcess::queryColumnNameListInTable(QString db_name, QString tab
 QVector<double> DataProcess::queryRawDataBySelTableColName(QString db_name, QString tb_name, QString col_name,
                                                                 QDateTime start_time, QDateTime end_time) {
 
-    QString sql = "select " + col_name + " from " + tb_name + " where DateTime > " + start_time.toString() +
-                " and DateTime < " + end_time.toString() + ";";
+    QString sql = "select " + col_name + " from " + tb_name + " where DateTime between '" + start_time.toString("yyyy-MM-dd HH:mm:ss") +
+                "' and '" + end_time.toString("yyyy-MM-dd HH:mm:ss") + "';";
+    qDebug()<<sql;
     QueryDB qdb;
     QSqlQuery query = qdb.queryDB(db_name, sql);
     QVector<double> result;
@@ -113,11 +114,11 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         if (it.value().range_filter)
             result = Utils::rangeCheck(result, it.value().max, it.value().min, it.value().process_type);
         // time cont
-        if (it.value().time_cont)
-            result = Utils::timeCont(result, it.value().frequency, 1, 1, it.value().process_type);
+        //if (it.value().time_cont)
+        //    result = Utils::timeCont(result, it.value().frequency, 1, 1, it.value().process_type);
         // range cont
         if (it.value().data_cont)
-            result = Utils::rangeCont(result, 28, it.value().time_interval, it.value().process_type);
+            result = Utils::rangeCont(result, 28, 0.1, it.value().process_type);
         // inter consis
         if (it.value().consist_check)
             result = Utils::interConsis(result, it.value().process_type);
@@ -140,6 +141,7 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
 
         i++;
         ratio = ((double)i / (double)analyse_paras.size()) * 100;
+        qDebug()<<"ratio = "<<ratio;
         emit this->preProcessRate(ratio);
     }
 

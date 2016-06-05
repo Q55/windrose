@@ -37,7 +37,7 @@ public:
         //精确到日期还是小时
         this->start_time.setDate(QDate(2000,1,1));
         this->start_time.setTime(QTime(0,0,0));
-        this->end_time.setDate(QDate(2000,1,1));
+        this->end_time.setDate(QDate(2016,6,1));
         this->end_time.setTime(QTime(0,0,0));
     }
 
