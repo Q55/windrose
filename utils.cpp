@@ -43,6 +43,7 @@ QVector<double> Utils::calcMax(QVector<double> data, int freq, int internal_time
         }
         result.push_back(max_val);
     }
+    qDebug()<<data.size()<<result.size();
     return result;
 }
 
