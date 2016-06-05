@@ -31,6 +31,12 @@ public:
 signals:
     void comboboxDatabase_changed(int);
 */
+public:
+    Dialog(QWidget *parent = 0);
+    ~Dialog();
+
+    void initTableList(int index, QStringList strings);
+
 public slots:
     /*****************************
      * pre-process: data select
@@ -40,6 +46,7 @@ public slots:
 
     void addSelectedColList();
     void delSelectedColList();
+    void addItemToSelListWidget(QListWidgetItem*);
     void updateSpinBoxSelCol();
 
     /****************************************
@@ -58,12 +65,8 @@ public slots:
     /*****************************************
      * post-process:
      *****************************************/
-
-public:
-    Dialog(QWidget *parent = 0);
-    ~Dialog();
-
-    void initTableList(int index, QStringList strings);
+    void setPostProcessRaw();
+    void inputFormulaDialog();
 
 private:
     Ui::Dialog *ui;
