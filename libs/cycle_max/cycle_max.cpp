@@ -6,11 +6,11 @@
  */
 
 /* Include Files */
-#include "rt_nonfinite.h"
+#include "libs/commons/rt_nonfinite.h"
 #include "cycle_max.h"
-#include "sum.h"
-#include "cycle_max_emxutil.h"
-#include "polyfit.h"
+#include "libs/commons/sum.h"
+#include "libs/commons/emxutil.h"
+#include "libs/commons/polyfit.h"
 
 /* Function Definitions */
 

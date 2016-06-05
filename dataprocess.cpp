@@ -60,32 +60,34 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
 
     for (QMap<QString, AnalyseParas>::Iterator it = analyse_paras.begin(); it != analyse_paras.end(); it++) {
 
-//        QVector<double> col_raw_data = queryRawDataBySelTableColName(it->db_name, it->tb_name, it->col_name,
-//                                                                 it->start_time, it->end_time);
-//        QString str = it->tb_name + "." + it->col_name;
-//        raw_data_map[str] = col_raw_data;
+        QVector<double> col_raw_data =
+                queryRawDataBySelTableColName(it.value().db_name, it.value().tb_name, it.value().col_name,
+                                              it.value().start_time, it.value().end_time);
+        QString str = it.key();
+        raw_data_map[str] = col_raw_data;
+        qDebug()<<col_raw_data.size();
 
-//        QVector<double> result;
+        QVector<double> result;
 
-//        // range filter
+        // range filter
 
-//        // time cont
+        // time cont
 
-//        // data cont
+        // data cont
 
-//        // consist check
+        // consist check
 
-//        // process type
+        // process type
 
-//        // max
+        // max
 
-//        // minimal
+        // minimal
 
-//        // average
+        // average
 
-//        after_process_data_map[str] = result;
+        after_process_data_map[str] = result;
+
     }
-
 }
 
 

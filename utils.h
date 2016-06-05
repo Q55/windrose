@@ -13,7 +13,7 @@ public:
 
 
     //FIXME:whether the input parameter type is reference
-    static double cycleMax(QVector<double> data);
+    static QVector<double> cycleMax(QVector<double> data, int window_size);
     static double interConsis(QVector<double> data);
 
 };

@@ -13,9 +13,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include "rt_nonfinite.h"
-#include "rtwtypes.h"
-#include "cycle_max_types.h"
+#include "libs/commons/rt_nonfinite.h"
+#include "libs/commons/rtwtypes.h"
+#include "libs/commons/types.h"
 
 /* Function Declarations */
 extern void cycle_max_initialize(void);
