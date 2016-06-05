@@ -2,6 +2,7 @@
 #define PREPROCESSWIDGET_H
 
 #include "dataprocess.h"
+#include "analyseparas.h"
 #include <QDialog>
 #include <QSet>
 #include <QListWidgetItem>
@@ -25,14 +26,47 @@ public:
         FPSO112,
         FPSO118
     };
+
+    enum Pre_AnalyseType
+    {
+        NONEANALYSE,
+        MAXVALUE,
+        MINVALUE,
+        AVERAGEVALUE
+    };
+
+    enum Pre_FilterType
+    {
+        NONEFILTER,
+        LOWERPASSFILTER
+    };
+
 /*
 signals:
     void comboboxDatabase_changed(int);
 */
 public slots:
+    /*****************************
+     * pre-process: data select
+     *****************************/
     void setDataTable( int );
     void setDataList( QString );
-    void setSelectedDataList();
+
+    void addSelectedColList();
+    void delSelectedColList();
+    void updateSpinBoxSelCol();
+
+    /****************************************
+     * pre-process: analysis configuration
+     ****************************************/
+    void saveConfigtoMap();
+
+
+    //==========================================
+
+    /*****************************************
+     * post-process:
+     *****************************************/
 
 public:
     Dialog(QWidget *parent = 0);
@@ -48,8 +82,9 @@ private:
     QStringList table118;
 
     DataProcess dpclass;
+    QMap<QString, AnalyseParas> map_col_list_analyse_paras;
 
-    QSet<QListWidgetItem *> curSelectedListSet;
+    QSet<QString> curSelectedListSet;
 
     QMap<int, QString> dbIndexNameMap;
 };

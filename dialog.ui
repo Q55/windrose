@@ -87,7 +87,7 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
-             <widget class="QSpinBox" name="spinBox_2">
+             <widget class="QSpinBox" name="spinBox_frequency">
               <property name="maximum">
                <number>999999</number>
               </property>
@@ -97,7 +97,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="spinBox_5">
+             <widget class="QSpinBox" name="spinBox_timeInterval">
               <property name="maximum">
                <number>999999</number>
               </property>
@@ -107,7 +107,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox_5">
+             <widget class="QComboBox" name="comboBox_anaType">
               <property name="minimumSize">
                <size>
                 <width>90</width>
@@ -137,7 +137,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox_4">
+             <widget class="QComboBox" name="comboBox_filterType">
               <item>
                <property name="text">
                 <string>无</string>
@@ -377,7 +377,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinBox">
+            <widget class="QSpinBox" name="spinBox_selCol">
              <property name="enabled">
               <bool>true</bool>
              </property>
@@ -427,7 +427,7 @@ color: rgb(0, 0, 127);</string>
        <property name="geometry">
         <rect>
          <x>610</x>
-         <y>410</y>
+         <y>390</y>
          <width>231</width>
          <height>131</height>
         </rect>
@@ -448,7 +448,7 @@ color: rgb(0, 0, 127);</string>
              </widget>
             </item>
             <item>
-             <widget class="QDateTimeEdit" name="dateTimeEdit">
+             <widget class="QDateTimeEdit" name="dateTimeEdit_startTime">
               <property name="displayFormat">
                <string>yyyy-MM-dd HH:mm:ss</string>
               </property>
@@ -466,7 +466,7 @@ color: rgb(0, 0, 127);</string>
              </widget>
             </item>
             <item>
-             <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+             <widget class="QDateTimeEdit" name="dateTimeEdit_endTime">
               <property name="displayFormat">
                <string>yyyy-MM-dd HH:mm:ss</string>
               </property>
@@ -514,7 +514,7 @@ color: rgb(0, 0, 127);</string>
        <property name="geometry">
         <rect>
          <x>610</x>
-         <y>160</y>
+         <y>150</y>
          <width>231</width>
          <height>241</height>
         </rect>
@@ -545,14 +545,14 @@ color: rgb(0, 0, 127);</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
-          <widget class="QCheckBox" name="checkBox_2">
+          <widget class="QCheckBox" name="checkBox_timeCont">
            <property name="text">
             <string>时间连续性</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QCheckBox" name="checkBox_3">
+          <widget class="QCheckBox" name="checkBox_dataCont">
            <property name="text">
             <string>数据连续性</string>
            </property>
@@ -589,7 +589,7 @@ color: rgb(0, 0, 127);</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="0" column="0">
-          <widget class="QCheckBox" name="checkBox_4">
+          <widget class="QCheckBox" name="checkBox_consist">
            <property name="text">
             <string>一致性检验</string>
            </property>
@@ -629,7 +629,7 @@ color: rgb(0, 0, 127);</string>
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="comboBox_3">
+            <widget class="QComboBox" name="comboBox_processType">
              <item>
               <property name="text">
                <string>标注</string>
@@ -646,7 +646,10 @@ color: rgb(0, 0, 127);</string>
          </item>
         </layout>
        </widget>
-       <widget class="QGroupBox" name="groupBox_12">
+       <widget class="QGroupBox" name="groupBox_rangeFilter">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>11</x>
@@ -660,6 +663,9 @@ color: rgb(0, 0, 127);</string>
         </property>
         <property name="checkable">
          <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
         </property>
         <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
@@ -679,7 +685,7 @@ color: rgb(0, 0, 127);</string>
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_max"/>
           </item>
          </layout>
         </widget>
@@ -701,7 +707,7 @@ color: rgb(0, 0, 127);</string>
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_min"/>
           </item>
          </layout>
         </widget>
@@ -756,6 +762,25 @@ color: rgb(0, 0, 127);</string>
        </property>
        <property name="readOnly">
         <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_saveConfig">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>730</x>
+         <y>520</y>
+         <width>113</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>保存配置</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </widget>
