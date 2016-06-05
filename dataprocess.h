@@ -12,7 +12,7 @@
 #include <QPair>
 #include <QObject>
 #include "analyseparas.h"
-//#include "filtercond.h"
+#include "utils.h"
 
 //author: zyn
 //time  : 2016-06-02
@@ -29,7 +29,8 @@ public:
     // interact with database
     QStringList queryTableNameListbyDBName(QString db_name);
     QStringList queryColumnNameListInTable(QString db_name, QString table_name);
-    QVector<double> queryRawDataBySelTableColName(QString db_name, QString tb_name, QString col_name, QDateTime start_time, QDateTime end_time);
+    QVector<double> queryRawDataBySelTableColName(QString db_name, QString tb_name, QString col_name,
+                                                  QDateTime start_time, QDateTime end_time);
 
 //    void preProccess(QString db_name, QStringList tb_name, QVector<AnalyseParas>, QVector<FilterCond>);
     void preProccess(QMap<QString, AnalyseParas> analyse_paras);
