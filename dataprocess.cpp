@@ -153,12 +153,24 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         after_process_data_map[str1] = v_mdata;
     }
 
+    emit preProcessEnd();
+
 }
 
 
 void DataProcess::exportToFile(QString data)
 {
 
+}
+
+QStringList DataProcess::getNamePostProcessData()
+{
+    QStringList view_post_col_name;
+    for(auto it = after_process_data_map.begin(); it != after_process_data_map.end(); ++it)
+    {
+        view_post_col_name << it.key();
+    }
+    return view_post_col_name;
 }
 
 

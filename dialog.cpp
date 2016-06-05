@@ -1,8 +1,10 @@
 #include "dialog.h"
 #include "ui_dialog.h"
+#include "formuladialog.h"
 
 #include <QDebug>
 #include <QErrorMessage>
+
 
 void Dialog::initComboboxMap()
 {
@@ -52,6 +54,8 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->comboBox_database, SIGNAL( currentIndexChanged(int) ), this, SLOT( setDataTable(int) ) );
     connect(ui->comboBox_dababaseT, SIGNAL( currentIndexChanged(QString) ), this, SLOT( setDataList(QString) ) );
 
+    connect(ui->dbTableList, SIGNAL( itemDoubleClicked(QListWidgetItem*) ), this, SLOT( addItemToSelListWidget(QListWidgetItem*) ) );
+
     connect(ui->pushButton_add, SIGNAL(clicked()), this, SLOT( addSelectedColList() ) );
     connect(ui->pushButton_add, SIGNAL(clicked()), this, SLOT( updateSpinBoxSelCol() ) );
 
@@ -70,6 +74,10 @@ Dialog::Dialog(QWidget *parent) :
     connect(&dpclass, SIGNAL( preProcessRate(int) ), ui->progressBar, SLOT( setValue(int) ) );
  //   connect(&dpclass, SIGNAL( preProcessRate(int) ), this, SLOT( setProgressBar(int) ) );
     connect(&dpclass, SIGNAL( preProcessRate(int) ), this, SLOT( setProgressTips(int) ) );
+
+    //========================================================
+    connect(&dpclass, SIGNAL( preProcessEnd(int) ), this, SLOT( setPostProcessRawCol() ) );
+    connect(ui->pushButton_inputFormula, SIGNAL(clicked()), this, SLOT( inputFormulaDialog() ) );
 }
 
 void Dialog::setProgressTips(int i)
@@ -77,7 +85,6 @@ void Dialog::setProgressTips(int i)
     QString progress_tips = QString::number(i, 10);
     progress_tips += " %";
     ui->lineEdit_tips->setText(progress_tips);
-    //qDebug() << ui->progressBar->value();
 
 }
 
@@ -167,6 +174,12 @@ void Dialog::addSelectedColList()
     repaint();
 }
 
+void Dialog::addItemToSelListWidget(QListWidgetItem *item)
+{
+    QString string = item->text();
+    ui->selectedDataList->addItem(string);
+}
+
 void Dialog::delSelectedColList()
 {
     QList<QListWidgetItem *> delItems = ui->selectedDataList->selectedItems();
@@ -196,8 +209,11 @@ void Dialog::saveConfigtoMap()
     AnalyseParas cur_analyse_paras;
 
     QListWidgetItem * cur_selected_col = ui->selectedDataList->currentItem();
-    if (cur_selected_col == NULL)
+    if (cur_selected_col == NULL) {
+        QErrorMessage *emptyListErr = new QErrorMessage(this);
+        emptyListErr->showMessage("you must select a datalist or some datalists to configuration.");
         return;
+    }
     QString cur_selected_col_text = cur_selected_col->text();
     QString cur_db_name = cur_selected_col_text.section('.', 0, 0);
     QString cur_table_name = cur_selected_col_text.section('.', 1, 1);
@@ -315,6 +331,19 @@ void Dialog::startPreProcess()
 //        it.value().printfConfigInfo();
 //    }
     dpclass.preProccess(map_col_list_analyse_paras);
+}
+//==========================================================================
+void Dialog::setPostProcessRaw()
+{
+    ui->listWidget_postProcessRaw->addItems(dpclass.getNamePostProcessData());
+    repaint();
+}
+
+void Dialog::inputFormulaDialog()
+{
+    FormulaDialog *formula_input_dialog = new FormulaDialog;
+    formula_input_dialog->show();
+
 }
 
 Dialog::~Dialog()

@@ -69,7 +69,8 @@ SOURCES += main.cpp\
     libs/weightedfit/weightedfit.cpp \
     libs/weightedfit/weightedfit_initialize.cpp \
     libs/weightedfit/weightedfit_terminate.cpp \
-    libs/commons/diff.cpp
+    libs/commons/diff.cpp \
+    formuladialog.cpp
 
 HEADERS  += \
     dataprocess.h \
@@ -129,10 +130,12 @@ HEADERS  += \
     libs/time_cont/time_cont.h \
     libs/weightedfit/weightedfit_initialize.h \
     libs/weightedfit/weightedfit_terminate.h \
-    libs/weightedfit/weightedfit.h
+    libs/weightedfit/weightedfit.h \
+    formuladialog.h
 
 FORMS    += \
-    dialog.ui
+    dialog.ui \
+    formuladialog.ui
 
 #QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
 #LIBS += -stdlib=libc++
