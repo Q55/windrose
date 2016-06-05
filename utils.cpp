@@ -20,6 +20,12 @@
 #include "libs/filters/filters_initialize.h"
 #include "libs/filters/filters_terminate.h"
 #include "libs/commons/emxAPI.h"
+#include "libs/time_cont/time_cont.h"
+#include "libs/time_cont/time_cont_initialize.h"
+#include "libs/time_cont/time_cont_terminate.h"
+#include "libs/inter_consis/inter_consis.h"
+#include "libs/inter_consis/inter_consis_initialize.h"
+#include "libs/inter_consis/inter_consis_terminate.h"
 #include <QDebug>
 
 Utils::Utils()
@@ -164,6 +170,101 @@ QVector<double> Utils::rangeCont(QVector<double> data, double gsd, double time_s
     return result;
 }
 
+//void time_cont(const emxArray_real_T *data, double time_row, double time_step,
+//               double check, emxArray_real_T *data_out)
+QVector<double> Utils::timeCont(QVector<double> data, int freq, double time_row, double time_step, int process_type) {
+
+    QVector<double> result;
+    QVector<double> time_col;
+    for (int i = 0; i < data.size(); ++i)
+        time_col.push_back(1 / freq * i);
+//    time_col.clear();
+//    time_col = {1,5,6,10,11,12,13,18,19,20};
+
+    emxArray_real_T *deal_data, *out;
+    double check = 2.0;
+    if (process_type == 0) // 标注--0   插值--1
+        check = 1.0;
+
+    time_cont_initialize();
+
+    // prepare for deal_data
+    static int iv0[2] = {data.size(), data.size() };
+    deal_data = emxCreateND_real_T(2, iv0);
+    for (int i = 0; i < deal_data->size[0U]; i++) {
+        deal_data->data[i] = time_col[i];
+    }
+    for (int j = 0; j < deal_data->size[1U]; j++) {
+        deal_data->data[deal_data->size[0] + j] = data[j];
+    }
+
+    emxInitArray_real_T(&out, 2);
+
+    // call time_cont() function.
+    time_cont(deal_data, time_row, time_step, check, out);
+
+    // output the result.
+    for (int i = 0; i < out->size[0U]; i++) {
+        result.push_back(out->data[i]);
+    }
+    qDebug()<<result.size();
+    for (int i = 0; i < result.size(); i++)
+        qDebug()<<result.at(i);
+
+    emxDestroyArray_real_T(deal_data);
+    emxDestroyArray_real_T(out);
+    time_cont_terminate();
+
+    return result;
+}
+
+//void inter_consis(emxArray_real_T *data1, const emxArray_real_T *data2, double
+//                  type, emxArray_real_T *data)
+QVector<double> Utils::interConsis(QVector<double> data, int process_type) {
+    QVector<double> ref_data, result;
+    ref_data = {1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 5};
+
+    emxArray_real_T *data1, *data2, *out;
+    double type = 2.0;
+    if (process_type == 0) // 标注--0   插值--1
+        type = 1.0;
+
+    inter_consis_initialize();
+
+    // prepare for deal_data
+    static int iv0[1] = {data.size()};
+    data1 = emxCreateND_real_T(1, iv0);
+    for (int i = 0; i < data1->size[0U]; i++) {
+        data1->data[i] = data[i];
+    }
+    static int iv1[1] = {ref_data.size()};
+    data2 = emxCreateND_real_T(1, iv1);
+    for (int i = 0; i < data2->size[0U]; i++) {
+        data2->data[i] = ref_data[i];
+    }
+
+    emxInitArray_real_T(&out, 2);
+
+    // call inter_consis() function.
+    inter_consis(data1, data2, type, out);
+
+    // output the result.
+    for (int i = 0; i < out->size[0U]; i++) {
+        result.push_back(out->data[i]);
+    }
+    qDebug()<<result.size();
+    for (int i = 0; i < result.size(); i++)
+        qDebug()<<result.at(i);
+
+    emxDestroyArray_real_T(data1);
+    emxDestroyArray_real_T(data2);
+    emxDestroyArray_real_T(out);
+    time_cont_terminate();
+
+    return result;
+
+}
+
 //void filters(double Fs, const emxArray_real_T *data, double *Mdata,
 //             emxArray_real_T *Ldata, emxArray_real_T *Wdata)
 double Utils::qtFilters(QVector<double> data, double fs, QVector<double>& l_data, QVector<double>& w_data) {
@@ -225,13 +326,4 @@ QVector<double> Utils::cycleMax(QVector<double> data, int freq, int internal_tim
     }
     qDebug()<<result.size();
     return result;
-}
-
-double Utils::interConsis(QVector<double> data)
-{
-    //call the function inter_consis.c.
-    //initial the data by QVector<double> data
-    //TODO:
-    double ret;
-    return ret;
 }

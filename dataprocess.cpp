@@ -59,6 +59,10 @@ QStringList DataProcess::queryColumnNameListInTable(QString db_name, QString tab
 //    for (int i = 0; i < 10; ++i) {
 //        qDebug()<<w_data.at(i);
 //    }
+//    QVector<double> result = {1,5,6,10,11,12,13,18,19,20};
+//    Utils::timeCont(result, 1000, 1, 1, 1);
+//    QVector<double> result = {1, 2, 3, 4, 5,6,7,8,9,10};
+//    Utils::interConsis(result, 1);
 
     return qsl;
 }
@@ -95,18 +99,8 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         return;
     }
 
-    for (int i = 0; i <= 1000000; ++i)
-    {
-//        QDateTime n2=QDateTime::currentDateTime();
-//        QDateTime now;
-//        do{
-//            now=QDateTime::currentDateTime();
-//        } while (n2.secsTo(now)<=1);
-        //qDebug() << ""
-
-        emit preProcessRate((i/10000));
-    }
-
+    int i = 0;
+    int ratio = 0;
     for (QMap<QString, AnalyseParas>::Iterator it = analyse_paras.begin(); it != analyse_paras.end(); it++) {
 
         QVector<double> col_raw_data =
@@ -114,43 +108,39 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
                                               it.value().start_time, it.value().end_time);
         QString str = it.key();
         raw_data_map[str] = col_raw_data;
-
-        QVector<double> result;
-
-
-
+        QVector<double> result = col_raw_data;
         // range check
-        result = col_raw_data;
-        result = Utils::rangeCheck(result, it.value().max, it.value().min, it.value().process_type);
-
+        if (it.value().range_filter)
+            result = Utils::rangeCheck(result, it.value().max, it.value().min, it.value().process_type);
         // time cont
-
+        if (it.value().time_cont)
+            result = Utils::timeCont(result, it.value().frequency, 1, 1, it.value().process_type);
         // range cont
-        result = Utils::rangeCont(result, 28, it.value().time_interval, it.value().process_type);
-
+        if (it.value().data_cont)
+            result = Utils::rangeCont(result, 28, it.value().time_interval, it.value().process_type);
         // inter consis
-
+        if (it.value().consist_check)
+            result = Utils::interConsis(result, it.value().process_type);
         // max
-        result = Utils::calcMax(result, it.value().frequency, it.value().time_interval);
-
+        if (it.value().analyse_type == it.value().MAXVALUE)
+            result = Utils::calcMax(result, it.value().frequency, it.value().time_interval);
         // min
-        result = Utils::calcMin(result, it.value().frequency, it.value().time_interval);
-
+        if (it.value().analyse_type == it.value().MINVALUE)
+            result = Utils::calcMin(result, it.value().frequency, it.value().time_interval);
         // average
-        result = Utils::calcAvg(result, it.value().frequency, it.value().time_interval);
-
+        if (it.value().analyse_type == it.value().AVERAGEVALUE)
+            result = Utils::calcAvg(result, it.value().frequency, it.value().time_interval);
         // filter
-        QVector<double> l_data, w_data;
-        double m_data = Utils::qtFilters(result, it.value().frequency, l_data, w_data);
-
+        if (it.value().filter_type == it.value().LOWERPASSFILTER) {
+            QVector<double> l_data, w_data;
+            Utils::qtFilters(result, it.value().frequency, l_data, w_data);
+            result = l_data;
+        }
         after_process_data_map[str] = result;
-        QString str1 = str + ".LData";
-        after_process_data_map[str1] = l_data;
-        str1 = str + ".WData";
-        after_process_data_map[str1] = w_data;
-        str1 = str + ".MData";
-        QVector<double> v_mdata = {m_data};
-        after_process_data_map[str1] = v_mdata;
+
+        i++;
+        ratio = ((double)i / (double)analyse_paras.size()) * 100;
+        emit this->preProcessRate(ratio);
     }
 
     emit preProcessEnd();
