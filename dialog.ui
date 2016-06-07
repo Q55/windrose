@@ -421,6 +421,9 @@ color: rgb(0, 0, 127);</string>
            <property name="selectionMode">
             <enum>QAbstractItemView::ExtendedSelection</enum>
            </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>

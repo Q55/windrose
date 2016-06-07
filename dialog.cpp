@@ -192,6 +192,9 @@ void Dialog::addSelectedColList()
         selDataItems << selColName;
     }
     ui->selectedDataList->addItems(selDataItems);
+    QString selected_items_first = selDataItems.first();
+    QList<QListWidgetItem *> set_item_selected = ui->selectedDataList->findItems(selected_items_first, Qt::MatchFixedString);
+    ui->selectedDataList->setCurrentItem(set_item_selected.first());
     repaint();
 }
 
@@ -209,10 +212,26 @@ void Dialog::delSelectedColList()
 
     for (it = delItems.begin(); it != delItems.end(); ++it) {
         QString delColName = (*it)->text();
-        curSelectedListMap.remove(delColName);
 
+        int pre_row = ui->selectedDataList->currentRow();
+        int cur_row = pre_row;
+        if (pre_row == map_col_list_analyse_paras.size()-1) {
+            cur_row = pre_row-1;
+        }
+
+        //curSelectedListMap.remove(delColName);
+        if (curSelectedListMap[delColName] == 0)
+        {
+            curSelectedListMap.remove(delColName);
+        }
+        else
+        {
+            curSelectedListMap[delColName]--;
+        }
         //qDebug() << ui->selectedDataList->currentRow();
-        ui->selectedDataList->takeItem(ui->selectedDataList->currentRow());
+        ui->selectedDataList->takeItem(pre_row);
+        ui->selectedDataList->setCurrentRow(cur_row);
+
         map_col_list_analyse_paras.remove(delColName);
         //ui->selectedDataList->removeItemWidget(*it);
     }
