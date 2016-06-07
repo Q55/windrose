@@ -44,7 +44,7 @@ public:
 public slots:
 
     //FIXME: input may be QStringList
-    void exportToFile(QString data);
+    void exportToFile();
 
 signals:
     void preProcessRate(int);

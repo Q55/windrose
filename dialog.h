@@ -87,9 +87,9 @@ private:
     /***********************************
      * interact with AnalyseParas class
      ***********************************/
-    double check_type[2] = {1.0, 2.0};  //important FIXME, zyn comment 06-07. to lsq.
+    double check_type[2] = {1.0, 2.0};  //important FIXME, zyn comment.FIXME 06-07. to lsq.
     QMap<double, int> check_type_anti_map;
-    double consist_check_type[3] = {1.0, 0.5, 2.0}; // important FIXME. zyn comment 06-07. to lsq
+    double consist_check_type[3] = {1.0, 2.0, 0.5}; // important FIXME. zyn comment. FIXME 06-07. to lsq
     QMap<double, int> consist_check_anti_map;
 
 //    QMap<QString, Pre_AnalyseType> analyse_type_map;

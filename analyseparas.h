@@ -110,8 +110,15 @@ public:
         qDebug() << "max:" << max;
         qDebug() << "min:" << min;
         qDebug() << "time_cont:" << time_cont;
+        qDebug() << "time_cont_time_step" << time_cont_time_step;
+        qDebug() << "time_cont_check_type" << time_cont_check_type;
         qDebug() << "data_cont:" << data_cont;
+        qDebug() << "data_cont_time_step" << data_cont_time_step;
+        qDebug() << "data_cont_gsd" << data_cont_gsd;
+        qDebug() << "data_cont_check_type" << data_cont_check_type;
         qDebug() << "consist_check:" << consist_check;
+        qDebug() << "expression" << expression;
+        qDebug() << "consist_check_type" << consist_check_type;
 //        qDebug() << "process_type:" << process_type;
         qDebug() << "start_time:" << start_time;
         qDebug() << "end_time:" << end_time;

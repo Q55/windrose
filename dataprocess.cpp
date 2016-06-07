@@ -152,7 +152,7 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
 }
 
 
-void DataProcess::exportToFile(QString data)
+void DataProcess::exportToFile()
 {
 
 }

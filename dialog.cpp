@@ -79,10 +79,13 @@ Dialog::Dialog(QWidget *parent) :
 
     connect(ui->pushButton_startDeal, SIGNAL(clicked()), this, SLOT( startPreProcess() ) );
 //    connect(ui->pushButton_startDeal, SIGNAL(clicked()), this, SLOT( initProgress() ) );
+    connect(ui->pushButton_export, SIGNAL(clicked()), &dpclass, SLOT( exportToFile() ) );
 
     connect(&dpclass, SIGNAL( preProcessRate(int) ), ui->progressBar, SLOT( setValue(int) ) );
  //   connect(&dpclass, SIGNAL( preProcessRate(int) ), this, SLOT( setProgressBar(int) ) );
     connect(&dpclass, SIGNAL( preProcessRate(int) ), this, SLOT( setProgressTips(int) ) );
+
+
 
     //========================================================
     connect(&dpclass, SIGNAL( preProcessEnd() ), this, SLOT( setPostProcessRawCol() ) );
@@ -305,7 +308,7 @@ void Dialog::saveConfigtoMap()
     map_col_list_analyse_paras[cur_selected_col_text].max = cur_max_filter_value;
     map_col_list_analyse_paras[cur_selected_col_text].min = cur_min_filter_value;
     double cur_range_filter_type_double = check_type[cur_range_filter_check_type];
-    map_col_list_analyse_paras[cur_selected_col_text].filter_type = cur_range_filter_type_double;
+    map_col_list_analyse_paras[cur_selected_col_text].range_filter_check_type = cur_range_filter_type_double;
 
     map_col_list_analyse_paras[cur_selected_col_text].time_cont = cur_time_cont;
     map_col_list_analyse_paras[cur_selected_col_text].time_cont_time_step = cur_time_cont_time_step;
@@ -333,7 +336,6 @@ void Dialog::saveConfigtoMap()
 void Dialog::showItemCurConfigInfo(QListWidgetItem * item)
 {
     QString curSelItem = item->text();
-    qDebug() << curSelItem;
     if (map_col_list_analyse_paras.find(curSelItem) == map_col_list_analyse_paras.end()) {
         qDebug() << "Development ERROR!";
         return;
