@@ -45,9 +45,10 @@ public slots:
     void setDataList( QString );
 
     void addSelectedColList();
+    void addSelectedColList(QListWidgetItem*);
     void delSelectedColList();
-    void addItemToSelListWidget(QListWidgetItem*);
     void updateSpinBoxSelCol();
+    void updateSpinBoxSelCol(QListWidgetItem*);
 
     /****************************************
      * pre-process: analysis configuration
@@ -65,7 +66,7 @@ public slots:
     /*****************************************
      * post-process:
      *****************************************/
-    void setPostProcessRaw();
+    void setPostProcessRawCol();
     void inputFormulaDialog();
 
 private:
@@ -78,9 +79,18 @@ private:
     DataProcess dpclass;
     QMap<QString, AnalyseParas> map_col_list_analyse_paras;
 
-    QSet<QString> curSelectedListSet;
+    QMap<QString, int> curSelectedListMap;
 
     QMap<int, QString> dbIndexNameMap;
+
+
+    /***********************************
+     * interact with AnalyseParas class
+     ***********************************/
+    double check_type[2] = {1.0, 2.0};  //important FIXME, zyn comment 06-07. to lsq.
+    QMap<double, int> check_type_anti_map;
+    double consist_check_type[3] = {1.0, 0.5, 2.0}; // important FIXME. zyn comment 06-07. to lsq
+    QMap<double, int> consist_check_anti_map;
 
 //    QMap<QString, Pre_AnalyseType> analyse_type_map;
 //    QMap<QString, Pre_FilterType> filter_type_map;

@@ -6,6 +6,7 @@
 class AnalyseParas
 {
 public:
+
     enum Pre_AnalyseType
     {
         NONEANALYSE,
@@ -29,10 +30,21 @@ public:
         this->range_filter = false;
         this->max = 0.0;
         this->min = 0.0;
+        this->range_filter_check_type = 1.0;//FIXME 06-07
+
         this->time_cont = false;
+        this->time_cont_time_step = 1.0;//FIXME 06-07
+        this->time_cont_check_type = 1.0;//FIXME 06-07
+
         this->data_cont = false;
+        this->data_cont_gsd = 0.0; //FIXME 06-07
+        this->data_cont_time_step = 1.0;//FIXME 06-07
+        this->data_cont_check_type = 1.0; //FIXME 06-07
+
         this->consist_check = false;
-        this->process_type = 0;
+        this->expression = "";
+        this->consist_check_type = 1.0;//FIXME 06-07
+        //this->process_type = 0;
 
         //精确到日期还是小时
         this->start_time.setDate(QDate(2000,1,1));
@@ -65,10 +77,22 @@ public:
     bool range_filter;
     double max;
     double min;
+    double range_filter_check_type;
+
     bool time_cont;
+    double time_cont_time_step;
+    double time_cont_check_type;
+
     bool data_cont;
+    double data_cont_gsd;
+    double data_cont_time_step;
+    double data_cont_check_type;
+
     bool consist_check;
-    int process_type;
+    QString expression;
+    double consist_check_type;
+
+//    int process_type;
 
     QDateTime start_time;
     QDateTime end_time;
@@ -88,7 +112,7 @@ public:
         qDebug() << "time_cont:" << time_cont;
         qDebug() << "data_cont:" << data_cont;
         qDebug() << "consist_check:" << consist_check;
-        qDebug() << "process_type:" << process_type;
+//        qDebug() << "process_type:" << process_type;
         qDebug() << "start_time:" << start_time;
         qDebug() << "end_time:" << end_time;
     }

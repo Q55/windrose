@@ -112,16 +112,19 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         QVector<double> result = col_raw_data;
         // range check
         if (it.value().range_filter)
-            result = Utils::rangeCheck(result, it.value().max, it.value().min, it.value().process_type);
+            //FIXME 06-07
+//            result = Utils::rangeCheck(result, it.value().max, it.value().min, it.value().process_type);
         // time cont
         //if (it.value().time_cont)
         //    result = Utils::timeCont(result, it.value().frequency, 1, 1, it.value().process_type);
         // range cont
         if (it.value().data_cont)
-            result = Utils::rangeCont(result, 28, 0.1, it.value().process_type);
+            //FIXME 06-07
+//            result = Utils::rangeCont(result, 28, 0.1, it.value().process_type);
         // inter consis
         if (it.value().consist_check)
-            result = Utils::interConsis(result, it.value().process_type);
+            //FIXME 06-07
+//            result = Utils::interConsis(result, it.value().process_type);
         // max
         if (it.value().analyse_type == it.value().MAXVALUE)
             result = Utils::calcMax(result, it.value().frequency, it.value().time_interval);
@@ -146,7 +149,6 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
     }
 
     emit preProcessEnd();
-
 }
 
 

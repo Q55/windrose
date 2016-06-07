@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>883</width>
+    <width>928</width>
     <height>700</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>统计分析</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="0" column="1">
     <widget class="QTabWidget" name="tabWidget">
      <property name="font">
       <font>
@@ -37,9 +37,9 @@
       <widget class="QGroupBox" name="groupBox_3">
        <property name="geometry">
         <rect>
-         <x>610</x>
+         <x>590</x>
          <y>10</y>
-         <width>241</width>
+         <width>301</width>
          <height>141</height>
         </rect>
        </property>
@@ -214,8 +214,8 @@
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>581</width>
-         <height>531</height>
+         <width>551</width>
+         <height>561</height>
         </rect>
        </property>
        <property name="title">
@@ -224,7 +224,7 @@
        <widget class="QPushButton" name="pushButton_del">
         <property name="geometry">
          <rect>
-          <x>250</x>
+          <x>233</x>
           <y>320</y>
           <width>75</width>
           <height>21</height>
@@ -240,7 +240,7 @@
        <widget class="QPushButton" name="pushButton_add">
         <property name="geometry">
          <rect>
-          <x>250</x>
+          <x>233</x>
           <y>270</y>
           <width>75</width>
           <height>21</height>
@@ -259,7 +259,7 @@
           <x>20</x>
           <y>41</y>
           <width>201</width>
-          <height>471</height>
+          <height>511</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -363,10 +363,10 @@
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>360</x>
-          <y>80</y>
-          <width>201</width>
-          <height>431</height>
+          <x>320</x>
+          <y>100</y>
+          <width>211</width>
+          <height>451</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -429,9 +429,9 @@ color: rgb(0, 0, 127);</string>
       <widget class="QGroupBox" name="groupBox_7">
        <property name="geometry">
         <rect>
-         <x>610</x>
-         <y>390</y>
-         <width>241</width>
+         <x>590</x>
+         <y>440</y>
+         <width>201</width>
          <height>131</height>
         </rect>
        </property>
@@ -492,7 +492,7 @@ color: rgb(0, 0, 127);</string>
        <property name="geometry">
         <rect>
          <x>330</x>
-         <y>570</y>
+         <y>580</y>
          <width>101</width>
          <height>31</height>
         </rect>
@@ -508,7 +508,7 @@ color: rgb(0, 0, 127);</string>
        <property name="geometry">
         <rect>
          <x>470</x>
-         <y>570</y>
+         <y>580</y>
          <width>101</width>
          <height>31</height>
         </rect>
@@ -523,148 +523,24 @@ color: rgb(0, 0, 127);</string>
       <widget class="QGroupBox" name="groupBox_2">
        <property name="geometry">
         <rect>
-         <x>610</x>
+         <x>590</x>
          <y>150</y>
-         <width>241</width>
-         <height>241</height>
+         <width>301</width>
+         <height>291</height>
         </rect>
        </property>
        <property name="title">
         <string>筛查条件</string>
        </property>
-       <widget class="QFrame" name="frame_2">
-        <property name="geometry">
-         <rect>
-          <x>11</x>
-          <y>85</y>
-          <width>221</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>45</height>
-         </size>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="checkBox_timeCont">
-           <property name="text">
-            <string>时间连续性</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QCheckBox" name="checkBox_dataCont">
-           <property name="text">
-            <string>数据连续性</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QFrame" name="frame_5">
-        <property name="geometry">
-         <rect>
-          <x>11</x>
-          <y>131</y>
-          <width>221</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>45</height>
-         </size>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_4">
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="checkBox_consist">
-           <property name="text">
-            <string>一致性检验</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QFrame" name="frame_6">
-        <property name="geometry">
-         <rect>
-          <x>11</x>
-          <y>179</y>
-          <width>221</width>
-          <height>45</height>
-         </rect>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>45</height>
-         </size>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_5">
-         <item row="0" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_8">
-           <item>
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>处理方式:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboBox_processType">
-             <item>
-              <property name="text">
-               <string>标注</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>插值</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
        <widget class="QGroupBox" name="groupBox_rangeFilter">
         <property name="enabled">
          <bool>true</bool>
         </property>
         <property name="geometry">
          <rect>
-          <x>11</x>
-          <y>21</y>
-          <width>221</width>
+          <x>0</x>
+          <y>20</y>
+          <width>301</width>
           <height>61</height>
          </rect>
         </property>
@@ -681,85 +557,410 @@ color: rgb(0, 0, 127);</string>
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>30</y>
-           <width>106</width>
-           <height>26</height>
+           <y>20</y>
+           <width>281</width>
+           <height>28</height>
           </rect>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <layout class="QHBoxLayout" name="horizontalLayout_19">
           <property name="spacing">
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="label_6">
-            <property name="font">
-             <font>
-              <pointsize>11</pointsize>
-             </font>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="spacing">
+             <number>0</number>
             </property>
-            <property name="text">
-             <string>Max:</string>
-            </property>
-           </widget>
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Max:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_max">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <double>9999.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>9999.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_max">
-            <property name="minimumSize">
-             <size>
-              <width>71</width>
-              <height>24</height>
-             </size>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <property name="spacing">
+             <number>0</number>
             </property>
-            <property name="maximum">
-             <double>9999.000000000000000</double>
+            <item>
+             <widget class="QLabel" name="label_7">
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Min:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_min">
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <double>9999.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <property name="spacing">
+             <number>0</number>
             </property>
-            <property name="value">
-             <double>9999.000000000000000</double>
-            </property>
-           </widget>
+            <item>
+             <widget class="QLabel" name="label_8">
+              <property name="text">
+               <string>类型：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_rangeFilterCheckType">
+              <item>
+               <property name="text">
+                <string>标记</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>插值</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_timeCont">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>80</y>
+          <width>301</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>时间连续性</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
         <widget class="QWidget" name="">
          <property name="geometry">
           <rect>
-           <x>110</x>
-           <y>30</y>
-           <width>104</width>
-           <height>26</height>
+           <x>10</x>
+           <y>20</y>
+           <width>281</width>
+           <height>28</height>
           </rect>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <layout class="QHBoxLayout" name="horizontalLayout_18">
           <property name="spacing">
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="label_7">
-            <property name="font">
-             <font>
-              <pointsize>11</pointsize>
-             </font>
+           <layout class="QHBoxLayout" name="horizontalLayout_17">
+            <property name="spacing">
+             <number>0</number>
             </property>
-            <property name="text">
-             <string>Min:</string>
-            </property>
-           </widget>
+            <item>
+             <widget class="QLabel" name="label_44">
+              <property name="text">
+               <string>time_step:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_timeContTimeStep"/>
+            </item>
+           </layout>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_min">
-            <property name="minimumSize">
-             <size>
-              <width>71</width>
-              <height>24</height>
-             </size>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <property name="spacing">
+             <number>0</number>
             </property>
-            <property name="maximum">
-             <double>9999.000000000000000</double>
+            <item>
+             <widget class="QLabel" name="label_47">
+              <property name="text">
+               <string>检查类型：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_timeContCheckType">
+              <item>
+               <property name="text">
+                <string>标记</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>插值</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_interConsis">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>220</y>
+          <width>301</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>一致性检查</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <widget class="QWidget" name="">
+         <property name="geometry">
+          <rect>
+           <x>11</x>
+           <y>21</y>
+           <width>281</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_24">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>1</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_25">
+            <item>
+             <widget class="QLabel" name="label_51">
+              <property name="text">
+               <string>计算式子：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_preFormula"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_26">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_24">
+              <item>
+               <widget class="QLabel" name="label_52">
+                <property name="text">
+                 <string>检查类型：</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_interConsisCheckType">
+                <item>
+                 <property name="text">
+                  <string>标记</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>插值</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>118</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <zorder>groupBox_rangeCont</zorder>
+        <zorder>groupBox_rangeCont</zorder>
+        <zorder>layoutWidget_4</zorder>
+        <zorder>label_51</zorder>
+        <zorder>lineEdit_preFormula</zorder>
+        <zorder>horizontalSpacer</zorder>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_rangeCont">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>140</y>
+          <width>301</width>
+          <height>81</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>数据连续性 </string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <widget class="QWidget" name="">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>281</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_25">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_20">
+            <property name="spacing">
+             <number>0</number>
             </property>
-            <property name="value">
-             <double>0.000000000000000</double>
-            </property>
-           </widget>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_21">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_48">
+                <property name="text">
+                 <string>time_step:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="doubleSpinBox_rangeContTimeStep"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_22">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_49">
+                <property name="text">
+                 <string>检查类型：</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_rangeContCheckType">
+                <item>
+                 <property name="text">
+                  <string>标记</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>插值</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_27">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_23">
+              <item>
+               <widget class="QLabel" name="label_50">
+                <property name="text">
+                 <string>gsd:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="doubleSpinBox_rangeContGsd"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>128</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -806,9 +1007,9 @@ color: rgb(0, 0, 127);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>730</x>
-         <y>520</y>
-         <width>113</width>
+         <x>790</x>
+         <y>530</y>
+         <width>91</width>
          <height>32</height>
         </rect>
        </property>
@@ -823,8 +1024,8 @@ color: rgb(0, 0, 127);</string>
        <property name="geometry">
         <rect>
          <x>60</x>
-         <y>600</y>
-         <width>731</width>
+         <y>610</y>
+         <width>801</width>
          <height>23</height>
         </rect>
        </property>
@@ -957,7 +1158,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>30</x>
           <y>40</y>
-          <width>131</width>
+          <width>132</width>
           <height>52</height>
          </rect>
         </property>
@@ -1094,7 +1295,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>30</x>
           <y>30</y>
-          <width>223</width>
+          <width>263</width>
           <height>64</height>
          </rect>
         </property>
@@ -1175,7 +1376,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>280</x>
           <y>30</y>
-          <width>223</width>
+          <width>263</width>
           <height>96</height>
          </rect>
         </property>
@@ -1271,7 +1472,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>30</x>
           <y>30</y>
-          <width>242</width>
+          <width>282</width>
           <height>130</height>
          </rect>
         </property>
@@ -1416,7 +1617,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>30</x>
           <y>30</y>
-          <width>268</width>
+          <width>308</width>
           <height>62</height>
          </rect>
         </property>
@@ -1500,7 +1701,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>310</x>
           <y>30</y>
-          <width>236</width>
+          <width>276</width>
           <height>62</height>
          </rect>
         </property>
@@ -1584,7 +1785,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>570</x>
           <y>30</y>
-          <width>254</width>
+          <width>294</width>
           <height>26</height>
          </rect>
         </property>

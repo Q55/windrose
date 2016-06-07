@@ -70,7 +70,11 @@ SOURCES += main.cpp\
     libs/weightedfit/weightedfit_initialize.cpp \
     libs/weightedfit/weightedfit_terminate.cpp \
     libs/commons/diff.cpp \
-    formuladialog.cpp
+    formuladialog.cpp \
+    scatterplot.cpp \
+    curveplot.cpp \
+    windroseplot.cpp \
+    histogramplot.cpp
 
 HEADERS  += \
     dataprocess.h \
@@ -131,7 +135,11 @@ HEADERS  += \
     libs/weightedfit/weightedfit_initialize.h \
     libs/weightedfit/weightedfit_terminate.h \
     libs/weightedfit/weightedfit.h \
-    formuladialog.h
+    formuladialog.h \
+    scatterplot.h \
+    curveplot.h \
+    windroseplot.h \
+    histogramplot.h
 
 FORMS    += \
     dialog.ui \

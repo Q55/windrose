@@ -6,6 +6,7 @@ FormulaDialog::FormulaDialog(QWidget *parent) :
     ui(new Ui::FormulaDialog)
 {
     ui->setupUi(this);
+
 }
 
 FormulaDialog::~FormulaDialog()

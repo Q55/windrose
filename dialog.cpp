@@ -15,6 +15,12 @@ void Dialog::initComboboxMap()
     dbIndexNameMap[1] = "112";
     dbIndexNameMap[2] = "118";
 
+    check_type_anti_map.insert(1.0, 0);
+    check_type_anti_map.insert(2.0, 1);
+
+    consist_check_anti_map.insert(1.0, 0);
+    consist_check_anti_map.insert(2.0, 1);
+    consist_check_anti_map.insert(0.5, 2);
 }
 
 Dialog::Dialog(QWidget *parent) :
@@ -26,7 +32,7 @@ Dialog::Dialog(QWidget *parent) :
 
     initComboboxMap();
 
-    curSelectedListSet.clear();
+    curSelectedListMap.clear();
 
     /*********************************
      * initial Table list
@@ -54,14 +60,17 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->comboBox_database, SIGNAL( currentIndexChanged(int) ), this, SLOT( setDataTable(int) ) );
     connect(ui->comboBox_dababaseT, SIGNAL( currentIndexChanged(QString) ), this, SLOT( setDataList(QString) ) );
 
-    connect(ui->dbTableList, SIGNAL( itemDoubleClicked(QListWidgetItem*) ), this, SLOT( addItemToSelListWidget(QListWidgetItem*) ) );
 
     connect(ui->pushButton_add, SIGNAL(clicked()), this, SLOT( addSelectedColList() ) );
+    connect(ui->dbTableList, SIGNAL( itemDoubleClicked(QListWidgetItem*) ), this, SLOT( addSelectedColList(QListWidgetItem*) ) );
     connect(ui->pushButton_add, SIGNAL(clicked()), this, SLOT( updateSpinBoxSelCol() ) );
+    connect(ui->dbTableList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(updateSpinBoxSelCol(QListWidgetItem*)) );
 
     connect(ui->pushButton_del, SIGNAL(clicked()), this, SLOT( delSelectedColList() ) );
     connect(ui->pushButton_del, SIGNAL(clicked()), this, SLOT( updateSpinBoxSelCol() ) );
     connect(ui->selectedDataList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT( showItemCurConfigInfo(QListWidgetItem*) ) );
+
+    //connect(ui->selectedDataList, SIGNAL(itemDoubleClicked(QListWidgetItem*))
 
     /**************************************************************
      * set analyse parameter corresponds to selected column data.
@@ -76,7 +85,7 @@ Dialog::Dialog(QWidget *parent) :
     connect(&dpclass, SIGNAL( preProcessRate(int) ), this, SLOT( setProgressTips(int) ) );
 
     //========================================================
-    connect(&dpclass, SIGNAL( preProcessEnd(int) ), this, SLOT( setPostProcessRawCol() ) );
+    connect(&dpclass, SIGNAL( preProcessEnd() ), this, SLOT( setPostProcessRawCol() ) );
     connect(ui->pushButton_inputFormula, SIGNAL(clicked()), this, SLOT( inputFormulaDialog() ) );
 }
 
@@ -153,31 +162,42 @@ void Dialog::setDataList(QString tablename)
 
 void Dialog::addSelectedColList()
 {
-    qDebug() << "enter the function" << endl;
     QList<QListWidgetItem*> addItems = ui->dbTableList->selectedItems();
     QList<QListWidgetItem*>::iterator it;
-    QStringList selDataList;
+    QStringList selDataItems;
 
     for(it = addItems.begin(); it != addItems.end(); ++it)
     {
         QString dbName = dbIndexNameMap[ui->comboBox_database->currentIndex()];
         QString tableName = ui->comboBox_dababaseT->currentText();
+
+        AnalyseParas cur_analyse_paras;
+        cur_analyse_paras.db_name = dbName;
+        cur_analyse_paras.tb_name = tableName;
+        cur_analyse_paras.col_name = (*it)->text();
+
         QString selColName = dbName + "." + tableName + "." + (*it)->text();
-        if (curSelectedListSet.find(selColName) == curSelectedListSet.end())
-        {
-            selDataList << selColName;
+
+        if (curSelectedListMap.find(selColName) == curSelectedListMap.end())
+        {            
             //ui->selectedDataList->addItem(*it);
-            curSelectedListSet.insert(selColName);
+            curSelectedListMap.insert(selColName, 0);
         }
+        else
+        {
+            curSelectedListMap[selColName]++;
+            selColName += QString::number(curSelectedListMap[selColName]);
+        }
+        map_col_list_analyse_paras.insert(selColName, cur_analyse_paras);
+        selDataItems << selColName;
     }
-    ui->selectedDataList->addItems(selDataList);
+    ui->selectedDataList->addItems(selDataItems);
     repaint();
 }
 
-void Dialog::addItemToSelListWidget(QListWidgetItem *item)
+void Dialog::addSelectedColList(QListWidgetItem *item)
 {
-    QString string = item->text();
-    ui->selectedDataList->addItem(string);
+    addSelectedColList();
 }
 
 void Dialog::delSelectedColList()
@@ -189,10 +209,11 @@ void Dialog::delSelectedColList()
 
     for (it = delItems.begin(); it != delItems.end(); ++it) {
         QString delColName = (*it)->text();
-        curSelectedListSet.remove(delColName);
+        curSelectedListMap.remove(delColName);
 
         //qDebug() << ui->selectedDataList->currentRow();
         ui->selectedDataList->takeItem(ui->selectedDataList->currentRow());
+        map_col_list_analyse_paras.remove(delColName);
         //ui->selectedDataList->removeItemWidget(*it);
     }
     repaint();
@@ -200,24 +221,28 @@ void Dialog::delSelectedColList()
 
 void Dialog::updateSpinBoxSelCol()
 {
-    ui->spinBox_selCol->setValue(curSelectedListSet.size());
+    ui->spinBox_selCol->setValue(map_col_list_analyse_paras.size());
     //repaint();
+}
+
+void Dialog::updateSpinBoxSelCol(QListWidgetItem*) {
+    updateSpinBoxSelCol();
 }
 
 void Dialog::saveConfigtoMap()
 {
-    AnalyseParas cur_analyse_paras;
-
     QListWidgetItem * cur_selected_col = ui->selectedDataList->currentItem();
     if (cur_selected_col == NULL) {
         QErrorMessage *emptyListErr = new QErrorMessage(this);
         emptyListErr->showMessage("you must select a datalist or some datalists to configuration.");
         return;
     }
+
+//    AnalyseParas cur_analyse_paras;
     QString cur_selected_col_text = cur_selected_col->text();
-    QString cur_db_name = cur_selected_col_text.section('.', 0, 0);
-    QString cur_table_name = cur_selected_col_text.section('.', 1, 1);
-    QString cur_col_name = cur_selected_col_text.section('.', 2, 2);
+//    QString cur_db_name = cur_selected_col_text.section('.', 0, 0);
+//    QString cur_table_name = cur_selected_col_text.section('.', 1, 1);
+//    QString cur_col_name = cur_selected_col_text.section('.', 2, 2);
 
     int cur_frequency = ui->spinBox_frequency->value();
     int cur_time_interval = ui->spinBox_timeInterval->value();
@@ -226,32 +251,59 @@ void Dialog::saveConfigtoMap()
     int cur_filter_type = ui->comboBox_filterType->currentIndex();
     //QString cur_filter_type = ui->comboBox_filterType->currentText();
 
-    bool cur_range_filter = ui->groupBox_rangeFilter->isEnabled();
+    bool cur_range_filter = ui->groupBox_rangeFilter->isChecked();
     double cur_max_filter_value = ui->doubleSpinBox_max->value();
     double cur_min_filter_value = ui->doubleSpinBox_min->value();
+    int cur_range_filter_check_type = ui->comboBox_rangeFilterCheckType->currentIndex();
 
-    bool cur_time_cont = ui->checkBox_timeCont->isChecked();
-    bool cur_data_cont = ui->checkBox_dataCont->isChecked();
-    bool cur_consist_check = ui->checkBox_consist->isChecked();
-    int cur_process_type = ui->comboBox_processType->currentIndex();
+    bool cur_time_cont = ui->groupBox_timeCont->isChecked();
+    double cur_time_cont_time_step = ui->doubleSpinBox_timeContTimeStep->value();
+    int cur_time_cont_check_type = ui->comboBox_timeContCheckType->currentIndex();
+
+    bool cur_data_cont = ui->groupBox_rangeCont->isChecked();
+    double cur_data_cont_gsd = ui->doubleSpinBox_rangeContGsd->value();
+    double cur_data_cont_time_step = ui->doubleSpinBox_rangeContTimeStep->value();
+    int cur_data_cont_check_type = ui->comboBox_rangeContCheckType->currentIndex();
+
+    bool cur_consist_check = ui->groupBox_interConsis->isChecked();
+    QString cur_expression = ui->lineEdit_preFormula->text();
+    int cur_consist_check_type = ui->comboBox_interConsisCheckType->currentIndex();
+    //int cur_process_type = ui->comboBox_processType->currentIndex();
+
     //QString cur_process_type = ui->comboBox_processType->currentText();
     QDateTime cur_start_time = ui->dateTimeEdit_startTime->dateTime();
     QDateTime cur_end_time = ui->dateTimeEdit_endTime->dateTime();
 
-    map_col_list_analyse_paras[cur_selected_col_text].db_name = cur_db_name;
-    map_col_list_analyse_paras[cur_selected_col_text].tb_name = cur_table_name;
-    map_col_list_analyse_paras[cur_selected_col_text].col_name = cur_col_name;
+//    map_col_list_analyse_paras[cur_selected_col_text].db_name = cur_db_name;
+//    map_col_list_analyse_paras[cur_selected_col_text].tb_name = cur_table_name;
+//    map_col_list_analyse_paras[cur_selected_col_text].col_name = cur_col_name;
     map_col_list_analyse_paras[cur_selected_col_text].frequency = cur_frequency;
     map_col_list_analyse_paras[cur_selected_col_text].time_interval = cur_time_interval;
     map_col_list_analyse_paras[cur_selected_col_text].analyse_type = cur_analyse_type;
     map_col_list_analyse_paras[cur_selected_col_text].filter_type = cur_filter_type;
+
     map_col_list_analyse_paras[cur_selected_col_text].range_filter = cur_range_filter;
     map_col_list_analyse_paras[cur_selected_col_text].max = cur_max_filter_value;
     map_col_list_analyse_paras[cur_selected_col_text].min = cur_min_filter_value;
+    double cur_range_filter_type_double = check_type[cur_range_filter_check_type];
+    map_col_list_analyse_paras[cur_selected_col_text].filter_type = cur_range_filter_type_double;
+
     map_col_list_analyse_paras[cur_selected_col_text].time_cont = cur_time_cont;
+    map_col_list_analyse_paras[cur_selected_col_text].time_cont_time_step = cur_time_cont_time_step;
+    double cur_time_cont_check_type_double = check_type[cur_time_cont_check_type];
+    map_col_list_analyse_paras[cur_selected_col_text].time_cont_check_type = cur_time_cont_check_type_double;
+
     map_col_list_analyse_paras[cur_selected_col_text].data_cont = cur_data_cont;
+    map_col_list_analyse_paras[cur_selected_col_text].data_cont_gsd = cur_data_cont_gsd;
+    map_col_list_analyse_paras[cur_selected_col_text].data_cont_time_step = cur_data_cont_time_step;
+    double cur_data_cont_check_type_double = check_type[cur_data_cont_check_type];
+    map_col_list_analyse_paras[cur_selected_col_text].data_cont_check_type = cur_data_cont_check_type_double;
+
     map_col_list_analyse_paras[cur_selected_col_text].consist_check = cur_consist_check;
-    map_col_list_analyse_paras[cur_selected_col_text].process_type = cur_process_type;
+    map_col_list_analyse_paras[cur_selected_col_text].expression = cur_expression;
+    double cur_consist_check_type_double = consist_check_type[cur_consist_check_type];
+    map_col_list_analyse_paras[cur_selected_col_text].consist_check_type = cur_consist_check_type_double;
+    //map_col_list_analyse_paras[cur_selected_col_text].process_type = cur_process_type;
     map_col_list_analyse_paras[cur_selected_col_text].start_time = cur_start_time;
     map_col_list_analyse_paras[cur_selected_col_text].end_time = cur_end_time;
 
@@ -264,48 +316,62 @@ void Dialog::showItemCurConfigInfo(QListWidgetItem * item)
     QString curSelItem = item->text();
     qDebug() << curSelItem;
     if (map_col_list_analyse_paras.find(curSelItem) == map_col_list_analyse_paras.end()) {
-        AnalyseParas prime_analyse_paras;
-        map_col_list_analyse_paras.insert(curSelItem, prime_analyse_paras);
+        qDebug() << "Development ERROR!";
+        return;
+//        AnalyseParas prime_analyse_paras;
+//        map_col_list_analyse_paras.insert(curSelItem, prime_analyse_paras);
     }
-    ui->comboBox_anaType->setCurrentIndex(map_col_list_analyse_paras[curSelItem].analyse_type);
-    ui->comboBox_filterType->setCurrentIndex(map_col_list_analyse_paras[curSelItem].filter_type);
-    ui->comboBox_processType->setCurrentIndex(map_col_list_analyse_paras[curSelItem].process_type);
+    AnalyseParas * cur_analyse_paras = &map_col_list_analyse_paras[curSelItem];
 
-    ui->spinBox_frequency->setValue(map_col_list_analyse_paras[curSelItem].frequency);
-    ui->spinBox_timeInterval->setValue(map_col_list_analyse_paras[curSelItem].time_interval);
+    ui->comboBox_anaType->setCurrentIndex(cur_analyse_paras->analyse_type);
+    ui->comboBox_filterType->setCurrentIndex(cur_analyse_paras->filter_type);
+    //ui->comboBox_processType->setCurrentIndex(cur_analyse_paras->process_type);
 
-    if (map_col_list_analyse_paras[curSelItem].range_filter) {
+    ui->spinBox_frequency->setValue(cur_analyse_paras->frequency);
+    ui->spinBox_timeInterval->setValue(cur_analyse_paras->time_interval);
+
+    if (cur_analyse_paras->range_filter) {
         ui->groupBox_rangeFilter->setChecked(true);
     } else {
         ui->groupBox_rangeFilter->setChecked(false);
     }
 
-    ui->doubleSpinBox_max->setValue(map_col_list_analyse_paras[curSelItem].max);
-    ui->doubleSpinBox_min->setValue(map_col_list_analyse_paras[curSelItem].min);
+    ui->doubleSpinBox_max->setValue(cur_analyse_paras->max);
+    ui->doubleSpinBox_min->setValue(cur_analyse_paras->min);
 
-    if (map_col_list_analyse_paras[curSelItem].time_cont)
+    if (cur_analyse_paras->time_cont)
     {
-        ui->checkBox_timeCont->setCheckState(Qt::Checked);
+        ui->groupBox_timeCont->setChecked(true);
     } else {
-        ui->checkBox_timeCont->setCheckState(Qt::Unchecked);
+        ui->groupBox_timeCont->setChecked(false);
     }
+    ui->doubleSpinBox_timeContTimeStep->setValue(cur_analyse_paras->time_cont_time_step);
+    int time_cont_check_type_index = check_type_anti_map[cur_analyse_paras->time_cont_check_type];
+    ui->comboBox_timeContCheckType->setCurrentIndex(time_cont_check_type_index);
 
-    if (map_col_list_analyse_paras[curSelItem].data_cont)
+    if (cur_analyse_paras->data_cont)
     {
-        ui->checkBox_dataCont->setCheckState(Qt::Checked);
+        ui->groupBox_rangeCont->setChecked(true);
     } else {
-        ui->checkBox_dataCont->setCheckState(Qt::Unchecked);
+        ui->groupBox_rangeCont->setChecked(false);
     }
+    ui->doubleSpinBox_rangeContGsd->setValue(cur_analyse_paras->data_cont_gsd);
+    ui->doubleSpinBox_rangeContTimeStep->setValue(cur_analyse_paras->data_cont_time_step);
+    int data_cont_check_type_index = check_type_anti_map[cur_analyse_paras->data_cont_check_type];
+    ui->comboBox_rangeContCheckType->setCurrentIndex(data_cont_check_type_index);
 
-    if (map_col_list_analyse_paras[curSelItem].consist_check)
+    if (cur_analyse_paras->consist_check)
     {
-        ui->checkBox_consist->setCheckState(Qt::Checked);
+        ui->groupBox_interConsis->setChecked(true);
     } else {
-        ui->checkBox_consist->setCheckState(Qt::Unchecked);
+        ui->groupBox_interConsis->setChecked(false);
     }
+    ui->lineEdit_preFormula->setText(cur_analyse_paras->expression);
+    int inter_consis_check_type_index = consist_check_anti_map[cur_analyse_paras->consist_check_type];
+    ui->comboBox_interConsisCheckType->setCurrentIndex(inter_consis_check_type_index);
 
-    ui->dateTimeEdit_startTime->setDateTime(map_col_list_analyse_paras[curSelItem].start_time);
-    ui->dateTimeEdit_endTime->setDateTime(map_col_list_analyse_paras[curSelItem].end_time);
+    ui->dateTimeEdit_startTime->setDateTime(cur_analyse_paras->start_time);
+    ui->dateTimeEdit_endTime->setDateTime(cur_analyse_paras->end_time);
 }
 
 void Dialog::startPreProcess()
@@ -333,7 +399,7 @@ void Dialog::startPreProcess()
     dpclass.preProccess(map_col_list_analyse_paras);
 }
 //==========================================================================
-void Dialog::setPostProcessRaw()
+void Dialog::setPostProcessRawCol()
 {
     ui->listWidget_postProcessRaw->addItems(dpclass.getNamePostProcessData());
     repaint();
