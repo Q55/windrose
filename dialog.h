@@ -26,6 +26,13 @@ public:
         FPSO112,
         FPSO118
     };
+    enum CurveType
+    {
+        CURVE,
+        SCATTER,
+        HISTOGRAM,
+        WINDROSE
+    };
 
 /*
 signals:
@@ -59,7 +66,7 @@ public slots:
     void startPreProcess();
 
     void setProgressTips(int);
-    void initProgress();
+    //void initProgress();
 
     //==========================================
 
@@ -68,6 +75,8 @@ public slots:
      *****************************************/
     void setPostProcessRawCol();
     void inputFormulaDialog();
+
+    void setPlotMode(int);
 
 private:
     Ui::Dialog *ui;
@@ -80,6 +89,7 @@ private:
     QMap<QString, AnalyseParas> map_col_list_analyse_paras;
 
     QMap<QString, int> curSelectedListMap;
+    QMap<QString, int> curSelectedListCountMap;
 
     QMap<int, QString> dbIndexNameMap;
 

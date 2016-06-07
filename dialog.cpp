@@ -1,9 +1,11 @@
 #include "dialog.h"
 #include "ui_dialog.h"
 #include "formuladialog.h"
+#include "scatterplot.h"
 
 #include <QDebug>
 #include <QErrorMessage>
+#include <QHBoxLayout>
 
 
 void Dialog::initComboboxMap()
@@ -90,6 +92,8 @@ Dialog::Dialog(QWidget *parent) :
     //========================================================
     connect(&dpclass, SIGNAL( preProcessEnd() ), this, SLOT( setPostProcessRawCol() ) );
     connect(ui->pushButton_inputFormula, SIGNAL(clicked()), this, SLOT( inputFormulaDialog() ) );
+
+    connect(ui->comboBox_curveType, SIGNAL(currentIndexChanged(int)), this, SLOT(setPlotMode(int)));
 }
 
 void Dialog::setProgressTips(int i)
@@ -100,11 +104,11 @@ void Dialog::setProgressTips(int i)
 
 }
 
-void Dialog::initProgress()
-{
-    ui->progressBar->setValue(0);
-    setProgressTips(0);
-}
+//void Dialog::initProgress()
+//{
+//    ui->progressBar->setValue(0);
+//    setProgressTips(0);
+//}
 
 void Dialog::initTableList(int index, QStringList strings)
 {
@@ -185,10 +189,12 @@ void Dialog::addSelectedColList()
         {            
             //ui->selectedDataList->addItem(*it);
             curSelectedListMap.insert(selColName, 0);
+            curSelectedListCountMap.insert(selColName, 0);
         }
         else
         {
             curSelectedListMap[selColName]++;
+            curSelectedListCountMap[selColName]++;
             selColName += QString::number(curSelectedListMap[selColName]);
         }
         map_col_list_analyse_paras.insert(selColName, cur_analyse_paras);
@@ -216,6 +222,10 @@ void Dialog::delSelectedColList()
     for (it = delItems.begin(); it != delItems.end(); ++it) {
         QString delColName = (*it)->text();
 
+        AnalyseParas * paras_temp = &map_col_list_analyse_paras[delColName];
+
+        QString del_col_name = paras_temp->db_name + "." + paras_temp->tb_name + "." + paras_temp->col_name;
+
         int pre_row = ui->selectedDataList->currentRow();
         int cur_row = pre_row;
         if (pre_row == map_col_list_analyse_paras.size()-1) {
@@ -223,14 +233,17 @@ void Dialog::delSelectedColList()
         }
 
         //curSelectedListMap.remove(delColName);
-        if (curSelectedListMap[delColName] == 0)
+        qDebug() << "the map count is:" << curSelectedListCountMap[del_col_name];
+        if (curSelectedListCountMap[del_col_name] == 0)
         {
-            curSelectedListMap.remove(delColName);
+            curSelectedListCountMap.remove(del_col_name);
+            curSelectedListMap.remove(del_col_name);
         }
         else
         {
-            curSelectedListMap[delColName]--;
+            curSelectedListCountMap[del_col_name]--;
         }
+
         //qDebug() << ui->selectedDataList->currentRow();
         ui->selectedDataList->takeItem(pre_row);
         ui->selectedDataList->setCurrentRow(cur_row);
@@ -419,7 +432,9 @@ void Dialog::startPreProcess()
 //    }
     dpclass.preProccess(map_col_list_analyse_paras);
 }
+
 //==========================================================================
+//post process
 void Dialog::setPostProcessRawCol()
 {
     ui->listWidget_postProcessRaw->addItems(dpclass.getNamePostProcessData());
@@ -430,7 +445,35 @@ void Dialog::inputFormulaDialog()
 {
     FormulaDialog *formula_input_dialog = new FormulaDialog;
     formula_input_dialog->show();
+}
 
+void Dialog::setPlotMode(int style)
+{
+    if (style == CURVE)
+    {
+
+    }
+    else if (style == SCATTER)
+    {
+         ScatterPlot *scatter_graph = new ScatterPlot();
+         QVector<double> x, y;
+         for (int i = 0; i < 100; ++i) {
+             x.append( i * 1.1 );
+             y.append( i * 2.2 );
+         }
+
+         scatter_graph->setSamples(x, y);
+         scatter_graph->setXAxisLabel("x轴");
+         scatter_graph->setYAxisLabel("y轴");
+         scatter_graph->resize(800, 600);
+//         QHBoxLayout *layout = new QHBoxLayout(scatter_graph);
+//         layout->setContentsMargins( 0, 0, 0, 0);
+//         layout->addWidget( scatter_graph );
+         scatter_graph->show();
+
+         //scatter_graph->repaint();
+    }
+    repaint();
 }
 
 Dialog::~Dialog()

@@ -6,6 +6,8 @@
 
 QT       += core gui
 QT       += sql
+###### for qwt. changed reply on enviroment ##########
+include (/usr/local/qwt-6.1.2/features/qwt.prf)
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -74,7 +76,8 @@ SOURCES += main.cpp\
     scatterplot.cpp \
     curveplot.cpp \
     windroseplot.cpp \
-    histogramplot.cpp
+    histogramplot.cpp \
+    plot.cpp
 
 HEADERS  += \
     dataprocess.h \
@@ -139,7 +142,8 @@ HEADERS  += \
     scatterplot.h \
     curveplot.h \
     windroseplot.h \
-    histogramplot.h
+    histogramplot.h \
+    plot.h
 
 FORMS    += \
     dialog.ui \

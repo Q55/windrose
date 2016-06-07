@@ -6,10 +6,11 @@
 #include <QString>
 
 class Utils
-{
+{    
 public:
     Utils();
     ~Utils();
+    static QVector<double> calcPreFormula(QVector<double> data, QString formula);
 
     static QVector<double> calcMax(QVector<double> data, int freq, int internal_time);
     static QVector<double> calcMin(QVector<double> data, int freq, int internal_time);
