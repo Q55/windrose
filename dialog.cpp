@@ -81,12 +81,12 @@ Dialog::Dialog(QWidget *parent) :
 
     connect(ui->pushButton_startDeal, SIGNAL(clicked()), this, SLOT( startPreProcess() ) );
 //    connect(ui->pushButton_startDeal, SIGNAL(clicked()), this, SLOT( initProgress() ) );
-    connect(ui->pushButton_export, SIGNAL(clicked()), &dpclass, SLOT( exportToFile() ) );
+//    connect(ui->pushButton_export, SIGNAL(clicked()), &dpclass, SLOT( exportToFile() ) );
+    connect(ui->pushButton_saveData, SIGNAL(clicked()), this, SLOT(exportDataToFile()) );
 
     connect(&dpclass, SIGNAL( preProcessRate(int) ), ui->progressBar, SLOT( setValue(int) ) );
  //   connect(&dpclass, SIGNAL( preProcessRate(int) ), this, SLOT( setProgressBar(int) ) );
     connect(&dpclass, SIGNAL( preProcessRate(int) ), this, SLOT( setProgressTips(int) ) );
-
 
 
     //========================================================
@@ -98,17 +98,32 @@ Dialog::Dialog(QWidget *parent) :
 
 void Dialog::setProgressTips(int i)
 {
+
+    if (i == 0) {
+        initProgress();
+    }
     QString progress_tips = QString::number(i, 10);
+    qDebug()<<"progress_tips = "<<progress_tips;
     progress_tips += " %";
     ui->lineEdit_tips->setText(progress_tips);
-
+    qDebug()<<"tips: "<<progress_tips;
+    repaint();
 }
 
+<<<<<<< Updated upstream
 //void Dialog::initProgress()
 //{
 //    ui->progressBar->setValue(0);
 //    setProgressTips(0);
 //}
+=======
+void Dialog::initProgress()
+{
+    ui->progressBar->setValue(0);
+    ui->progressBar->show();
+    ui->lineEdit_tips->setText("0");
+}
+>>>>>>> Stashed changes
 
 void Dialog::initTableList(int index, QStringList strings)
 {
@@ -406,6 +421,21 @@ void Dialog::showItemCurConfigInfo(QListWidgetItem * item)
 
     ui->dateTimeEdit_startTime->setDateTime(cur_analyse_paras->start_time);
     ui->dateTimeEdit_endTime->setDateTime(cur_analyse_paras->end_time);
+}
+
+void Dialog::exportDataToFile() {
+    if (dpclass.getAfterDataMapSize() <= 0) {
+        QErrorMessage * errDialog = new QErrorMessage();
+        errDialog->showMessage("Please Press 'Start Process' First!");
+        return;
+    }
+
+    QDir dir;
+    QString cur_path = dir.currentPath();
+    QString dir_name = QFileDialog::getExistingDirectory(this, tr("Open Directory"), cur_path,
+                                                          QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    //qDebug()<<dir_name;
+    dpclass.exportDataToFiles(dir_name);
 }
 
 void Dialog::startPreProcess()

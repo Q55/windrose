@@ -102,6 +102,7 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
 
     int i = 0;
     int ratio = 0;
+    emit this->preProcessRate(ratio);
     for (QMap<QString, AnalyseParas>::Iterator it = analyse_paras.begin(); it != analyse_paras.end(); it++) {
 
         QVector<double> col_raw_data =
@@ -118,13 +119,17 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         //if (it.value().time_cont)
         //    result = Utils::timeCont(result, it.value().frequency, 1, 1, it.value().process_type);
         // range cont
-        if (it.value().data_cont)
+        if (it.value().data_cont);
             //FIXME 06-07
 //            result = Utils::rangeCont(result, 28, 0.1, it.value().process_type);
         // inter consis
-        if (it.value().consist_check)
+        if (it.value().consist_check);
             //FIXME 06-07
 //            result = Utils::interConsis(result, it.value().process_type);
+//        if (it.value().consist_check) {
+//            QString expression;
+//            result = Utils::interConsis(result, expression, it.value().process_type);
+//        }
         // max
         if (it.value().analyse_type == it.value().MAXVALUE)
             result = Utils::calcMax(result, it.value().frequency, it.value().time_interval);
@@ -138,6 +143,7 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         if (it.value().filter_type == it.value().LOWERPASSFILTER) {
             QVector<double> l_data, w_data;
             Utils::qtFilters(result, it.value().frequency, l_data, w_data);
+            QString strtemp = str + ".LData";
             result = l_data;
         }
         after_process_data_map[str] = result;
@@ -152,8 +158,16 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
 }
 
 
-void DataProcess::exportToFile()
+void DataProcess::exportDataToFiles(QString path)
 {
+    qDebug()<<"Save path = "<<path;
+    QString orig_file_name = path + "/orig.data.csv";
+    QString pre_proc_file_name = path + "/pre.proc.data.csv";
+    QFile orig_file(orig_file_name);
+    orig_file.open(QFile::WriteOnly);
+    QTextStream text1(&orig_file);
+    text1<<"Test,test2,"<<endl;
+    orig_file.close();
 
 }
 

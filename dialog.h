@@ -4,6 +4,7 @@
 #include "dataprocess.h"
 #include "analyseparas.h"
 #include <QDialog>
+#include <QFileDialog>
 #include <QSet>
 #include <QListWidgetItem>
 #include <QStringList>
@@ -64,6 +65,7 @@ public slots:
     void showItemCurConfigInfo(QListWidgetItem*);
 
     void startPreProcess();
+    void exportDataToFile();
 
     void setProgressTips(int);
     //void initProgress();

@@ -28,7 +28,7 @@ public:
         this->filter_type = 0;
 
         this->range_filter = false;
-        this->max = 0.0;
+        this->max = 9999.99;
         this->min = 0.0;
         this->range_filter_check_type = 1.0;//FIXME 06-07
 

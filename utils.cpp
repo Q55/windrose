@@ -221,7 +221,7 @@ QVector<double> Utils::timeCont(QVector<double> data, int freq, double time_row,
 
 //void inter_consis(emxArray_real_T *data1, const emxArray_real_T *data2, double
 //                  type, emxArray_real_T *data)
-QVector<double> Utils::interConsis(QVector<double> data, int process_type) {
+QVector<double> Utils::interConsis(QVector<double> data, QString expression, int process_type) {
     QVector<double> ref_data, result;
     ref_data = {1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 5};
 

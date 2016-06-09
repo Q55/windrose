@@ -556,12 +556,12 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
            <y>20</y>
-           <width>281</width>
+           <width>284</width>
            <height>28</height>
           </rect>
          </property>
@@ -688,7 +688,7 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -767,13 +767,13 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>11</x>
            <y>21</y>
            <width>281</width>
-           <height>51</height>
+           <height>53</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_24">
@@ -844,12 +844,6 @@ color: rgb(0, 0, 127);</string>
           </item>
          </layout>
         </widget>
-        <zorder>groupBox_rangeCont</zorder>
-        <zorder>groupBox_rangeCont</zorder>
-        <zorder>layoutWidget_4</zorder>
-        <zorder>label_51</zorder>
-        <zorder>lineEdit_preFormula</zorder>
-        <zorder>horizontalSpacer</zorder>
        </widget>
        <widget class="QGroupBox" name="groupBox_rangeCont">
         <property name="geometry">
@@ -869,13 +863,13 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
            <y>20</y>
            <width>281</width>
-           <height>51</height>
+           <height>58</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_25">
