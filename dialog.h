@@ -49,26 +49,24 @@ public slots:
     /*****************************
      * pre-process: data select
      *****************************/
-    void setDataTable( int );
-    void setDataList( QString );
-
-    void addSelectedColList();
-    void addSelectedColList(QListWidgetItem*);
-    void delSelectedColList();
+    void setDBTableList( int );
+    void setTableColList( QString );
+    void preAddSelectedColList();
+    void preAddSelectedColList(QListWidgetItem*);
+    void preDelSelectedColList();
     void updateSpinBoxSelCol();
     void updateSpinBoxSelCol(QListWidgetItem*);
 
     /****************************************
      * pre-process: analysis configuration
      ****************************************/
-    void saveConfigtoMap();
+    void saveConfigToMap();
     void showItemCurConfigInfo(QListWidgetItem*);
-
     void startPreProcess();
     void exportDataToFile();
-
+    void clearPreCache();
     void setProgressTips(int);
-    //void initProgress();
+    void initProgress();
 
     //==========================================
 
@@ -76,7 +74,12 @@ public slots:
      * post-process:
      *****************************************/
     void setPostProcessRawCol();
-    void inputFormulaDialog();
+    void postAddSelectedColList();
+    void postAddSelectedColList(QListWidgetItem*) { postAddSelectedColList(); }
+    void postDelSelectedColList();
+    void postPopExprDlg();
+    void parsePostExpr(bool, QString, int, double, bool, QString, int, QString);
+    void showSelColData();
 
     void setPlotMode(int);
 
@@ -90,8 +93,8 @@ private:
     DataProcess dpclass;
     QMap<QString, AnalyseParas> map_col_list_analyse_paras;
 
-    QMap<QString, int> curSelectedListMap;
-    QMap<QString, int> curSelectedListCountMap;
+    QMap<QString, int> pre_selcol_count_map;
+    //QMap<QString, int> pre_sel_colrepeatlist_map;
 
     QMap<int, QString> dbIndexNameMap;
 

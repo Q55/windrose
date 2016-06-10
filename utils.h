@@ -4,6 +4,7 @@
 #include <QVector>
 #include <QStringList>
 #include <QString>
+#include "calcexpression.h"
 
 class Utils
 {    
@@ -22,19 +23,19 @@ public:
 
     //void range_check(emxArray_real_T *data, const emxArray_real_T *b_max,
     //                 const emxArray_real_T *b_min, const emxArray_real_T *check_list, double check)
-    static QVector<double> rangeCheck(QVector<double> data, double max, double min, int process_type);
+    static QVector<double> rangeCheck(QVector<double> data, double max, double min, double process_type);
 
     //void time_cont(const emxArray_real_T *data, double time_row, double time_step,
     //               double check, emxArray_real_T *data_out)
-    static QVector<double> timeCont(QVector<double> data, int freq, double time_row, double time_step, int process_type);
+    static QVector<double> timeCont(QVector<double> data, int freq, double time_row, double time_step, double process_type);
 
     //void range_cont(emxArray_real_T *data, const emxArray_real_T *gsd, double
     //                time_step, const emxArray_real_T *check_list, double check)
-    static QVector<double> rangeCont(QVector<double> data, double gsd, double time_step, int process_type);
+    static QVector<double> rangeCont(QVector<double> data, double gsd, double time_step, double process_type);
 
     //void inter_consis(emxArray_real_T *data1, const emxArray_real_T *data2, double
     //                  type, emxArray_real_T *data)
-    static QVector<double> interConsis(QVector<double> data, QString expression, int process_type);
+    static QVector<double> interConsis(QVector<double> data, QString var_name, QString expression, double process_type);
 
     //double cycle_max(const emxArray_real_T *data, double est_max, double resol,
     //                 double obs_time, double Regression_cycle)

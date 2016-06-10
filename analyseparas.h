@@ -2,6 +2,7 @@
 #define ANALYSEPARAS_H
 #include <QString>
 #include <QDate>
+#include <QDebug>
 
 class AnalyseParas
 {
@@ -42,6 +43,7 @@ public:
         this->data_cont_check_type = 1.0; //FIXME 06-07
 
         this->consist_check = false;
+        this->var_name = "a";
         this->expression = "";
         this->consist_check_type = 1.0;//FIXME 06-07
         //this->process_type = 0;
@@ -89,6 +91,7 @@ public:
     double data_cont_check_type;
 
     bool consist_check;
+    QString var_name;
     QString expression;
     double consist_check_type;
 

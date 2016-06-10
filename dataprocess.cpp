@@ -17,7 +17,6 @@ QStringList DataProcess::queryTableNameListbyDBName(QString db_name) {
     QStringList qsl;
     while(query.next()) {
         qsl << query.value(0).toString();
-//        qDebug()<< query.value(0).toString();
     }
     return qsl;
 }
@@ -32,37 +31,6 @@ QStringList DataProcess::queryColumnNameListInTable(QString db_name, QString tab
         qsl << query.value(0).toString();
 //        qDebug()<< query.value(0).toString();
     }
-
-//    QVector<double> result = {63.28465174,37.99977112,67.73463881,1000,7.027921752,79.17068791,44.60047712,10.03249046,
-//                              89.21039851,15.84685586,65.87981232,96.16947997,50.62965453,80.57868233,99.54306176,
-//                              70.26305706,54.08040631,99.69740406,90.91789511,96.07628517,80.21519287,72.28712213,
-//                              53.08459423,67.56803368,14.84815871,75.00601463};
-//    result = Utils::rangeCont(result, 28.1604, 0.1, "");
-//    // test filter function
-//    QFile file("/Users/lishiqiang/Documents/parttime/外协交流/mat_to_c/mat_to_c/filters/test_data.csv");
-//    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-//        qDebug()<<"Open File ERROR!";
-//    }
-//    QTextStream stream(&file);
-//    QStringList csvList;
-//    while (!stream.atEnd()) {
-//        csvList.push_back(stream.readLine());
-//    }
-//    file.close();
-//    QVector<double> result;
-//    qDebug()<<csvList.size();
-//    for (int i = 0; i < csvList.size(); ++i)
-//        result.push_back(csvList.at(i).toDouble());
-//    QVector<double> l_data, w_data;
-//    double m_data = Utils::qtFilters(result, 5, l_data, w_data);
-//    qDebug()<<"m_data = "<<m_data<<" lsize = "<<l_data.size()<<" wSize = "<<w_data.size();
-//    for (int i = 0; i < 10; ++i) {
-//        qDebug()<<w_data.at(i);
-//    }
-//    QVector<double> result = {1,5,6,10,11,12,13,18,19,20};
-//    Utils::timeCont(result, 1000, 1, 1, 1);
-//    QVector<double> result = {1, 2, 3, 4, 5,6,7,8,9,10};
-//    Utils::interConsis(result, 1);
 
     return qsl;
 }
@@ -87,9 +55,8 @@ QVector<double> DataProcess::getFromRawDataMap(QString list)
     return raw_data_map[list];
 }
 
-QVector<double> DataProcess::getFromAfterProcessDataMap(QString list)
-{
-    return after_process_data_map[list];
+QVector<double> DataProcess::getFromAfterProcessDataMap(QString list){
+    return after_preproc_data_map[list];
 }
 
 void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
@@ -100,6 +67,8 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         return;
     }
 
+    raw_data_map.clear();
+    after_preproc_data_map.clear();
     int i = 0;
     int ratio = 0;
     emit this->preProcessRate(ratio);
@@ -111,25 +80,19 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         QString str = it.key();
         raw_data_map[str] = col_raw_data;
         QVector<double> result = col_raw_data;
+        freq_list.push_back(it.value().frequency);
         // range check
         if (it.value().range_filter)
-            //FIXME 06-07
-//            result = Utils::rangeCheck(result, it.value().max, it.value().min, it.value().process_type);
+            result = Utils::rangeCheck(result, it.value().max, it.value().min, it.value().range_filter_check_type);
         // time cont
-        //if (it.value().time_cont)
-        //    result = Utils::timeCont(result, it.value().frequency, 1, 1, it.value().process_type);
+        if (it.value().time_cont)
+            result = Utils::timeCont(result, it.value().frequency, 1, it.value().time_cont_time_step, it.value().time_cont_check_type);
         // range cont
-        if (it.value().data_cont);
-            //FIXME 06-07
-//            result = Utils::rangeCont(result, 28, 0.1, it.value().process_type);
+        if (it.value().data_cont)
+            result = Utils::rangeCont(result, it.value().data_cont_gsd, it.value().data_cont_time_step, it.value().data_cont_check_type);
         // inter consis
-        if (it.value().consist_check);
-            //FIXME 06-07
-//            result = Utils::interConsis(result, it.value().process_type);
-//        if (it.value().consist_check) {
-//            QString expression;
-//            result = Utils::interConsis(result, expression, it.value().process_type);
-//        }
+        if (it.value().consist_check)
+            result = Utils::interConsis(result, it.value().var_name, it.value().expression, it.value().consist_check_type);
         // max
         if (it.value().analyse_type == it.value().MAXVALUE)
             result = Utils::calcMax(result, it.value().frequency, it.value().time_interval);
@@ -144,9 +107,12 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
             QVector<double> l_data, w_data;
             Utils::qtFilters(result, it.value().frequency, l_data, w_data);
             QString strtemp = str + ".LData";
-            result = l_data;
+            after_preproc_data_map[strtemp] = l_data;
+            strtemp = str + ".WData";
+            after_preproc_data_map[strtemp] = w_data;
+        } else {
+            after_preproc_data_map[str] = result;
         }
-        after_process_data_map[str] = result;
 
         i++;
         ratio = ((double)i / (double)analyse_paras.size()) * 100;
@@ -157,28 +123,160 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
     emit preProcessEnd();
 }
 
-
-void DataProcess::exportDataToFiles(QString path)
+void DataProcess::exportDataToFiles(QString path, bool is_rawdata)
 {
-    qDebug()<<"Save path = "<<path;
-    QString orig_file_name = path + "/orig.data.csv";
-    QString pre_proc_file_name = path + "/pre.proc.data.csv";
-    QFile orig_file(orig_file_name);
-    orig_file.open(QFile::WriteOnly);
-    QTextStream text1(&orig_file);
-    text1<<"Test,test2,"<<endl;
-    orig_file.close();
+    QString data_file_name;
+    QMap<QString, QVector<double> > *write_data_map;
+    if (is_rawdata) {
+        data_file_name = path + "/raw.data.csv";
+        write_data_map = &raw_data_map;
+    } else {
+        data_file_name = path + "/preproc.data.csv";
+        write_data_map = &after_preproc_data_map;
+    }
+    QFile data_file(data_file_name);
+    data_file.open(QFile::WriteOnly);
+    QTextStream text(&data_file);
+    // Write Header First
+    for (QMap<QString, QVector<double> >::Iterator it = write_data_map->begin(); it != write_data_map->end(); ++it) {
+        text<<"Time,"<<it.key()<<",";
+    }
+    text<<endl;
 
+    // Write Data
+    int line_count = 1;
+    bool write_finished = false;
+    while (!write_finished) {
+        int col = 0;
+        write_finished  = true;
+        for (QMap<QString, QVector<double>>::Iterator it = write_data_map->begin(); it != write_data_map->end(); ++it, col++) {
+            QVector<double> &data = it.value();
+            if (line_count > data.size()) {
+                text<<","<<",";
+            } else {
+                text<<(double)(1.0/(double)freq_list[col]*(double)line_count)<<","<<data[line_count-1]<<",";
+                write_finished = false;
+            }
+        }
+        text<<endl;
+        line_count++;
+    }
+    data_file.close();
 }
 
 QStringList DataProcess::getNamePostProcessData()
 {
     QStringList view_post_col_name;
-    for(auto it = after_process_data_map.begin(); it != after_process_data_map.end(); ++it)
+    for(auto it = after_preproc_data_map.begin(); it != after_preproc_data_map.end(); ++it)
     {
         view_post_col_name << it.key();
     }
     return view_post_col_name;
 }
 
+void DataProcess::addColsToPostProcDataDirectly(QStringList col_name_list) {
+    if (col_name_list.size() <= 0) return;
 
+    for (auto it = col_name_list.begin(); it != col_name_list.end(); ++it) {
+        if (after_preproc_data_map.find(*it) != after_preproc_data_map.end()) {
+            postproc_data_map.insert(*it, after_preproc_data_map[*it]);
+        }
+    }
+    //qDebug()<<"Size of postproc_data_map after add is "<<postproc_data_map.size();
+}
+
+QString DataProcess::addColToPostProcDataByExpr(bool is_scalar, QString data1, QString data2, int op, double operand) {
+    QString new_col_name;
+    QVector<double> result;
+    qDebug()<<operand;
+    if (is_scalar) {
+        if (after_preproc_data_map.find(data1) != after_preproc_data_map.end()) {
+            QVector<double> &orig_data = after_preproc_data_map[data1];
+            switch (op) {
+            case 0:
+                new_col_name = data1 + "+" + QString::number(operand);
+                for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
+                    result.push_back(*it + operand);
+                break;
+            case 1:
+                new_col_name = data1 + "-" + QString::number(operand);
+                for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
+                    result.push_back(*it - operand);
+                break;
+            case 2:
+                new_col_name = data1 + "*" + QString::number(operand);
+                for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
+                    result.push_back(*it * operand);
+                break;
+            case 3:
+                new_col_name = data1 + "/" + QString::number(operand);
+                for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
+                    result.push_back(*it / operand);
+                break;
+            case 4:
+                new_col_name = data1 + "^2";
+                for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
+                    result.push_back((*it) * (*it));
+                break;
+            case 5:
+                new_col_name = data1 + ".extract";
+                for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
+                    result.push_back(sqrt(*it));
+                break;
+            case 6:
+                new_col_name = data1 + ".log";
+                for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
+                    result.push_back(log(*it));
+                break;
+            }
+        }
+    } else {
+        if (after_preproc_data_map.find(data1) != after_preproc_data_map.end() &&
+                after_preproc_data_map.find(data2) != after_preproc_data_map.end()) {
+            QVector<double> &orig_data1 = after_preproc_data_map[data1];
+            QVector<double> &orig_data2 = after_preproc_data_map[data2];
+            auto it1 = orig_data1.begin();
+            auto it2 = orig_data2.begin();
+            switch (op) {
+            case 0:
+                new_col_name = data1 + "+" + data2;
+                for (; it1 != orig_data1.end() && it2 != orig_data2.end(); ++it1, ++it2)
+                    result.push_back(*it1 + *it2);
+                break;
+            case 1:
+                new_col_name = data1 + "-" + data2;
+                for (; it1 != orig_data1.end() && it2 != orig_data2.end(); ++it1, ++it2)
+                    result.push_back(*it1 - *it2);
+                break;
+            case 2:
+                new_col_name = data1 + "*" + data2;
+                for (; it1 != orig_data1.end() && it2 != orig_data2.end(); ++it1, ++it2)
+                    result.push_back(*it1 * *it2);
+                break;
+            case 3:
+                new_col_name = data1 + "/" + data2;
+                for (; it1 != orig_data1.end() && it2 != orig_data2.end(); ++it1, ++it2) {
+                    double val2 = *it2;
+                    if (val2 == 0.0) val2 = 1;
+                    result.push_back(*it1 / val2);
+                }
+                break;
+            }
+        }
+    }
+
+    if (new_col_name != "") {
+        postproc_data_map.insert(new_col_name, result);
+    }
+    return new_col_name;
+}
+
+void DataProcess::delColsFromPostProcDataByName(QStringList col_name_list) {
+    if (col_name_list.size() <= 0) return;
+
+    for (auto it = col_name_list.begin(); it != col_name_list.end(); ++it) {
+        if (postproc_data_map.find(*it) != postproc_data_map.end())
+            postproc_data_map.remove(*it);
+    }
+    //qDebug()<<"Size of postproc_data_map after del is "<<postproc_data_map.size();
+}

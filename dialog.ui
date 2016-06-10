@@ -14,7 +14,7 @@
    <string>统计分析</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
+   <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="font">
       <font>
@@ -38,7 +38,7 @@
        <property name="geometry">
         <rect>
          <x>590</x>
-         <y>10</y>
+         <y>0</y>
          <width>301</width>
          <height>141</height>
         </rect>
@@ -213,15 +213,15 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
+         <y>0</y>
          <width>551</width>
-         <height>561</height>
+         <height>581</height>
         </rect>
        </property>
        <property name="title">
         <string>数据选择</string>
        </property>
-       <widget class="QPushButton" name="pushButton_del">
+       <widget class="QPushButton" name="pushButton_pre_del_cols">
         <property name="geometry">
          <rect>
           <x>233</x>
@@ -237,7 +237,7 @@
          <string>&lt;&lt;</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_add">
+       <widget class="QPushButton" name="pushButton_pre_add_cols">
         <property name="geometry">
          <rect>
           <x>233</x>
@@ -259,7 +259,7 @@
           <x>20</x>
           <y>41</y>
           <width>201</width>
-          <height>511</height>
+          <height>521</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -273,7 +273,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="comboBox_database">
+            <widget class="QComboBox" name="comboBox_db_list">
              <property name="minimumSize">
               <size>
                <width>120</width>
@@ -315,7 +315,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="comboBox_dababaseT">
+            <widget class="QComboBox" name="comboBox_tb_list">
              <property name="minimumSize">
               <size>
                <width>120</width>
@@ -349,7 +349,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="dbTableList">
+          <widget class="QListWidget" name="pre_table_cols_list">
            <property name="alternatingRowColors">
             <bool>false</bool>
            </property>
@@ -366,7 +366,7 @@
           <x>320</x>
           <y>100</y>
           <width>211</width>
-          <height>451</height>
+          <height>461</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -417,7 +417,7 @@ color: rgb(0, 0, 127);</string>
           </layout>
          </item>
          <item>
-          <widget class="QListWidget" name="selectedDataList">
+          <widget class="QListWidget" name="pre_selected_col_list">
            <property name="selectionMode">
             <enum>QAbstractItemView::ExtendedSelection</enum>
            </property>
@@ -428,12 +428,25 @@ color: rgb(0, 0, 127);</string>
          </item>
         </layout>
        </widget>
+       <widget class="QPushButton" name="pushButton_clear_pre">
+        <property name="geometry">
+         <rect>
+          <x>420</x>
+          <y>40</y>
+          <width>113</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>清除缓存</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QGroupBox" name="groupBox_7">
        <property name="geometry">
         <rect>
          <x>590</x>
-         <y>440</y>
+         <y>450</y>
          <width>201</width>
          <height>131</height>
         </rect>
@@ -495,7 +508,7 @@ color: rgb(0, 0, 127);</string>
        <property name="geometry">
         <rect>
          <x>330</x>
-         <y>580</y>
+         <y>587</y>
          <width>101</width>
          <height>31</height>
         </rect>
@@ -511,7 +524,7 @@ color: rgb(0, 0, 127);</string>
        <property name="geometry">
         <rect>
          <x>470</x>
-         <y>580</y>
+         <y>587</y>
          <width>101</width>
          <height>31</height>
         </rect>
@@ -527,9 +540,9 @@ color: rgb(0, 0, 127);</string>
        <property name="geometry">
         <rect>
          <x>590</x>
-         <y>150</y>
+         <y>140</y>
          <width>301</width>
-         <height>291</height>
+         <height>311</height>
         </rect>
        </property>
        <property name="title">
@@ -755,7 +768,7 @@ color: rgb(0, 0, 127);</string>
           <x>0</x>
           <y>220</y>
           <width>301</width>
-          <height>71</height>
+          <height>81</height>
          </rect>
         </property>
         <property name="title">
@@ -772,8 +785,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>11</x>
            <y>21</y>
-           <width>281</width>
-           <height>53</height>
+           <width>276</width>
+           <height>63</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_24">
@@ -805,6 +818,16 @@ color: rgb(0, 0, 127);</string>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_24">
               <item>
+               <widget class="QLabel" name="label_53">
+                <property name="text">
+                 <string>变量名：</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_preVarName"/>
+              </item>
+              <item>
                <widget class="QLabel" name="label_52">
                 <property name="text">
                  <string>检查类型：</string>
@@ -815,30 +838,22 @@ color: rgb(0, 0, 127);</string>
                <widget class="QComboBox" name="comboBox_interConsisCheckType">
                 <item>
                  <property name="text">
-                  <string>标记</string>
+                  <string>大于</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>插值</string>
+                  <string>小于</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>等于</string>
                  </property>
                 </item>
                </widget>
               </item>
              </layout>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>118</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </item>
@@ -1040,19 +1055,19 @@ color: rgb(0, 0, 127);</string>
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>531</width>
+         <width>441</width>
          <height>631</height>
         </rect>
        </property>
        <property name="title">
         <string>数据选择</string>
        </property>
-       <widget class="QListWidget" name="listWidget_postProcessRaw">
+       <widget class="QListWidget" name="post_proc_raw_col_list">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>40</y>
-          <width>201</width>
+          <x>10</x>
+          <y>50</y>
+          <width>171</width>
           <height>581</height>
          </rect>
         </property>
@@ -1060,12 +1075,12 @@ color: rgb(0, 0, 127);</string>
          <enum>QAbstractItemView::ExtendedSelection</enum>
         </property>
        </widget>
-       <widget class="QListWidget" name="listWidget_postProcessAfter">
+       <widget class="QListWidget" name="post_proc_after_col_list">
         <property name="geometry">
          <rect>
-          <x>320</x>
-          <y>40</y>
-          <width>191</width>
+          <x>260</x>
+          <y>50</y>
+          <width>171</width>
           <height>581</height>
          </rect>
         </property>
@@ -1073,18 +1088,54 @@ color: rgb(0, 0, 127);</string>
          <enum>QAbstractItemView::ExtendedSelection</enum>
         </property>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QLabel" name="label_54">
         <property name="geometry">
          <rect>
-          <x>230</x>
-          <y>220</y>
-          <width>81</width>
-          <height>201</height>
+          <x>12</x>
+          <y>30</y>
+          <width>59</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>前处理结果：</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_55">
+        <property name="geometry">
+         <rect>
+          <x>275</x>
+          <y>30</y>
+          <width>59</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>后处理列：</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>245</y>
+          <width>94</width>
+          <height>151</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_26">
          <item>
-          <widget class="QPushButton" name="pushButton_import">
+          <widget class="QPushButton" name="pushButton_post_add_cols">
            <property name="focusPolicy">
             <enum>Qt::NoFocus</enum>
            </property>
@@ -1094,7 +1145,7 @@ color: rgb(0, 0, 127);</string>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_export">
+          <widget class="QPushButton" name="pushButton_post_del_cols">
            <property name="focusPolicy">
             <enum>Qt::NoFocus</enum>
            </property>
@@ -1104,7 +1155,7 @@ color: rgb(0, 0, 127);</string>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_inputFormula">
+          <widget class="QPushButton" name="pushButton_post_input_expr">
            <property name="focusPolicy">
             <enum>Qt::NoFocus</enum>
            </property>
@@ -1116,183 +1167,315 @@ color: rgb(0, 0, 127);</string>
         </layout>
        </widget>
       </widget>
-      <widget class="QGroupBox" name="groupBox_9">
-       <property name="geometry">
-        <rect>
-         <x>720</x>
-         <y>120</y>
-         <width>171</width>
-         <height>151</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>数据分析</string>
-       </property>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>11</x>
-          <y>30</y>
-          <width>151</width>
-          <height>71</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QLabel" name="label_16">
-           <property name="text">
-            <string>选择分析方案</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="comboBox_postAnaType">
-           <item>
-            <property name="text">
-             <string>谱分析</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>相关性分析</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>回归分析</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>雨流计数法</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>曲线拟合</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>船体位置计算</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>一维最大熵</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>二维最大熵</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
       <widget class="QGroupBox" name="groupBox_10">
        <property name="geometry">
         <rect>
-         <x>720</x>
-         <y>10</y>
-         <width>171</width>
-         <height>101</height>
+         <x>580</x>
+         <y>390</y>
+         <width>311</width>
+         <height>251</height>
         </rect>
        </property>
        <property name="title">
-        <string>曲线</string>
+        <string>曲线作图</string>
        </property>
-       <widget class="QWidget" name="layoutWidget_8">
+       <widget class="QPushButton" name="pushButton_start_drawgraph">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>30</y>
-          <width>151</width>
-          <height>61</height>
+          <x>113</x>
+          <y>218</y>
+          <width>91</width>
+          <height>31</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="text">
+         <string>开始作图</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>22</y>
+          <width>301</width>
+          <height>181</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_38">
          <item>
-          <widget class="QLabel" name="label_17">
-           <property name="text">
-            <string>画图</string>
+          <layout class="QVBoxLayout" name="verticalLayout_37">
+           <property name="spacing">
+            <number>0</number>
            </property>
-          </widget>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_48">
+             <item>
+              <widget class="QLabel" name="label_80">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>X轴Lable</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_xlabel"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_81">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Y轴Lable</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_ylabel"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_53">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_51">
+               <item>
+                <widget class="QLabel" name="label_83">
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>选择曲线类型</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboBox_curveType_2">
+                 <item>
+                  <property name="text">
+                   <string>曲线图</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>散点图</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>玫瑰图</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>直方图</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>13</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBox_curveType">
+          <layout class="QHBoxLayout" name="horizontalLayout_52">
            <item>
-            <property name="text">
-             <string>曲线图</string>
-            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_49">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QPushButton" name="pushButton_add_xdata">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
+                 <property name="text">
+                  <string>添加X轴数据</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_del_xdata">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
+                 <property name="text">
+                  <string>删除X轴数据</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_79">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>X轴数据:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QListWidget" name="xaxis_data_list">
+               <property name="selectionMode">
+                <enum>QAbstractItemView::ExtendedSelection</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
-            <property name="text">
-             <string>散点图</string>
-            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_36">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_50">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QPushButton" name="pushButton_add_ydata">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
+                 <property name="text">
+                  <string>添加Y轴数据</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_del_ydata">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
+                 <property name="text">
+                  <string>删除Y轴数据</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_82">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Y轴数据:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QListWidget" name="yaxis_data_list">
+               <property name="selectionMode">
+                <enum>QAbstractItemView::ExtendedSelection</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
-           <item>
-            <property name="text">
-             <string>玫瑰图</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>直方图</string>
-            </property>
-           </item>
-          </widget>
+          </layout>
          </item>
         </layout>
        </widget>
-      </widget>
-      <widget class="QPushButton" name="pushButton_startAnalyse">
-       <property name="geometry">
-        <rect>
-         <x>760</x>
-         <y>230</y>
-         <width>91</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="text">
-        <string>开始分析</string>
-       </property>
+       <zorder>layoutWidget</zorder>
+       <zorder>pushButton_start_drawgraph</zorder>
+       <zorder>layoutWidget_2</zorder>
       </widget>
       <widget class="QGroupBox" name="groupBox_12">
        <property name="geometry">
         <rect>
-         <x>560</x>
+         <x>460</x>
          <y>10</y>
-         <width>141</width>
+         <width>111</width>
          <height>631</height>
         </rect>
        </property>
        <property name="title">
-        <string>选择数据列</string>
+        <string>选择数据列值：</string>
        </property>
        <widget class="QTableWidget" name="tableWidget_2">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>40</y>
-          <width>121</width>
+          <y>50</y>
+          <width>91</width>
           <height>581</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="lineWidth">
          <number>0</number>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
         </property>
         <property name="rowCount">
          <number>1000</number>
         </property>
         <property name="columnCount">
-         <number>1</number>
+         <number>2</number>
         </property>
         <attribute name="horizontalHeaderVisible">
          <bool>false</bool>
@@ -1307,7 +1490,7 @@ color: rgb(0, 0, 127);</string>
          <bool>false</bool>
         </attribute>
         <attribute name="verticalHeaderDefaultSectionSize">
-         <number>25</number>
+         <number>15</number>
         </attribute>
         <attribute name="verticalHeaderHighlightSections">
          <bool>false</bool>
@@ -2312,7 +2495,687 @@ color: rgb(0, 0, 127);</string>
         <row/>
         <row/>
         <row/>
-        <column/>
+        <column>
+         <property name="text">
+          <string>#</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>val</string>
+         </property>
+        </column>
+       </widget>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>0</y>
+         <width>113</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>清除缓存</string>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_data_analysis">
+       <property name="geometry">
+        <rect>
+         <x>580</x>
+         <y>10</y>
+         <width>311</width>
+         <height>361</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>数据分析</string>
+       </property>
+       <widget class="QGroupBox" name="groupBox_spectral">
+        <property name="geometry">
+         <rect>
+          <x>6</x>
+          <y>44</y>
+          <width>301</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>谱分析</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>21</x>
+           <y>20</y>
+           <width>193</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_29">
+          <item>
+           <widget class="QLabel" name="label_56">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>频率</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_spectral_freq"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_57">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Hz</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>13</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_cyclemax">
+        <property name="geometry">
+         <rect>
+          <x>6</x>
+          <y>80</y>
+          <width>301</width>
+          <height>65</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>回归分析</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <widget class="QLabel" name="label_62">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>90</y>
+           <width>58</width>
+           <height>14</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>最大值估值</string>
+         </property>
+        </widget>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>20</y>
+           <width>271</width>
+           <height>39</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_30">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_58">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>最大值估值</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_cyclemax_estmax"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_27">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_59">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>估计精度</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_cyclemax_resol"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_28">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_60">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>观测周期</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_cyclemax_obstime"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_29">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_61">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>回归周期</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_cyclemax_regressioncycle"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_enpost">
+        <property name="geometry">
+         <rect>
+          <x>6</x>
+          <y>140</y>
+          <width>301</width>
+          <height>75</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>船体位置计算</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>20</y>
+           <width>271</width>
+           <height>52</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_34">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_34">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_33">
+              <item>
+               <widget class="QLabel" name="label_65">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>横摇</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_enpost_roll"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_32">
+              <item>
+               <widget class="QLabel" name="label_64">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>经度</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_enpost_lon"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_31">
+              <item>
+               <widget class="QLabel" name="label_63">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>纬度</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_enpost_lat"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_39">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_40">
+              <item>
+               <widget class="QLabel" name="label_69">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>纵摇</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_enpost_pitch"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_41">
+              <item>
+               <widget class="QLabel" name="label_70">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>艏首</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_enpost_heading"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_42">
+              <item>
+               <widget class="QLabel" name="label_71">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>海拔</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_enpost_altitude"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_maxshangone">
+        <property name="geometry">
+         <rect>
+          <x>6</x>
+          <y>211</y>
+          <width>301</width>
+          <height>83</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>一维最大殇计算</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>20</y>
+           <width>271</width>
+           <height>64</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_35">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_43">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_44">
+              <item>
+               <widget class="QLabel" name="label_72">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>limitmin</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_maxshang1_limitmin"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_45">
+              <item>
+               <widget class="QLabel" name="label_73">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>a0resol</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_maxshang1_a0resol"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_46">
+              <item>
+               <widget class="QLabel" name="label_74">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>kesimin</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_maxshang1_estkesimin"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_47">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_30">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_75">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>kesimax</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_maxshang1_kesimax"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_31">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_76">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>kesiresol</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_maxshang1_kesiresol"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_32">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_77">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>whsample</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_maxshang1_whsample"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_33">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_78">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>whmax</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_maxshang1_whmax"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_maxshangtwo">
+        <property name="geometry">
+         <rect>
+          <x>6</x>
+          <y>292</y>
+          <width>301</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>二维最大殇计算</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <widget class="QPushButton" name="pushButton_maxshang2_config">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>15</y>
+           <width>91</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>参数配置</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QPushButton" name="pushButton_start_analyse">
+        <property name="geometry">
+         <rect>
+          <x>106</x>
+          <y>333</y>
+          <width>91</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="text">
+         <string>开始分析</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>23</y>
+          <width>301</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_28">
+         <item>
+          <widget class="QGroupBox" name="groupBox_correlation">
+           <property name="title">
+            <string>相关性分析</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_weightedfit">
+           <property name="title">
+            <string>曲线拟合</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
      </widget>

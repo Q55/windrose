@@ -43,7 +43,7 @@ QVector<double> Utils::calcMax(QVector<double> data, int freq, int internal_time
         }
         result.push_back(max_val);
     }
-    qDebug()<<data.size()<<result.size();
+    //qDebug()<<data.size()<<result.size();
     return result;
 }
 
@@ -78,13 +78,16 @@ QVector<double> Utils::calcAvg(QVector<double> data, int freq, int internal_time
 
 //void range_check(emxArray_real_T *data, const emxArray_real_T *b_max,
 //                 const emxArray_real_T *b_min, const emxArray_real_T *check_list, double check)
-QVector<double> Utils::rangeCheck(QVector<double> data, double max, double min, int process_type) {
+QVector<double> Utils::rangeCheck(QVector<double> data, double max, double min, double process_type) {
     QVector<double> result;
     emxArray_real_T *deal_data, *b_max, *b_min, *check_list;
-    double check = 0.0;
-    if (process_type == 0) // 标注--0   插值--1
+    double check = 2.0;
+    if (process_type == 0.0) // 标注--0   插值--1
         check = 1.0;
+    else if (process_type == 1.0)
+        check = 2.0;
 
+    qDebug()<<"range check type = "<<process_type;
     range_check_initialize();
 
     // prepare for deal_data
@@ -126,12 +129,16 @@ QVector<double> Utils::rangeCheck(QVector<double> data, double max, double min, 
 
 //void range_cont(emxArray_real_T *data, const emxArray_real_T *gsd, double
 //                time_step, const emxArray_real_T *check_list, double check)
-QVector<double> Utils::rangeCont(QVector<double> data, double gsd, double time_step, int process_type) {
+QVector<double> Utils::rangeCont(QVector<double> data, double gsd, double time_step, double process_type) {
     QVector<double> result;
     emxArray_real_T *deal_data, *array_gsd, *check_list;
     double check = 2.0;
-    if (process_type == 0) // 标注--0   插值--1
+    if (process_type == 0.0) // 标注--0   插值--1
         check = 1.0;
+    else if (process_type == 1.0)
+        check = 2.0;
+
+    qDebug()<<"range cont type = "<<process_type;
 
     range_cont_initialize();
 
@@ -173,18 +180,19 @@ QVector<double> Utils::rangeCont(QVector<double> data, double gsd, double time_s
 
 //void time_cont(const emxArray_real_T *data, double time_row, double time_step,
 //               double check, emxArray_real_T *data_out)
-QVector<double> Utils::timeCont(QVector<double> data, int freq, double time_row, double time_step, int process_type) {
+QVector<double> Utils::timeCont(QVector<double> data, int freq, double time_row, double time_step, double process_type) {
 
+    //QVector<double> data = {1,5,6,10,11,12,13,18,19,20};
     QVector<double> result;
     QVector<double> time_col;
     for (int i = 0; i < data.size(); ++i)
         time_col.push_back(1 / freq * i);
-//    time_col.clear();
-//    time_col = {1,5,6,10,11,12,13,18,19,20};
-
+    //time_col.clear();
+    //time_col = {1,5,6,10,11,12,13,18,19,20};
+qDebug()<<"time cont type = "<<process_type;
     emxArray_real_T *deal_data, *out;
     double check = 2.0;
-    if (process_type == 0) // 标注--0   插值--1
+    if (process_type == 0.0) // 标注--0   插值--1
         check = 1.0;
 
     time_cont_initialize();
@@ -221,14 +229,27 @@ QVector<double> Utils::timeCont(QVector<double> data, int freq, double time_row,
 
 //void inter_consis(emxArray_real_T *data1, const emxArray_real_T *data2, double
 //                  type, emxArray_real_T *data)
-QVector<double> Utils::interConsis(QVector<double> data, QString expression, int process_type) {
+QVector<double> Utils::interConsis(QVector<double> data, QString var_name, QString expression, double process_type) {
     QVector<double> ref_data, result;
-    ref_data = {1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 5};
+    if(expression != "") {
+        CalcExpression ce(var_name, expression);
+        for (int i = 0; i < data.size(); ++i) {
+            double refval = ce.calcExpr(data[i]);
+            ref_data.push_back(refval);
+        }
+    } else {
+        ref_data = data;
+    }
 
+    qDebug()<<"inter consis type = "<<process_type;
     emxArray_real_T *data1, *data2, *out;
-    double type = 2.0;
-    if (process_type == 0) // 标注--0   插值--1
-        type = 1.0;
+    double type = 1.0;
+    if (process_type == 0.0)
+        type = 1.0; // greater than
+    else if (process_type == 1.0)
+        type = 2.0; // less than
+    else if (process_type == 2.0)
+        type = 3.0; // equal
 
     inter_consis_initialize();
 
@@ -253,9 +274,9 @@ QVector<double> Utils::interConsis(QVector<double> data, QString expression, int
     for (int i = 0; i < out->size[0U]; i++) {
         result.push_back(out->data[i]);
     }
-    qDebug()<<result.size();
-    for (int i = 0; i < result.size(); i++)
-        qDebug()<<result.at(i);
+//    qDebug()<<result.size();
+//    for (int i = 0; i < result.size(); i++)
+//        qDebug()<<result.at(i);
 
     emxDestroyArray_real_T(data1);
     emxDestroyArray_real_T(data2);
@@ -325,6 +346,6 @@ QVector<double> Utils::cycleMax(QVector<double> data, int freq, int internal_tim
         cycle_max_terminate();
         result.push_back(retval);
     }
-    qDebug()<<result.size();
+    //qDebug()<<result.size();
     return result;
 }
