@@ -59,6 +59,13 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->pushButton_post_input_expr, SIGNAL(clicked()), this, SLOT( postPopExprDlg() ) );
     connect(ui->post_proc_after_col_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(showSelColData())); // show 1000 data.
 
+    // post-processing: data analysis
+
+    // post draw graph
+    connect(ui->pushButton_add_xdata, SIGNAL(clicked()), this, SLOT(postAddXAxisData()));
+    connect(ui->pushButton_del_xdata, SIGNAL(clicked()), this, SLOT(postDelXAxisData()));
+    connect(ui->pushButton_add_ydata, SIGNAL(clicked()), this, SLOT(postAddYAxisData()));
+    connect(ui->pushButton_del_ydata, SIGNAL(clicked()), this, SLOT(postDelYAxisData()));
     //connect(ui->comboBox_curveType, SIGNAL(currentIndexChanged(int)), this, SLOT(setPlotMode(int)));
 }
 
@@ -366,7 +373,7 @@ void Dialog::postAddSelectedColList() {
     QList<QListWidgetItem *> set_item_selected = ui->post_proc_after_col_list->findItems(
                 selected_col_items.first(), Qt::MatchFixedString);
     ui->post_proc_after_col_list->setCurrentItem(set_item_selected.first());
-    repaint();
+    ui->post_proc_after_col_list->repaint();
 }
 
 void Dialog::postDelSelectedColList() {
@@ -386,7 +393,7 @@ void Dialog::postDelSelectedColList() {
     }
     dpclass.delColsFromPostProcDataByName(del_col_list);
     ui->post_proc_after_col_list->setCurrentRow(cur_row);
-    repaint();
+    ui->post_proc_after_col_list->repaint();
 }
 
 void Dialog::postPopExprDlg() {
@@ -444,9 +451,79 @@ void Dialog::showSelColData() {
         QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
         ui->tableWidget_2->setItem(i-1, 1, item2);
     }
-    ui->tableWidget_2->resizeColumnsToContents();
-    ui->tableWidget_2->resizeRowsToContents();
+    ui->tableWidget_2->setColumnWidth(0, 50);
+    ui->tableWidget_2->setColumnWidth(1, 50);
+    //ui->tableWidget_2->resizeColumnsToContents();
+    //ui->tableWidget_2->resizeRowsToContents();
     ui->tableWidget_2->repaint();
+}
+
+void Dialog::postAddXAxisData() {
+    QList<QListWidgetItem *> xaxis_col = ui->post_proc_after_col_list->selectedItems();
+    if (xaxis_col.size() <= 0) return;
+
+    QSet<QString> exist_cols;
+    for (int i = 0; i < ui->xaxis_data_list->count(); ++i) {
+        exist_cols.insert(ui->xaxis_data_list->item(i)->text());
+    }
+
+    QStringList selected_col_items;
+    for (auto it = xaxis_col.begin(); it != xaxis_col.end(); ++it) {
+        QString col_name = (*it)->text();
+        if (exist_cols.find(col_name) == exist_cols.end())// cannot add duplicate columns in post process.
+            selected_col_items << col_name;
+    }
+    if (selected_col_items.size() <= 0 ) {
+        //qDebug()<<"Please don't select duplicate column(s).";
+        return;
+    }
+    ui->xaxis_data_list->addItems(selected_col_items);
+    ui->xaxis_data_list->repaint();
+}
+
+void Dialog::postDelXAxisData() {
+    QList<QListWidgetItem *> xaxis_col = ui->xaxis_data_list->selectedItems();
+    if (xaxis_col.size() <= 0) return;
+
+    for (auto it = xaxis_col.begin(); it != xaxis_col.end(); ++it) {
+        int pre_row = ui->xaxis_data_list->row(*it);
+        delete ui->xaxis_data_list->takeItem(pre_row);
+    }
+    ui->xaxis_data_list->repaint();
+}
+
+void Dialog::postAddYAxisData() {
+    QList<QListWidgetItem *> yaxis_col = ui->post_proc_after_col_list->selectedItems();
+    if (yaxis_col.size() <= 0) return;
+
+    QSet<QString> exist_cols;
+    for (int i = 0; i < ui->yaxis_data_list->count(); ++i) {
+        exist_cols.insert(ui->yaxis_data_list->item(i)->text());
+    }
+
+    QStringList selected_col_items;
+    for (auto it = yaxis_col.begin(); it != yaxis_col.end(); ++it) {
+        QString col_name = (*it)->text();
+        if (exist_cols.find(col_name) == exist_cols.end())// cannot add duplicate columns in post process.
+            selected_col_items << col_name;
+    }
+    if (selected_col_items.size() <= 0 ) {
+        //qDebug()<<"Please don't select duplicate column(s).";
+        return;
+    }
+    ui->yaxis_data_list->addItems(selected_col_items);
+    ui->yaxis_data_list->repaint();
+}
+
+void Dialog::postDelYAxisData() {
+    QList<QListWidgetItem *> yaxis_col = ui->yaxis_data_list->selectedItems();
+    if (yaxis_col.size() <= 0) return;
+
+    for (auto it = yaxis_col.begin(); it != yaxis_col.end(); ++it) {
+        int pre_row = ui->yaxis_data_list->row(*it);
+        delete ui->yaxis_data_list->takeItem(pre_row);
+    }
+    ui->yaxis_data_list->repaint();
 }
 
 void Dialog::setPlotMode(int style)

@@ -81,6 +81,13 @@ public slots:
     void parsePostExpr(bool, QString, int, double, bool, QString, int, QString);
     void showSelColData();
 
+    // post data analysis
+
+    // post draw graph
+    void postAddXAxisData();
+    void postDelXAxisData();
+    void postAddYAxisData();
+    void postDelYAxisData();
     void setPlotMode(int);
 
 private:
