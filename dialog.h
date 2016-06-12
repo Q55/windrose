@@ -80,6 +80,11 @@ public slots:
     void postPopExprDlg();
     void parsePostExpr(bool, QString, int, double, bool, QString, int, QString);
     void showSelColData();
+    void showSelColDataFirst1000();
+    void showSelColDataPre1000();
+    void showSelColDataLast1000();
+    void showSelColDataPost1000();
+    void clearPostCache();
 
     // post data analysis
     void postStartDataAnalysis();
@@ -108,6 +113,7 @@ private:
     QMap<int, QString> dbIndexNameMap;
 
 
+    QString show_data_details_col_name;
     /***********************************
      * interact with AnalyseParas class
      ***********************************/

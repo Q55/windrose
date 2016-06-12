@@ -18,8 +18,8 @@ public:
 
     void plotForCurve(const QVector<double> &x, const QVector<QVector<double> > &yy);
     void plotForScatter(const QVector<double> &x, const QVector<double> &y);
-    void plotForBarChart(const QVector<double> &y);
-    void plotForPolarRose(const QVector<double> &windspeed, const QVector<double> &winddir);
+    void plotForBarChart(const QVector<double> &x, const QVector<double> &y);
+    //void plotForPolarRose(const QVector<double> &windspeed, const QVector<double> &winddir);
 
 public:
     //void setSamples( const QVector<double> &x, const QVector<double> &y );

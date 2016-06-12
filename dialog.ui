@@ -1248,11 +1248,11 @@ color: rgb(0, 0, 127);</string>
          <string>Note:</string>
         </property>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>7</x>
-          <y>20</y>
+          <x>6</x>
+          <y>24</y>
           <width>311</width>
           <height>171</height>
          </rect>
@@ -1519,7 +1519,7 @@ color: rgb(0, 0, 127);</string>
        <property name="title">
         <string>选择数据列值：</string>
        </property>
-       <widget class="QTableWidget" name="tableWidget_2">
+       <widget class="QTableWidget" name="tableWidget_col_data_details">
         <property name="geometry">
          <rect>
           <x>6</x>
@@ -2583,12 +2583,12 @@ color: rgb(0, 0, 127);</string>
          </property>
         </column>
        </widget>
-       <widget class="QPushButton" name="pushButton_pre1000_records">
+       <widget class="QPushButton" name="pushButton_first1000_records">
         <property name="geometry">
          <rect>
-          <x>15</x>
+          <x>60</x>
           <y>35</y>
-          <width>82</width>
+          <width>41</width>
           <height>16</height>
          </rect>
         </property>
@@ -2601,28 +2601,7 @@ color: rgb(0, 0, 127);</string>
          <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
-         <string>前1000条记录</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_pre1000_records_2">
-        <property name="geometry">
-         <rect>
-          <x>15</x>
-          <y>641</y>
-          <width>82</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
-        <property name="text">
-         <string>后1000条记录</string>
+         <string>Start</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_56">
@@ -2662,6 +2641,69 @@ color: rgb(0, 0, 127);</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_pre1000_records">
+        <property name="geometry">
+         <rect>
+          <x>11</x>
+          <y>35</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="text">
+         <string>Pre</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_post1000_records">
+        <property name="geometry">
+         <rect>
+          <x>11</x>
+          <y>641</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="text">
+         <string>Post</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_last1000_records">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>641</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="text">
+         <string>End</string>
         </property>
        </widget>
       </widget>
@@ -3135,8 +3177,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>299</width>
-           <height>112</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3765,7 +3807,7 @@ color: rgb(0, 0, 127);</string>
         </property>
        </widget>
       </widget>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pushButton_clear_post">
        <property name="geometry">
         <rect>
          <x>160</x>

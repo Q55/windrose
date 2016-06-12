@@ -2,6 +2,8 @@
 #include "ui_dialog.h"
 #include "postexprdialog.h"
 #include "qwtgraphplotcustom.h"
+#include "qwtpolarwindroseplot.h"
+#include "qchartwindroseplot.h"
 
 #include <QDebug>
 #include <QErrorMessage>
@@ -58,10 +60,15 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->pushButton_post_del_cols, SIGNAL(clicked()), this, SLOT(postDelSelectedColList()));
     connect(ui->pushButton_post_input_expr, SIGNAL(clicked()), this, SLOT( postPopExprDlg() ) );
     connect(ui->post_proc_after_col_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(showSelColData())); // show 1000 data.
+    connect(ui->pushButton_first1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataFirst1000()));
+    connect(ui->pushButton_pre1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataPre1000()));
+    connect(ui->pushButton_last1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataLast1000()));
+    connect(ui->pushButton_post1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataPost1000()));
 
     // post-processing: data analysis
     connect(ui->pushButton_post_start_analyse, SIGNAL(clicked()), this, SLOT(postStartDataAnalysis()));
     connect(ui->toolBox_analysis_data, SIGNAL(currentChanged(int)), this, SLOT(postPrepareDataForAnalysis(int)));
+    connect(ui->pushButton_clear_post, SIGNAL(clicked()), this, SLOT(clearPostCache()));
 
     // post draw graph
     connect(ui->pushButton_add_xdata, SIGNAL(clicked()), this, SLOT(postAddXAxisData()));
@@ -339,7 +346,7 @@ void Dialog::clearPreCache(){
         ui->pre_selected_col_list->clear();
         ui->post_proc_raw_col_list->clear();
         ui->post_proc_after_col_list->clear();
-        ui->tableWidget_2->clear();
+        ui->tableWidget_col_data_details->clear();
         ui->xaxis_data_list->clear();
         ui->yaxis_data_list->clear();
         ui->label_selcol_totalcount->setText("0");
@@ -351,8 +358,39 @@ void Dialog::clearPreCache(){
         ui->comboBox_weightfit_x->setItemText(1, "1");
         ui->comboBox_weightfit_y->setItemText(0, "0");
         ui->comboBox_weightfit_y->setItemText(1, "1");
+        show_data_details_col_name.clear();
 
         ui->spinBox_selCol->setValue(map_col_list_analyse_paras.size());
+
+        QMessageBox msgBox;
+        msgBox.setText("All Cached Data Cleared!");
+        msgBox.exec();
+    }
+}
+
+void Dialog::clearPostCache() {
+    QMessageBox msgBox;
+    msgBox.setText("Clear Post Cached Data in Memory?");
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    int ret = msgBox.exec();
+
+    if (ret == QMessageBox::Ok) {
+        dpclass.clearPostproc_data_map();
+        ui->post_proc_after_col_list->clear();
+        ui->tableWidget_col_data_details->clear();
+        ui->xaxis_data_list->clear();
+        ui->yaxis_data_list->clear();
+        ui->label_selcol_totalcount->setText("0");
+        ui->comboBox_correlation_x->setItemText(0, "0");
+        ui->comboBox_correlation_x->setItemText(1, "1");
+        ui->comboBox_correlation_y->setItemText(0, "0");
+        ui->comboBox_correlation_y->setItemText(1, "1");
+        ui->comboBox_weightfit_x->setItemText(0, "0");
+        ui->comboBox_weightfit_x->setItemText(1, "1");
+        ui->comboBox_weightfit_y->setItemText(0, "0");
+        ui->comboBox_weightfit_y->setItemText(1, "1");
+        show_data_details_col_name.clear();
 
         QMessageBox msgBox;
         msgBox.setText("All Cached Data Cleared!");
@@ -456,29 +494,158 @@ void Dialog::parsePostExpr(bool scalar_checked, QString scalar_data, int scalar_
 }
 
 void Dialog::showSelColData() {
-    QString sel_col = ui->post_proc_after_col_list->currentItem()->text();
+    show_data_details_col_name = ui->post_proc_after_col_list->currentItem()->text();;
     QVector<double> *col_data = NULL;
     auto post_data_map = dpclass.getPostProcDataMap();
-    if (post_data_map.find(sel_col) != post_data_map.end()) {
-        col_data = &post_data_map[sel_col];
+    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
+        col_data = &post_data_map[show_data_details_col_name];
     } else {
         col_data->clear();
     }
 
     for (int i = 1; i <= 1000 && i <= col_data->size(); ++i) {
         QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
-        ui->tableWidget_2->setItem(i-1, 0, item1);
+        ui->tableWidget_col_data_details->setItem(i-1, 0, item1);
 
         QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
-        ui->tableWidget_2->setItem(i-1, 1, item2);
+        ui->tableWidget_col_data_details->setItem(i-1, 1, item2);
     }
-    ui->tableWidget_2->setColumnWidth(0, 50);
-    ui->tableWidget_2->setColumnWidth(1, 50);
-    //ui->tableWidget_2->resizeColumnsToContents();
-    //ui->tableWidget_2->resizeRowsToContents();
-    ui->tableWidget_2->repaint();
+    ui->tableWidget_col_data_details->setColumnWidth(0, 50);
+    ui->tableWidget_col_data_details->setColumnWidth(1, 50);
+    //ui->tableWidget_col_data_details->resizeColumnsToContents();
+    //ui->tableWidget_col_data_details->resizeRowsToContents();
+    ui->tableWidget_col_data_details->repaint();
     ui->label_selcol_totalcount->setText(QString::number(col_data->size()));
     ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
+}
+
+void Dialog::showSelColDataFirst1000() {
+    if (show_data_details_col_name.isNull()) {
+        qDebug()<<"Please select a col first.";
+        return;
+    }
+
+    QVector<double> *col_data = NULL;
+    auto post_data_map = dpclass.getPostProcDataMap();
+    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
+        col_data = &post_data_map[show_data_details_col_name];
+    } else {
+        col_data->clear();
+    }
+
+    for (int i = 1; i <= 1000 && i <= col_data->size(); ++i) {
+        QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
+        ui->tableWidget_col_data_details->setItem(i-1, 0, item1);
+
+        QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
+        ui->tableWidget_col_data_details->setItem(i-1, 1, item2);
+    }
+    ui->tableWidget_col_data_details->setColumnWidth(0, 50);
+    ui->tableWidget_col_data_details->setColumnWidth(1, 50);
+    //ui->tableWidget_col_data_details->resizeColumnsToContents();
+    //ui->tableWidget_col_data_details->resizeRowsToContents();
+    ui->tableWidget_col_data_details->repaint();
+}
+
+void Dialog::showSelColDataLast1000() {
+    if (show_data_details_col_name.isNull()) {
+        qDebug()<<"Please select a col first.";
+        return;
+    }
+
+    QVector<double> *col_data = NULL;
+    auto post_data_map = dpclass.getPostProcDataMap();
+    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
+        col_data = &post_data_map[show_data_details_col_name];
+    } else {
+        col_data->clear();
+    }
+
+    int base = 1;
+    int size = col_data->size();
+    if (size <= 1000) base = 1;
+    else base = (size - 1000 + 1);
+    if (base <= 0) base = 1;
+    for (int i = base; (i - base + 1)  <= 1000 && i <= size; ++i) {
+        QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
+        ui->tableWidget_col_data_details->setItem(i-base, 0, item1);
+
+        QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
+        ui->tableWidget_col_data_details->setItem(i-base, 1, item2);
+    }
+    ui->tableWidget_col_data_details->setColumnWidth(0, 50);
+    ui->tableWidget_col_data_details->setColumnWidth(1, 50);
+    //ui->tableWidget_col_data_details->resizeColumnsToContents();
+    //ui->tableWidget_col_data_details->resizeRowsToContents();
+    ui->tableWidget_col_data_details->setCurrentCell(999, 0);
+    ui->tableWidget_col_data_details->repaint();
+}
+
+void Dialog::showSelColDataPre1000() {
+    if (show_data_details_col_name.isNull()) {
+        qDebug()<<"Please select a col first.";
+        return;
+    }
+
+    QVector<double> *col_data = NULL;
+    auto post_data_map = dpclass.getPostProcDataMap();
+    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
+        col_data = &post_data_map[show_data_details_col_name];
+    } else {
+        col_data->clear();
+    }
+
+    int current_index = ui->tableWidget_col_data_details->item(0, 0)->text().toInt();
+    int base = 1;
+    if (current_index <= 1000) base = 1;
+    else base = (current_index - 1000);
+    if (base <= 0) base = 1;
+    for (int i = base; (i - base) < 1000 && i <= col_data->size(); ++i) {
+        QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
+        ui->tableWidget_col_data_details->setItem(i-base, 0, item1);
+
+        QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
+        ui->tableWidget_col_data_details->setItem(i-base, 1, item2);
+    }
+    ui->tableWidget_col_data_details->setColumnWidth(0, 50);
+    ui->tableWidget_col_data_details->setColumnWidth(1, 50);
+    //ui->tableWidget_col_data_details->resizeColumnsToContents();
+    //ui->tableWidget_col_data_details->resizeRowsToContents();
+    ui->tableWidget_col_data_details->repaint();
+}
+
+void Dialog::showSelColDataPost1000() {
+    if (show_data_details_col_name.isNull()) {
+        qDebug()<<"Please select a col first.";
+        return;
+    }
+
+    QVector<double> *col_data = NULL;
+    auto post_data_map = dpclass.getPostProcDataMap();
+    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
+        col_data = &post_data_map[show_data_details_col_name];
+    } else {
+        col_data->clear();
+    }
+
+    int current_index = ui->tableWidget_col_data_details->item(999, 0)->text().toInt();
+    int base = 1;
+    int size = col_data->size();
+    if (current_index + 1000 < size) base = current_index + 1;
+    else base = (size - 1000 + 1);
+    if (base <=0) base = 1;
+    for (int i = base; (i - base) < 1000 && i <= col_data->size(); ++i) {
+        QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
+        ui->tableWidget_col_data_details->setItem(i-base, 0, item1);
+
+        QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
+        ui->tableWidget_col_data_details->setItem(i-base, 1, item2);
+    }
+    ui->tableWidget_col_data_details->setColumnWidth(0, 50);
+    ui->tableWidget_col_data_details->setColumnWidth(1, 50);
+    //ui->tableWidget_col_data_details->resizeColumnsToContents();
+    //ui->tableWidget_col_data_details->resizeRowsToContents();
+    ui->tableWidget_col_data_details->repaint();
 }
 
 void Dialog::postAddXAxisData() {
@@ -808,15 +975,43 @@ void Dialog::postStartDrawGraph() {
             }
             QVector<double> y_col = all_data_map[ui->yaxis_data_list->item(0)->text()];
 
-            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom();
-            graph->plotForPolarRose(x_col, y_col);
-            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
-            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
-            graph->show();
+            if (x_col.size() != y_col.size()) {
+                msg = "records of x & y not matched.";
+                break;
+            }
+//            QVector<double> x_col = {6,7.2,6.5,7.1,5.6,3.5,4.4,4.3,3.4,3.8,4.8,3.6,2.8,2.2,2.9,4.2,4.7,6,
+//                                     6.2,4.1,3.4,2.3,3.2,3.9,3.5,3.7,2.5,2.9,2.9,3.5,4.6,4,4.4,4.9,5.6,5.4,5.1,5.2,5.6,6.3}; // speed
+//            QVector<double> y_col = {57,44,56,57,57,81,59,56,66,9,56,62,41,65,11,44,65,64,46,46,24,73,105,
+//                                     65,83,52,67,4,73,62,23,56,46,61,50,64,53,74,66,51}; // dir
+            QChartWindRosePlot *windrose = new QChartWindRosePlot(18, x_col, y_col);
+            windrose->show();
             break;
         }
         case 3: { // histgraph
+            if (ui->xaxis_data_list->count() > 1) {
+                msg = "x data shoule be non or 1 col.";
+                break;
+            }
+            QVector<double> x_col;
+            for (int i = 0; i < ui->xaxis_data_list->count(); ++i)
+                x_col = all_data_map[ui->xaxis_data_list->item(i)->text()];
 
+            if (ui->yaxis_data_list->count() != 1) {
+                msg = "y data shoule be 1 col.";
+                break;
+            }
+            QVector<double> y_col = all_data_map[ui->yaxis_data_list->item(0)->text()];
+
+            if ((x_col.size() != 0) && (x_col.size() != y_col.size())) {
+                msg = "records of x & y not matched.";
+                break;
+            }
+
+            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+            graph->plotForBarChart(x_col, y_col);
+            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
+            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
+            graph->show();
             break;
         }
         default:
@@ -828,34 +1023,6 @@ void Dialog::postStartDrawGraph() {
         else
             ui->label_drawgraph_note->setStyleSheet("color: rgb(44,104,7);");
     }
-
-
-
-//    if (style == CURVE)
-//    {
-
-//    }
-//    else if (style == SCATTER)
-//    {
-//         ScatterPlot *scatter_graph = new ScatterPlot();
-//         QVector<double> x, y;
-//         for (int i = 0; i < 100; ++i) {
-//             x.append( i * 1.1 );
-//             y.append( i * 2.2 );
-//         }
-
-//         //scatter_graph->setSamples(x, y);
-//         scatter_graph->setXAxisLabel("x轴");
-//         scatter_graph->setYAxisLabel("y轴");
-//         scatter_graph->resize(800, 600);
-////         QHBoxLayout *layout = new QHBoxLayout(scatter_graph);
-////         layout->setContentsMargins( 0, 0, 0, 0);
-////         layout->addWidget( scatter_graph );
-//         scatter_graph->show();
-
-//         //scatter_graph->repaint();
-//    }
-//    repaint();
 }
 
 void Dialog::initComboboxMap()

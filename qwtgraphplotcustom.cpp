@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <qwt_plot_curve.h>
 #include <qwt_plot_histogram.h>
+#include <qwt_plot_barchart.h>
 
 QwtGraphPlotCustom::QwtGraphPlotCustom() {
 
@@ -31,7 +32,6 @@ void QwtGraphPlotCustom::plotForCorrelation(const QVector<double> &x, const QVec
     curve2->setSamples(samples);
     curve2->setStyle(QwtPlotCurve::Lines);
     curve2->attach(graph_plot);
-
 
     //scatter_plot->resize(800, 600);
 
@@ -129,7 +129,6 @@ void QwtGraphPlotCustom::plotForScatter(const QVector<double> &x, const QVector<
     for (int i = 0; i < x.size(); ++i)
         samples += QPointF(x[i], y[i]);
 
-    qDebug()<<"test scatter.";
     QwtPlotCurve *curve = new QwtPlotCurve("散点图");
     curve->setSamples(samples);
     curve->setStyle(QwtPlotCurve::NoCurve);
@@ -141,15 +140,24 @@ void QwtGraphPlotCustom::plotForScatter(const QVector<double> &x, const QVector<
     curve->attach(graph_plot);
 }
 
-void QwtGraphPlotCustom::plotForBarChart(const QVector<double> &y) {
-    //scatter_plot = new QwtP
+void QwtGraphPlotCustom::plotForBarChart(const QVector<double> &x, const QVector<double> &y) {
+    QPolygonF samples;
+    for (int j = 0; j < y.size(); ++j) {
+        if (x.size() == 0)
+            samples += QPointF(j + 1, y[j]);
+        else
+            samples += QPointF(x[j], y[j]);
+    }
 
+    QwtPlotBarChart *bar_chart = new QwtPlotBarChart("柱状图");
+    bar_chart->setSamples(samples);
+    bar_chart->attach(graph_plot);
 }
 
-void QwtGraphPlotCustom::plotForPolarRose(const QVector<double> &windspeed, const QVector<double> &winddir) {
+//void QwtGraphPlotCustom::plotForPolarRose(const QVector<double> &windspeed, const QVector<double> &winddir) {
 
-    qDebug()<<"size speed = "<<windspeed.size()<<", size dir = "<<winddir.size();
-}
+//    qDebug()<<"size speed = "<<windspeed.size()<<", size dir = "<<winddir.size();
+//}
 
 //void ScatterPlot::setSamples(const QVector<double> &x, const QVector<double> &y) {
 //    //qDebug() << "enter setSamples";

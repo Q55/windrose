@@ -3,11 +3,12 @@
 # Project created by QtCreator 2016-05-30T21:04:19
 #
 #-------------------------------------------------
+###### for qwt. changed reply on enviroment ##########
+include (/usr/local/qwt-6.1.2/features/qwt.prf)
 
 QT       += core gui
 QT       += sql
-###### for qwt. changed reply on enviroment ##########
-include (/usr/local/qwt-6.1.2/features/qwt.prf)
+QT       += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,6 +16,8 @@ TARGET = windrose
 TEMPLATE = app
 
 #INCLUDEPATH += /Users/lishiqiang/Developer/QtProject/windrose/libs/cycle_max
+INCLUDEPATH += /usr/local/qwtpolar-1.1.1/lib/qwtpolar.framework/Headers
+LIBS += /usr/local/qwtpolar-1.1.1/lib/qwtpolar.framework/qwtpolar
 
 SOURCES += main.cpp\
     dataprocess.cpp \
@@ -72,9 +75,6 @@ SOURCES += main.cpp\
     libs/weightedfit/weightedfit_initialize.cpp \
     libs/weightedfit/weightedfit_terminate.cpp \
     libs/commons/diff.cpp \
-    curveplot.cpp \
-    windroseplot.cpp \
-    histogramplot.cpp \
     plot.cpp \
     calcexpression.cpp \
     postexprdialog.cpp \
@@ -85,7 +85,10 @@ SOURCES += main.cpp\
     libs/1D_max_entropy1/max_shang_one.cpp \
     libs/1D_max_entropy1/max_shang_one_initialize.cpp \
     libs/1D_max_entropy1/max_shang_one_terminate.cpp \
-    qwtgraphplotcustom.cpp
+    qwtgraphplotcustom.cpp \
+    qwtpolarwindroseplot.cpp \
+    qchartwindroseplot.cpp \
+    chartview.cpp
 
 HEADERS  += \
     dataprocess.h \
@@ -146,9 +149,6 @@ HEADERS  += \
     libs/weightedfit/weightedfit_initialize.h \
     libs/weightedfit/weightedfit_terminate.h \
     libs/weightedfit/weightedfit.h \
-    curveplot.h \
-    windroseplot.h \
-    histogramplot.h \
     plot.h \
     calcexpression.h \
     postexprdialog.h \
@@ -159,12 +159,12 @@ HEADERS  += \
     libs/1D_max_entropy1/max_shang_one_terminate.h \
     libs/1D_max_entropy1/max_shang_one.h \
     libs/commons/gamma.h \
-    qwtgraphplotcustom.h
+    qwtgraphplotcustom.h \
+    qwtpolarwindroseplot.h \
+    qchartwindroseplot.h \
+    chartview.h
 
 FORMS    += \
     dialog.ui \
     postexprdialog.ui
 
-#QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
-#LIBS += -stdlib=libc++
-#QMAKE_CXXFLAGS += -stdlib=libc++
