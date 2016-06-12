@@ -69,6 +69,7 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
 
     raw_data_map.clear();
     after_preproc_data_map.clear();
+    freq_list.clear();
     int i = 0;
     int ratio = 0;
     emit this->preProcessRate(ratio);
@@ -149,7 +150,7 @@ void DataProcess::exportDataToFiles(QString path, bool is_rawdata)
     while (!write_finished) {
         int col = 0;
         write_finished  = true;
-        for (QMap<QString, QVector<double>>::Iterator it = write_data_map->begin(); it != write_data_map->end(); ++it, col++) {
+        for (QMap<QString, QVector<double> >::Iterator it = write_data_map->begin(); it != write_data_map->end(); ++it, col++) {
             QVector<double> &data = it.value();
             if (line_count > data.size()) {
                 text<<","<<",";
@@ -164,11 +165,9 @@ void DataProcess::exportDataToFiles(QString path, bool is_rawdata)
     data_file.close();
 }
 
-QStringList DataProcess::getNamePostProcessData()
-{
+QStringList DataProcess::getNamePostProcessData() {
     QStringList view_post_col_name;
-    for(auto it = after_preproc_data_map.begin(); it != after_preproc_data_map.end(); ++it)
-    {
+    for(auto it = after_preproc_data_map.begin(); it != after_preproc_data_map.end(); ++it) {
         view_post_col_name << it.key();
     }
     return view_post_col_name;

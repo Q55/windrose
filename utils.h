@@ -41,6 +41,20 @@ public:
     //                 double obs_time, double Regression_cycle)
     static QVector<double> cycleMax(QVector<double> data, int freq, int internal_time);
 
+    static double qtCorrelation(QVector<double> in_data1, QVector<double> in_data2, QVector<double> &out_a, QVector<double> &out_b);
+
+    static void weightedFit(QVector<double> in_data1, QVector<double> in_data2, double &a, double &b);
+
+    static void qtSpectral(QVector<double> in_data, double freq, QVector<double> &f, QVector<double> &yy);
+
+    static double qtCycleMax(QVector<double> in_data, double est_max, double resol, double obs_time, double regression_cycle);
+
+    static void qtEnpost(double lat, double lon, double roll, double pitch, double heading, double altitude,
+                         double &spmx, double &spmy, double &spmz, double &aftx, double &afty, double &aftz);
+
+    static void qt1DMaxEntropy(QVector<double> in_data, double limit_min, double a0_resol, double est_kesi_min, double est_kesi_max,
+                               double kesi_resol, double wh_sample, double wh_max, QVector<double> &yy1, QVector<double> &yy2);
+
 };
 
 #endif // UTILS_H

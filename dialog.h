@@ -82,13 +82,15 @@ public slots:
     void showSelColData();
 
     // post data analysis
+    void postStartDataAnalysis();
+    void postPrepareDataForAnalysis(int);
 
     // post draw graph
     void postAddXAxisData();
     void postDelXAxisData();
     void postAddYAxisData();
     void postDelYAxisData();
-    void setPlotMode(int);
+    void postStartDrawGraph();
 
 private:
     Ui::Dialog *ui;

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>922</width>
+    <width>930</width>
     <height>737</height>
    </rect>
   </property>
@@ -1172,12 +1172,12 @@ color: rgb(0, 0, 127);</string>
         </layout>
        </widget>
       </widget>
-      <widget class="QGroupBox" name="groupBox_10">
+      <widget class="QGroupBox" name="groupBox_draw_graph">
        <property name="geometry">
         <rect>
          <x>580</x>
          <y>420</y>
-         <width>311</width>
+         <width>321</width>
          <height>251</height>
         </rect>
        </property>
@@ -1193,7 +1193,7 @@ color: rgb(0, 0, 127);</string>
        <widget class="QPushButton" name="pushButton_start_drawgraph">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>120</x>
           <y>218</y>
           <width>91</width>
           <height>31</height>
@@ -1206,16 +1206,61 @@ color: rgb(0, 0, 127);</string>
          <string>开始作图</string>
         </property>
        </widget>
-       <widget class="QWidget" name="layoutWidget">
+       <widget class="QLabel" name="label_drawgraph_note">
         <property name="geometry">
          <rect>
-          <x>5</x>
-          <y>22</y>
-          <width>301</width>
-          <height>196</height>
+          <x>58</x>
+          <y>196</y>
+          <width>241</width>
+          <height>16</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_38">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>OK.</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_59">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>196</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(94, 113, 255);</string>
+        </property>
+        <property name="text">
+         <string>Note:</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>7</x>
+          <y>20</y>
+          <width>311</width>
+          <height>171</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_31">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_37">
            <property name="spacing">
@@ -1280,7 +1325,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_curveType_2">
+                <widget class="QComboBox" name="comboBox_curveType">
                  <item>
                   <property name="text">
                    <string>曲线图</string>
@@ -1323,14 +1368,17 @@ color: rgb(0, 0, 127);</string>
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_52">
+          <layout class="QHBoxLayout" name="horizontalLayout_32">
+           <property name="spacing">
+            <number>-1</number>
+           </property>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <property name="spacing">
               <number>0</number>
              </property>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_49">
+              <layout class="QHBoxLayout" name="horizontalLayout_31">
                <property name="spacing">
                 <number>0</number>
                </property>
@@ -1388,7 +1436,7 @@ color: rgb(0, 0, 127);</string>
             </layout>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_36">
+            <layout class="QVBoxLayout" name="verticalLayout_30">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -1456,6 +1504,8 @@ color: rgb(0, 0, 127);</string>
        </widget>
        <zorder>layoutWidget</zorder>
        <zorder>pushButton_start_drawgraph</zorder>
+       <zorder>label_drawgraph_note</zorder>
+       <zorder>label_59</zorder>
       </widget>
       <widget class="QGroupBox" name="groupBox_12">
        <property name="geometry">
@@ -2575,14 +2625,53 @@ color: rgb(0, 0, 127);</string>
          <string>后1000条记录</string>
         </property>
        </widget>
+       <widget class="QLabel" name="label_56">
+        <property name="geometry">
+         <rect>
+          <x>7</x>
+          <y>18</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>计数：</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_selcol_totalcount">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>18</y>
+          <width>61</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
       </widget>
-      <widget class="QGroupBox" name="groupBox_13">
+      <widget class="QGroupBox" name="groupBox_data_analysis">
        <property name="geometry">
         <rect>
          <x>580</x>
          <y>10</y>
-         <width>311</width>
-         <height>391</height>
+         <width>321</width>
+         <height>401</height>
         </rect>
        </property>
        <property name="title">
@@ -2602,7 +2691,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>10</x>
           <y>20</y>
-          <width>291</width>
+          <width>301</width>
           <height>331</height>
          </rect>
         </property>
@@ -2638,31 +2727,87 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>289</width>
+           <width>299</width>
            <height>112</height>
           </rect>
          </property>
          <attribute name="label">
           <string>相关性分析</string>
          </attribute>
-         <widget class="QLabel" name="label_57">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>10</y>
-            <width>59</width>
-            <height>16</height>
+            <width>201</width>
+            <height>64</height>
            </rect>
           </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-            <italic>true</italic>
-           </font>
-          </property>
-          <property name="text">
-           <string>不需要参数</string>
-          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_32">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_33">
+             <item>
+              <widget class="QLabel" name="label_84">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>X</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_correlation_x">
+               <item>
+                <property name="text">
+                 <string>0</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>1</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_34">
+             <item>
+              <widget class="QLabel" name="label_85">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Y</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_correlation_y">
+               <item>
+                <property name="text">
+                 <string>0</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>1</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_weightedfit">
@@ -2677,24 +2822,80 @@ color: rgb(0, 0, 127);</string>
          <attribute name="label">
           <string>曲线拟合</string>
          </attribute>
-         <widget class="QLabel" name="label_56">
+         <widget class="QWidget" name="layoutWidget_3">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>10</y>
-            <width>59</width>
-            <height>16</height>
+            <width>201</width>
+            <height>64</height>
            </rect>
           </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-            <italic>true</italic>
-           </font>
-          </property>
-          <property name="text">
-           <string>不需要参数</string>
-          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_33">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_35">
+             <item>
+              <widget class="QLabel" name="label_86">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>X</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_weightfit_x">
+               <item>
+                <property name="text">
+                 <string>0</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>1</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_36">
+             <item>
+              <widget class="QLabel" name="label_87">
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Y</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_weightfit_y">
+               <item>
+                <property name="text">
+                 <string>0</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>1</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_spectral">
@@ -2732,9 +2933,9 @@ color: rgb(0, 0, 127);</string>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_spectral_freq_2">
+            <widget class="QLineEdit" name="lineEdit_spectral_freq">
              <property name="text">
-              <string>1</string>
+              <string>0.2</string>
              </property>
             </widget>
            </item>
@@ -2819,14 +3020,14 @@ color: rgb(0, 0, 127);</string>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_29">
              <item>
-              <widget class="QLineEdit" name="lineEdit_cyclemax_resol_2">
+              <widget class="QLineEdit" name="lineEdit_cyclemax_resol">
                <property name="text">
                 <string>0.1</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_cyclemax_regressioncycle_2">
+              <widget class="QLineEdit" name="lineEdit_cyclemax_regressioncycle">
                <property name="text">
                 <string>100</string>
                </property>
@@ -2877,14 +3078,14 @@ color: rgb(0, 0, 127);</string>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_27">
              <item>
-              <widget class="QLineEdit" name="lineEdit_cyclemax_estmax_2">
+              <widget class="QLineEdit" name="lineEdit_cyclemax_estmax">
                <property name="text">
                 <string>4</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_cyclemax_obstime_2">
+              <widget class="QLineEdit" name="lineEdit_cyclemax_obstime">
                <property name="text">
                 <string>0.5</string>
                </property>
@@ -2894,14 +3095,48 @@ color: rgb(0, 0, 127);</string>
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="layoutWidget">
+          <property name="geometry">
+           <rect>
+            <x>12</x>
+            <y>80</y>
+            <width>145</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_37">
+           <item>
+            <widget class="QLabel" name="label_120">
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>回归结果:    </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_cyclemax_result">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>0.0</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_enpost">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>299</width>
+           <height>112</height>
           </rect>
          </property>
          <attribute name="label">
@@ -2911,14 +3146,14 @@ color: rgb(0, 0, 127);</string>
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>10</y>
+            <y>7</y>
             <width>271</width>
-            <height>62</height>
+            <height>52</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_43">
            <property name="spacing">
-            <number>-1</number>
+            <number>0</number>
            </property>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_59">
@@ -2937,7 +3172,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_roll_2">
+                <widget class="QLineEdit" name="lineEdit_enpost_roll">
                  <property name="text">
                   <string>0</string>
                  </property>
@@ -2960,7 +3195,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_lon_2">
+                <widget class="QLineEdit" name="lineEdit_enpost_lon">
                  <property name="text">
                   <string>39.04845</string>
                  </property>
@@ -2983,7 +3218,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_lat_2">
+                <widget class="QLineEdit" name="lineEdit_enpost_lat">
                  <property name="text">
                   <string>121.5347</string>
                  </property>
@@ -3010,7 +3245,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_pitch_2">
+                <widget class="QLineEdit" name="lineEdit_enpost_pitch">
                  <property name="text">
                   <string>0</string>
                  </property>
@@ -3033,7 +3268,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_heading_2">
+                <widget class="QLineEdit" name="lineEdit_enpost_heading">
                  <property name="text">
                   <string>0</string>
                  </property>
@@ -3056,9 +3291,188 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_altitude_2">
+                <widget class="QLineEdit" name="lineEdit_enpost_altitude">
                  <property name="text">
                   <string>45</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="layoutWidget_11">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>61</y>
+            <width>271</width>
+            <height>52</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_49">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_72">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_73">
+               <item>
+                <widget class="QLabel" name="label_114">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>spmx</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_spmx">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_74">
+               <item>
+                <widget class="QLabel" name="label_115">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>spmy</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_spmy">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_75">
+               <item>
+                <widget class="QLabel" name="label_116">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>spmz</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_spmz">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_76">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_77">
+               <item>
+                <widget class="QLabel" name="label_117">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>aftx: </string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_aftx">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_78">
+               <item>
+                <widget class="QLabel" name="label_118">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>afty:  </string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_afty">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_79">
+               <item>
+                <widget class="QLabel" name="label_119">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>aftz: </string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_aftz">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
                  </property>
                 </widget>
                </item>
@@ -3111,7 +3525,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_limitmin_2">
+                <widget class="QLineEdit" name="lineEdit_maxshang1_limitmin">
                  <property name="text">
                   <string>0.12</string>
                  </property>
@@ -3134,7 +3548,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_a0resol_2">
+                <widget class="QLineEdit" name="lineEdit_maxshang1_a0resol">
                  <property name="text">
                   <string>0.001</string>
                  </property>
@@ -3157,7 +3571,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_estkesimin_2">
+                <widget class="QLineEdit" name="lineEdit_maxshang1_estkesimin">
                  <property name="text">
                   <string>0.001</string>
                  </property>
@@ -3187,7 +3601,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_kesimax_2">
+                <widget class="QLineEdit" name="lineEdit_maxshang1_kesimax">
                  <property name="text">
                   <string>20</string>
                  </property>
@@ -3213,7 +3627,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_kesiresol_2">
+                <widget class="QLineEdit" name="lineEdit_maxshang1_kesiresol">
                  <property name="text">
                   <string>0.001</string>
                  </property>
@@ -3239,7 +3653,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_whsample_2">
+                <widget class="QLineEdit" name="lineEdit_maxshang1_whsample">
                  <property name="text">
                   <string>0.1</string>
                  </property>
@@ -3265,7 +3679,7 @@ color: rgb(0, 0, 127);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_whmax_2">
+                <widget class="QLineEdit" name="lineEdit_maxshang1_whmax">
                  <property name="text">
                   <string>4</string>
                  </property>
@@ -3295,8 +3709,8 @@ color: rgb(0, 0, 127);</string>
        <widget class="QPushButton" name="pushButton_post_start_analyse">
         <property name="geometry">
          <rect>
-          <x>100</x>
-          <y>360</y>
+          <x>120</x>
+          <y>370</y>
           <width>91</width>
           <height>31</height>
          </rect>
@@ -3308,11 +3722,53 @@ color: rgb(0, 0, 127);</string>
          <string>开始分析</string>
         </property>
        </widget>
+       <widget class="QLabel" name="label_58">
+        <property name="geometry">
+         <rect>
+          <x>12</x>
+          <y>354</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(94, 113, 255);</string>
+        </property>
+        <property name="text">
+         <string>Note:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_dataanalysis_note">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>354</y>
+          <width>241</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>OK.</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
       </widget>
       <widget class="QPushButton" name="pushButton">
        <property name="geometry">
         <rect>
-         <x>747</x>
+         <x>160</x>
          <y>0</y>
          <width>141</width>
          <height>32</height>

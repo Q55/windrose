@@ -1,7 +1,7 @@
 #include "dialog.h"
 #include "ui_dialog.h"
 #include "postexprdialog.h"
-#include "scatterplot.h"
+#include "qwtgraphplotcustom.h"
 
 #include <QDebug>
 #include <QErrorMessage>
@@ -60,13 +60,15 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->post_proc_after_col_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(showSelColData())); // show 1000 data.
 
     // post-processing: data analysis
+    connect(ui->pushButton_post_start_analyse, SIGNAL(clicked()), this, SLOT(postStartDataAnalysis()));
+    connect(ui->toolBox_analysis_data, SIGNAL(currentChanged(int)), this, SLOT(postPrepareDataForAnalysis(int)));
 
     // post draw graph
     connect(ui->pushButton_add_xdata, SIGNAL(clicked()), this, SLOT(postAddXAxisData()));
     connect(ui->pushButton_del_xdata, SIGNAL(clicked()), this, SLOT(postDelXAxisData()));
     connect(ui->pushButton_add_ydata, SIGNAL(clicked()), this, SLOT(postAddYAxisData()));
     connect(ui->pushButton_del_ydata, SIGNAL(clicked()), this, SLOT(postDelYAxisData()));
-    //connect(ui->comboBox_curveType, SIGNAL(currentIndexChanged(int)), this, SLOT(setPlotMode(int)));
+    connect(ui->pushButton_start_drawgraph, SIGNAL(clicked()), this, SLOT(postStartDrawGraph()));
 }
 
 void Dialog::setProgressTips(int i) {
@@ -314,6 +316,7 @@ void Dialog::startPreProcess()
     }
     //for test
     dpclass.preProccess(map_col_list_analyse_paras);
+
 }
 
 void Dialog::clearPreCache(){
@@ -327,6 +330,7 @@ void Dialog::clearPreCache(){
         dpclass.clearRawDataMap();
         dpclass.clearAfterPreProcDataMap();
         dpclass.clearFreqList();
+        dpclass.clearPostproc_data_map();
 
         //pre_sel_colrepeatlist_map.clear();
         pre_selcol_count_map.clear();
@@ -335,6 +339,18 @@ void Dialog::clearPreCache(){
         ui->pre_selected_col_list->clear();
         ui->post_proc_raw_col_list->clear();
         ui->post_proc_after_col_list->clear();
+        ui->tableWidget_2->clear();
+        ui->xaxis_data_list->clear();
+        ui->yaxis_data_list->clear();
+        ui->label_selcol_totalcount->setText("0");
+        ui->comboBox_correlation_x->setItemText(0, "0");
+        ui->comboBox_correlation_x->setItemText(1, "1");
+        ui->comboBox_correlation_y->setItemText(0, "0");
+        ui->comboBox_correlation_y->setItemText(1, "1");
+        ui->comboBox_weightfit_x->setItemText(0, "0");
+        ui->comboBox_weightfit_x->setItemText(1, "1");
+        ui->comboBox_weightfit_y->setItemText(0, "0");
+        ui->comboBox_weightfit_y->setItemText(1, "1");
 
         ui->spinBox_selCol->setValue(map_col_list_analyse_paras.size());
 
@@ -347,6 +363,11 @@ void Dialog::clearPreCache(){
 //==========================================================================
 //post process
 void Dialog::setPostProcessRawCol() {
+    ui->post_proc_raw_col_list->clear();
+    ui->post_proc_after_col_list->clear();
+    dpclass.clearPostproc_data_map();
+    ui->xaxis_data_list->clear();
+    ui->yaxis_data_list->clear();
     ui->post_proc_raw_col_list->addItems(dpclass.getNamePostProcessData());
     repaint();
 }
@@ -456,6 +477,8 @@ void Dialog::showSelColData() {
     //ui->tableWidget_2->resizeColumnsToContents();
     //ui->tableWidget_2->resizeRowsToContents();
     ui->tableWidget_2->repaint();
+    ui->label_selcol_totalcount->setText(QString::number(col_data->size()));
+    ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
 }
 
 void Dialog::postAddXAxisData() {
@@ -526,33 +549,313 @@ void Dialog::postDelYAxisData() {
     ui->yaxis_data_list->repaint();
 }
 
-void Dialog::setPlotMode(int style)
-{
-    if (style == CURVE)
-    {
+void Dialog::postPrepareDataForAnalysis(int index) {
+    QList<QListWidgetItem *> sel_items = ui->post_proc_after_col_list->selectedItems();
+    QVector<QString> sel_col_list;
+    for (auto it = sel_items.begin(); it != sel_items.end(); ++it)
+        sel_col_list.push_back((*it)->text());
 
+    if (index == 0) { // correlation
+        if (sel_col_list.size() != 2) {
+            ui->label_dataanalysis_note->setText("Please Sel 2 Columns for Correlation.");
+            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
+            return;
+        }
+        ui->comboBox_correlation_x->setItemText(0, sel_col_list[0]);
+        ui->comboBox_correlation_x->setItemText(1, sel_col_list[1]);
+        ui->comboBox_correlation_y->setItemText(0, sel_col_list[1]);
+        ui->comboBox_correlation_y->setItemText(1, sel_col_list[0]);
+        ui->toolBoxPage_correlation->repaint();
+    } else if (index == 1) {
+        if (sel_col_list.size() != 2) {
+            ui->label_dataanalysis_note->setText("Please Sel 2 Columns for Weightfit.");
+            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
+            return;
+        }
+        ui->comboBox_weightfit_x->setItemText(0, sel_col_list[0]);
+        ui->comboBox_weightfit_x->setItemText(1, sel_col_list[1]);
+        ui->comboBox_weightfit_y->setItemText(0, sel_col_list[1]);
+        ui->comboBox_weightfit_y->setItemText(1, sel_col_list[0]);
+        ui->toolBoxPage_weightedfit->repaint();
     }
-    else if (style == SCATTER)
-    {
-         ScatterPlot *scatter_graph = new ScatterPlot();
-         QVector<double> x, y;
-         for (int i = 0; i < 100; ++i) {
-             x.append( i * 1.1 );
-             y.append( i * 2.2 );
-         }
 
-         scatter_graph->setSamples(x, y);
-         scatter_graph->setXAxisLabel("x轴");
-         scatter_graph->setYAxisLabel("y轴");
-         scatter_graph->resize(800, 600);
-//         QHBoxLayout *layout = new QHBoxLayout(scatter_graph);
-//         layout->setContentsMargins( 0, 0, 0, 0);
-//         layout->addWidget( scatter_graph );
-         scatter_graph->show();
+    ui->label_dataanalysis_note->setText("Ok.");
+    ui->label_dataanalysis_note->setStyleSheet("color: rgb(44,104,7);");
+}
 
-         //scatter_graph->repaint();
+void Dialog::postStartDataAnalysis() {
+    if (ui->groupBox_data_analysis->isChecked()) {
+
+        QList<QListWidgetItem *> sel_items = ui->post_proc_after_col_list->selectedItems();
+        int analysis_type = ui->toolBox_analysis_data->currentIndex();
+        if (sel_items.size() <= 0 && analysis_type != 4) {
+            ui->label_dataanalysis_note->setText("Please Sel Correlation Columns.");
+            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
+            return;
+        }
+
+        // prepare for data
+        auto all_data_map = dpclass.getPostProcDataMap();
+        QVector<double> in_data1, in_data2;
+        QVector<double> out_data1, out_data2;
+        double ret_val;
+        QString msg = "Ok.";
+
+        switch (analysis_type) {
+        case 0: { // correlation
+            if (sel_items.size() != 2) {
+                msg = "Correlation Needs 2 Columns.";
+                break;
+            }
+            in_data1 = all_data_map[ui->comboBox_correlation_x->currentText()]; // x
+            in_data2 = all_data_map[ui->comboBox_correlation_y->currentText()]; // y
+            //in_data1 = {1,2,3,4,5,6,7,8,10,11,12,13,14};
+            //in_data2 = {0,2,4,6,8,10,12,14,16,18,20,22,24,26};
+            if (in_data1.size() != in_data2.size()) {
+                msg = "Size of Input Data X & Y Not Matched.";
+                break;
+            }
+            ret_val = Utils::qtCorrelation(in_data1, in_data2, out_data1, out_data2); // a, b
+
+            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
+            graph->plotForCorrelation(in_data1, in_data2);
+            graph->show();
+            break;
+        }
+        case 1: { // weightedfit
+            if (sel_items.size() != 2) {
+                msg = "Weightedfit Needs 2 Columns.";
+                break;
+            }
+            in_data1 = all_data_map[ui->comboBox_weightfit_x->currentText()]; // x
+            in_data2 = all_data_map[ui->comboBox_weightfit_y->currentText()]; // y
+            //in_data1 = {1,2,3,4,5,6,7,8,9,10,11,12,13};
+            //in_data2 = {2.68009505, 4.440152786, 6.955791581,8.264737552, 10.32401073, 12.21620137, 14.56359881,
+            //                            16.29702541, 18.01835966, 20.84322102, 22.86014104,24.31722384, 26.72096637};
+            if (in_data1.size() != in_data2.size()) {
+                msg = "Size of Input Data X & Y Not Matched.";
+                break;
+            }
+            double a, b;
+            Utils::weightedFit(in_data1, in_data2, a, b);
+            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
+            graph->plotForWeightedFit(in_data1, in_data2, a, b);
+            graph->show();
+            break;
+        }
+        case 2: { // spectral
+            if (sel_items.size() != 1) {
+                msg = "Spectral Needs 1 Column.";
+                break;
+            }
+            in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
+            Utils::qtSpectral(in_data1, ui->lineEdit_spectral_freq->text().toDouble(), out_data1, out_data2); // out1: f, out2: YY
+            if (out_data1.size() != out_data2.size()) {
+                msg = "Size of Out Data f & YY Not Matched.";
+                break;
+            }
+            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+            graph->plotForSpectral(out_data1, out_data2);
+            graph->show();
+            break;
+        }
+        case 3: { // cyclemax
+            if (sel_items.size() != 1) {
+                msg = "Cyclemax Needs 1 Column.";
+                break;
+            }
+            in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
+            double result = Utils::qtCycleMax(in_data1, ui->lineEdit_cyclemax_estmax->text().toDouble(),
+                                              ui->lineEdit_cyclemax_resol->text().toDouble(),
+                                              ui->lineEdit_cyclemax_obstime->text().toDouble(),
+                                              ui->lineEdit_cyclemax_regressioncycle->text().toDouble());
+            ui->lineEdit_cyclemax_result->setText(QString::number(result));
+            break;
+        }
+        case 4: { // enpost
+            double spmx, spmy, spmz, aftx, afty, aftz;
+            Utils::qtEnpost(ui->lineEdit_enpost_lat->text().toDouble(),
+                            ui->lineEdit_enpost_lon->text().toDouble(),
+                            ui->lineEdit_enpost_roll->text().toDouble(),
+                            ui->lineEdit_enpost_pitch->text().toDouble(),
+                            ui->lineEdit_enpost_heading->text().toDouble(),
+                            ui->lineEdit_enpost_altitude->text().toDouble(),
+                            spmx, spmy, spmz, aftx, afty, aftz);
+            ui->lineEdit_enpost_spmx->setText(QString::number(spmx));
+            ui->lineEdit_enpost_spmy->setText(QString::number(spmy));
+            ui->lineEdit_enpost_spmz->setText(QString::number(spmz));
+            ui->lineEdit_enpost_aftx->setText(QString::number(aftx));
+            ui->lineEdit_enpost_afty->setText(QString::number(afty));
+            ui->lineEdit_enpost_aftz->setText(QString::number(aftz));
+            break;
+        }
+        case 5: { // max shang 1
+            if (sel_items.size() != 1) {
+                msg = "Max Shang1 Needs 1 Column.";
+                break;
+            }
+            in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
+            Utils::qt1DMaxEntropy(in_data1, ui->lineEdit_maxshang1_limitmin->text().toDouble(),
+                                  ui->lineEdit_maxshang1_a0resol->text().toDouble(),
+                                  ui->lineEdit_maxshang1_estkesimin->text().toDouble(),
+                                  ui->lineEdit_maxshang1_kesimax->text().toDouble(),
+                                  ui->lineEdit_maxshang1_kesiresol->text().toDouble(),
+                                  ui->lineEdit_maxshang1_whsample->text().toDouble(),
+                                  ui->lineEdit_maxshang1_whmax->text().toDouble(),
+                                  out_data1, out_data2); // output: yy1, yy2
+            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+            graph->plotFor1DMaxEntropy(out_data1, out_data2);
+            graph->show();
+            break;
+        }
+        case 6: // max shang 2
+            break;
+        }
+        ui->label_dataanalysis_note->setText(msg);
+        if (msg != "Ok.")
+            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
+        else
+            ui->label_dataanalysis_note->setStyleSheet("color: rgb(44,104,7);");
     }
-    repaint();
+}
+
+void Dialog::postStartDrawGraph() {
+    if (ui->groupBox_draw_graph->isChecked()) {
+        QString msg = "Ok.";
+        auto all_data_map = dpclass.getPostProcDataMap();
+        int graph_type = ui->comboBox_curveType->currentIndex();
+        switch (graph_type) {
+        case 0: { // curve chart
+            if (ui->xaxis_data_list->count() > 1) {
+                msg = "x data shoule be non or 1 col.";
+                break;
+            }
+            QVector<double> x_col;
+            for (int i = 0; i < ui->xaxis_data_list->count(); ++i)
+                x_col = all_data_map[ui->xaxis_data_list->item(i)->text()];
+
+            if (ui->yaxis_data_list->count() < 1 || ui->yaxis_data_list->count() > 5) {
+                msg = "y data cols should between 1 ~ 5.";
+                break;
+            }
+            QVector<QVector<double> > y_cols;
+            for (int i = 0; i < ui->yaxis_data_list->count(); ++i)
+                y_cols.push_back(all_data_map[ui->yaxis_data_list->item(i)->text()]);
+
+            int records = x_col.size();
+            if (records == 0) records = y_cols[0].size();
+            bool matched = true;
+            for (auto it = y_cols.begin(); it != y_cols.end(); ++it) {
+                if (it->size() != records) {
+                    msg = "records of x & y not matched.";
+                    matched = false;
+                    break;
+                }
+            }
+
+            if (matched) {
+                QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+                graph->plotForCurve(x_col, y_cols);
+                graph->setXAxisLabel(ui->lineEdit_xlabel->text());
+                graph->setYAxisLabel(ui->lineEdit_ylabel->text());
+                graph->show();
+            }
+            break;
+        }
+        case 1: { // scatter graph
+            if (ui->xaxis_data_list->count() != 1) {
+                msg = "x data shoule be 1 col.";
+                break;
+            }
+            QVector<double> x_col = all_data_map[ui->xaxis_data_list->item(0)->text()];
+
+            if (ui->yaxis_data_list->count() != 1) {
+                msg = "y data should be 1 col.";
+                break;
+            }
+            QVector<double> y_col = all_data_map[ui->yaxis_data_list->item(0)->text()];
+
+            if (x_col.size() != y_col.size()) {
+                msg = "records of x & y not matched.";
+                break;
+            }
+
+            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+            graph->plotForScatter(x_col, y_col);
+            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
+            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
+            graph->show();
+            break;
+        }
+        case 2: { // rose plot
+            if (ui->xaxis_data_list->count() != 1) {
+                msg = "x data shoule be 1 col.";
+                break;
+            }
+            if (!(ui->xaxis_data_list->item(0)->text().contains("windspeed", Qt::CaseInsensitive))) {
+                msg = "The x col should be 'WindSpeed'";
+                break;
+            }
+            QVector<double> x_col = all_data_map[ui->xaxis_data_list->item(0)->text()];
+
+            if (ui->yaxis_data_list->count() != 1) {
+                msg = "y data shoule be 1 col.";
+                break;
+            }
+            if (!(ui->yaxis_data_list->item(0)->text().contains("winddir", Qt::CaseInsensitive))) {
+                msg = "The y col should be 'WindDir'";
+                break;
+            }
+            QVector<double> y_col = all_data_map[ui->yaxis_data_list->item(0)->text()];
+
+            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom();
+            graph->plotForPolarRose(x_col, y_col);
+            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
+            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
+            graph->show();
+            break;
+        }
+        case 3: { // histgraph
+
+            break;
+        }
+        default:
+            break;
+        }
+        ui->label_drawgraph_note->setText(msg);
+        if (msg != "Ok.")
+            ui->label_drawgraph_note->setStyleSheet("color: rgb(231,66,67);");
+        else
+            ui->label_drawgraph_note->setStyleSheet("color: rgb(44,104,7);");
+    }
+
+
+
+//    if (style == CURVE)
+//    {
+
+//    }
+//    else if (style == SCATTER)
+//    {
+//         ScatterPlot *scatter_graph = new ScatterPlot();
+//         QVector<double> x, y;
+//         for (int i = 0; i < 100; ++i) {
+//             x.append( i * 1.1 );
+//             y.append( i * 2.2 );
+//         }
+
+//         //scatter_graph->setSamples(x, y);
+//         scatter_graph->setXAxisLabel("x轴");
+//         scatter_graph->setYAxisLabel("y轴");
+//         scatter_graph->resize(800, 600);
+////         QHBoxLayout *layout = new QHBoxLayout(scatter_graph);
+////         layout->setContentsMargins( 0, 0, 0, 0);
+////         layout->addWidget( scatter_graph );
+//         scatter_graph->show();
+
+//         //scatter_graph->repaint();
+//    }
+//    repaint();
 }
 
 void Dialog::initComboboxMap()

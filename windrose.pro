@@ -72,13 +72,20 @@ SOURCES += main.cpp\
     libs/weightedfit/weightedfit_initialize.cpp \
     libs/weightedfit/weightedfit_terminate.cpp \
     libs/commons/diff.cpp \
-    scatterplot.cpp \
     curveplot.cpp \
     windroseplot.cpp \
     histogramplot.cpp \
     plot.cpp \
     calcexpression.cpp \
-    postexprdialog.cpp
+    postexprdialog.cpp \
+    libs/commons/abs.cpp \
+    libs/commons/fix.cpp \
+    libs/commons/mod.cpp \
+    libs/commons/gamma.cpp \
+    libs/1D_max_entropy1/max_shang_one.cpp \
+    libs/1D_max_entropy1/max_shang_one_initialize.cpp \
+    libs/1D_max_entropy1/max_shang_one_terminate.cpp \
+    qwtgraphplotcustom.cpp
 
 HEADERS  += \
     dataprocess.h \
@@ -139,13 +146,20 @@ HEADERS  += \
     libs/weightedfit/weightedfit_initialize.h \
     libs/weightedfit/weightedfit_terminate.h \
     libs/weightedfit/weightedfit.h \
-    scatterplot.h \
     curveplot.h \
     windroseplot.h \
     histogramplot.h \
     plot.h \
     calcexpression.h \
-    postexprdialog.h
+    postexprdialog.h \
+    libs/commons/fix.h \
+    libs/commons/abs.h \
+    libs/commons/mod.h \
+    libs/1D_max_entropy1/max_shang_one_initialize.h \
+    libs/1D_max_entropy1/max_shang_one_terminate.h \
+    libs/1D_max_entropy1/max_shang_one.h \
+    libs/commons/gamma.h \
+    qwtgraphplotcustom.h
 
 FORMS    += \
     dialog.ui \

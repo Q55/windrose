@@ -26,6 +26,21 @@
 #include "libs/inter_consis/inter_consis.h"
 #include "libs/inter_consis/inter_consis_initialize.h"
 #include "libs/inter_consis/inter_consis_terminate.h"
+#include "libs/correlation/correlation.h"
+#include "libs/correlation/correlation_initialize.h"
+#include "libs/correlation/correlation_terminate.h"
+#include "libs/weightedfit/weightedfit.h"
+#include "libs/weightedfit/weightedfit_initialize.h"
+#include "libs/weightedfit/weightedfit_terminate.h"
+#include "libs/spectral/spectral.h"
+#include "libs/spectral/spectral_initialize.h"
+#include "libs/spectral/spectral_terminate.h"
+#include "libs/enpost/enpost.h"
+#include "libs/enpost/enpost_initialize.h"
+#include "libs/enpost/enpost_terminate.h"
+#include "libs/1D_max_entropy1/max_shang_one.h"
+#include "libs/1D_max_entropy1/max_shang_one_initialize.h"
+#include "libs/1D_max_entropy1/max_shang_one_terminate.h"
 #include <QDebug>
 
 Utils::Utils()
@@ -189,7 +204,7 @@ QVector<double> Utils::timeCont(QVector<double> data, int freq, double time_row,
         time_col.push_back(1 / freq * i);
     //time_col.clear();
     //time_col = {1,5,6,10,11,12,13,18,19,20};
-qDebug()<<"time cont type = "<<process_type;
+    qDebug()<<"time cont type = "<<process_type;
     emxArray_real_T *deal_data, *out;
     double check = 2.0;
     if (process_type == 0.0) // 标注--0   插值--1
@@ -328,8 +343,7 @@ double Utils::qtFilters(QVector<double> data, double fs, QVector<double>& l_data
 
 //double cycle_max(const emxArray_real_T *data, double est_max, double resol,
 //                 double obs_time, double Regression_cycle)
-QVector<double> Utils::cycleMax(QVector<double> data, int freq, int internal_time)
-{
+QVector<double> Utils::cycleMax(QVector<double> data, int freq, int internal_time) {
     QVector<double> result;
     int window_size = freq * internal_time;
     for (int i = 0; i < data.size(); i = i + window_size) {
@@ -349,3 +363,204 @@ QVector<double> Utils::cycleMax(QVector<double> data, int freq, int internal_tim
     //qDebug()<<result.size();
     return result;
 }
+
+double Utils::qtCorrelation(QVector<double> in_data1, QVector<double> in_data2, QVector<double> &out_data1, QVector<double> &out_data2) {
+    double index = 0.0;
+    emxArray_real_T *x, *y, *a, *b;
+
+    correlation_initialize();
+    emxInitArray_real_T(&b, 2);
+    emxInitArray_real_T(&a, 1);
+
+    static int iv0[1] = { in_data1.size() };
+    x = emxCreateND_real_T(1, iv0);
+    for (int j = 0; j < x->size[0U]; j++)
+        x->data[j] = in_data1[j];
+
+    static int iv1[1] = { in_data2.size() };
+    y = emxCreateND_real_T(1, iv1);
+    for (int j = 0; j < y->size[0U]; j++)
+        y->data[j] = in_data2[j];
+
+    correlation(x, y, b, a, &index);
+
+    for (int i = 0; i < a->size[0]; ++i) {
+        //qDebug()<<a->data[i];
+        out_data1.push_back(a->data[i]);
+    }
+    //qDebug()<<"index = "<<index;
+    for (int i = 0; i < b->size[1]; ++i) {
+        //qDebug()<<b->data[i];
+        out_data2.push_back(b->data[i]);
+    }
+
+    emxDestroyArray_real_T(x);
+    emxDestroyArray_real_T(y);
+    emxDestroyArray_real_T(a);
+    emxDestroyArray_real_T(b);
+
+    correlation_terminate();
+
+    return index;
+}
+
+void Utils::weightedFit(QVector<double> in_data1, QVector<double> in_data2, double &a, double &b) {
+
+    emxArray_real_T *data;
+
+    weightedfit_initialize();
+
+    // prepare for deal_data
+    static int iv0[2] = {in_data1.size(), in_data2.size() };
+    data = emxCreateND_real_T(2, iv0);
+    for (int i = 0; i < data->size[0U]; i++) {
+        data->data[i] = in_data1[i];
+    }
+    for (int j = 0; j < data->size[1U]; j++) {
+        data->data[data->size[0] + j] = in_data2[j];
+    }
+
+    weightedfit(data, &a, &b);
+
+    qDebug()<<"a = "<<a<<", b = "<<b;
+
+    emxDestroyArray_real_T(data);
+
+    time_cont_terminate();
+}
+
+void Utils::qtSpectral(QVector<double> in_data, double freq, QVector<double> &f, QVector<double> &YY) {
+    emxArray_real_T *data, *out_f, *out_YY;
+
+    spectral_initialize();
+
+    emxInitArray_real_T(&out_f, 2);
+    emxInitArray_real_T(&out_YY, 1);
+
+    static int iv0[1] = { in_data.size() };
+    data = emxCreateND_real_T(1, iv0);
+    for (int j = 0; j < data->size[0U]; j++)
+        data->data[j] = in_data[j];
+
+    spectral(freq, data, out_f, out_YY);
+
+    for(int i = 0; i < out_f->size[1]; ++i) {
+        f.push_back(out_f->data[i]);
+    }
+
+    for (int i = 0; i < out_YY->size[0]; ++i) {
+        YY.push_back(out_YY->data[i]);
+    }
+
+    qDebug()<<"data size = "<<in_data.size();
+    qDebug()<<"f size0 = "<<out_f->size[0];
+    qDebug()<<"f size1 = "<<out_f->size[1];
+    qDebug()<<"YY size = "<<out_YY->size[0];
+
+    emxDestroyArray_real_T(data);
+    emxDestroyArray_real_T(out_f);
+    emxDestroyArray_real_T(out_YY);
+    spectral_terminate();
+
+}
+
+double Utils::qtCycleMax(QVector<double> in_data, double est_max, double resol, double obs_time, double regression_cycle) {
+
+    //qDebug()<<"in data size = "<<in_data.size();
+    double result = 0.0;
+    emxArray_real_T *data;
+
+    cycle_max_initialize();
+
+    static int iv0[1] = {in_data.size()};
+    data = emxCreateND_real_T(1, iv0);
+    for (int j = 0; j < data->size[0U]; j++)
+        data->data[j] = in_data[j];
+
+    result = cycle_max(data, est_max, resol, obs_time, regression_cycle);
+
+    emxDestroyArray_real_T(data);
+    cycle_max_terminate();
+
+    return result;
+}
+
+void Utils::qtEnpost(double lat, double lon, double roll, double pitch, double heading, double altitude,
+                     double &spmx, double &spmy, double &spmz, double &aftx, double &afty, double &aftz) {
+    emxArray_real_T *in_lat, *in_lon, *in_roll, *in_pitch, *in_heading, *in_altitude;
+
+    enpost_initialize();
+
+    static int iv1[1] = {1};
+    in_lat = emxCreateND_real_T(1, iv1);
+    for (int j = 0; j < in_lat->size[0U]; j++)
+        in_lat->data[j] = lat;
+
+    in_lon = emxCreateND_real_T(1, iv1);
+    for (int j = 0; j < in_lon->size[0U]; j++)
+        in_lon->data[j] = lon;
+
+    in_roll = emxCreateND_real_T(1, iv1);
+    for (int j = 0; j < in_roll->size[0U]; j++)
+        in_roll->data[j] = roll;
+
+    in_pitch = emxCreateND_real_T(1, iv1);
+    for (int j = 0; j < in_pitch->size[0U]; j++)
+        in_pitch->data[j] = pitch;
+
+    in_heading = emxCreateND_real_T(1, iv1);
+    for (int j = 0; j < in_heading->size[0U]; j++)
+        in_heading->data[j] = heading;
+
+    in_altitude = emxCreateND_real_T(1, iv1);
+    for (int j = 0; j < in_altitude->size[0U]; j++)
+        in_altitude->data[j] = altitude;
+
+    enpost(in_lat, in_lon, in_roll, in_pitch, in_heading, in_altitude,
+           &spmx, &spmy, &spmz, &aftx, &afty, &aftz);
+
+    emxDestroyArray_real_T(in_lat);
+    emxDestroyArray_real_T(in_lon);
+    emxDestroyArray_real_T(in_roll);
+    emxDestroyArray_real_T(in_pitch);
+    emxDestroyArray_real_T(in_heading);
+    emxDestroyArray_real_T(in_altitude);
+
+    enpost_terminate();
+}
+
+void Utils::qt1DMaxEntropy(QVector<double> in_data, double limit_min, double a0_resol, double est_kesi_min, double est_kesi_max,
+                           double kesi_resol, double wh_sample, double wh_max, QVector<double> &yy1, QVector<double> &yy2) {
+//    qDebug()<<"limit_min = "<<limit_min<<", a0_resol = "<<a0_resol<<", est_kesi_min = "<<est_kesi_min;
+//    qDebug()<<"est_kesi_max = "<<est_kesi_max<<", kesi_resol = "<<kesi_resol<<", wh_sample = "<<wh_sample<<", wh_max = "<<wh_max;
+//    qDebug()<<"input data size = "<<in_data.size();
+    emxArray_real_T *data, *out_yy;
+    max_shang_one_initialize();
+
+    static int iv0[1] = {in_data.size()};
+    data = emxCreateND_real_T(1, iv0);
+    for (int j = 0; j < data->size[0U]; j++)
+        data->data[j] = in_data[j];
+
+    emxInitArray_real_T(&out_yy, 2);
+
+    qDebug()<<"11111111";
+
+    max_shang_one(data, limit_min, a0_resol, est_kesi_min, est_kesi_max, kesi_resol, wh_sample, wh_max, out_yy);
+
+    qDebug()<<"in data size = "<<in_data.size();
+    qDebug()<<"out data size0 = "<<out_yy->size[0];
+    qDebug()<<"out data size1 = "<<out_yy->size[1];
+
+    for (int i = 0; i < out_yy->size[0]; ++i)
+        yy1.push_back(out_yy->data[i]);
+
+    for (int i = 0; i < out_yy->size[1]; ++i)
+        yy2.push_back(out_yy->data[i]);
+
+    emxDestroyArray_real_T(out_yy);
+    emxDestroyArray_real_T(data);
+    max_shang_one_terminate();
+}
+
+

@@ -53,6 +53,7 @@ public:
     void addColsToPostProcDataDirectly(QStringList col_name_list);
     QString addColToPostProcDataByExpr(bool is_scalar, QString data1, QString data2, int op, double operand);
     void delColsFromPostProcDataByName(QStringList col_name_list);
+    void clearPostproc_data_map() { postproc_data_map.clear(); }
 
 signals:
     void preProcessRate(int);
