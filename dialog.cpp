@@ -776,8 +776,8 @@ void Dialog::postStartDataAnalysis() {
             }
             in_data1 = all_data_map[ui->comboBox_correlation_x->currentText()]; // x
             in_data2 = all_data_map[ui->comboBox_correlation_y->currentText()]; // y
-            //in_data1 = {1,2,3,4,5,6,7,8,10,11,12,13,14};
-            //in_data2 = {0,2,4,6,8,10,12,14,16,18,20,22,24,26};
+//            in_data1 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+//            in_data2 = {0,2,4,6,8,10,12,14,16,18,20,22,24,26};
             if (in_data1.size() != in_data2.size()) {
                 msg = "Size of Input Data X & Y Not Matched.";
                 break;
@@ -785,7 +785,7 @@ void Dialog::postStartDataAnalysis() {
             ret_val = Utils::qtCorrelation(in_data1, in_data2, out_data1, out_data2); // a, b
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
-            graph->plotForCorrelation(in_data1, in_data2);
+            graph->plotForCorrelation(out_data2, out_data1);
             graph->show();
             break;
         }
