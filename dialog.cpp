@@ -751,15 +751,14 @@ void Dialog::postPrepareDataForAnalysis(int index) {
 }
 
 void Dialog::postStartDataAnalysis() {
-    if (ui->groupBox_data_analysis->isChecked()) {
-
+//    if (ui->groupBox_data_analysis->isChecked()) {
         QList<QListWidgetItem *> sel_items = ui->post_proc_after_col_list->selectedItems();
         int analysis_type = ui->toolBox_analysis_data->currentIndex();
-        if (sel_items.size() <= 0 && analysis_type != 4) {
-            ui->label_dataanalysis_note->setText("Please Sel Correlation Columns.");
-            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
-            return;
-        }
+//        if (sel_items.size() <= 0 && analysis_type != 4) {
+//            ui->label_dataanalysis_note->setText("Please Sel Correlation Columns.");
+//            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
+//            return;
+//        }
 
         // prepare for data
         auto all_data_map = dpclass.getPostProcDataMap();
@@ -769,7 +768,24 @@ void Dialog::postStartDataAnalysis() {
         QString msg = "Ok.";
 
         switch (analysis_type) {
-        case 0: { // correlation
+        case 0: { // enpost
+            double spmx, spmy, spmz, aftx, afty, aftz;
+            Utils::qtEnpost(ui->lineEdit_enpost_lat->text().toDouble(),
+                            ui->lineEdit_enpost_lon->text().toDouble(),
+                            ui->lineEdit_enpost_roll->text().toDouble(),
+                            ui->lineEdit_enpost_pitch->text().toDouble(),
+                            ui->lineEdit_enpost_heading->text().toDouble(),
+                            ui->lineEdit_enpost_altitude->text().toDouble(),
+                            spmx, spmy, spmz, aftx, afty, aftz);
+            ui->lineEdit_enpost_spmx->setText(QString::number(spmx));
+            ui->lineEdit_enpost_spmy->setText(QString::number(spmy));
+            ui->lineEdit_enpost_spmz->setText(QString::number(spmz));
+            ui->lineEdit_enpost_aftx->setText(QString::number(aftx));
+            ui->lineEdit_enpost_afty->setText(QString::number(afty));
+            ui->lineEdit_enpost_aftz->setText(QString::number(aftz));
+            break;
+        }
+        case 1: {// correlation
             if (sel_items.size() != 2) {
                 msg = "Correlation Needs 2 Columns.";
                 break;
@@ -789,7 +805,7 @@ void Dialog::postStartDataAnalysis() {
             graph->show();
             break;
         }
-        case 1: { // weightedfit
+        case 2: { // weightedfit
             if (sel_items.size() != 2) {
                 msg = "Weightedfit Needs 2 Columns.";
                 break;
@@ -810,22 +826,6 @@ void Dialog::postStartDataAnalysis() {
             graph->show();
             break;
         }
-        case 2: { // spectral
-            if (sel_items.size() != 1) {
-                msg = "Spectral Needs 1 Column.";
-                break;
-            }
-            in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
-            Utils::qtSpectral(in_data1, ui->lineEdit_spectral_freq->text().toDouble(), out_data1, out_data2); // out1: f, out2: YY
-            if (out_data1.size() != out_data2.size()) {
-                msg = "Size of Out Data f & YY Not Matched.";
-                break;
-            }
-            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
-            graph->plotForSpectral(out_data1, out_data2);
-            graph->show();
-            break;
-        }
         case 3: { // cyclemax
             if (sel_items.size() != 1) {
                 msg = "Cyclemax Needs 1 Column.";
@@ -839,21 +839,20 @@ void Dialog::postStartDataAnalysis() {
             ui->lineEdit_cyclemax_result->setText(QString::number(result));
             break;
         }
-        case 4: { // enpost
-            double spmx, spmy, spmz, aftx, afty, aftz;
-            Utils::qtEnpost(ui->lineEdit_enpost_lat->text().toDouble(),
-                            ui->lineEdit_enpost_lon->text().toDouble(),
-                            ui->lineEdit_enpost_roll->text().toDouble(),
-                            ui->lineEdit_enpost_pitch->text().toDouble(),
-                            ui->lineEdit_enpost_heading->text().toDouble(),
-                            ui->lineEdit_enpost_altitude->text().toDouble(),
-                            spmx, spmy, spmz, aftx, afty, aftz);
-            ui->lineEdit_enpost_spmx->setText(QString::number(spmx));
-            ui->lineEdit_enpost_spmy->setText(QString::number(spmy));
-            ui->lineEdit_enpost_spmz->setText(QString::number(spmz));
-            ui->lineEdit_enpost_aftx->setText(QString::number(aftx));
-            ui->lineEdit_enpost_afty->setText(QString::number(afty));
-            ui->lineEdit_enpost_aftz->setText(QString::number(aftz));
+        case 4: { // spectral
+            if (sel_items.size() != 1) {
+                msg = "Spectral Needs 1 Column.";
+                break;
+            }
+            in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
+            Utils::qtSpectral(in_data1, ui->lineEdit_spectral_freq->text().toDouble(), out_data1, out_data2); // out1: f, out2: YY
+            if (out_data1.size() != out_data2.size()) {
+                msg = "Size of Out Data f & YY Not Matched.";
+                break;
+            }
+            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+            graph->plotForSpectral(out_data1, out_data2);
+            graph->show();
             break;
         }
         case 5: { // max shang 1
@@ -883,11 +882,11 @@ void Dialog::postStartDataAnalysis() {
             ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
         else
             ui->label_dataanalysis_note->setStyleSheet("color: rgb(44,104,7);");
-    }
+//    }
 }
 
 void Dialog::postStartDrawGraph() {
-    if (ui->groupBox_draw_graph->isChecked()) {
+//    if (ui->groupBox_draw_graph->isChecked()) {
         QString msg = "Ok.";
         auto all_data_map = dpclass.getPostProcDataMap();
         int graph_type = ui->comboBox_curveType->currentIndex();
@@ -1022,7 +1021,7 @@ void Dialog::postStartDrawGraph() {
             ui->label_drawgraph_note->setStyleSheet("color: rgb(231,66,67);");
         else
             ui->label_drawgraph_note->setStyleSheet("color: rgb(44,104,7);");
-    }
+//    }
 }
 
 void Dialog::initComboboxMap()

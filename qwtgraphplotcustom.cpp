@@ -7,6 +7,7 @@
 #include <qwt_plot_curve.h>
 #include <qwt_plot_histogram.h>
 #include <qwt_plot_barchart.h>
+#include <qwt_plot_spectrogram.h>
 
 QwtGraphPlotCustom::QwtGraphPlotCustom() {
 
@@ -100,6 +101,12 @@ void QwtGraphPlotCustom::plotFor1DMaxEntropy(const QVector<double> &yy1, const Q
     curve->setSymbol(curve_symbols);
     curve->setPen(Qt::blue);
     curve->attach(graph_plot);
+}
+
+void plotFor2DMaxEntropyDensity () {
+    QwtPlotSpectrogram *plot = new QwtPlotSpectrogram("密度图");
+
+
 }
 
 void QwtGraphPlotCustom::plotForCurve(const QVector<double> &x, const QVector<QVector<double> > &yy) {
