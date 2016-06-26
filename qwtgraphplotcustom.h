@@ -15,6 +15,7 @@ public:
     void plotForWeightedFit(const QVector<double> &x, const QVector<double> &y, double a, double b);
     void plotForSpectral(const QVector<double> &f, const QVector<double> &YY);
     void plotFor1DMaxEntropy(const QVector<double> &yy1, const QVector<double> &yy2);
+    void plotFor2DMaxEntropyDensity();
 
     void plotForCurve(const QVector<double> &x, const QVector<QVector<double> > &yy);
     void plotForScatter(const QVector<double> &x, const QVector<double> &y);

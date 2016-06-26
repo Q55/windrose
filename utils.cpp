@@ -41,11 +41,39 @@
 #include "libs/1D_max_entropy1/max_shang_one.h"
 #include "libs/1D_max_entropy1/max_shang_one_initialize.h"
 #include "libs/1D_max_entropy1/max_shang_one_terminate.h"
+#include "libs/kendall/Kendall_initialize.h"
+#include "libs/kendall/Kendall.h"
+#include "libs/kendall/Kendall_terminate.h"
+#include "libs/stats_1d/Statistics_1d.h"
+#include "libs/stats_1d/Statistics_1d_initialize.h"
+#include "libs/stats_1d/Statistics_1d_terminate.h"
+#include "libs/stats_2d/Statistics_2d.h"
+#include "libs/stats_2d/Statistics_2d_initialize.h"
+#include "libs/stats_2d/Statistics_2d_terminate.h"
+#include "libs/distr_F1/distr_F1.h"
+#include "libs/distr_F1/distr_F1_initialize.h"
+#include "libs/distr_F1/distr_F1_terminate.h"
+#include "libs/distr_F2/distr_F2.h"
+#include "libs/distr_F2/distr_F2_initialize.h"
+#include "libs/distr_F2/distr_F2_terminate.h"
+#include "libs/ff_AMH/ff_AMH.h"
+#include "libs/ff_AMH/ff_AMH_initialize.h"
+#include "libs/ff_AMH/ff_AMH_terminate.h"
+#include "libs/ff_Gum/ff_Gum.h"
+#include "libs/ff_Gum/ff_Gum_initialize.h"
+#include "libs/ff_Gum/ff_Gum_terminate.h"
+#include "libs/ff_Cla/ff_Cla.h"
+#include "libs/ff_Cla/ff_Cla_initialize.h"
+#include "libs/ff_Cla/ff_Cla_terminate.h"
+#include "libs/ff_Fra/ff_Fra.h"
+#include "libs/ff_Fra/ff_Fra_initialize.h"
+#include "libs/ff_Fra/ff_Fra_terminate.h"
+#include "libs/ff_GB/ff_GB.h"
+#include "libs/ff_GB/ff_GB_initialize.h"
+#include "libs/ff_GB/ff_GB_terminate.h"
 #include <QDebug>
 
-Utils::Utils()
-{
-}
+Utils::Utils() {}
 
 QVector<double> Utils::calcMax(QVector<double> data, int freq, int internal_time) {
     QVector<double> result;
@@ -561,6 +589,219 @@ void Utils::qt1DMaxEntropy(QVector<double> in_data, double limit_min, double a0_
     emxDestroyArray_real_T(out_yy);
     emxDestroyArray_real_T(data);
     max_shang_one_terminate();
+}
+
+double Utils::qtKendall(QVector<double> in_data1, QVector<double> in_data2, double limit_min1, double limit_min2) {
+    double result = 0.0;
+    emxArray_real_T *data1, *data2;
+
+    Kendall_initialize();
+
+    static int iv0[1] = { in_data1.size() };
+    data1 = emxCreateND_real_T(1, iv0);
+    for (int j = 0; j < data1->size[0U]; j++)
+        data1->data[j] = in_data1[j];
+
+    static int iv1[1] = { in_data2.size() };
+    data2 = emxCreateND_real_T(1, iv1);
+    for (int j = 0; j < data2->size[0U]; j++)
+        data2->data[j] = in_data2[j];
+
+    result = Kendall(data1, data2, limit_min1, limit_min2);
+
+    emxDestroyArray_real_T(data1);
+    emxDestroyArray_real_T(data2);
+
+    Kendall_terminate();
+    return result;
+}
+
+void Utils::qtStats1D(QVector<double> in_data1, double step, QVector<double> &yy1, QVector<double> &yy2) {
+    emxArray_real_T *data, *out_yy;
+    Statistics_1d_initialize();
+
+    static int iv0[1] = {in_data1.size()};
+    data = emxCreateND_real_T(1, iv0);
+    for (int j = 0; j < data->size[0U]; j++)
+        data->data[j] = in_data1[j];
+
+    emxInitArray_real_T(&out_yy, 2);
+
+    Statistics_1d(data, step, out_yy);
+
+    qDebug()<<"in data size = "<<in_data1.size();
+    qDebug()<<"out data size0 = "<<out_yy->size[0];
+    qDebug()<<"out data size1 = "<<out_yy->size[1];
+
+    for (int i = 0; i < out_yy->size[0]; ++i)
+        yy1.push_back(out_yy->data[i]);
+
+    for (int i = 0; i < out_yy->size[1]; ++i)
+        yy2.push_back(out_yy->data[i]);
+
+    emxDestroyArray_real_T(out_yy);
+    emxDestroyArray_real_T(data);
+    Statistics_1d_terminate();
+}
+
+void Utils::qtStats2D(QVector<double> in_data1, QVector<double> in_data2, double limit_min1, double limit_min2, double step1, double step2, QVector<QVector<double> > &out) {
+    emxArray_real_T *data1, *data2, *out_yy;
+
+    Statistics_2d_initialize();
+
+    emxInitArray_real_T(&out_yy, 2);
+
+    static int iv0[1] = { in_data1.size() };
+    data1 = emxCreateND_real_T(1, iv0);
+    for (int j = 0; j < data1->size[0U]; j++)
+        data1->data[j] = in_data1[j];
+
+    static int iv1[1] = { in_data2.size() };
+    data2 = emxCreateND_real_T(1, iv1);
+    for (int j = 0; j < data2->size[0U]; j++)
+        data2->data[j] = in_data2[j];
+
+    Statistics_2d(data1, data2, limit_min1, limit_min2, step1, step2, out_yy);
+
+    for (int i = 0; i < out_yy->size[0]; ++i) {
+        for (int j = 0; j < out_yy->size[1]; ++j)
+            out[i][j] = out_yy->data[i * out_yy->size[1] + j];
+    }
+
+    emxDestroyArray_real_T(data1);
+    emxDestroyArray_real_T(data2);
+    emxDestroyArray_real_T(out_yy);
+    Statistics_2d_terminate();
+}
+
+void Utils::qtDistrF1(QVector<double> in_data1, QVector<double> in_data2, QVector<double> &out_FF1, QVector<double> &out_FF2) {
+    distr_F1_initialize();
+    double temp[in_data1.size() + in_data2.size()];
+    for (int i = 0; i < in_data1.size(); ++i)
+        temp[i] = in_data1.at(i);
+    for (int i = 0; i < in_data2.size(); ++i)
+        temp[i + in_data1.size()] = in_data2.at(i);
+
+    emxArray_real_T *in_data =emxCreateWrapper_real_T(temp, in_data1.size(), 2);
+
+    emxArray_real_T *out_yy;
+    emxInitArray_real_T(&out_yy, 2);
+
+    distr_F1(in_data, out_yy);
+
+    qDebug()<<"in data size = "<<in_data1.size();
+    qDebug()<<"out data size0 = "<<out_yy->size[0];
+    qDebug()<<"out data size1 = "<<out_yy->size[1];
+
+    for (int i = 0; i < out_yy->size[0]; ++i)
+        out_FF1.push_back(out_yy->data[i]);
+
+    for (int i = 0; i < out_yy->size[1]; ++i)
+        out_FF2.push_back(out_yy->data[i]);
+
+    emxDestroyArray_real_T(in_data);
+    emxDestroyArray_real_T(out_yy);
+    distr_F1_terminate();
+}
+
+void Utils::qtDistrF2(QVector<QVector<double> > in_ff, QVector<QVector<double> > &out_FF) {
+    distr_F2_initialize();
+    int size = 0;
+    for (int i = 0; i < in_ff.size(); ++i)
+        size += in_ff.at(i).size();
+    double temp[size];
+    size = 0;
+    for (int i = 0; i < in_ff.size(); ++i) {
+        for (int j = 0; j < in_ff.at(i).size(); ++j) {
+            temp[size + j] = in_ff.at(i).at(j);
+        }
+        size += in_ff.at(i).size();
+    }
+
+    int col = 0, row = in_ff.size();
+    for (int i = 0; i < row; ++i) {
+        col = in_ff.at(i).size();
+        break;
+    }
+
+    emxArray_real_T *in_data =emxCreateWrapper_real_T(temp, row, col), *out;
+    emxInitArray_real_T(&out, 2);
+
+    distr_F2(in_data, out);
+
+    for (int i = 0; i < out->size[0]; ++i) {
+        for (int j = 0; j < out->size[1]; ++j)
+            out_FF[i][j] = out->data[i * out->size[1] + j];
+    }
+
+    emxDestroyArray_real_T(in_data);
+    emxDestroyArray_real_T(out);
+    distr_F2_terminate();
+}
+
+void Utils::qt2DMaxEntropy(QVector<double> ff1, QVector<double> FF1, QVector<double> ff2, QVector<double> FF2, double R, int type,
+                           QVector<QVector<double> > &out) {
+    emxArray_real_T *in_ff1, *in_ff2, *in_FF1, *in_FF2, *out_yy;
+
+    switch (type) {
+    case 0: ff_AMH_initialize(); break;
+    case 1: ff_Cla_initialize(); break;
+    case 2: ff_Fra_initialize(); break;
+    case 3: ff_GB_initialize(); break;
+    case 4: ff_Gum_initialize(); break;
+    default: return;
+    }
+
+    emxInitArray_real_T(&out_yy, 2);
+
+    static int iv0[1] = { ff1.size() };
+    in_ff1 = emxCreateND_real_T(1, iv0);
+    for (int j = 0; j < in_ff1->size[0U]; j++)
+        in_ff1->data[j] = ff1[j];
+
+    static int iv1[1] = { FF1.size() };
+    in_FF1 = emxCreateND_real_T(1, iv1);
+    for (int j = 0; j < in_FF1->size[0U]; j++)
+        in_FF1->data[j] = FF1[j];
+
+    static int iv2[1] = { ff2.size() };
+    in_ff2 = emxCreateND_real_T(1, iv2);
+    for (int j = 0; j < in_ff2->size[0U]; j++)
+        in_ff2->data[j] = ff2[j];
+
+    static int iv3[1] = { FF2.size() };
+    in_FF2 = emxCreateND_real_T(1, iv3);
+    for (int j = 0; j < in_FF2->size[0U]; j++)
+        in_FF2->data[j] = FF2[j];
+
+    switch (type) {
+    case 0: ff_AMH(in_ff1, in_FF1, in_ff2, in_FF2, R, out_yy); break;
+    case 1: ff_Cla(in_ff1, in_FF1, in_ff2, in_FF2, R, out_yy); break;
+    case 2: ff_Fra(in_ff1, in_FF1, in_ff2, in_FF2, R, out_yy); break;
+    case 3: ff_GB(in_ff1, in_FF1, in_ff2, in_FF2, R, out_yy); break;
+    case 4: ff_Gum(in_ff1, in_FF1, in_ff2, in_FF2, R, out_yy); break;
+    default: return;
+    }
+
+    for (int i = 0; i < out_yy->size[0]; ++i) {
+        for (int j = 0; j < out_yy->size[1]; ++j)
+            out[i][j] = out_yy->data[i * out_yy->size[1] + j];
+    }
+
+    emxDestroyArray_real_T(in_ff1);
+    emxDestroyArray_real_T(in_FF1);
+    emxDestroyArray_real_T(in_ff2);
+    emxDestroyArray_real_T(in_FF2);
+    emxDestroyArray_real_T(out_yy);
+
+    switch (type) {
+    case 0: ff_AMH_terminate(); break;
+    case 1: ff_Cla_terminate(); break;
+    case 2: ff_Fra_terminate(); break;
+    case 3: ff_GB_terminate(); break;
+    case 4: ff_Gum_terminate(); break;
+    default: return;
+    }
 }
 
 

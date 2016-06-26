@@ -87,7 +87,39 @@ SOURCES += main.cpp\
     libs/1D_max_entropy1/max_shang_one_terminate.cpp \
     qwtgraphplotcustom.cpp \
     qchartwindroseplot.cpp \
-    chartview.cpp
+    chartview.cpp \
+    libs/kendall/Kendall_initialize.cpp \
+    libs/kendall/Kendall_terminate.cpp \
+    libs/kendall/Kendall.cpp \
+    libs/kendall/sortLE.cpp \
+    libs/stats_1d/Statistics_1d_initialize.cpp \
+    libs/stats_1d/Statistics_1d_terminate.cpp \
+    libs/stats_1d/Statistics_1d.cpp \
+    libs/stats_2d/Statistics_2d.cpp \
+    libs/stats_2d/Statistics_2d_initialize.cpp \
+    libs/stats_2d/Statistics_2d_sum.cpp \
+    libs/stats_2d/Statistics_2d_terminate.cpp \
+    libs/distr_F1/distr_F1.cpp \
+    libs/distr_F1/distr_F1_initialize.cpp \
+    libs/distr_F1/distr_F1_terminate.cpp \
+    libs/distr_F2/distr_F2.cpp \
+    libs/distr_F2/distr_F2_initialize.cpp \
+    libs/distr_F2/distr_F2_terminate.cpp \
+    libs/ff_AMH/ff_AMH.cpp \
+    libs/ff_AMH/ff_AMH_initialize.cpp \
+    libs/ff_AMH/ff_AMH_terminate.cpp \
+    libs/ff_Gum/ff_Gum.cpp \
+    libs/ff_Gum/ff_Gum_initialize.cpp \
+    libs/ff_Gum/ff_Gum_terminate.cpp \
+    libs/ff_Cla/ff_Cla.cpp \
+    libs/ff_Cla/ff_Cla_initialize.cpp \
+    libs/ff_Cla/ff_Cla_terminate.cpp \
+    libs/ff_Fra/ff_Fra.cpp \
+    libs/ff_Fra/ff_Fra_initialize.cpp \
+    libs/ff_Fra/ff_Fra_terminate.cpp \
+    libs/ff_GB/ff_GB.cpp \
+    libs/ff_GB/ff_GB_initialize.cpp \
+    libs/ff_GB/ff_GB_terminate.cpp
 
 HEADERS  += \
     dataprocess.h \
@@ -160,7 +192,39 @@ HEADERS  += \
     libs/commons/gamma.h \
     qwtgraphplotcustom.h \
     qchartwindroseplot.h \
-    chartview.h
+    chartview.h \
+    libs/kendall/Kendall_initialize.h \
+    libs/kendall/Kendall_terminate.h \
+    libs/kendall/Kendall.h \
+    libs/kendall/sortLE.h \
+    libs/stats_1d/Statistics_1d_initialize.h \
+    libs/stats_1d/Statistics_1d_terminate.h \
+    libs/stats_1d/Statistics_1d.h \
+    libs/stats_2d/Statistics_2d_initialize.h \
+    libs/stats_2d/Statistics_2d_sum.h \
+    libs/stats_2d/Statistics_2d_terminate.h \
+    libs/stats_2d/Statistics_2d.h \
+    libs/distr_F1/distr_F1_initialize.h \
+    libs/distr_F1/distr_F1_terminate.h \
+    libs/distr_F1/distr_F1.h \
+    libs/distr_F2/distr_F2_initialize.h \
+    libs/distr_F2/distr_F2_terminate.h \
+    libs/distr_F2/distr_F2.h \
+    libs/ff_AMH/ff_AMH_initialize.h \
+    libs/ff_AMH/ff_AMH_terminate.h \
+    libs/ff_AMH/ff_AMH.h \
+    libs/ff_Gum/ff_Gum_initialize.h \
+    libs/ff_Gum/ff_Gum_terminate.h \
+    libs/ff_Gum/ff_Gum.h \
+    libs/ff_Cla/ff_Cla_initialize.h \
+    libs/ff_Cla/ff_Cla_terminate.h \
+    libs/ff_Cla/ff_Cla.h \
+    libs/ff_Fra/ff_Fra_initialize.h \
+    libs/ff_Fra/ff_Fra_terminate.h \
+    libs/ff_Fra/ff_Fra.h \
+    libs/ff_GB/ff_GB_initialize.h \
+    libs/ff_GB/ff_GB_terminate.h \
+    libs/ff_GB/ff_GB.h
 
 FORMS    += \
     dialog.ui \
