@@ -55,6 +55,17 @@ public:
     static void qt1DMaxEntropy(QVector<double> in_data, double limit_min, double a0_resol, double est_kesi_min, double est_kesi_max,
                                double kesi_resol, double wh_sample, double wh_max, QVector<double> &yy1, QVector<double> &yy2);
 
+    // for 2-D Max Entropy
+    static double qtKendall(QVector<double> in_data1, QVector<double> in_data2, double limit_min1, double limit_min2);
+    static void qtStats1D(QVector<double> in_data1, double step, QVector<double> &yy1, QVector<double> &yy2);
+    static void qtStats2D(QVector<double> in_data1, QVector<double> in_data2, double limit_min1, double limit_min2, double step1,
+                          double step2, QVector<QVector<double> > &out);
+    static void qtDistrF1(QVector<double> in_data1, QVector<double> in_data2, QVector<double> &out_FF1, QVector<double> &out_FF2);
+    static void qtDistrF2(QVector<QVector<double> > in_ff, QVector<QVector<double> > &out_FF);
+    static void qt2DMaxEntropy(QVector<double> ff1, QVector<double> FF1, QVector<double> ff2, QVector<double> FF2, double R, int type,
+                               QVector<QVector<double> > &out);
+    //static void qtFFGum(QVector<double> ff1, QVector<double> FF1, QVector<double> ff2, QVector<double> FF2, double R, QVector<QVector<double> > &out);
+
 };
 
 #endif // UTILS_H
