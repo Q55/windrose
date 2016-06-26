@@ -66,6 +66,7 @@ public:
                                QVector<QVector<double> > &out);
     //static void qtFFGum(QVector<double> ff1, QVector<double> FF1, QVector<double> ff2, QVector<double> FF2, double R, QVector<QVector<double> > &out);
 
+    static QVector<double> getQVectorFromFile(QString filename, int ignore_rows, int rd_rows, int col_index);
 };
 
 #endif // UTILS_H
