@@ -16,8 +16,8 @@ TARGET = windrose
 TEMPLATE = app
 
 #INCLUDEPATH += /Users/lishiqiang/Developer/QtProject/windrose/libs/cycle_max
-INCLUDEPATH += /usr/local/qwtpolar-1.1.1/lib/qwtpolar.framework/Headers
-LIBS += /usr/local/qwtpolar-1.1.1/lib/qwtpolar.framework/qwtpolar
+#INCLUDEPATH += /usr/local/qwtpolar-1.1.1/lib/qwtpolar.framework/Headers
+#LIBS += /usr/local/qwtpolar-1.1.1/lib/qwtpolar.framework/qwtpolar
 
 SOURCES += main.cpp\
     dataprocess.cpp \
@@ -86,7 +86,6 @@ SOURCES += main.cpp\
     libs/1D_max_entropy1/max_shang_one_initialize.cpp \
     libs/1D_max_entropy1/max_shang_one_terminate.cpp \
     qwtgraphplotcustom.cpp \
-    qwtpolarwindroseplot.cpp \
     qchartwindroseplot.cpp \
     chartview.cpp
 
@@ -160,7 +159,6 @@ HEADERS  += \
     libs/1D_max_entropy1/max_shang_one.h \
     libs/commons/gamma.h \
     qwtgraphplotcustom.h \
-    qwtpolarwindroseplot.h \
     qchartwindroseplot.h \
     chartview.h
 
