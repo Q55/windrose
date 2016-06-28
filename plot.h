@@ -4,6 +4,8 @@
 #include <QVector>
 #include <QString>
 #include <qwt_plot_curve.h>
+#include <qwt_plot.h>
+#include <qwt_plot_spectrogram.h>
 
 class QwtSymbol;
 
@@ -20,6 +22,10 @@ public:
     void setYAxisTitle(QString ylabel);
     void appendCurve(QwtPlotCurve *);
     void setCurveStyle(QwtPlotCurve::CurveStyle);
+
+//public Q_SLOTS:
+//    void showContour ( bool on );
+//    void showSpectrogram ( bool on );
 
 private:
     QwtPlotCurve *d_curve;

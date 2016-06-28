@@ -18,19 +18,19 @@ Dialog::Dialog(QWidget *parent) :
 
     /////////////////////////////////////////////
     /// for cust lib test.
-    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
-                                                     3, 1000000, 1);
-    QVector<double> data2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
-                                                     3, 1000000, 2);
+//    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
+//                                                     3, 1000000, 1);
+//    QVector<double> data2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
+//                                                     3, 1000000, 2);
 //    qDebug()<<data1.size();
 //    qDebug()<<data2.size();
-    QVector<double> out1, out2;
-    QVector<QVector<double> > out;
-    Utils::qtStats2D(data1, data2, 0.12, 0.12, 0.1, 0.1, out);
-    qDebug()<<out.size();
-    for (int i = 0; i < out.size(); ++i) {
-        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
-    }
+//    QVector<double> out1, out2;
+//    QVector<QVector<double> > out;
+//    Utils::qtStats2D(data1, data2, 0.12, 0.12, 0.1, 0.1, out);
+//    qDebug()<<out.size();
+//    for (int i = 0; i < out.size(); ++i) {
+//        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
+//    }
     ////////////////////////////////////////////
 
     initComboboxMap();
@@ -1124,6 +1124,19 @@ void Dialog::postStartDrawGraph() {
             graph->setYAxisLabel(ui->lineEdit_ylabel->text());
             graph->show();
             break;
+        }
+        case 4: //spectrogram
+        {
+            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom();
+            QVector<QVector<double> > test_data;
+            test_data.resize(1000);
+            for (int i = 0; i < 1000; ++i)
+            {
+                test_data[i].resize(1000);
+                for (int j = 0; j < 1000; ++j)
+                    test_data[i][j] = 1.11+i+j*1.2;
+            }
+            graph->plotFor2DMaxEntropyDensity(test_data);
         }
         default:
             break;

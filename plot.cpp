@@ -9,6 +9,9 @@
 #include <qwt_plot_layout.h>
 #include <qwt_plot_canvas.h>
 #include <qwt_plot_grid.h>
+
+
+
 class DistancePicker: public QwtPlotPicker
 {
 public:
@@ -39,6 +42,9 @@ public:
         return text;
     }
 };
+
+
+
 
 Plot::Plot( QWidget *parent ):
     QwtPlot( parent ),
@@ -135,3 +141,21 @@ void Plot::setCurveStyle(QwtPlotCurve::CurveStyle style)
 {
     d_curve->setStyle(style);
 }
+
+
+//void Plot::showContour( bool on )
+//{
+//    d_spectrogram->setDisplayMode( QwtPlotSpectrogram::ContourMode, on );
+//    replot();
+//}
+
+
+//for spectrogram
+//void Plot::showSpectrogram( bool on )
+//{
+//    d_spectrogram->setDisplayMode( QwtPlotSpectrogram::ImageMode, on );
+//    d_spectrogram->setDefaultContourPen(
+//        on ? QPen( Qt::black, 0 ) : QPen( Qt::NoPen ) );
+
+//    replot();
+//}

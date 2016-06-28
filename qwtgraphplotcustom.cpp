@@ -1,5 +1,6 @@
 #include "qwtgraphplotcustom.h"
 #include "plot.h"
+#include "qwtspectrogram.h"
 
 #include <qwt_interval_symbol.h>
 #include <qwt_symbol.h>
@@ -8,6 +9,16 @@
 #include <qwt_plot_histogram.h>
 #include <qwt_plot_barchart.h>
 #include <qwt_plot_spectrogram.h>
+
+//************for spectrogram***************
+#include <qnumeric.h>
+#include <qwt_plot_renderer.h>
+#include <qwt_plot_spectrogram.h>
+#include <qwt_color_map.h>
+#include <qwt_scale_widget.h>
+#include <qwt_scale_draw.h>
+#include <qwt_plot_zoomer.h>
+#include <qwt_plot_panner.h>
 
 QwtGraphPlotCustom::QwtGraphPlotCustom() {
 
@@ -103,9 +114,174 @@ void QwtGraphPlotCustom::plotFor1DMaxEntropy(const QVector<double> &yy1, const Q
     curve->attach(graph_plot);
 }
 
-void plotFor2DMaxEntropyDensity () {
-    QwtPlotSpectrogram *plot = new QwtPlotSpectrogram("密度图");
 
+class MyZoomer: public QwtPlotZoomer
+{
+public:
+    MyZoomer( QWidget *canvas ):
+        QwtPlotZoomer( canvas )
+    {
+        setTrackerMode( AlwaysOn );
+    }
+
+    virtual QwtText trackerTextF( const QPointF &pos ) const
+    {
+        QColor bg( Qt::white );
+        bg.setAlpha( 200 );
+
+        QwtText text = QwtPlotZoomer::trackerTextF( pos );
+        text.setBackgroundBrush( QBrush( bg ) );
+        return text;
+    }
+};
+
+class SpectrogramData: public QwtRasterData
+{
+private:
+    QMap<QPair<double, double>, double > rasterData;
+    double xLength;
+    double yLength;
+    double minZValue;
+    double maxZValue;
+public:
+    SpectrogramData()
+    {
+
+    }
+
+    //返回值表示错误码
+    int initSpectrogramData(const QVector<QVector<double> > &data)
+    {
+        if (data.empty())
+            return -1;
+        int matrixLength = data[0].size();
+        int n = data.size();
+
+        //rasterData.resize(data.size());
+        xLength = (double)n;
+        yLength = (double)matrixLength;
+        minZValue = MAXFLOAT;
+        maxZValue = 0.0;
+        for (int i = 0; i < n; ++i) {
+            if (matrixLength != data[i].size() )
+            {
+                qDebug() << "It is not a matrix";
+                return -2;
+            }
+            //rasterData[i].resize(matrixLength);
+            for (int j = 0; j < matrixLength; ++j) {
+                rasterData.insert(qMakePair(double(i), double(j)), data[i][j]);
+                if (minZValue > data[i][j])
+                {
+                    minZValue = data[i][j];
+                }
+                if (maxZValue < data[i][j])
+                {
+                    maxZValue = data[i][j];
+                }
+            }
+        }
+        return 0;
+    }
+
+    void setMyInterval()
+    {
+        setInterval( Qt::XAxis, QwtInterval( 0.0, xLength ) );
+        setInterval( Qt::YAxis, QwtInterval( 0.0, yLength ) );
+        setInterval( Qt::ZAxis, QwtInterval( minZValue, maxZValue ) );
+    }
+
+    virtual double value( double x, double y ) const
+    {
+        return rasterData.value(qMakePair(x, y));
+    }
+};
+
+class LinearColorMapRGB: public QwtLinearColorMap
+{
+public:
+    LinearColorMapRGB():
+        QwtLinearColorMap( Qt::darkCyan, Qt::red, QwtColorMap::RGB )
+    {
+        addColorStop( 0.1, Qt::cyan );
+        addColorStop( 0.6, Qt::green );
+        addColorStop( 0.95, Qt::yellow );
+    }
+};
+
+void QwtGraphPlotCustom::plotFor2DMaxEntropyDensity ( const QVector<QVector<double> > &data ) {
+    qDebug() << "entry function";
+    QwtPlotSpectrogram* d_spectrogram = new QwtPlotSpectrogram("密度图");
+    d_spectrogram->setRenderThreadCount( 0 ); // use system specific thread count
+    d_spectrogram->setCachePolicy( QwtPlotRasterItem::PaintCache );
+
+    SpectrogramData *spectrogram_data = new SpectrogramData();
+    spectrogram_data->initSpectrogramData(data);
+    spectrogram_data->setMyInterval();
+
+    d_spectrogram->setData( spectrogram_data );
+    d_spectrogram->attach( graph_plot );
+    qDebug() << "plot graph";
+    const QwtInterval zInterval = d_spectrogram->data()->interval( Qt::ZAxis );
+
+    // A color bar on the right axis
+    QwtScaleWidget *rightAxis = graph_plot->axisWidget( QwtPlot::yRight );
+    rightAxis->setTitle( "Intensity" );
+    rightAxis->setColorBarEnabled( true );
+
+    graph_plot->setAxisScale( QwtPlot::yRight, zInterval.minValue(), zInterval.maxValue() );
+    graph_plot->enableAxis( QwtPlot::yRight );
+
+//    graph_plot->plotLayout()->setAlignCanvasToScales( true );
+
+    d_spectrogram->setColorMap( new LinearColorMapRGB() );
+    rightAxis->setColorMap( zInterval, new LinearColorMapRGB() );
+
+    // LeftButton for the zooming
+    // MidButton for the panning
+    // RightButton: zoom out by 1
+    // Ctrl+RighButton: zoom out to full size
+
+    QwtPlotZoomer* zoomer = new MyZoomer( graph_plot->canvas() );
+    zoomer->setMousePattern( QwtEventPattern::MouseSelect2,
+        Qt::RightButton, Qt::ControlModifier );
+    zoomer->setMousePattern( QwtEventPattern::MouseSelect3,
+        Qt::RightButton );
+
+    QwtPlotPanner *panner = new QwtPlotPanner( graph_plot->canvas() );
+    panner->setAxisEnabled( QwtPlot::yRight, false );
+    panner->setMouseButton( Qt::MidButton );
+
+    // Avoid jumping when labels with more/less digits
+    // appear/disappear when scrolling vertically
+
+    const QFontMetrics fm( graph_plot->axisWidget( QwtPlot::yLeft )->font() );
+    QwtScaleDraw *sd = graph_plot->axisScaleDraw( QwtPlot::yLeft );
+    sd->setMinimumExtent( fm.width( "100.00" ) );
+
+    const QColor c( Qt::darkBlue );
+    zoomer->setRubberBandPen( c );
+    zoomer->setTrackerPen( c );
+
+//    QToolBar *toolBar = new QToolBar( this );
+
+//    QCheckBox *btnSpectrogram = new QCheckBox( "Spectrogram", toolBar );
+//    toolBar->addWidget( btnSpectrogram );
+//    connect( btnSpectrogram, SIGNAL( toggled( bool ) ),
+//        d_plot, SLOT( showSpectrogram( bool ) ) );
+
+//    QCheckBox *btnContour = new QCheckBox( "Contour", toolBar );
+//    toolBar->addWidget( btnContour );
+//    connect( btnContour, SIGNAL( toggled( bool ) ),
+//        d_plot, SLOT( showContour( bool ) ) );
+
+//    addToolBar( toolBar );
+//    btnSpectrogram->setChecked( true );
+//    btnContour->setChecked( false );
+    d_spectrogram->setDisplayMode( QwtPlotSpectrogram::ImageMode, true );
+    d_spectrogram->setDefaultContourPen( QPen( Qt::black, 0 ) );
+    d_spectrogram->setDisplayMode( QwtPlotSpectrogram::ContourMode, true );
+    graph_plot->replot();
 
 }
 
