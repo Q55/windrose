@@ -71,6 +71,9 @@
 #include "libs/ff_GB/ff_GB.h"
 #include "libs/ff_GB/ff_GB_initialize.h"
 #include "libs/ff_GB/ff_GB_terminate.h"
+#include "libs/diraverage/diraverage.h"
+#include "libs/diraverage/diraverage_initialize.h"
+#include "libs/diraverage/diraverage_terminate.h"
 #include <QFile>
 #include <QDebug>
 
@@ -116,6 +119,32 @@ QVector<double> Utils::calcAvg(QVector<double> data, int freq, int internal_time
         }
         double avg = sum / window_size;
         result.push_back(avg);
+    }
+    return result;
+}
+
+QVector<double> Utils::calcDirAvg(QVector<double> data, int freq, int internal_time) {
+    QVector<double> result;
+    int window_size = freq * internal_time;
+    if (window_size <= 0) return result;
+    QVector<double> period_data;
+    for (int i = 0; i < data.size(); i = i + window_size) {
+        period_data.clear();
+        for (int j = i; j < i + window_size && j < data.size(); j++) {
+            period_data.push_back(data[j]);
+        }
+
+        diraverage_initialize();
+        static int iv0[1] = { period_data.size() };
+        emxArray_real_T *data1 = emxCreateND_real_T(1, iv0);
+        for (int j = 0; j < period_data.size(); j++)
+            data1->data[j] = period_data[j];
+
+        double avg = diraverage(data1);
+        result.push_back(avg);
+
+        emxDestroyArray_real_T(data1);
+        diraverage_terminate();
     }
     return result;
 }
@@ -434,13 +463,13 @@ void Utils::qtSpectral(QVector<double> in_data, double freq, QVector<double> &f,
 double Utils::qtCycleMax(QVector<double> in_data, double est_max, double resol, double obs_time, double regression_cycle) { // sample output not matched.
 
     double result = 0.0;
-    emxArray_real_T *data;
 
     cycle_max_initialize();
+    emxArray_real_T *data;
 
     static int iv0[1] = {in_data.size()};
     data = emxCreateND_real_T(1, iv0);
-    for (int j = 0; j < data->size[0U]; j++)
+    for (int j = 0; j < in_data.size(); j++)
         data->data[j] = in_data[j];
 
     result = cycle_max(data, est_max, resol, obs_time, regression_cycle);

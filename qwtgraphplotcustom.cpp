@@ -87,6 +87,22 @@ void QwtGraphPlotCustom::plotForSpectral(const QVector<double> &f, const QVector
     curve->attach(graph_plot);
 }
 
+void QwtGraphPlotCustom::plotForXYData(const QVector<double> &x, const QVector<double> &y) {
+    QPolygonF samples;
+    for (int i = 0; i < x.size(); ++i)
+        samples += QPointF(x[i], y[i]);
+
+    QwtPlotCurve *curve = new QwtPlotCurve("X-Y曲线");
+    curve->setSamples(samples);
+    curve->setStyle(QwtPlotCurve::Lines);
+    QwtSymbol *curve_symbols = new QwtSymbol( QwtSymbol::XCross);
+    curve_symbols->setSize(1);
+    curve_symbols->setPen( Qt::blue );
+    curve->setSymbol(curve_symbols);
+    curve->setPen(Qt::blue);
+    curve->attach(graph_plot);
+}
+
 void QwtGraphPlotCustom::plotFor1DMaxEntropy(const QVector<double> &yy1, const QVector<double> &yy2) {
     QPolygonF samples;
     for (int i = 0; i < yy1.size(); ++i)

@@ -1071,9 +1071,6 @@ color: rgb(0, 0, 127);</string>
            <property name="text">
             <string>清除缓存</string>
            </property>
-           <property name="autoDefault">
-            <bool>false</bool>
-           </property>
           </widget>
          </item>
          <item>
@@ -2680,7 +2677,7 @@ color: rgb(0, 0, 127);</string>
             <enum>Qt::NoFocus</enum>
            </property>
            <property name="text">
-            <string>First</string>
+            <string>开始</string>
            </property>
           </widget>
          </item>
@@ -2695,7 +2692,7 @@ color: rgb(0, 0, 127);</string>
             <enum>Qt::NoFocus</enum>
            </property>
            <property name="text">
-            <string>End</string>
+            <string>结束</string>
            </property>
           </widget>
          </item>
@@ -2710,7 +2707,7 @@ color: rgb(0, 0, 127);</string>
             <enum>Qt::NoFocus</enum>
            </property>
            <property name="text">
-            <string>Next</string>
+            <string>往前1000条</string>
            </property>
           </widget>
          </item>
@@ -2725,7 +2722,7 @@ color: rgb(0, 0, 127);</string>
             <enum>Qt::NoFocus</enum>
            </property>
            <property name="text">
-            <string>Last</string>
+            <string>往后1000条</string>
            </property>
           </widget>
          </item>
@@ -2771,12 +2768,6 @@ color: rgb(0, 0, 127);</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="sizeIncrement">
-         <size>
-          <width>8</width>
-          <height>9</height>
-         </size>
-        </property>
         <property name="focusPolicy">
          <enum>Qt::NoFocus</enum>
         </property>
@@ -2813,335 +2804,339 @@ color: rgb(0, 0, 127);</string>
          <attribute name="label">
           <string>船体位置计算</string>
          </attribute>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget_9">
           <property name="geometry">
            <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>331</width>
-            <height>116</height>
+            <x>10</x>
+            <y>7</y>
+            <width>271</width>
+            <height>52</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_33">
+          <layout class="QVBoxLayout" name="verticalLayout_43">
+           <property name="spacing">
+            <number>0</number>
+           </property>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_43">
-             <property name="spacing">
-              <number>0</number>
-             </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_59">
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_59">
+              <layout class="QHBoxLayout" name="horizontalLayout_60">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_60">
-                 <item>
-                  <widget class="QLabel" name="label_101">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>横摇:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_roll">
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QLabel" name="label_101">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>横摇:</string>
+                 </property>
+                </widget>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_61">
-                 <item>
-                  <widget class="QLabel" name="label_102">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>纬度:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_lat">
-                   <property name="text">
-                    <string>39.04845</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_62">
-                 <item>
-                  <widget class="QLabel" name="label_103">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>经度:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_lon">
-                   <property name="text">
-                    <string>121.5347</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QLineEdit" name="lineEdit_enpost_roll">
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_63">
+              <layout class="QHBoxLayout" name="horizontalLayout_61">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_64">
-                 <item>
-                  <widget class="QLabel" name="label_104">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>纵摇:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_pitch">
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QLabel" name="label_102">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>纬度:</string>
+                 </property>
+                </widget>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_65">
-                 <item>
-                  <widget class="QLabel" name="label_105">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>艏首:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_heading">
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QLineEdit" name="lineEdit_enpost_lat">
+                 <property name="text">
+                  <string>39.04845</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_62">
+               <item>
+                <widget class="QLabel" name="label_103">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>经度:</string>
+                 </property>
+                </widget>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_66">
-                 <item>
-                  <widget class="QLabel" name="label_106">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>海拔:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_altitude">
-                   <property name="text">
-                    <string>45</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QLineEdit" name="lineEdit_enpost_lon">
+                 <property name="text">
+                  <string>121.5347</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
             </layout>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_49">
-             <property name="spacing">
-              <number>0</number>
-             </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_63">
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_72">
+              <layout class="QHBoxLayout" name="horizontalLayout_64">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_73">
-                 <item>
-                  <widget class="QLabel" name="label_114">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>spmx</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_spmx">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>0.0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QLabel" name="label_104">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>纵摇:</string>
+                 </property>
+                </widget>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_74">
-                 <item>
-                  <widget class="QLabel" name="label_115">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>spmy</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_spmy">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>0.0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_75">
-                 <item>
-                  <widget class="QLabel" name="label_116">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>spmz</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_spmz">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>0.0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QLineEdit" name="lineEdit_enpost_pitch">
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_76">
+              <layout class="QHBoxLayout" name="horizontalLayout_65">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_77">
-                 <item>
-                  <widget class="QLabel" name="label_117">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>aftx: </string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_aftx">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>0.0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QLabel" name="label_105">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>艏首:</string>
+                 </property>
+                </widget>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_78">
-                 <item>
-                  <widget class="QLabel" name="label_118">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>afty:  </string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_afty">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>0.0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QLineEdit" name="lineEdit_enpost_heading">
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_66">
+               <item>
+                <widget class="QLabel" name="label_106">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>海拔:</string>
+                 </property>
+                </widget>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_79">
-                 <item>
-                  <widget class="QLabel" name="label_119">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>aftz: </string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_enpost_aftz">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>0.0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QLineEdit" name="lineEdit_enpost_altitude">
+                 <property name="text">
+                  <string>45</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="layoutWidget_11">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>61</y>
+            <width>290</width>
+            <height>52</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_49">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_72">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_73">
+               <item>
+                <widget class="QLabel" name="label_114">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>spmx</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_spmx">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_74">
+               <item>
+                <widget class="QLabel" name="label_115">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>spmy</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_spmy">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_75">
+               <item>
+                <widget class="QLabel" name="label_116">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>spmz</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_spmz">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_76">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_77">
+               <item>
+                <widget class="QLabel" name="label_117">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>aftx: </string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_aftx">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_78">
+               <item>
+                <widget class="QLabel" name="label_118">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>afty:  </string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_afty">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_79">
+               <item>
+                <widget class="QLabel" name="label_119">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>aftz: </string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_enpost_aftz">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -3155,8 +3150,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>81</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3240,8 +3235,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>81</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3428,8 +3423,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>81</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3497,173 +3492,189 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>81</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
           <string>相关性分析/肯德尔系数</string>
          </attribute>
-         <widget class="QWidget" name="">
+         <widget class="QLineEdit" name="lineEdit_kendall_limit_min1">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>50</y>
+            <width>51</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_kendall_limit_min2">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>50</y>
+            <width>51</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButton_correlation">
+          <property name="geometry">
+           <rect>
+            <x>210</x>
+            <y>20</y>
+            <width>100</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>相关性分析</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButton_kendall">
+          <property name="geometry">
+           <rect>
+            <x>210</x>
+            <y>50</y>
+            <width>100</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>肯德尔系数</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_121">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>50</y>
+            <width>21</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>min1</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_122">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>50</y>
+            <width>21</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>min2</string>
+          </property>
+         </widget>
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>10</y>
-            <width>331</width>
-            <height>67</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_54">
+          <layout class="QHBoxLayout" name="horizontalLayout_33">
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_31">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_50">
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_33">
-                 <item>
-                  <widget class="QLabel" name="label_84">
-                   <property name="maximumSize">
-                    <size>
-                     <width>10</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>X</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QComboBox" name="comboBox_correlation_x">
-                   <item>
-                    <property name="text">
-                     <string>0</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>1</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_34">
-                 <item>
-                  <widget class="QLabel" name="label_85">
-                   <property name="maximumSize">
-                    <size>
-                     <width>10</width>
-                     <height>10</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>Y</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QComboBox" name="comboBox_correlation_y">
-                   <item>
-                    <property name="text">
-                     <string>0</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>1</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_53">
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_51">
-                 <item>
-                  <widget class="QLabel" name="label_121">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>min1</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_kendall_limit_min1">
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_52">
-                 <item>
-                  <widget class="QLabel" name="label_122">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>min2</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_kendall_limit_min2">
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-            </layout>
+            <widget class="QLabel" name="label_84">
+             <property name="maximumSize">
+              <size>
+               <width>10</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>X</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_32">
+            <widget class="QComboBox" name="comboBox_correlation_x">
              <item>
-              <widget class="QRadioButton" name="radioButton_correlation">
-               <property name="text">
-                <string>相关性分析</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
+              <property name="text">
+               <string>0</string>
+              </property>
              </item>
              <item>
-              <widget class="QRadioButton" name="radioButton_kendall">
-               <property name="text">
-                <string>肯德尔系数</string>
-               </property>
-              </widget>
+              <property name="text">
+               <string>1</string>
+              </property>
              </item>
-            </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="layoutWidget">
+          <property name="geometry">
+           <rect>
+            <x>100</x>
+            <y>10</y>
+            <width>73</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_34">
+           <item>
+            <widget class="QLabel" name="label_85">
+             <property name="maximumSize">
+              <size>
+               <width>10</width>
+               <height>10</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Y</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_correlation_y">
+             <item>
+              <property name="text">
+               <string>0</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1</string>
+              </property>
+             </item>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -3681,8 +3692,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>81</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3890,8 +3901,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>81</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4101,59 +4112,59 @@ color: rgb(0, 0, 127);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QLabel" name="label_90">
           <property name="geometry">
            <rect>
             <x>210</x>
             <y>50</y>
-            <width>113</width>
+            <width>21</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>类型</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox_stats_type">
+          <property name="geometry">
+           <rect>
+            <x>238</x>
+            <y>50</y>
+            <width>81</width>
             <height>26</height>
            </rect>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_55">
-           <item>
-            <widget class="QLabel" name="label_90">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>类型</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboBox_stats_type">
-             <item>
-              <property name="text">
-               <string>Stats1D</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Stats2D</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>DistrF1</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>DistrF2</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
+          <item>
+           <property name="text">
+            <string>Stats1D</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Stats2D</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>DistrF1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>DistrF2</string>
+           </property>
+          </item>
          </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_maxshang2">
@@ -4387,7 +4398,7 @@ color: rgb(0, 0, 127);</string>
          <widget class="QLineEdit" name="lineEdit_2dshang_R">
           <property name="geometry">
            <rect>
-            <x>260</x>
+            <x>270</x>
             <y>10</y>
             <width>51</width>
             <height>21</height>
@@ -4418,7 +4429,7 @@ color: rgb(0, 0, 127);</string>
          <widget class="QComboBox" name="comboBox_2dshang_type">
           <property name="geometry">
            <rect>
-            <x>276</x>
+            <x>270</x>
             <y>38</y>
             <width>60</width>
             <height>26</height>
@@ -4453,7 +4464,7 @@ color: rgb(0, 0, 127);</string>
          <widget class="QLabel" name="label_95">
           <property name="geometry">
            <rect>
-            <x>250</x>
+            <x>240</x>
             <y>40</y>
             <width>31</width>
             <height>20</height>

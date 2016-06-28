@@ -16,6 +16,7 @@ public:
     static QVector<double> calcMax(QVector<double> data, int freq, int internal_time);
     static QVector<double> calcMin(QVector<double> data, int freq, int internal_time);
     static QVector<double> calcAvg(QVector<double> data, int freq, int internal_time);
+    static QVector<double> calcDirAvg(QVector<double> data, int freq, int internal_time);
 
     static double qtFilters(QVector<double> data, double fs, QVector<double>& l_data, QVector<double>& w_data);
 

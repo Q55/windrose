@@ -17,7 +17,7 @@ public:
     ~PostExprDialog();
 
 signals:
-    void postExprParas(bool, QString, int, double, bool, QString, int, QString);
+    void postExprParas(bool, QString, int, double, bool, QString, int, QString, QString);
 
 public slots:
     void accept();
