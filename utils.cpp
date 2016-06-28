@@ -71,6 +71,7 @@
 #include "libs/ff_GB/ff_GB.h"
 #include "libs/ff_GB/ff_GB_initialize.h"
 #include "libs/ff_GB/ff_GB_terminate.h"
+#include <QFile>
 #include <QDebug>
 
 Utils::Utils() {}
@@ -636,8 +637,9 @@ void Utils::qtStats1D(QVector<double> in_data1, double step, QVector<double> &yy
     for (int i = 0; i < out_yy->size[0]; ++i)
         yy1.push_back(out_yy->data[i]);
 
-    for (int i = 0; i < out_yy->size[1]; ++i)
-        yy2.push_back(out_yy->data[i]);
+    for (int i = 0; i < out_yy->size[0]; ++i) {
+        yy2.push_back(out_yy->data[out_yy->size[0] + i]);
+    }
 
     emxDestroyArray_real_T(out_yy);
     emxDestroyArray_real_T(data);
@@ -663,9 +665,17 @@ void Utils::qtStats2D(QVector<double> in_data1, QVector<double> in_data2, double
 
     Statistics_2d(data1, data2, limit_min1, limit_min2, step1, step2, out_yy);
 
-    for (int i = 0; i < out_yy->size[0]; ++i) {
-        for (int j = 0; j < out_yy->size[1]; ++j)
+    for (int i = 0; i < out_yy->size[0] * out_yy->size[1]; ++i)
+        qDebug()<<out_yy->data[i];
+
+    out.resize(out_yy->size[0]);
+    for (int i = 0; i < out.size(); ++i)
+        out[i].resize(out_yy->size[1]);
+
+    for (int i = 0; i < out_yy->size[0]; ++i) { // 42
+        for (int j = 0; j < out_yy->size[1]; ++j) { //42
             out[i][j] = out_yy->data[i * out_yy->size[1] + j];
+        }
     }
 
     emxDestroyArray_real_T(data1);
@@ -802,6 +812,33 @@ void Utils::qt2DMaxEntropy(QVector<double> ff1, QVector<double> FF1, QVector<dou
     case 4: ff_Gum_terminate(); break;
     default: return;
     }
+}
+
+QVector<double> Utils::getQVectorFromFile(QString filename, int ignore_rows, int rd_rows, int col_index) {
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug()<<"Open File ERROR!";
+        exit(-1);
+    }
+
+    QVector<double> rd_vec_data;
+    QTextStream in(&file);
+    int i = 0;
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        if (++i <= ignore_rows) continue;
+        QStringList list = line.split(",");
+        if (list.size() <= col_index) {
+            qDebug()<<"col_index is too large";
+            exit(-1);
+        }
+        rd_vec_data.push_back(list.at(col_index - 1).toDouble());
+        if (rd_vec_data.size() == rd_rows) {
+            return rd_vec_data;
+        }
+    }
+
+    return rd_vec_data;
 }
 
 

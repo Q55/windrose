@@ -16,6 +16,23 @@ Dialog::Dialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    /////////////////////////////////////////////
+    /// for cust lib test.
+    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
+                                                     3, 1000000, 1);
+    QVector<double> data2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
+                                                     3, 1000000, 2);
+//    qDebug()<<data1.size();
+//    qDebug()<<data2.size();
+    QVector<double> out1, out2;
+    QVector<QVector<double> > out;
+    Utils::qtStats2D(data1, data2, 0.12, 0.12, 0.1, 0.1, out);
+    qDebug()<<out.size();
+    for (int i = 0; i < out.size(); ++i) {
+        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
+    }
+    ////////////////////////////////////////////
+
     initComboboxMap();
     pre_selcol_count_map.clear();
     //pre_sel_colrepeatlist_map.clear();
