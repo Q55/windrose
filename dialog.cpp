@@ -18,19 +18,23 @@ Dialog::Dialog(QWidget *parent) :
 
     /////////////////////////////////////////////
     /// for cust lib test.
-    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
-                                                     3, 1000000, 1);
-    QVector<double> data2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
-                                                     3, 1000000, 2);
-//    qDebug()<<data1.size();
-//    qDebug()<<data2.size();
-    QVector<double> out1, out2;
-    QVector<QVector<double> > out;
-    Utils::qtStats2D(data1, data2, 0.12, 0.12, 0.1, 0.1, out);
-    qDebug()<<out.size();
-    for (int i = 0; i < out.size(); ++i) {
-        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
-    }
+//    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/maxshang1.csv",
+//                                                     3, 100000000, 1);
+////    QVector<double> data2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/spectral.csv",
+////                                                     2, 100000000, 2);
+////    qDebug()<<data1;
+////    qDebug()<<data2;
+//    QVector<double> out1, out2;
+//    double a, b;
+//    QVector<QVector<double> > out;
+//    Utils::qt1DMaxEntropy(data1, 0.12, 0.001, 0.001, 20, 0.001, 0.1, 4, out1, out2);
+////    qDebug()<<a<<","<<b;
+//    qDebug()<<out1;
+//    qDebug()<<out2;
+////    qDebug()<<out2;
+////    for (int i = 0; i < out.size(); ++i) {
+////        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
+////    }
     ////////////////////////////////////////////
 
     initComboboxMap();
@@ -836,7 +840,7 @@ void Dialog::postStartDataAnalysis() {
             ui->lineEdit_enpost_aftz->setText(QString::number(aftz));
             break;
         }
-        case 1: {// correlation  // weighted fit
+        case 1: { // weighted fit
             if (sel_items.size() != 2) {
                 msg = "曲线拟合需要2列数据";
                 break;
@@ -896,7 +900,7 @@ void Dialog::postStartDataAnalysis() {
 //            in_data1 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 //            in_data2 = {0,2,4,6,8,10,12,14,16,18,20,22,24,26};
             if (in_data1.size() != in_data2.size()) {
-                msg = "2列数据尺寸不匹配";
+                msg = "X列和Y列数据尺寸不匹配";
                 break;
             }
 
@@ -910,6 +914,7 @@ void Dialog::postStartDataAnalysis() {
                 ret_val = Utils::qtCorrelation(in_data1, in_data2, out_data1, out_data2); // a, b
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
                 graph->plotForCorrelation(out_data2, out_data1);
+                //graph->plotForCorrelation(out_data1, out_data2);
                 graph->show();
             } else if (type == 2) {
                 ret_val = Utils::qtKendall(in_data1, in_data2, ui->lineEdit_kendall_limit_min1->text().toDouble(),

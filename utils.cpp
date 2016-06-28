@@ -120,8 +120,6 @@ QVector<double> Utils::calcAvg(QVector<double> data, int freq, int internal_time
     return result;
 }
 
-//void range_check(emxArray_real_T *data, const emxArray_real_T *b_max,
-//                 const emxArray_real_T *b_min, const emxArray_real_T *check_list, double check)
 QVector<double> Utils::rangeCheck(QVector<double> data, double max, double min, double process_type) {
     QVector<double> result;
     emxArray_real_T *deal_data, *b_max, *b_min, *check_list;
@@ -131,7 +129,6 @@ QVector<double> Utils::rangeCheck(QVector<double> data, double max, double min, 
     else if (process_type == 1.0)
         check = 2.0;
 
-    qDebug()<<"range check type = "<<process_type;
     range_check_initialize();
 
     // prepare for deal_data
@@ -171,8 +168,6 @@ QVector<double> Utils::rangeCheck(QVector<double> data, double max, double min, 
     return result;
 }
 
-//void range_cont(emxArray_real_T *data, const emxArray_real_T *gsd, double
-//                time_step, const emxArray_real_T *check_list, double check)
 QVector<double> Utils::rangeCont(QVector<double> data, double gsd, double time_step, double process_type) {
     QVector<double> result;
     emxArray_real_T *deal_data, *array_gsd, *check_list;
@@ -181,8 +176,6 @@ QVector<double> Utils::rangeCont(QVector<double> data, double gsd, double time_s
         check = 1.0;
     else if (process_type == 1.0)
         check = 2.0;
-
-    qDebug()<<"range cont type = "<<process_type;
 
     range_cont_initialize();
 
@@ -222,8 +215,6 @@ QVector<double> Utils::rangeCont(QVector<double> data, double gsd, double time_s
     return result;
 }
 
-//void time_cont(const emxArray_real_T *data, double time_row, double time_step,
-//               double check, emxArray_real_T *data_out)
 QVector<double> Utils::timeCont(QVector<double> data, int freq, double time_row, double time_step, double process_type) {
 
     //QVector<double> data = {1,5,6,10,11,12,13,18,19,20};
@@ -231,26 +222,23 @@ QVector<double> Utils::timeCont(QVector<double> data, int freq, double time_row,
     QVector<double> time_col;
     for (int i = 0; i < data.size(); ++i)
         time_col.push_back(1 / freq * i);
-    //time_col.clear();
-    //time_col = {1,5,6,10,11,12,13,18,19,20};
-    qDebug()<<"time cont type = "<<process_type;
-    emxArray_real_T *deal_data, *out;
+//    time_col.clear();
+//    time_col = {1,5,6,10,11,12,13,18,19,20};
     double check = 2.0;
     if (process_type == 0.0) // 标注--0   插值--1
         check = 1.0;
 
     time_cont_initialize();
 
-    // prepare for deal_data
-    static int iv0[2] = {data.size(), data.size() };
-    deal_data = emxCreateND_real_T(2, iv0);
-    for (int i = 0; i < deal_data->size[0U]; i++) {
-        deal_data->data[i] = time_col[i];
-    }
-    for (int j = 0; j < deal_data->size[1U]; j++) {
-        deal_data->data[deal_data->size[0] + j] = data[j];
-    }
+    int size = data.size() * 2;
+    double temp[size];
+    for (int i = 0; i < time_col.size(); ++i)
+        temp[i] = time_col.at(i);
+    int k = time_col.size();
+    for (int i = 0; i < data.size(); ++i)
+        temp[k++] = data.at(i);
 
+    emxArray_real_T *deal_data =emxCreateWrapper_real_T(temp, data.size(), 2), *out; // (row, col)
     emxInitArray_real_T(&out, 2);
 
     // call time_cont() function.
@@ -260,9 +248,6 @@ QVector<double> Utils::timeCont(QVector<double> data, int freq, double time_row,
     for (int i = 0; i < out->size[0U]; i++) {
         result.push_back(out->data[i]);
     }
-    qDebug()<<result.size();
-    for (int i = 0; i < result.size(); i++)
-        qDebug()<<result.at(i);
 
     emxDestroyArray_real_T(deal_data);
     emxDestroyArray_real_T(out);
@@ -271,8 +256,6 @@ QVector<double> Utils::timeCont(QVector<double> data, int freq, double time_row,
     return result;
 }
 
-//void inter_consis(emxArray_real_T *data1, const emxArray_real_T *data2, double
-//                  type, emxArray_real_T *data)
 QVector<double> Utils::interConsis(QVector<double> data, QString var_name, QString expression, double process_type) {
     QVector<double> ref_data, result;
     if(expression != "") {
@@ -285,7 +268,6 @@ QVector<double> Utils::interConsis(QVector<double> data, QString var_name, QStri
         ref_data = data;
     }
 
-    qDebug()<<"inter consis type = "<<process_type;
     emxArray_real_T *data1, *data2, *out;
     double type = 1.0;
     if (process_type == 0.0)
@@ -318,9 +300,6 @@ QVector<double> Utils::interConsis(QVector<double> data, QString var_name, QStri
     for (int i = 0; i < out->size[0U]; i++) {
         result.push_back(out->data[i]);
     }
-//    qDebug()<<result.size();
-//    for (int i = 0; i < result.size(); i++)
-//        qDebug()<<result.at(i);
 
     emxDestroyArray_real_T(data1);
     emxDestroyArray_real_T(data2);
@@ -328,16 +307,13 @@ QVector<double> Utils::interConsis(QVector<double> data, QString var_name, QStri
     time_cont_terminate();
 
     return result;
-
 }
 
-//void filters(double Fs, const emxArray_real_T *data, double *Mdata,
-//             emxArray_real_T *Ldata, emxArray_real_T *Wdata)
 double Utils::qtFilters(QVector<double> data, double fs, QVector<double>& l_data, QVector<double>& w_data) {
     double m_data = 0;
-    emxArray_real_T *deal_data, *deal_ldata, *deal_wdata;
 
     filters_initialize();
+    emxArray_real_T *deal_data, *deal_ldata, *deal_wdata;
 
     // prepare for deal_data
     static int iv0[1] = { data.size() };
@@ -369,30 +345,6 @@ double Utils::qtFilters(QVector<double> data, double fs, QVector<double>& l_data
     return m_data;
 }
 
-
-//double cycle_max(const emxArray_real_T *data, double est_max, double resol,
-//                 double obs_time, double Regression_cycle)
-QVector<double> Utils::cycleMax(QVector<double> data, int freq, int internal_time) {
-    QVector<double> result;
-    int window_size = freq * internal_time;
-    for (int i = 0; i < data.size(); i = i + window_size) {
-        cycle_max_initialize();
-        emxArray_real_T *input_data;
-        static int iv0[1] = { window_size };
-        input_data = emxCreateND_real_T(1, iv0);
-        int k = i;
-        for (int j = 0; j < input_data->size[0U]; j++) {
-            input_data->data[j] = data[k++];
-        }
-        double retval = cycle_max(input_data, 4, 0.1, 0.5, 100);
-        emxDestroyArray_real_T(input_data);
-        cycle_max_terminate();
-        result.push_back(retval);
-    }
-    //qDebug()<<result.size();
-    return result;
-}
-
 double Utils::qtCorrelation(QVector<double> in_data1, QVector<double> in_data2, QVector<double> &out_data1, QVector<double> &out_data2) {
     double index = 0.0;
     emxArray_real_T *x, *y, *a, *b;
@@ -414,12 +366,9 @@ double Utils::qtCorrelation(QVector<double> in_data1, QVector<double> in_data2, 
     correlation(x, y, b, a, &index);
 
     for (int i = 0; i < a->size[0]; ++i) {
-        //qDebug()<<a->data[i];
         out_data1.push_back(a->data[i]);
     }
-    //qDebug()<<"index = "<<index;
     for (int i = 0; i < b->size[1]; ++i) {
-        //qDebug()<<b->data[i];
         out_data2.push_back(b->data[i]);
     }
 
@@ -433,25 +382,21 @@ double Utils::qtCorrelation(QVector<double> in_data1, QVector<double> in_data2, 
     return index;
 }
 
-void Utils::weightedFit(QVector<double> in_data1, QVector<double> in_data2, double &a, double &b) {
-
-    emxArray_real_T *data;
+void Utils::weightedFit(QVector<double> in_data1, QVector<double> in_data2, double &a, double &b) { // sample output not matched.
 
     weightedfit_initialize();
 
-    // prepare for deal_data
-    static int iv0[2] = {in_data1.size(), in_data2.size() };
-    data = emxCreateND_real_T(2, iv0);
-    for (int i = 0; i < data->size[0U]; i++) {
-        data->data[i] = in_data1[i];
-    }
-    for (int j = 0; j < data->size[1U]; j++) {
-        data->data[data->size[0] + j] = in_data2[j];
-    }
+    int size = in_data1.size() * 2;
+    double temp[size];
+    for (int i = 0; i < in_data1.size(); ++i)
+        temp[i] = in_data1.at(i);
+    int k = in_data1.size();
+    for (int i = 0; i < in_data2.size(); ++i)
+        temp[k++] = in_data2.at(i);
+
+    emxArray_real_T *data =emxCreateWrapper_real_T(temp, in_data1.size(), 2); // (row, col)
 
     weightedfit(data, &a, &b);
-
-    qDebug()<<"a = "<<a<<", b = "<<b;
 
     emxDestroyArray_real_T(data);
 
@@ -459,10 +404,9 @@ void Utils::weightedFit(QVector<double> in_data1, QVector<double> in_data2, doub
 }
 
 void Utils::qtSpectral(QVector<double> in_data, double freq, QVector<double> &f, QVector<double> &YY) {
-    emxArray_real_T *data, *out_f, *out_YY;
-
     spectral_initialize();
 
+    emxArray_real_T *data, *out_f, *out_YY;
     emxInitArray_real_T(&out_f, 2);
     emxInitArray_real_T(&out_YY, 1);
 
@@ -481,21 +425,14 @@ void Utils::qtSpectral(QVector<double> in_data, double freq, QVector<double> &f,
         YY.push_back(out_YY->data[i]);
     }
 
-    qDebug()<<"data size = "<<in_data.size();
-    qDebug()<<"f size0 = "<<out_f->size[0];
-    qDebug()<<"f size1 = "<<out_f->size[1];
-    qDebug()<<"YY size = "<<out_YY->size[0];
-
     emxDestroyArray_real_T(data);
     emxDestroyArray_real_T(out_f);
     emxDestroyArray_real_T(out_YY);
     spectral_terminate();
-
 }
 
-double Utils::qtCycleMax(QVector<double> in_data, double est_max, double resol, double obs_time, double regression_cycle) {
+double Utils::qtCycleMax(QVector<double> in_data, double est_max, double resol, double obs_time, double regression_cycle) { // sample output not matched.
 
-    //qDebug()<<"in data size = "<<in_data.size();
     double result = 0.0;
     emxArray_real_T *data;
 
@@ -560,9 +497,7 @@ void Utils::qtEnpost(double lat, double lon, double roll, double pitch, double h
 
 void Utils::qt1DMaxEntropy(QVector<double> in_data, double limit_min, double a0_resol, double est_kesi_min, double est_kesi_max,
                            double kesi_resol, double wh_sample, double wh_max, QVector<double> &yy1, QVector<double> &yy2) {
-//    qDebug()<<"limit_min = "<<limit_min<<", a0_resol = "<<a0_resol<<", est_kesi_min = "<<est_kesi_min;
-//    qDebug()<<"est_kesi_max = "<<est_kesi_max<<", kesi_resol = "<<kesi_resol<<", wh_sample = "<<wh_sample<<", wh_max = "<<wh_max;
-//    qDebug()<<"input data size = "<<in_data.size();
+    // sample output not totally matched.
     emxArray_real_T *data, *out_yy;
     max_shang_one_initialize();
 
@@ -573,19 +508,17 @@ void Utils::qt1DMaxEntropy(QVector<double> in_data, double limit_min, double a0_
 
     emxInitArray_real_T(&out_yy, 2);
 
-    qDebug()<<"11111111";
-
     max_shang_one(data, limit_min, a0_resol, est_kesi_min, est_kesi_max, kesi_resol, wh_sample, wh_max, out_yy);
 
-    qDebug()<<"in data size = "<<in_data.size();
-    qDebug()<<"out data size0 = "<<out_yy->size[0];
-    qDebug()<<"out data size1 = "<<out_yy->size[1];
+    for (int i = 0; i < out_yy->size[0] * out_yy->size[1]; ++i)
+        qDebug()<<out_yy->data[i];
+
 
     for (int i = 0; i < out_yy->size[0]; ++i)
         yy1.push_back(out_yy->data[i]);
 
-    for (int i = 0; i < out_yy->size[1]; ++i)
-        yy2.push_back(out_yy->data[i]);
+    for (int i = 0; i < out_yy->size[0]; ++i)
+        yy2.push_back(out_yy->data[i + out_yy->size[0]]);
 
     emxDestroyArray_real_T(out_yy);
     emxDestroyArray_real_T(data);
@@ -630,10 +563,6 @@ void Utils::qtStats1D(QVector<double> in_data1, double step, QVector<double> &yy
 
     Statistics_1d(data, step, out_yy);
 
-    qDebug()<<"in data size = "<<in_data1.size();
-    qDebug()<<"out data size0 = "<<out_yy->size[0];
-    qDebug()<<"out data size1 = "<<out_yy->size[1];
-
     for (int i = 0; i < out_yy->size[0]; ++i)
         yy1.push_back(out_yy->data[i]);
 
@@ -665,16 +594,13 @@ void Utils::qtStats2D(QVector<double> in_data1, QVector<double> in_data2, double
 
     Statistics_2d(data1, data2, limit_min1, limit_min2, step1, step2, out_yy);
 
-    for (int i = 0; i < out_yy->size[0] * out_yy->size[1]; ++i)
-        qDebug()<<out_yy->data[i];
-
-    out.resize(out_yy->size[0]);
+    out.resize(out_yy->size[0]); // 34
     for (int i = 0; i < out.size(); ++i)
         out[i].resize(out_yy->size[1]);
 
-    for (int i = 0; i < out_yy->size[0]; ++i) { // 42
-        for (int j = 0; j < out_yy->size[1]; ++j) { //42
-            out[i][j] = out_yy->data[i * out_yy->size[1] + j];
+    for (int i = 0; i < out_yy->size[1]; ++i) { // 42
+        for (int j = 0; j < out_yy->size[0]; ++j) { //34
+            out[j][i] = out_yy->data[i * out_yy->size[0] + j];
         }
     }
 
@@ -699,15 +625,11 @@ void Utils::qtDistrF1(QVector<double> in_data1, QVector<double> in_data2, QVecto
 
     distr_F1(in_data, out_yy);
 
-    qDebug()<<"in data size = "<<in_data1.size();
-    qDebug()<<"out data size0 = "<<out_yy->size[0];
-    qDebug()<<"out data size1 = "<<out_yy->size[1];
-
     for (int i = 0; i < out_yy->size[0]; ++i)
         out_FF1.push_back(out_yy->data[i]);
 
-    for (int i = 0; i < out_yy->size[1]; ++i)
-        out_FF2.push_back(out_yy->data[i]);
+    for (int i = 0; i < out_yy->size[0]; ++i)
+        out_FF2.push_back(out_yy->data[i + out_yy->size[0]]);
 
     emxDestroyArray_real_T(in_data);
     emxDestroyArray_real_T(out_yy);
@@ -715,18 +637,6 @@ void Utils::qtDistrF1(QVector<double> in_data1, QVector<double> in_data2, QVecto
 }
 
 void Utils::qtDistrF2(QVector<QVector<double> > in_ff, QVector<QVector<double> > &out_FF) {
-    distr_F2_initialize();
-    int size = 0;
-    for (int i = 0; i < in_ff.size(); ++i)
-        size += in_ff.at(i).size();
-    double temp[size];
-    size = 0;
-    for (int i = 0; i < in_ff.size(); ++i) {
-        for (int j = 0; j < in_ff.at(i).size(); ++j) {
-            temp[size + j] = in_ff.at(i).at(j);
-        }
-        size += in_ff.at(i).size();
-    }
 
     int col = 0, row = in_ff.size();
     for (int i = 0; i < row; ++i) {
@@ -734,14 +644,38 @@ void Utils::qtDistrF2(QVector<QVector<double> > in_ff, QVector<QVector<double> >
         break;
     }
 
+    for (int i = 0; i < row; ++i) {
+        if (in_ff.at(i).size() != col) {
+            qDebug()<<"distr_F2: 输入非矩阵";
+            exit(-1);
+        }
+    }
+
+    distr_F2_initialize();
+
+    int size = row * col;
+    double temp[size];
+
+    int k = 0;
+    for (int i = 0; i < col; ++i) {
+        for (int j = 0; j < row; ++j) {
+            temp[k++] = in_ff.at(j).at(i);
+        }
+    }
+
     emxArray_real_T *in_data =emxCreateWrapper_real_T(temp, row, col), *out;
     emxInitArray_real_T(&out, 2);
 
     distr_F2(in_data, out);
 
-    for (int i = 0; i < out->size[0]; ++i) {
-        for (int j = 0; j < out->size[1]; ++j)
-            out_FF[i][j] = out->data[i * out->size[1] + j];
+    out_FF.resize(out->size[0]); // 34
+    for (int i = 0; i < out_FF.size(); ++i)
+        out_FF[i].resize(out->size[1]);
+
+    for (int i = 0; i < out->size[1]; ++i) { // 42
+        for (int j = 0; j < out->size[0]; ++j) { //34
+            out_FF[j][i] = out->data[i * out->size[0] + j];
+        }
     }
 
     emxDestroyArray_real_T(in_data);
@@ -793,9 +727,14 @@ void Utils::qt2DMaxEntropy(QVector<double> ff1, QVector<double> FF1, QVector<dou
     default: return;
     }
 
-    for (int i = 0; i < out_yy->size[0]; ++i) {
-        for (int j = 0; j < out_yy->size[1]; ++j)
-            out[i][j] = out_yy->data[i * out_yy->size[1] + j];
+    out.resize(out_yy->size[0]);
+    for (int i = 0; i < out.size(); ++i)
+        out[i].resize(out_yy->size[1]);
+
+    for (int i = 0; i < out_yy->size[1]; ++i) {
+        for (int j = 0; j < out_yy->size[0]; ++j) {
+            out[j][i] = out_yy->data[i * out_yy->size[0] + j];
+        }
     }
 
     emxDestroyArray_real_T(in_ff1);

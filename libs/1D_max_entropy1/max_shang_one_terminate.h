@@ -2,7 +2,7 @@
  * File: max_shang_one_terminate.h
  *
  * MATLAB Coder version            : 3.0
- * C/C++ source code generated on  : 06-Jun-2016 15:17:02
+ * C/C++ source code generated on  : 11-Jun-2016 17:29:56
  */
 
 #ifndef __MAX_SHANG_ONE_TERMINATE_H__
