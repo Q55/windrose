@@ -101,8 +101,12 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         if (it.value().analyse_type == it.value().MINVALUE)
             result = Utils::calcMin(result, it.value().frequency, it.value().time_interval);
         // average
-        if (it.value().analyse_type == it.value().AVERAGEVALUE)
-            result = Utils::calcAvg(result, it.value().frequency, it.value().time_interval);
+        if (it.value().analyse_type == it.value().AVERAGEVALUE) {
+            if (str.contains("winddir", Qt::CaseInsensitive))
+                result = Utils::calcDirAvg(result, it.value().frequency, it.value().time_interval);
+            else
+                result = Utils::calcAvg(result, it.value().frequency, it.value().time_interval);
+        }
         // filter
         if (it.value().filter_type == it.value().LOWERPASSFILTER) {
             QVector<double> l_data, w_data;
@@ -129,10 +133,10 @@ void DataProcess::exportDataToFiles(QString path, bool is_rawdata)
     QString data_file_name;
     QMap<QString, QVector<double> > *write_data_map;
     if (is_rawdata) {
-        data_file_name = path + "/raw.data.csv";
+        data_file_name = path + ".rawdata.csv";
         write_data_map = &raw_data_map;
     } else {
-        data_file_name = path + "/preproc.data.csv";
+        data_file_name = path + ".preprocdata.csv";
         write_data_map = &after_preproc_data_map;
     }
     QFile data_file(data_file_name);
@@ -184,8 +188,8 @@ void DataProcess::addColsToPostProcDataDirectly(QStringList col_name_list) {
     //qDebug()<<"Size of postproc_data_map after add is "<<postproc_data_map.size();
 }
 
-QString DataProcess::addColToPostProcDataByExpr(bool is_scalar, QString data1, QString data2, int op, double operand) {
-    QString new_col_name;
+QString DataProcess::addColToPostProcDataByExpr(bool is_scalar, QString data1, QString data2, int op, double operand, QString new_col) {
+    QString new_col_name = new_col;
     QVector<double> result;
     qDebug()<<operand;
     if (is_scalar) {
@@ -193,37 +197,37 @@ QString DataProcess::addColToPostProcDataByExpr(bool is_scalar, QString data1, Q
             QVector<double> &orig_data = after_preproc_data_map[data1];
             switch (op) {
             case 0:
-                new_col_name = data1 + "+" + QString::number(operand);
+                //new_col_name = data1 + "+" + QString::number(operand);
                 for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
                     result.push_back(*it + operand);
                 break;
             case 1:
-                new_col_name = data1 + "-" + QString::number(operand);
+                //new_col_name = data1 + "-" + QString::number(operand);
                 for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
                     result.push_back(*it - operand);
                 break;
             case 2:
-                new_col_name = data1 + "*" + QString::number(operand);
+                //new_col_name = data1 + "*" + QString::number(operand);
                 for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
                     result.push_back(*it * operand);
                 break;
             case 3:
-                new_col_name = data1 + "/" + QString::number(operand);
+                //new_col_name = data1 + "/" + QString::number(operand);
                 for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
                     result.push_back(*it / operand);
                 break;
             case 4:
-                new_col_name = data1 + "^2";
+                //new_col_name = data1 + "^2";
                 for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
                     result.push_back((*it) * (*it));
                 break;
             case 5:
-                new_col_name = data1 + ".extract";
+                //new_col_name = data1 + ".extract";
                 for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
                     result.push_back(sqrt(*it));
                 break;
             case 6:
-                new_col_name = data1 + ".log";
+                //new_col_name = data1 + ".log";
                 for (auto it = orig_data.begin(); it != orig_data.end(); ++it)
                     result.push_back(log(*it));
                 break;
@@ -238,22 +242,22 @@ QString DataProcess::addColToPostProcDataByExpr(bool is_scalar, QString data1, Q
             auto it2 = orig_data2.begin();
             switch (op) {
             case 0:
-                new_col_name = data1 + "+" + data2;
+                //new_col_name = data1 + "+" + data2;
                 for (; it1 != orig_data1.end() && it2 != orig_data2.end(); ++it1, ++it2)
                     result.push_back(*it1 + *it2);
                 break;
             case 1:
-                new_col_name = data1 + "-" + data2;
+                //new_col_name = data1 + "-" + data2;
                 for (; it1 != orig_data1.end() && it2 != orig_data2.end(); ++it1, ++it2)
                     result.push_back(*it1 - *it2);
                 break;
             case 2:
-                new_col_name = data1 + "*" + data2;
+                //new_col_name = data1 + "*" + data2;
                 for (; it1 != orig_data1.end() && it2 != orig_data2.end(); ++it1, ++it2)
                     result.push_back(*it1 * *it2);
                 break;
             case 3:
-                new_col_name = data1 + "/" + data2;
+                //new_col_name = data1 + "/" + data2;
                 for (; it1 != orig_data1.end() && it2 != orig_data2.end(); ++it1, ++it2) {
                     double val2 = *it2;
                     if (val2 == 0.0) val2 = 1;
@@ -263,6 +267,13 @@ QString DataProcess::addColToPostProcDataByExpr(bool is_scalar, QString data1, Q
             }
         }
     }
+
+    int i = 0;
+    QString temp_name = new_col_name;
+    while (postproc_data_map.find(temp_name) != postproc_data_map.end()) {
+        temp_name = new_col_name + QString::number(i++);
+    }
+    new_col_name = temp_name;
 
     if (new_col_name != "") {
         postproc_data_map.insert(new_col_name, result);

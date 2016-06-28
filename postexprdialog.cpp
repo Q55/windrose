@@ -20,6 +20,7 @@ PostExprDialog::PostExprDialog(QStringList sel_col, QWidget *parent) :
         ui->groupBox_scalar_expr->setChecked(true);
         ui->comboBox_scalar_data->setItemText(0, sel_col[0]);
         ui->lineEdit_scalar_operand->setText("0");
+        ui->lineEdit_new_col_name->setText(sel_col[0]);
     } else if (sel_col.size() == 2) {
         ui->groupBox_scalar_expr->setCheckable(false);
         ui->groupBox_vector_expr->setChecked(true);
@@ -27,6 +28,7 @@ PostExprDialog::PostExprDialog(QStringList sel_col, QWidget *parent) :
         ui->comboBox_vector_data_1->setItemText(1, sel_col[1]);
         ui->comboBox_vector_data_2->setItemText(0, sel_col[1]);
         ui->comboBox_vector_data_2->setItemText(1, sel_col[0]);
+        ui->lineEdit_new_col_name->setText(sel_col[0] + "#" + sel_col[1]);
     }
 
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
@@ -41,14 +43,6 @@ void PostExprDialog::accept() {
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
         return;
-//    } else if (ui->comboBox_scarlar_operator->currentIndex() == 6 &&
-//               ui->lineEdit_scalar_operand->text().toDouble() <= 0.0) { // "log-1"
-//        QMessageBox msgBox;
-//        msgBox.setText("Log shoule be Greater than Zero.");
-//        msgBox.setStandardButtons(QMessageBox::Ok);
-//        msgBox.setDefaultButton(QMessageBox::Ok);
-//        msgBox.exec();
-//        return;
     } else {
         emit postExprParas(ui->groupBox_scalar_expr->isChecked(),
                        ui->comboBox_scalar_data->currentText(),
@@ -57,7 +51,8 @@ void PostExprDialog::accept() {
                        ui->groupBox_vector_expr->isChecked(),
                        ui->comboBox_vector_data_1->currentText(),
                        ui->comboBox_vector_operator->currentIndex(),
-                       ui->comboBox_vector_data_2->currentText());
+                       ui->comboBox_vector_data_2->currentText(),
+                       ui->lineEdit_new_col_name->text());
         QDialog::accept();
     }
 }

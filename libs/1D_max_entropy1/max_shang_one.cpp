@@ -2,7 +2,7 @@
  * File: max_shang_one.c
  *
  * MATLAB Coder version            : 3.0
- * C/C++ source code generated on  : 06-Jun-2016 15:17:02
+ * C/C++ source code generated on  : 11-Jun-2016 17:29:56
  */
 
 /* Include Files */
@@ -144,7 +144,7 @@ static double erfenfa(double a, double b, double tol, double a0, const
   double root;
   double step;
   boolean_T exitg1;
-  int i1;
+  int i2;
   int a1;
   boolean_T exitg2;
   double b_a1;
@@ -161,10 +161,10 @@ static double erfenfa(double a, double b, double tol, double a0, const
   x = 9.9999999E+7;
   exitg1 = false;
   while ((!exitg1) && (root == 0.0)) {
-    i1 = (int)(((b - 0.1) + (step - a)) / step);
+    i2 = (int)(((b - 0.1) + (step - a)) / step);
     a1 = 0;
     exitg2 = false;
-    while ((!exitg2) && (a1 <= i1 - 1)) {
+    while ((!exitg2) && (a1 <= i2 - 1)) {
       b_a1 = a + (double)a1 * step;
       b1 = b_a1 + step;
       c1 = (b_a1 + b1) / 2.0;
@@ -473,7 +473,7 @@ static void larnum_divi(double aa[1000], double bb[1000], double cc[1000])
   boolean_T exitg5;
   boolean_T guard3 = false;
   int loop_ub;
-  int i2;
+  int i3;
   short aa_notzero_data[1000];
   boolean_T exitg4;
   boolean_T guard2 = false;
@@ -529,8 +529,8 @@ static void larnum_divi(double aa[1000], double bb[1000], double cc[1000])
     loop_ub = idx;
   }
 
-  for (i2 = 0; i2 < loop_ub; i2++) {
-    aa_notzero_data[i2] = ii_data[i2];
+  for (i3 = 0; i3 < loop_ub; i3++) {
+    aa_notzero_data[i3] = ii_data[i3];
   }
 
   idx = 0;
@@ -567,22 +567,22 @@ static void larnum_divi(double aa[1000], double bb[1000], double cc[1000])
     ii = idx;
   }
 
-  for (i2 = 0; i2 < ii; i2++) {
-    bb_notzero_data[i2] = ii_data[i2];
+  for (i3 = 0; i3 < ii; i3++) {
+    bb_notzero_data[i3] = ii_data[i3];
   }
 
   if (!(loop_ub == 0)) {
     if (aa_notzero_data[loop_ub - 1] + 1 > 1000) {
-      i2 = 0;
+      i3 = 0;
       idx = 0;
     } else {
-      i2 = aa_notzero_data[loop_ub - 1];
+      i3 = aa_notzero_data[loop_ub - 1];
       idx = 1000;
     }
 
-    ii = idx - i2;
+    ii = idx - i3;
     for (idx = 0; idx < ii; idx++) {
-      aa[i2 + idx] = 0.0;
+      aa[i3 + idx] = 0.0;
     }
 
     /* 扩充aa序列 */
@@ -594,16 +594,16 @@ static void larnum_divi(double aa[1000], double bb[1000], double cc[1000])
 
   if (!(ii_size_idx_0 == 0)) {
     if (bb_notzero_data[ii_size_idx_0 - 1] + 1 > 1000) {
-      i2 = 0;
+      i3 = 0;
       idx = 0;
     } else {
-      i2 = bb_notzero_data[ii_size_idx_0 - 1];
+      i3 = bb_notzero_data[ii_size_idx_0 - 1];
       idx = 1000;
     }
 
-    loop_ub = idx - i2;
+    loop_ub = idx - i3;
     for (idx = 0; idx < loop_ub; idx++) {
-      bb[i2 + idx] = 0.0;
+      bb[i3 + idx] = 0.0;
     }
 
     /* 扩充aa序列 */
@@ -625,17 +625,17 @@ static void larnum_divi(double aa[1000], double bb[1000], double cc[1000])
     memcpy(&dd[0], &aa[0], 1000U * sizeof(double));
     row_c = 1;
   } else {
-    i2 = (len_aa - len_bb) + 1;
-    if (i2 > len_aa) {
-      i2 = 1;
+    i3 = (len_aa - len_bb) + 1;
+    if (i3 > len_aa) {
+      i3 = 1;
       idx = 0;
     } else {
       idx = len_aa;
     }
 
-    loop_ub = idx - i2;
+    loop_ub = idx - i3;
     for (idx = 0; idx <= loop_ub; idx++) {
-      dd[idx] = aa[(i2 + idx) - 1];
+      dd[idx] = aa[(i3 + idx) - 1];
     }
 
     row_c = row;
@@ -677,8 +677,8 @@ static void larnum_divi(double aa[1000], double bb[1000], double cc[1000])
       loop_ub = idx;
     }
 
-    for (i2 = 0; i2 < loop_ub; i2++) {
-      aa_notzero_data[i2] = ii_data[i2];
+    for (i3 = 0; i3 < loop_ub; i3++) {
+      aa_notzero_data[i3] = ii_data[i3];
     }
 
     if (ii_size_idx_0 == 0) {
@@ -1109,7 +1109,7 @@ static void larnum_plus(const double aa[1000], const double bb[1000], double cc
   boolean_T exitg2;
   boolean_T guard2 = false;
   int loop_ub;
-  int i4;
+  int i5;
   short aa_notzero_data[1000];
   boolean_T exitg1;
   boolean_T guard1 = false;
@@ -1146,8 +1146,8 @@ static void larnum_plus(const double aa[1000], const double bb[1000], double cc
     loop_ub = idx;
   }
 
-  for (i4 = 0; i4 < loop_ub; i4++) {
-    aa_notzero_data[i4] = ii_data[i4];
+  for (i5 = 0; i5 < loop_ub; i5++) {
+    aa_notzero_data[i5] = ii_data[i5];
   }
 
   idx = 0;
@@ -1182,8 +1182,8 @@ static void larnum_plus(const double aa[1000], const double bb[1000], double cc
     idx = 0;
   }
 
-  for (i4 = 0; i4 < idx; i4++) {
-    bb_notzero_data[i4] = ii_data[i4];
+  for (i5 = 0; i5 < idx; i5++) {
+    bb_notzero_data[i5] = ii_data[i5];
   }
 
   if (loop_ub == 0) {
@@ -1192,22 +1192,22 @@ static void larnum_plus(const double aa[1000], const double bb[1000], double cc
     memcpy(&cc[0], &aa[0], 1000U * sizeof(double));
   } else {
     if (aa_notzero_data[loop_ub - 1] >= bb_notzero_data[ii_size_idx_0 - 1]) {
-      i4 = aa_notzero_data[loop_ub - 1];
+      i5 = aa_notzero_data[loop_ub - 1];
     } else {
-      i4 = bb_notzero_data[ii_size_idx_0 - 1];
+      i5 = bb_notzero_data[ii_size_idx_0 - 1];
     }
 
-    for (ii = 0; ii < i4; ii++) {
+    for (ii = 0; ii < i5; ii++) {
       cc[ii] = aa[ii] + bb[ii];
     }
 
     if (aa_notzero_data[loop_ub - 1] >= bb_notzero_data[ii_size_idx_0 - 1]) {
-      i4 = aa_notzero_data[loop_ub - 1];
+      i5 = aa_notzero_data[loop_ub - 1];
     } else {
-      i4 = bb_notzero_data[ii_size_idx_0 - 1];
+      i5 = bb_notzero_data[ii_size_idx_0 - 1];
     }
 
-    for (jj = 0; jj < i4; jj++) {
+    for (jj = 0; jj < i5; jj++) {
       d1 = cc[jj] / 10.0;
       b_fix(&d1);
       cc[jj + 1] += d1;
@@ -1237,7 +1237,7 @@ static double larnum_vs(double aa[1000], double bb[1000])
   boolean_T guard2 = false;
   int ii_size_idx_0;
   short bb_notzero_data[1000];
-  int i3;
+  int i4;
   int len_aa;
   int len_bb;
   double test[1000];
@@ -1316,15 +1316,15 @@ static double larnum_vs(double aa[1000], double bb[1000])
   if (!(loop_ub == 0)) {
     if (aa_notzero_data[loop_ub - 1] + 1 > 1000) {
       idx = 0;
-      i3 = 0;
+      i4 = 0;
     } else {
       idx = aa_notzero_data[loop_ub - 1];
-      i3 = 1000;
+      i4 = 1000;
     }
 
-    ii = i3 - idx;
-    for (i3 = 0; i3 < ii; i3++) {
-      aa[idx + i3] = 0.0;
+    ii = i4 - idx;
+    for (i4 = 0; i4 < ii; i4++) {
+      aa[idx + i4] = 0.0;
     }
 
     /* 扩充aa序列 */
@@ -1337,15 +1337,15 @@ static double larnum_vs(double aa[1000], double bb[1000])
   if (!(ii_size_idx_0 == 0)) {
     if (bb_notzero_data[ii_size_idx_0 - 1] + 1 > 1000) {
       idx = 0;
-      i3 = 0;
+      i4 = 0;
     } else {
       idx = bb_notzero_data[ii_size_idx_0 - 1];
-      i3 = 1000;
+      i4 = 1000;
     }
 
-    loop_ub = i3 - idx;
-    for (i3 = 0; i3 < loop_ub; i3++) {
-      bb[idx + i3] = 0.0;
+    loop_ub = i4 - idx;
+    for (i4 = 0; i4 < loop_ub; i4++) {
+      bb[idx + i4] = 0.0;
     }
 
     /* 扩充aa序列 */
@@ -1492,8 +1492,8 @@ void max_shang_one(const emxArray_real_T *data1, double limit_min, double
   emxArray_real_T *data;
   int ixstart;
   double kd;
-  int ix;
-  boolean_T exitg3;
+  int idx;
+  boolean_T exitg4;
   emxArray_real_T *a0_row;
   double rr;
   emxArray_real_T *x_row;
@@ -1513,9 +1513,15 @@ void max_shang_one(const emxArray_real_T *data1, double limit_min, double
   emxArray_real_T *KK;
   int kk;
   int itmp;
-  boolean_T exitg2;
+  boolean_T exitg3;
   emxArray_int32_T *r0;
   int ll_yy;
+  emxArray_real_T *xx_cor;
+  emxArray_boolean_T *x;
+  emxArray_int32_T *b_ii;
+  int i1;
+  boolean_T exitg2;
+  boolean_T guard2 = false;
   int xx_ii;
   double aa;
   double index_row;
@@ -1530,7 +1536,7 @@ void max_shang_one(const emxArray_real_T *data1, double limit_min, double
   boolean_T guard1 = false;
   short ff_notzero_data[1000];
   double gg;
-  int b_ii;
+  int c_ii;
   emxInit_real_T(&sample1, 1);
   i0 = sample1->size[0];
   sample1->size[0] = data1->size[0];
@@ -1568,15 +1574,15 @@ void max_shang_one(const emxArray_real_T *data1, double limit_min, double
   kd = sample1->data[0];
   if (n > 1) {
     if (rtIsNaN(kd)) {
-      ix = 2;
-      exitg3 = false;
-      while ((!exitg3) && (ix <= n)) {
-        ixstart = ix;
-        if (!rtIsNaN(sample1->data[ix - 1])) {
-          kd = sample1->data[ix - 1];
-          exitg3 = true;
+      idx = 2;
+      exitg4 = false;
+      while ((!exitg4) && (idx <= n)) {
+        ixstart = idx;
+        if (!rtIsNaN(sample1->data[idx - 1])) {
+          kd = sample1->data[idx - 1];
+          exitg4 = true;
         } else {
-          ix++;
+          idx++;
         }
       }
     }
@@ -1682,10 +1688,10 @@ void max_shang_one(const emxArray_real_T *data1, double limit_min, double
       a0_dou->data[n - 1] = apnd;
       i0 = n - 1;
       ixstart = i0 / 2;
-      for (ix = 1; ix < ixstart; ix++) {
-        kd = (double)ix * a0_resol;
-        a0_dou->data[ix] = anew + kd;
-        a0_dou->data[(n - ix) - 1] = apnd - kd;
+      for (idx = 1; idx < ixstart; idx++) {
+        kd = (double)idx * a0_resol;
+        a0_dou->data[idx] = anew + kd;
+        a0_dou->data[(n - idx) - 1] = apnd - kd;
       }
 
       if (ixstart << 1 == n - 1) {
@@ -1810,16 +1816,16 @@ void max_shang_one(const emxArray_real_T *data1, double limit_min, double
   itmp = 0;
   if (KK->size[0] > 1) {
     if (rtIsNaN(KK->data[0])) {
-      ix = 1;
-      exitg2 = false;
-      while ((!exitg2) && (ix + 1 <= n)) {
-        ixstart = ix + 1;
-        if (!rtIsNaN(KK->data[ix])) {
-          kd = KK->data[ix];
-          itmp = ix;
-          exitg2 = true;
+      idx = 1;
+      exitg3 = false;
+      while ((!exitg3) && (idx + 1 <= n)) {
+        ixstart = idx + 1;
+        if (!rtIsNaN(KK->data[idx])) {
+          kd = KK->data[idx];
+          itmp = idx;
+          exitg3 = true;
         } else {
-          ix++;
+          idx++;
         }
       }
     }
@@ -1920,10 +1926,10 @@ void max_shang_one(const emxArray_real_T *data1, double limit_min, double
       a0_dou->data[n - 1] = apnd;
       i0 = n - 1;
       ixstart = i0 / 2;
-      for (ix = 1; ix < ixstart; ix++) {
-        kd = (double)ix * wh_sample;
-        a0_dou->data[ix] = anew + kd;
-        a0_dou->data[(n - ix) - 1] = apnd - kd;
+      for (idx = 1; idx < ixstart; idx++) {
+        kd = (double)idx * wh_sample;
+        a0_dou->data[idx] = anew + kd;
+        a0_dou->data[(n - idx) - 1] = apnd - kd;
       }
 
       if (ixstart << 1 == n - 1) {
@@ -1943,7 +1949,11 @@ void max_shang_one(const emxArray_real_T *data1, double limit_min, double
 
   emxFree_int32_T(&r0);
   i0 = yy->size[0];
-  for (ll_yy = 0; ll_yy < i0; ll_yy++) {
+  ll_yy = 0;
+  emxInit_real_T1(&xx_cor, 2);
+  emxInit_boolean_T(&x, 2);
+  emxInit_int32_T1(&b_ii, 2);
+  while (ll_yy <= i0 - 1) {
     /* %% */
     anew = yy->data[ll_yy + yy->size[0]] - wh_sample;
     if (rtIsNaN(anew) || rtIsNaN(yy->data[ll_yy + yy->size[0]] - 0.005)) {
@@ -1984,20 +1994,20 @@ void max_shang_one(const emxArray_real_T *data1, double limit_min, double
       }
     }
 
-    ixstart = a0_dou->size[0] * a0_dou->size[1];
+    i1 = a0_dou->size[0] * a0_dou->size[1];
     a0_dou->size[0] = 1;
     a0_dou->size[1] = n;
-    emxEnsureCapacity((emxArray__common *)a0_dou, ixstart, (int)sizeof(double));
+    emxEnsureCapacity((emxArray__common *)a0_dou, i1, (int)sizeof(double));
     if (n > 0) {
       a0_dou->data[0] = anew;
       if (n > 1) {
         a0_dou->data[n - 1] = apnd;
-        ixstart = n - 1;
-        ixstart /= 2;
-        for (ix = 1; ix < ixstart; ix++) {
-          kd = (double)ix * 0.01;
-          a0_dou->data[ix] = anew + kd;
-          a0_dou->data[(n - ix) - 1] = apnd - kd;
+        i1 = n - 1;
+        ixstart = i1 / 2;
+        for (idx = 1; idx < ixstart; idx++) {
+          kd = (double)idx * 0.01;
+          a0_dou->data[idx] = anew + kd;
+          a0_dou->data[(n - idx) - 1] = apnd - kd;
         }
 
         if (ixstart << 1 == n - 1) {
@@ -2010,99 +2020,171 @@ void max_shang_one(const emxArray_real_T *data1, double limit_min, double
       }
     }
 
-    for (xx_ii = 0; xx_ii < a0_dou->size[1]; xx_ii++) {
-      /* %% */
-      /* 该函数用来求解就是求解kesi的方程 */
-      /*  function y1=fun_shang(x,kesi,a0,r,beta) */
-      /*  %该函数用来求解就是求解kesi的方程 */
-      /*   y1=kesi*(beta^((r+1)/kesi))*(1/gamma((r+1)/kesi))*abs((x-a0)^r)*(exp(-1*beta*abs((x-a0)^kesi))); */
-      /*  end */
-      aa = (x_row->data[itmp] + 1.0) / x_kesi->data[itmp];
-      index_row = b_mod(aa, 1.0);
-      if (index_row == 0.0) {
-        index_row = 1.0;
+    i1 = x->size[0] * x->size[1];
+    x->size[0] = 1;
+    x->size[1] = a0_dou->size[1];
+    emxEnsureCapacity((emxArray__common *)x, i1, (int)sizeof(boolean_T));
+    n = a0_dou->size[0] * a0_dou->size[1];
+    for (i1 = 0; i1 < n; i1++) {
+      x->data[i1] = (a0_dou->data[i1] >= limit_min);
+    }
+
+    ixstart = x->size[1];
+    idx = 0;
+    i1 = b_ii->size[0] * b_ii->size[1];
+    b_ii->size[0] = 1;
+    b_ii->size[1] = x->size[1];
+    emxEnsureCapacity((emxArray__common *)b_ii, i1, (int)sizeof(int));
+    ii = 1;
+    exitg2 = false;
+    while ((!exitg2) && (ii <= ixstart)) {
+      guard2 = false;
+      if (x->data[ii - 1]) {
+        idx++;
+        b_ii->data[idx - 1] = ii;
+        if (idx >= ixstart) {
+          exitg2 = true;
+        } else {
+          guard2 = true;
+        }
+      } else {
+        guard2 = true;
       }
 
-      kd = index_row;
-      b_gamma(&kd);
-      larnum_format(kd, result_aa);
-      for (tt = 0; tt < (int)-(1.0E-20 + (-1.0 - (aa - 1.0))); tt++) {
-        memcpy(&b_result_aa[0], &result_aa[0], 1000U * sizeof(double));
-        larnum_format((aa - 1.0) + -(double)tt, dv0);
-        larnum_multi(b_result_aa, dv0, result_aa);
+      if (guard2) {
+        ii++;
+      }
+    }
+
+    if (x->size[1] == 1) {
+      if (idx == 0) {
+        i1 = b_ii->size[0] * b_ii->size[1];
+        b_ii->size[0] = 1;
+        b_ii->size[1] = 0;
+        emxEnsureCapacity((emxArray__common *)b_ii, i1, (int)sizeof(int));
+      }
+    } else {
+      i1 = b_ii->size[0] * b_ii->size[1];
+      if (1 > idx) {
+        b_ii->size[1] = 0;
+      } else {
+        b_ii->size[1] = idx;
       }
 
-      /*  aa_notzero=find(result_aa~=0); */
-      /*  gg=0; */
-      /*  for ii=aa_notzero(length(aa_notzero)):-1:1 */
-      /*      gg=gg+result_aa(ii,1)*10^(ii-1); */
-      /*  end */
-      /*  y1=gg; */
-      aapowerbb(a0_row->data[itmp], aa, result_bb);
-      larnum_divi(result_bb, result_aa, result_cc);
-      b_aapowerbb(a0_row->data[itmp] * fabs(rt_powd_snf(a0_dou->data[xx_ii] -
-        a0_corret->data[itmp], x_kesi->data[itmp])), result_bb);
-      larnum_divi(result_cc, result_bb, result_aa);
-      ixstart = 0;
-      ii = 1;
-      exitg1 = false;
-      while ((!exitg1) && (ii < 1001)) {
-        guard1 = false;
-        if (result_aa[ii - 1] >= 1.0E-10) {
-          ixstart++;
-          ii_data[ixstart - 1] = (short)ii;
-          if (ixstart >= 1000) {
-            exitg1 = true;
+      emxEnsureCapacity((emxArray__common *)b_ii, i1, (int)sizeof(int));
+    }
+
+    i1 = xx_cor->size[0] * xx_cor->size[1];
+    xx_cor->size[0] = 1;
+    xx_cor->size[1] = b_ii->size[1];
+    emxEnsureCapacity((emxArray__common *)xx_cor, i1, (int)sizeof(double));
+    n = b_ii->size[0] * b_ii->size[1];
+    for (i1 = 0; i1 < n; i1++) {
+      xx_cor->data[i1] = b_ii->data[i1];
+    }
+
+    if (!(xx_cor->size[1] == 0)) {
+      for (xx_ii = 0; xx_ii < xx_cor->size[1]; xx_ii++) {
+        /* %% */
+        /* 该函数用来求解就是求解kesi的方程 */
+        /*  function y1=fun_shang(x,kesi,a0,r,beta) */
+        /*  %该函数用来求解就是求解kesi的方程 */
+        /*   y1=kesi*(beta^((r+1)/kesi))*(1/gamma((r+1)/kesi))*abs((x-a0)^r)*(exp(-1*beta*abs((x-a0)^kesi))); */
+        /*  end */
+        aa = (x_row->data[itmp] + 1.0) / x_kesi->data[itmp];
+        index_row = b_mod(aa, 1.0);
+        if (index_row == 0.0) {
+          index_row = 1.0;
+        }
+
+        kd = index_row;
+        b_gamma(&kd);
+        larnum_format(kd, result_aa);
+        for (tt = 0; tt < (int)-(1.0E-20 + (-1.0 - (aa - 1.0))); tt++) {
+          memcpy(&b_result_aa[0], &result_aa[0], 1000U * sizeof(double));
+          larnum_format((aa - 1.0) + -(double)tt, dv0);
+          larnum_multi(b_result_aa, dv0, result_aa);
+        }
+
+        /*  aa_notzero=find(result_aa~=0); */
+        /*  gg=0; */
+        /*  for ii=aa_notzero(length(aa_notzero)):-1:1 */
+        /*      gg=gg+result_aa(ii,1)*10^(ii-1); */
+        /*  end */
+        /*  y1=gg; */
+        aapowerbb(a0_row->data[itmp], aa, result_bb);
+        larnum_divi(result_bb, result_aa, result_cc);
+        b_aapowerbb(a0_row->data[itmp] * fabs(rt_powd_snf(a0_dou->data[(int)
+          xx_cor->data[xx_ii] - 1] - a0_corret->data[itmp], x_kesi->data[itmp])),
+                    result_bb);
+        larnum_divi(result_cc, result_bb, result_aa);
+        idx = 0;
+        ii = 1;
+        exitg1 = false;
+        while ((!exitg1) && (ii < 1001)) {
+          guard1 = false;
+          if (result_aa[ii - 1] >= 1.0E-10) {
+            idx++;
+            ii_data[idx - 1] = (short)ii;
+            if (idx >= 1000) {
+              exitg1 = true;
+            } else {
+              guard1 = true;
+            }
           } else {
             guard1 = true;
           }
-        } else {
-          guard1 = true;
-        }
 
-        if (guard1) {
-          ii++;
-        }
-      }
-
-      if (1 > ixstart) {
-        ix = 0;
-      } else {
-        ix = ixstart;
-      }
-
-      if (1 > ixstart) {
-        n = 0;
-      } else {
-        n = ixstart;
-      }
-
-      for (ixstart = 0; ixstart < n; ixstart++) {
-        ff_notzero_data[ixstart] = ii_data[ixstart];
-      }
-
-      if (ix == 0) {
-        gg = 0.0;
-      } else {
-        gg = 0.0;
-        ixstart = ff_notzero_data[ix - 1];
-        for (ii = 0; ii < ixstart; ii++) {
-          b_ii = ixstart - ii;
-          if (b_ii - 1 == 0) {
-            gg += result_aa[b_ii - 1];
-          } else {
-            gg += result_aa[b_ii - 1] * rt_powd_snf(10.0, (double)b_ii - 1.0);
+          if (guard1) {
+            ii++;
           }
         }
+
+        if (1 > idx) {
+          ixstart = 0;
+        } else {
+          ixstart = idx;
+        }
+
+        if (1 > idx) {
+          n = 0;
+        } else {
+          n = idx;
+        }
+
+        for (i1 = 0; i1 < n; i1++) {
+          ff_notzero_data[i1] = ii_data[i1];
+        }
+
+        if (ixstart == 0) {
+          gg = 0.0;
+        } else {
+          gg = 0.0;
+          i1 = ff_notzero_data[ixstart - 1];
+          for (ii = 0; ii < i1; ii++) {
+            c_ii = i1 - ii;
+            if (c_ii - 1 == 0) {
+              gg += result_aa[c_ii - 1];
+            } else {
+              gg += result_aa[c_ii - 1] * rt_powd_snf(10.0, (double)c_ii - 1.0);
+            }
+          }
+        }
+
+        yy->data[ll_yy] += x_kesi->data[itmp] * fabs(rt_powd_snf(a0_dou->data
+          [(int)xx_cor->data[xx_ii] - 1] - a0_corret->data[itmp], x_row->
+          data[itmp])) * gg;
+
+        /* 一维最大熵函数已验证正确 */
       }
-
-      yy->data[ll_yy] += x_kesi->data[itmp] * fabs(rt_powd_snf(a0_dou->
-        data[xx_ii] - a0_corret->data[itmp], x_row->data[itmp])) * gg;
-
-      /* 一维最大熵函数已验证正确 */
     }
+
+    ll_yy++;
   }
 
+  emxFree_int32_T(&b_ii);
+  emxFree_boolean_T(&x);
+  emxFree_real_T(&xx_cor);
   emxFree_real_T(&a0_corret);
   emxFree_real_T(&x_kesi);
   emxFree_real_T(&a0_dou);

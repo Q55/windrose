@@ -2,12 +2,11 @@
  * File: abs.c
  *
  * MATLAB Coder version            : 3.0
- * C/C++ source code generated on  : 06-Jun-2016 15:17:02
+ * C/C++ source code generated on  : 11-Jun-2016 17:29:56
  */
 
 /* Include Files */
 #include "rt_nonfinite.h"
-//#include "max_shang_one.h"
 #include "abs.h"
 
 /* Function Definitions */

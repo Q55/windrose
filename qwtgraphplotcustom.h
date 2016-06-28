@@ -16,6 +16,8 @@ public:
     void plotForSpectral(const QVector<double> &f, const QVector<double> &YY);
     void plotFor1DMaxEntropy(const QVector<double> &yy1, const QVector<double> &yy2);
     void plotFor2DMaxEntropyDensity( const QVector<QVector<double> > &data );
+    void plotForXYData(const QVector<double> &x, const QVector<double> &y);
+    void plotFor2DMaxEntropyDensity();
 
     void plotForCurve(const QVector<double> &x, const QVector<QVector<double> > &yy);
     void plotForScatter(const QVector<double> &x, const QVector<double> &y);

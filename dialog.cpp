@@ -18,6 +18,7 @@ Dialog::Dialog(QWidget *parent) :
 
     /////////////////////////////////////////////
     /// for cust lib test.
+<<<<<<< HEAD
 //    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
 //                                                     3, 1000000, 1);
 //    QVector<double> data2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
@@ -31,10 +32,41 @@ Dialog::Dialog(QWidget *parent) :
 //    for (int i = 0; i < out.size(); ++i) {
 //        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
 //    }
+//    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/maxshang1.csv",
+//                                                     3, 100000000, 1);
+////    QVector<double> data2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/spectral.csv",
+////                                                     2, 100000000, 2);
+////    qDebug()<<data1;
+////    qDebug()<<data2;
+//    QVector<double> out1, out2;
+//    double a, b;
+//    QVector<QVector<double> > out;
+//    Utils::qt1DMaxEntropy(data1, 0.12, 0.001, 0.001, 20, 0.001, 0.1, 4, out1, out2);
+////    qDebug()<<a<<","<<b;
+//    qDebug()<<out1;
+//    qDebug()<<out2;
+////    qDebug()<<out2;
+////    for (int i = 0; i < out.size(); ++i) {
+////        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
+////    }
+//    QVector<QVector<double> > data;
+//    data.resize(34);
+//    for (int i = 0; i < 34; ++i)
+//        data[i].resize(42);
+//    for (int i = 0; i < 42; ++i) {
+//        QVector<double> col = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_distr_F2.pass.csv",
+//                                                         3, 100000000, i + 1);
+//        for (int j = 0; j < 34; ++j) {
+//            data[j][i] = col.at(j);
+//        }
+//    }
+//    qDebug()<<data;
     ////////////////////////////////////////////
 
     initComboboxMap();
     pre_selcol_count_map.clear();
+    kendall_val_ = 0.4954;
+    stats_2D_output_.clear();
     //pre_sel_colrepeatlist_map.clear();
 
     // pre-processing
@@ -312,14 +344,18 @@ void Dialog::exportDataToFile() {
         return;
     }
 
-    QDir dir;
-    QString cur_path = dir.currentPath();
+//    QDir dir;
+//    QString cur_path = dir.currentPath();
     //QString dir_name = QFileDialog::getExistingDirectory(this, tr("Open Directory"), cur_path,
     //                                                      QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    QString dir_name = QFileDialog::getExistingDirectory(this, tr("Open Directory"), "/Users/lishiqiang/Desktop",
-                                                          QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    dpclass.exportDataToFiles(dir_name, true); // write raw_data
-    dpclass.exportDataToFiles(dir_name, false);// write pre_processed_data
+//    QString dir_name = QFileDialog::getExistingDirectory(this, tr("Open Directory"), "/Users/lishiqiang/Desktop",
+//                                                          QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    QString file_name = QFileDialog::getSaveFileName(this,
+                                                     tr("保存数据"),
+                                                     "",
+                                                     tr("保存文件(*)"));
+    dpclass.exportDataToFiles(file_name, true); // write raw_data
+    dpclass.exportDataToFiles(file_name, false);// write pre_processed_data
 }
 
 void Dialog::startPreProcess()
@@ -493,20 +529,27 @@ void Dialog::postPopExprDlg() {
     PostExprDialog *expr_dlg = new PostExprDialog(selcols);
     expr_dlg->show();
 
-    connect(expr_dlg, SIGNAL(postExprParas(bool, QString, int, double, bool, QString, int, QString)), this,
-            SLOT(parsePostExpr(bool, QString, int, double, bool, QString, int, QString)));
+    connect(expr_dlg, SIGNAL(postExprParas(bool, QString, int, double, bool, QString, int, QString, QString)), this,
+            SLOT(parsePostExpr(bool, QString, int, double, bool, QString, int, QString, QString)));
 }
 
 void Dialog::parsePostExpr(bool scalar_checked, QString scalar_data, int scalar_op, double scalar_val, bool vec_checked,
-                           QString vec_data1, int vec_op, QString vec_data2) {
-    QString new_col_name;
-    if(scalar_checked) {
-        new_col_name = dpclass.addColToPostProcDataByExpr(true, scalar_data, "", scalar_op, scalar_val);
-    } else if (vec_checked) {
-        new_col_name = dpclass.addColToPostProcDataByExpr(false, vec_data1, vec_data2, vec_op, 0.0);
+                           QString vec_data1, int vec_op, QString vec_data2, QString new_col_name) {
+    if (new_col_name == "") {
+        QMessageBox msgBox;
+        msgBox.setText("请输入新列名");
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+        return;
     }
-    if (new_col_name != "")
-        ui->post_proc_after_col_list->addItem(new_col_name);
+    QString new_col;
+    if(scalar_checked) {
+        new_col = dpclass.addColToPostProcDataByExpr(true, scalar_data, "", scalar_op, scalar_val, new_col_name);
+    } else if (vec_checked) {
+        new_col = dpclass.addColToPostProcDataByExpr(false, vec_data1, vec_data2, vec_op, 0.0, new_col_name);
+    }
+    if (new_col != "")
+        ui->post_proc_after_col_list->addItem(new_col);
     repaint();
 }
 
@@ -667,11 +710,21 @@ void Dialog::showSelColDataPost1000() {
 
 void Dialog::postAddXAxisData() {
     QList<QListWidgetItem *> xaxis_col = ui->post_proc_after_col_list->selectedItems();
-    if (xaxis_col.size() <= 0) return;
+    if (xaxis_col.size() != 1) {
+        QErrorMessage *xOnlyOneColErr = new QErrorMessage(this);
+        xOnlyOneColErr->showMessage("X轴仅能选择1列数据");
+        return;
+    }
 
     QSet<QString> exist_cols;
     for (int i = 0; i < ui->xaxis_data_list->count(); ++i) {
         exist_cols.insert(ui->xaxis_data_list->item(i)->text());
+    }
+
+    if (exist_cols.size() >= 1) {
+        QErrorMessage *xOnlyOneColErr = new QErrorMessage(this);
+        xOnlyOneColErr->showMessage("X轴已有数据列，请先删除后再添加");
+        return;
     }
 
     QStringList selected_col_items;
@@ -689,13 +742,14 @@ void Dialog::postAddXAxisData() {
 }
 
 void Dialog::postDelXAxisData() {
-    QList<QListWidgetItem *> xaxis_col = ui->xaxis_data_list->selectedItems();
-    if (xaxis_col.size() <= 0) return;
+//    QList<QListWidgetItem *> xaxis_col = ui->xaxis_data_list->selectedItems();
+//    if (xaxis_col.size() <= 0) return;
 
-    for (auto it = xaxis_col.begin(); it != xaxis_col.end(); ++it) {
-        int pre_row = ui->xaxis_data_list->row(*it);
-        delete ui->xaxis_data_list->takeItem(pre_row);
-    }
+//    for (auto it = xaxis_col.begin(); it != xaxis_col.end(); ++it) {
+//        int pre_row = ui->xaxis_data_list->row(*it);
+//        delete ui->xaxis_data_list->takeItem(pre_row);
+//    }
+    ui->xaxis_data_list->clear();
     ui->xaxis_data_list->repaint();
 }
 
@@ -794,6 +848,7 @@ void Dialog::postPrepareDataForAnalysis(int index) {
         ui->comboBox_2dshang_ff2->setCurrentIndex(1);
         ui->comboBox_2dshang_FF1->setCurrentIndex(2);
         ui->comboBox_2dshang_FF2->setCurrentIndex(3);
+        ui->lineEdit_2dshang_R->setText(QString::number(kendall_val_));
         ui->toolBoxPage_maxshang2->repaint();
     }
 
@@ -836,7 +891,7 @@ void Dialog::postStartDataAnalysis() {
             ui->lineEdit_enpost_aftz->setText(QString::number(aftz));
             break;
         }
-        case 1: {// correlation  // weighted fit
+        case 1: { // weighted fit
             if (sel_items.size() != 2) {
                 msg = "曲线拟合需要2列数据";
                 break;
@@ -896,7 +951,7 @@ void Dialog::postStartDataAnalysis() {
 //            in_data1 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 //            in_data2 = {0,2,4,6,8,10,12,14,16,18,20,22,24,26};
             if (in_data1.size() != in_data2.size()) {
-                msg = "2列数据尺寸不匹配";
+                msg = "X列和Y列数据尺寸不匹配";
                 break;
             }
 
@@ -910,10 +965,12 @@ void Dialog::postStartDataAnalysis() {
                 ret_val = Utils::qtCorrelation(in_data1, in_data2, out_data1, out_data2); // a, b
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
                 graph->plotForCorrelation(out_data2, out_data1);
+                //graph->plotForCorrelation(out_data1, out_data2);
                 graph->show();
             } else if (type == 2) {
                 ret_val = Utils::qtKendall(in_data1, in_data2, ui->lineEdit_kendall_limit_min1->text().toDouble(),
                                            ui->lineEdit_kendall_limit_min2->text().toDouble());
+                kendall_val_ = ret_val;
                 msg = QString::number(ret_val);
             } else {
                 msg = "请选择分析类型:相关性分析 or 肯德尔系数";
@@ -950,6 +1007,13 @@ void Dialog::postStartDataAnalysis() {
             switch (type) {
             case 0: { // stats 1D
                 Utils::qtStats1D(in_data1, ui->lineEdit_stats_step1->text().toDouble(), out_data1, out_data2);
+                if (out_data1.size() != out_data2.size()) {
+                    msg = "结果序列X和Y元素个数不匹配";
+                    break;
+                }
+                QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+                graph->plotForXYData(out_data1, out_data2);
+                graph->show();
                 break;
             }
             case 1: { // stats 2D
@@ -962,11 +1026,23 @@ void Dialog::postStartDataAnalysis() {
             }
             case 2: { // Distr F1
                 Utils::qtDistrF1(in_data1, in_data2, out_data1, out_data2);
+                if (out_data1.size() != out_data2.size()) {
+                    msg = "结果序列X和Y元素个数不匹配";
+                    break;
+                }
+                QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+                graph->plotForXYData(out_data1, out_data2);
+                graph->show();
                 break;
             }
             case 3: { // Distr F2
-                QVector<QVector<double> > in, out; // should be replaced by a more global variable--lsq, 2016.06.26
-                Utils::qtDistrF2(in, out);
+                if (stats_2D_output_.size() == 0) {
+                    QErrorMessage *stats2d_first_msg = new QErrorMessage(this);
+                    stats2d_first_msg->showMessage("请先执行Stats2D以准备数据");
+                    break;
+                }
+                QVector<QVector<double> > out;
+                Utils::qtDistrF2(stats_2D_output_, out);
                 break;
             }
             default: break;

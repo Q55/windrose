@@ -78,7 +78,7 @@ public slots:
     void postAddSelectedColList(QListWidgetItem*) { postAddSelectedColList(); }
     void postDelSelectedColList();
     void postPopExprDlg();
-    void parsePostExpr(bool, QString, int, double, bool, QString, int, QString);
+    void parsePostExpr(bool, QString, int, double, bool, QString, int, QString, QString);
     void showSelColData();
     void showSelColDataFirst1000();
     void showSelColDataPre1000();
@@ -125,6 +125,10 @@ private:
 //    QMap<QString, Pre_AnalyseType> analyse_type_map;
 //    QMap<QString, Pre_FilterType> filter_type_map;
     void initComboboxMap();
+
+
+    double kendall_val_;
+    QVector<QVector<double> > stats_2D_output_;
 };
 
 #endif // PREPROCESSWIDGET_H
