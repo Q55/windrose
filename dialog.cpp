@@ -18,7 +18,6 @@ Dialog::Dialog(QWidget *parent) :
 
     /////////////////////////////////////////////
     /// for cust lib test.
-<<<<<<< HEAD
 //    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
 //                                                     3, 1000000, 1);
 //    QVector<double> data2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
@@ -50,17 +49,21 @@ Dialog::Dialog(QWidget *parent) :
 ////        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
 ////    }
 //    QVector<QVector<double> > data;
-//    data.resize(34);
-//    for (int i = 0; i < 34; ++i)
-//        data[i].resize(42);
-//    for (int i = 0; i < 42; ++i) {
+//    data.resize(33);
+//    for (int i = 0; i < 33; ++i)
+//        data[i].resize(41);
+//    for (int i = 0; i < 41; ++i) {
 //        QVector<double> col = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_distr_F2.pass.csv",
-//                                                         3, 100000000, i + 1);
-//        for (int j = 0; j < 34; ++j) {
+//                                                         1, 100000000, i + 1);
+//        for (int j = 0; j < 33; ++j) {
 //            data[j][i] = col.at(j);
 //        }
 //    }
 //    qDebug()<<data;
+//    QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
+//    graph->plotFor2DMaxEntropyDensity(data);
+//    graph->show();
+//    return;
     ////////////////////////////////////////////
 
     initComboboxMap();
@@ -1022,6 +1025,15 @@ void Dialog::postStartDataAnalysis() {
                                  ui->lineEdit_stats_limit_min2->text().toDouble(),
                                  ui->lineEdit_stats_step1->text().toDouble(),
                                  ui->lineEdit_stats_step2->text().toDouble(), out);
+                if (out.size() <= 0) {
+                    msg = "输出结果为空";
+                    break;
+                }
+
+                QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
+                graph->plotFor2DMaxEntropyDensity(out);
+                graph->show();
+
                 break;
             }
             case 2: { // Distr F1
@@ -1043,6 +1055,16 @@ void Dialog::postStartDataAnalysis() {
                 }
                 QVector<QVector<double> > out;
                 Utils::qtDistrF2(stats_2D_output_, out);
+
+                if (out.size() <= 0) {
+                    msg = "输出结果为空";
+                    break;
+                }
+
+                QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
+                graph->plotFor2DMaxEntropyDensity(out);
+                graph->show();
+
                 break;
             }
             default: break;
@@ -1062,6 +1084,16 @@ void Dialog::postStartDataAnalysis() {
             int type = ui->comboBox_2dshang_type->currentIndex();
             QVector<QVector<double> > out; // should be replaced by a more global variable--lsq, 2016.06.26
             Utils::qt2DMaxEntropy(ff1, FF1, ff2, FF2, ui->lineEdit_2dshang_R->text().toDouble(), type, out);
+
+            if (out.size() <= 0) {
+                msg = "输出结果为空";
+                break;
+            }
+
+            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
+            graph->plotFor2DMaxEntropyDensity(out);
+            graph->show();
+
             break;
         }
         }
@@ -1201,19 +1233,19 @@ void Dialog::postStartDrawGraph() {
             graph->show();
             break;
         }
-        case 4: //spectrogram
-        {
-            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom();
-            QVector<QVector<double> > test_data;
-            test_data.resize(1000);
-            for (int i = 0; i < 1000; ++i)
-            {
-                test_data[i].resize(1000);
-                for (int j = 0; j < 1000; ++j)
-                    test_data[i][j] = 1.11+i+j*1.2;
-            }
-            graph->plotFor2DMaxEntropyDensity(test_data);
-        }
+//        case 4: //spectrogram
+//        {
+//            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom();
+//            QVector<QVector<double> > test_data;
+//            test_data.resize(1000);
+//            for (int i = 0; i < 1000; ++i)
+//            {
+//                test_data[i].resize(1000);
+//                for (int j = 0; j < 1000; ++j)
+//                    test_data[i][j] = 1.11+i+j*1.2;
+//            }
+//            graph->plotFor2DMaxEntropyDensity(test_data);
+//        }
         default:
             break;
         }

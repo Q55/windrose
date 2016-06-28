@@ -43,6 +43,7 @@ ChartView::ChartView(QWidget *parent)
 //![1]
 void ChartView::keyPressEvent(QKeyEvent *event)
 {
+    return; // // need no response for key press, by lsq, 2016.06.28
     switch (event->key()) {
     case Qt::Key_Plus:
         chart()->zoomIn();
@@ -75,6 +76,7 @@ void ChartView::keyPressEvent(QKeyEvent *event)
 //![2]
 void ChartView::switchChartType()
 {
+    return; // need no switch chart type, by lsq, 2016.06.28
     QChart *newChart;
     QChart *oldChart = chart();
 

@@ -63,7 +63,7 @@ Plot::Plot( QWidget *parent ):
     plotLayout()->setAlignCanvasToScales( true );
 
     canvas()->resize(800, 600);
-    //plotLayout(AlignScales);
+    //plotLayout->AlignScales();
 
     // attach curve
     d_curve = new QwtPlotCurve();

@@ -2,8 +2,10 @@
 #define SCATTERPLOT_H
 #include <qwt_plot.h>
 #include <QMainWindow>
+#include <qwt_plot_spectrogram.h>
 
 class Plot;
+class PlotSpectrogram;
 
 class QwtGraphPlotCustom: public QMainWindow {
     Q_OBJECT
@@ -15,9 +17,8 @@ public:
     void plotForWeightedFit(const QVector<double> &x, const QVector<double> &y, double a, double b);
     void plotForSpectral(const QVector<double> &f, const QVector<double> &YY);
     void plotFor1DMaxEntropy(const QVector<double> &yy1, const QVector<double> &yy2);
-    void plotFor2DMaxEntropyDensity( const QVector<QVector<double> > &data );
     void plotForXYData(const QVector<double> &x, const QVector<double> &y);
-    void plotFor2DMaxEntropyDensity();
+    void plotFor2DMaxEntropyDensity(const QVector<QVector<double> > &array_2d);
 
     void plotForCurve(const QVector<double> &x, const QVector<QVector<double> > &yy);
     void plotForScatter(const QVector<double> &x, const QVector<double> &y);
@@ -31,6 +32,8 @@ public:
 
 public:
     Plot *graph_plot;
+    PlotSpectrogram *spectrogram_plot;
+
 };
 
 #endif // SCATTERPLOT_H

@@ -38,7 +38,7 @@ void PostExprDialog::accept() {
     if (ui->comboBox_scarlar_operator->currentIndex() == 3 &&
             ui->lineEdit_scalar_operand->text().toDouble() == 0.0) { // "/0"
         QMessageBox msgBox;
-        msgBox.setText("Divider Should not be zero.");
+        msgBox.setText("除数不能为0.");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();

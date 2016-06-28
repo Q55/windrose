@@ -53,7 +53,8 @@ QChartWindRosePlot::QChartWindRosePlot(int angular_count, const QVector<double> 
 void QChartWindRosePlot::createPolarChartView() {
 
     chart_ = new QPolarChart();
-    chart_->setTitle("Use arrow keys to scroll, +/- to zoom, and space to switch chart type.");
+    //chart_->setTitle("Use arrow keys to scroll, +/- to zoom, and space to switch chart type.");
+    chart_->setTitle("WindRose");
 
     chart_angular_axis_ = new QValueAxis();
     chart_angular_axis_->setTickCount(angular_count_ + 1); // First and last ticks are co-located on 0/360 angle.

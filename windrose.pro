@@ -119,7 +119,8 @@ SOURCES += main.cpp\
     libs/ff_Fra/ff_Fra_terminate.cpp \
     libs/ff_GB/ff_GB.cpp \
     libs/ff_GB/ff_GB_initialize.cpp \
-    libs/ff_GB/ff_GB_terminate.cpp
+    libs/ff_GB/ff_GB_terminate.cpp \
+    plotspectrogram.cpp
 
 HEADERS  += \
     dataprocess.h \
@@ -224,7 +225,8 @@ HEADERS  += \
     libs/ff_Fra/ff_Fra.h \
     libs/ff_GB/ff_GB_initialize.h \
     libs/ff_GB/ff_GB_terminate.h \
-    libs/ff_GB/ff_GB.h
+    libs/ff_GB/ff_GB.h \
+    plotspectrogram.h
 
 FORMS    += \
     dialog.ui \

@@ -796,7 +796,7 @@ QVector<double> Utils::getQVectorFromFile(QString filename, int ignore_rows, int
         QString line = in.readLine();
         if (++i <= ignore_rows) continue;
         QStringList list = line.split(",");
-        if (list.size() <= col_index) {
+        if (list.size() < col_index) {
             qDebug()<<"col_index is too large";
             exit(-1);
         }
