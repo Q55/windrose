@@ -1,6 +1,5 @@
 #include "qwtgraphplotcustom.h"
 #include "plot.h"
-#include "qwtspectrogram.h"
 
 #include <qwt_interval_symbol.h>
 #include <qwt_symbol.h>
@@ -210,7 +209,7 @@ public:
 };
 
 void QwtGraphPlotCustom::plotFor2DMaxEntropyDensity ( const QVector<QVector<double> > &data ) {
-    qDebug() << "entry function";
+
     QwtPlotSpectrogram* d_spectrogram = new QwtPlotSpectrogram("密度图");
     d_spectrogram->setRenderThreadCount( 0 ); // use system specific thread count
     d_spectrogram->setCachePolicy( QwtPlotRasterItem::PaintCache );
@@ -221,7 +220,7 @@ void QwtGraphPlotCustom::plotFor2DMaxEntropyDensity ( const QVector<QVector<doub
 
     d_spectrogram->setData( spectrogram_data );
     d_spectrogram->attach( graph_plot );
-    qDebug() << "plot graph";
+
     const QwtInterval zInterval = d_spectrogram->data()->interval( Qt::ZAxis );
 
     // A color bar on the right axis
