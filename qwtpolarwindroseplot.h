@@ -2,7 +2,7 @@
 #define QWTPOLARWINDROSEPLOT_H
 
 #include <QMainWindow>
-#include <qwt_polar_plot.h>
+//#include <qwt_polar_plot.h>
 
 class QwtPolarWindRosePlot : public QMainWindow
 {
@@ -22,7 +22,7 @@ signals:
 public slots:
 
 private:
-    QwtPolarPlot *polar_plot;
+//    QwtPolarPlot *polar_plot;
     QVector<QVector<double> > graph_serials;
 };
 
