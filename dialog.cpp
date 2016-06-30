@@ -32,7 +32,7 @@ Dialog::Dialog(QWidget *parent) :
 //        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
 //    }
 //    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/maxshang1.csv",
-//                                                     3, 100000000, 1);
+//                                                     3, 100000000, 15);
 ////    QVector<double> data2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/spectral.csv",
 ////                                                     2, 100000000, 2);
 ////    qDebug()<<data1;
@@ -40,14 +40,17 @@ Dialog::Dialog(QWidget *parent) :
 //    QVector<double> out1, out2;
 //    double a, b;
 //    QVector<QVector<double> > out;
-//    Utils::qt1DMaxEntropy(data1, 0.12, 0.001, 0.001, 20, 0.001, 0.1, 4, out1, out2);
+//    Utils::qt1DMaxEntropy(data1, 0.12, 0.001, 0.001, 20, 0.001, 0.1, 5, out1, out2);
 ////    qDebug()<<a<<","<<b;
 //    qDebug()<<out1;
 //    qDebug()<<out2;
-////    qDebug()<<out2;
-////    for (int i = 0; i < out.size(); ++i) {
-////        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
-////    }
+//    for (int i = 0; i < out.size(); ++i) {
+//        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
+//    }
+//    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/bar.tem.test.preprocdata.csv", 1, 100000000, 2);
+//    double ret = Utils::qtCycleMax(data1, 4, 0.1, 0.5, 100);
+//    qDebug()<<ret;
+
 //    QVector<QVector<double> > data;
 //    data.resize(33);
 //    for (int i = 0; i < 33; ++i)
@@ -64,6 +67,10 @@ Dialog::Dialog(QWidget *parent) :
 //    graph->plotFor2DMaxEntropyDensity(data);
 //    graph->show();
 //    return;
+//    QVector<double> in_data1, in_data2;
+//    double a, b;
+//    Utils::weightedFit(in_data1, in_data2, a, b);
+//    qDebug()<<"a = "<<a<<", b = "<<b;
     ////////////////////////////////////////////
 
     initComboboxMap();
@@ -1020,18 +1027,18 @@ void Dialog::postStartDataAnalysis() {
                 break;
             }
             case 1: { // stats 2D
-                QVector<QVector<double> > out;
+                stats_2D_output_.clear();
                 Utils::qtStats2D(in_data1, in_data2, ui->lineEdit_stats_limit_min1->text().toDouble(),
                                  ui->lineEdit_stats_limit_min2->text().toDouble(),
                                  ui->lineEdit_stats_step1->text().toDouble(),
-                                 ui->lineEdit_stats_step2->text().toDouble(), out);
-                if (out.size() <= 0) {
+                                 ui->lineEdit_stats_step2->text().toDouble(), stats_2D_output_);
+                if (stats_2D_output_.size() <= 0) {
                     msg = "输出结果为空";
                     break;
                 }
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
-                graph->plotFor2DMaxEntropyDensity(out);
+                graph->plotFor2DMaxEntropyDensity(stats_2D_output_);
                 graph->show();
 
                 break;

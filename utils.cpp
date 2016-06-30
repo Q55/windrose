@@ -414,6 +414,19 @@ double Utils::qtCorrelation(QVector<double> in_data1, QVector<double> in_data2, 
 void Utils::weightedFit(QVector<double> in_data1, QVector<double> in_data2, double &a, double &b) { // sample output not matched.
 
     weightedfit_initialize();
+//    QVector<double> temp_data1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+//    QVector<double> temp_data2 = {2.421800555,4.836975886,6.93269427,
+//                                  8.178788109,
+//                                  10.10850616,
+//                                  12.87113558,
+//                                  14.05064164,
+//                                  16.90660753,
+//                                  18.08114827,
+//                                  20.29035001,
+//                                  22.41293223,
+//                                  24.32627721,
+//                                  26.38830093};
+//    qDebug()<<temp_data1<<temp_data2;
 
     int size = in_data1.size() * 2;
     double temp[size];
@@ -423,9 +436,14 @@ void Utils::weightedFit(QVector<double> in_data1, QVector<double> in_data2, doub
     for (int i = 0; i < in_data2.size(); ++i)
         temp[k++] = in_data2.at(i);
 
+    for (int i = 0; i < size; ++i)
+        qDebug()<<temp[i];
+
     emxArray_real_T *data =emxCreateWrapper_real_T(temp, in_data1.size(), 2); // (row, col)
 
     weightedfit(data, &a, &b);
+
+    qDebug()<<a<<","<<b;
 
     emxDestroyArray_real_T(data);
 

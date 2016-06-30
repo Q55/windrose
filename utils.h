@@ -7,7 +7,7 @@
 #include "calcexpression.h"
 
 class Utils
-{    
+{
 public:
     Utils();
     ~Utils();

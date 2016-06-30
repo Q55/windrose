@@ -43,9 +43,17 @@ public:
         else
             array2d_col = 0;
 
-        setInterval( Qt::XAxis, QwtInterval( 0, 42 ) );
-        setInterval( Qt::YAxis, QwtInterval( 0, 34 ) );
-        setInterval( Qt::ZAxis, QwtInterval( 0.0, 0.25 ) );
+        double max_val = 0.0;
+        for (int i = 0; i < array2d_row; ++i)
+            for (int j = 0; j < array2d_col; ++j)
+                if (max_val < array2d_data[i][j])
+                    max_val = array2d_data[i][j];
+
+//        qDebug()<<"max value = "<<max_val;
+
+        setInterval( Qt::XAxis, QwtInterval( 0, array2d_col ) ); // 42
+        setInterval( Qt::YAxis, QwtInterval( 0, array2d_row ) ); // 34
+        setInterval( Qt::ZAxis, QwtInterval( 0.0, max_val ) ); // 0.25
     }
 
     virtual QwtRasterData* copy() const {
@@ -64,8 +72,6 @@ public:
         double ret_val = 0.0;
         if (xpos >= 0 && xpos < array2d_row && ypos >= 0 && ypos < array2d_col)
             ret_val = array2d_data[xpos][ypos];
-
-        //qDebug()<<x<<","<<xpos<<", "<<y<<","<<ypos<<","<<ret_val;
 
         return ret_val;
     }
