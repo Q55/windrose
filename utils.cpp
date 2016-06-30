@@ -478,7 +478,7 @@ void Utils::qtSpectral(QVector<double> in_data, double freq, QVector<double> &f,
     spectral_terminate();
 }
 
-double Utils::qtCycleMax(QVector<double> in_data, double est_max, double resol, double obs_time, double regression_cycle) { // sample output not matched.
+double Utils::qtCycleMax(QVector<double> in_data, double resol, double obs_time, double regression_cycle) { // sample output not matched.
 
     double result = 0.0;
 
@@ -490,7 +490,7 @@ double Utils::qtCycleMax(QVector<double> in_data, double est_max, double resol, 
     for (int j = 0; j < in_data.size(); j++)
         data->data[j] = in_data[j];
 
-    result = cycle_max(data, est_max, resol, obs_time, regression_cycle);
+    result = cycle_max(data, resol, obs_time, regression_cycle);
 
     emxDestroyArray_real_T(data);
     cycle_max_terminate();

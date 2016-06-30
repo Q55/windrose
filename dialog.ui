@@ -3235,8 +3235,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>81</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3267,7 +3267,7 @@ color: rgb(0, 0, 127);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>最大值估值:</string>
+                  <string>估计精度:</string>
                  </property>
                 </widget>
                </item>
@@ -3279,7 +3279,7 @@ color: rgb(0, 0, 127);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>观测周期:</string>
+                  <string>回归周期:</string>
                  </property>
                 </widget>
                </item>
@@ -3288,16 +3288,16 @@ color: rgb(0, 0, 127);</string>
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_27">
                <item>
-                <widget class="QLineEdit" name="lineEdit_cyclemax_estmax">
+                <widget class="QLineEdit" name="lineEdit_cyclemax_resol">
                  <property name="text">
-                  <string>4</string>
+                  <string>0.1</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_cyclemax_obstime">
+                <widget class="QLineEdit" name="lineEdit_cyclemax_regressioncycle">
                  <property name="text">
-                  <string>0.5</string>
+                  <string>100</string>
                  </property>
                 </widget>
                </item>
@@ -3317,7 +3317,7 @@ color: rgb(0, 0, 127);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>估计精度:</string>
+                  <string>观测周期:</string>
                  </property>
                 </widget>
                </item>
@@ -3329,7 +3329,7 @@ color: rgb(0, 0, 127);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>回归周期:</string>
+                  <string>结果:</string>
                  </property>
                 </widget>
                </item>
@@ -3338,16 +3338,19 @@ color: rgb(0, 0, 127);</string>
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_29">
                <item>
-                <widget class="QLineEdit" name="lineEdit_cyclemax_resol">
+                <widget class="QLineEdit" name="lineEdit_cyclemax_obstime">
                  <property name="text">
-                  <string>0.1</string>
+                  <string>0.5</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_cyclemax_regressioncycle">
+                <widget class="QLineEdit" name="lineEdit_cyclemax_result">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
-                  <string>100</string>
+                  <string>0</string>
                  </property>
                 </widget>
                </item>
@@ -3395,22 +3398,6 @@ color: rgb(0, 0, 127);</string>
               </property>
               <property name="text">
                <string>回归结果:    </string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_cyclemax_result">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>0.0</string>
               </property>
              </widget>
             </item>
@@ -4172,8 +4159,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>81</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">

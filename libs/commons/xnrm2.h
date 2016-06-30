@@ -2,7 +2,7 @@
  * File: xnrm2.h
  *
  * MATLAB Coder version            : 3.0
- * C/C++ source code generated on  : 20-May-2016 11:10:10
+ * C/C++ source code generated on  : 30-Jun-2016 18:34:40
  */
 
 #ifndef __XNRM2_H__

@@ -2,7 +2,7 @@
  * File: cycle_max.c
  *
  * MATLAB Coder version            : 3.0
- * C/C++ source code generated on  : 20-May-2016 11:10:10
+ * C/C++ source code generated on  : 30-Jun-2016 18:34:40
  */
 
 /* Include Files */
@@ -17,29 +17,29 @@
 /*
  * obs_time工况观测周期以小时为单位
  * Arguments    : const emxArray_real_T *data
- *                double est_max
  *                double resol
  *                double obs_time
  *                double Regression_cycle
  * Return Type  : double
  */
-double cycle_max(const emxArray_real_T *data, double est_max, double resol,
-                 double obs_time, double Regression_cycle)
+double cycle_max(const emxArray_real_T *data, double resol, double obs_time,
+                 double Regression_cycle)
 {
-  double cyclemax;
-  emxArray_real_T *Ws_No;
-  double ndbl;
-  int i0;
-  int nm1d2;
-  emxArray_int32_T *ii;
+  int ixstart;
   int n;
+  double ndbl;
+  int idx;
+  boolean_T exitg2;
+  emxArray_real_T *Ws_No;
+  double est_max;
+  int i0;
+  emxArray_int32_T *ii;
   double anew;
   double apnd;
   double cdiff;
   double absa;
   double absb;
   emxArray_real_T *r0;
-  int idx;
   emxArray_boolean_T *x;
   unsigned int m;
   boolean_T exitg1;
@@ -58,23 +58,53 @@ double cycle_max(const emxArray_real_T *data, double est_max, double resol,
   double b_H_ln[11];
   double b_PH_ln[11];
   double n_line[2];
+  ixstart = 1;
+  n = data->size[0];
+  ndbl = data->data[0];
+  if (data->size[0] > 1) {
+    if (rtIsNaN(data->data[0])) {
+      idx = 2;
+      exitg2 = false;
+      while ((!exitg2) && (idx <= n)) {
+        ixstart = idx;
+        if (!rtIsNaN(data->data[idx - 1])) {
+          ndbl = data->data[idx - 1];
+          exitg2 = true;
+        } else {
+          idx++;
+        }
+      }
+    }
+
+    if (ixstart < data->size[0]) {
+      while (ixstart + 1 <= n) {
+        if (data->data[ixstart] > ndbl) {
+          ndbl = data->data[ixstart];
+        }
+
+        ixstart++;
+      }
+    }
+  }
+
   emxInit_real_T(&Ws_No, 2);
+  est_max = ndbl + resol;
   ndbl = est_max / resol;
   i0 = Ws_No->size[0] * Ws_No->size[1];
   Ws_No->size[0] = (int)ndbl;
   Ws_No->size[1] = 2;
   emxEnsureCapacity((emxArray__common *)Ws_No, i0, (int)sizeof(double));
-  nm1d2 = (int)ndbl << 1;
-  for (i0 = 0; i0 < nm1d2; i0++) {
+  ixstart = (int)ndbl << 1;
+  for (i0 = 0; i0 < ixstart; i0++) {
     Ws_No->data[i0] = 0.0;
   }
 
   emxInit_int32_T(&ii, 1);
-  nm1d2 = (int)ndbl;
+  ixstart = (int)ndbl;
   i0 = ii->size[0];
   ii->size[0] = (int)ndbl;
   emxEnsureCapacity((emxArray__common *)ii, i0, (int)sizeof(int));
-  for (i0 = 0; i0 < nm1d2; i0++) {
+  for (i0 = 0; i0 < ixstart; i0++) {
     ii->data[i0] = i0;
   }
 
@@ -137,25 +167,25 @@ double cycle_max(const emxArray_real_T *data, double est_max, double resol,
     if (n > 1) {
       r0->data[n - 1] = apnd;
       i0 = n - 1;
-      nm1d2 = i0 / 2;
-      for (idx = 1; idx < nm1d2; idx++) {
+      ixstart = i0 / 2;
+      for (idx = 1; idx < ixstart; idx++) {
         ndbl = (double)idx * resol;
         r0->data[idx] = anew + ndbl;
         r0->data[(n - idx) - 1] = apnd - ndbl;
       }
 
-      if (nm1d2 << 1 == n - 1) {
-        r0->data[nm1d2] = (anew + apnd) / 2.0;
+      if (ixstart << 1 == n - 1) {
+        r0->data[ixstart] = (anew + apnd) / 2.0;
       } else {
-        ndbl = (double)nm1d2 * resol;
-        r0->data[nm1d2] = anew + ndbl;
-        r0->data[nm1d2 + 1] = apnd - ndbl;
+        ndbl = (double)ixstart * resol;
+        r0->data[ixstart] = anew + ndbl;
+        r0->data[ixstart + 1] = apnd - ndbl;
       }
     }
   }
 
-  nm1d2 = ii->size[0];
-  for (i0 = 0; i0 < nm1d2; i0++) {
+  ixstart = ii->size[0];
+  for (i0 = 0; i0 < ixstart; i0++) {
     Ws_No->data[ii->data[i0]] = r0->data[i0];
   }
 
@@ -167,27 +197,27 @@ double cycle_max(const emxArray_real_T *data, double est_max, double resol,
 
   emxInit_boolean_T(&x, 1);
   m = 1U;
-  nm1d2 = Ws_No->size[0];
+  ixstart = Ws_No->size[0];
   i0 = x->size[0];
-  x->size[0] = nm1d2;
+  x->size[0] = ixstart;
   emxEnsureCapacity((emxArray__common *)x, i0, (int)sizeof(boolean_T));
-  for (i0 = 0; i0 < nm1d2; i0++) {
+  for (i0 = 0; i0 < ixstart; i0++) {
     x->data[i0] = (Ws_No->data[i0 + Ws_No->size[0]] == 0.0);
   }
 
-  nm1d2 = x->size[0];
+  ixstart = x->size[0];
   idx = 0;
   i0 = ii->size[0];
   ii->size[0] = x->size[0];
   emxEnsureCapacity((emxArray__common *)ii, i0, (int)sizeof(int));
   n = 1;
   exitg1 = false;
-  while ((!exitg1) && (n <= nm1d2)) {
+  while ((!exitg1) && (n <= ixstart)) {
     guard1 = false;
     if (x->data[n - 1]) {
       idx++;
       ii->data[idx - 1] = n;
-      if (idx >= nm1d2) {
+      if (idx >= ixstart) {
         exitg1 = true;
       } else {
         guard1 = true;
@@ -220,15 +250,15 @@ double cycle_max(const emxArray_real_T *data, double est_max, double resol,
 
   emxFree_boolean_T(&x);
   emxInit_real_T(&W_No, 2);
-  nm1d2 = ii->size[0];
+  ixstart = ii->size[0];
   ndbl = est_max / resol;
   i0 = W_No->size[0] * W_No->size[1];
-  W_No->size[0] = (int)(ndbl - (double)nm1d2);
+  W_No->size[0] = (int)(ndbl - (double)ixstart);
   W_No->size[1] = 2;
   emxEnsureCapacity((emxArray__common *)W_No, i0, (int)sizeof(double));
-  nm1d2 = (int)(ndbl - (double)nm1d2) << 1;
+  ixstart = (int)(ndbl - (double)ixstart) << 1;
   emxFree_int32_T(&ii);
-  for (i0 = 0; i0 < nm1d2; i0++) {
+  for (i0 = 0; i0 < ixstart; i0++) {
     W_No->data[i0] = 0.0;
   }
 
@@ -244,41 +274,41 @@ double cycle_max(const emxArray_real_T *data, double est_max, double resol,
 
   emxFree_real_T(&Ws_No);
   emxInit_real_T1(&H, 1);
-  nm1d2 = W_No->size[0];
+  ixstart = W_No->size[0];
   i0 = H->size[0];
-  H->size[0] = nm1d2;
+  H->size[0] = ixstart;
   emxEnsureCapacity((emxArray__common *)H, i0, (int)sizeof(double));
-  for (i0 = 0; i0 < nm1d2; i0++) {
+  for (i0 = 0; i0 < ixstart; i0++) {
     H->data[i0] = W_No->data[i0];
   }
 
   emxInit_real_T1(&b_W_No, 1);
-  nm1d2 = W_No->size[0];
+  ixstart = W_No->size[0];
   i0 = b_W_No->size[0];
-  b_W_No->size[0] = nm1d2;
+  b_W_No->size[0] = ixstart;
   emxEnsureCapacity((emxArray__common *)b_W_No, i0, (int)sizeof(double));
-  for (i0 = 0; i0 < nm1d2; i0++) {
+  for (i0 = 0; i0 < ixstart; i0++) {
     b_W_No->data[i0] = W_No->data[i0 + W_No->size[0]];
   }
 
   emxInit_real_T1(&PH, 1);
   N = sum(b_W_No);
-  nm1d2 = W_No->size[0];
+  ixstart = W_No->size[0];
 
   /* PH为对应有义波高Hs的出现概率 */
   i0 = PH->size[0];
-  PH->size[0] = nm1d2 - 1;
+  PH->size[0] = ixstart - 1;
   emxEnsureCapacity((emxArray__common *)PH, i0, (int)sizeof(double));
   emxFree_real_T(&b_W_No);
-  for (i0 = 0; i0 <= nm1d2 - 2; i0++) {
+  for (i0 = 0; i0 <= ixstart - 2; i0++) {
     PH->data[i0] = 0.0;
   }
 
   emxInit_real_T1(&PH_ln, 1);
   i0 = PH_ln->size[0];
-  PH_ln->size[0] = nm1d2 - 1;
+  PH_ln->size[0] = ixstart - 1;
   emxEnsureCapacity((emxArray__common *)PH_ln, i0, (int)sizeof(double));
-  for (i0 = 0; i0 <= nm1d2 - 2; i0++) {
+  for (i0 = 0; i0 <= ixstart - 2; i0++) {
     PH_ln->data[i0] = 0.0;
   }
 
@@ -287,15 +317,15 @@ double cycle_max(const emxArray_real_T *data, double est_max, double resol,
   /* PH_ln为对应有义波高出现概率的对数形式 */
   nn = 0;
   i0 = H_ln->size[0];
-  H_ln->size[0] = nm1d2 - 1;
+  H_ln->size[0] = ixstart - 1;
   emxEnsureCapacity((emxArray__common *)H_ln, i0, (int)sizeof(double));
-  for (i0 = 0; i0 <= nm1d2 - 2; i0++) {
+  for (i0 = 0; i0 <= ixstart - 2; i0++) {
     H_ln->data[i0] = 0.0;
   }
 
   n = 0;
   emxInit_real_T1(&c_W_No, 1);
-  while (n <= nm1d2 - 2) {
+  while (n <= ixstart - 2) {
     i0 = c_W_No->size[0];
     c_W_No->size[0] = n + 1;
     emxEnsureCapacity((emxArray__common *)c_W_No, i0, (int)sizeof(double));
@@ -328,15 +358,15 @@ double cycle_max(const emxArray_real_T *data, double est_max, double resol,
   /*  alpha=(PH_ln(end-1,1)-PH_ln(end-6,1))/(H_ln(end-1,1)-H_ln(end-6,1)); */
   /*  belta=PH_ln(end-1,1)-alpha*H_ln(end-1,1); */
   /* $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ */
-  nm1d2 = H_ln->size[0] - 11;
+  ixstart = H_ln->size[0] - 12;
   for (i0 = 0; i0 < 11; i0++) {
-    b_H_ln[i0] = H_ln->data[i0 + nm1d2];
+    b_H_ln[i0] = H_ln->data[i0 + ixstart];
   }
 
+  ixstart = H_ln->size[0] - 12;
   emxFree_real_T(&H_ln);
-  nm1d2 = PH_ln->size[0] - 11;
   for (i0 = 0; i0 < 11; i0++) {
-    b_PH_ln[i0] = PH_ln->data[i0 + nm1d2];
+    b_PH_ln[i0] = PH_ln->data[i0 + ixstart];
   }
 
   emxFree_real_T(&PH_ln);
@@ -344,12 +374,8 @@ double cycle_max(const emxArray_real_T *data, double est_max, double resol,
 
   /* 直线拟合添加到程序中替换alpha，belta */
   /* $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ */
-  cyclemax = exp((log(-log(1.0 - (1.0 - 1.0 / (Regression_cycle * (24.0 /
-    obs_time) * 365.0)))) - n_line[1]) / n_line[0]);
-
-  /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
-  /* 图形验证部分 */
-  return cyclemax;
+  return exp((log(-log(1.0 - (1.0 - 1.0 / (Regression_cycle * (24.0 / obs_time) *
+    365.0)))) - n_line[1]) / n_line[0]);
 }
 
 /*

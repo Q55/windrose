@@ -47,9 +47,9 @@ Dialog::Dialog(QWidget *parent) :
 //    for (int i = 0; i < out.size(); ++i) {
 //        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
 //    }
-//    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/bar.tem.test.preprocdata.csv", 1, 100000000, 2);
-//    double ret = Utils::qtCycleMax(data1, 4, 0.1, 0.5, 100);
-//    qDebug()<<ret;
+    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/bar.tem.test.preprocdata.csv", 1, 100000000, 2);
+    double ret = Utils::qtCycleMax(data1, 0.1, 0.5, 100);
+    qDebug()<<ret;
 
 //    QVector<QVector<double> > data;
 //    data.resize(33);
@@ -928,11 +928,13 @@ void Dialog::postStartDataAnalysis() {
                 break;
             }
             in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
-            double result = Utils::qtCycleMax(in_data1, ui->lineEdit_cyclemax_estmax->text().toDouble(),
+            //qDebug()<<in_data1;
+            double result = Utils::qtCycleMax(in_data1,
                                               ui->lineEdit_cyclemax_resol->text().toDouble(),
                                               ui->lineEdit_cyclemax_obstime->text().toDouble(),
                                               ui->lineEdit_cyclemax_regressioncycle->text().toDouble());
             ui->lineEdit_cyclemax_result->setText(QString::number(result));
+            msg = QString::number(result);
             break;
         }
         case 3: { // spectral

@@ -34,7 +34,7 @@ public:
 
     static void qtSpectral(QVector<double> in_data, double freq, QVector<double> &f, QVector<double> &yy);
 
-    static double qtCycleMax(QVector<double> in_data, double est_max, double resol, double obs_time, double regression_cycle);
+    static double qtCycleMax(QVector<double> in_data, double resol, double obs_time, double regression_cycle);
 
     static void qtEnpost(double lat, double lon, double roll, double pitch, double heading, double altitude,
                          double &spmx, double &spmy, double &spmz, double &aftx, double &afty, double &aftz);
