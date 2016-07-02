@@ -9,12 +9,19 @@
 #include <QErrorMessage>
 #include <QHBoxLayout>
 #include <QMessageBox>
+#include <QMenu>
+
+#define MAXSHOWCOLS 5
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+    // a bug in QT, so we cannot set it in *.ui file, by shiqiang, 2016.07.02
+    ui->tableWidget_col_data_details->horizontalHeader()->setVisible(true);
+    //ui->tableWidget_col_data_details->verticalHeader()->setVisible(true);
+    //ui->tableWidget_col_data_details->horizontalHeader()->setc
 
     /////////////////////////////////////////////
     /// for cust lib test.
@@ -47,9 +54,10 @@ Dialog::Dialog(QWidget *parent) :
 //    for (int i = 0; i < out.size(); ++i) {
 //        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
 //    }
-    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/bar.tem.test.preprocdata.csv", 1, 100000000, 2);
-    double ret = Utils::qtCycleMax(data1, 0.1, 0.5, 100);
-    qDebug()<<ret;
+//    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/cycle_max.csv", 2, 100000000, 1);
+//    qDebug()<<data1.size();
+//    double ret = Utils::qtCycleMax(data1, 0.1, 0.5, 100);
+//    qDebug()<<ret;
 
 //    QVector<QVector<double> > data;
 //    data.resize(33);
@@ -118,11 +126,13 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->post_proc_raw_col_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(postAddSelectedColList(QListWidgetItem*)));
     connect(ui->pushButton_post_del_cols, SIGNAL(clicked()), this, SLOT(postDelSelectedColList()));
     connect(ui->pushButton_post_input_expr, SIGNAL(clicked()), this, SLOT( postPopExprDlg() ) );
-    connect(ui->post_proc_after_col_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(showSelColData())); // show 1000 data.
+    connect(ui->post_proc_after_col_list, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(addRightMenuToShowData(const QPoint &)));
+    connect(ui->post_proc_after_col_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(showSelColDataByDoubleClicked())); // show 1000 data.
     connect(ui->pushButton_first1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataFirst1000()));
     connect(ui->pushButton_pre1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataPre1000()));
     connect(ui->pushButton_last1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataLast1000()));
-    connect(ui->pushButton_post1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataPost1000()));
+    connect(ui->pushButton_next1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataNext1000()));
+    connect(ui->tableWidget_col_data_details, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(addRightMenuToRemoveCol(const QPoint &)));
 
     // post-processing: data analysis
     connect(ui->pushButton_post_start_analyse, SIGNAL(clicked()), this, SLOT(postStartDataAnalysis()));
@@ -135,6 +145,251 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->pushButton_add_ydata, SIGNAL(clicked()), this, SLOT(postAddYAxisData()));
     connect(ui->pushButton_del_ydata, SIGNAL(clicked()), this, SLOT(postDelYAxisData()));
     connect(ui->pushButton_start_drawgraph, SIGNAL(clicked()), this, SLOT(postStartDrawGraph()));
+}
+
+
+
+void Dialog::addRightMenuToShowData(const QPoint &pos) {
+    QMenu *right_menu = new QMenu(ui->post_proc_after_col_list);
+    QAction *show_data = new QAction(tr("查看数据"), ui->post_proc_after_col_list);
+
+    connect(show_data, SIGNAL(triggered(bool)), this, SLOT(addSelColDataByRightMenu()));
+
+    if (ui->post_proc_after_col_list->selectedItems().size() > 0) {
+        right_menu->addAction(show_data);
+    }
+
+    right_menu->exec(QCursor::pos());
+
+    delete right_menu;
+    delete show_data;
+}
+
+void Dialog::addRightMenuToRemoveCol(const QPoint &pos) {
+    QMenu *right_menu = new QMenu(ui->tableWidget_col_data_details);
+    QAction *remove_data = new QAction(tr("删除数据"), ui->tableWidget_col_data_details);
+    QAction *show_data_count = new QAction(tr("显示数据量"), ui->tableWidget_col_data_details);
+
+    connect(remove_data, SIGNAL(triggered(bool)), this, SLOT(removeColDataFromShowDataList()));
+    connect(show_data_count, SIGNAL(triggered(bool)), this, SLOT(showSelColDataCount()));
+
+    int col = ui->tableWidget_col_data_details->currentColumn();
+    if (col - 1 >= 0 && col - 1 < showdata_col_list_.size()) {
+        right_menu->addAction(remove_data);
+        right_menu->addAction(show_data_count);
+    }
+
+    right_menu->exec(QCursor::pos());
+
+    delete right_menu;
+    delete remove_data;
+}
+
+void Dialog::showSelColDataCount() {
+
+    if (showdata_col_list_.size() <= 0) {
+        ui->label_selcol_totalcount->setText("请先选择展示数据列");
+        ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
+        return;
+    }
+
+    int ref_col = ui->tableWidget_col_data_details->currentColumn();
+    if (ref_col < 1 || ref_col > MAXSHOWCOLS)
+        ref_col = last_ref_col_;
+
+    int size = 0;
+    int i = 0;
+    QString name;
+    for (QMap<QString, QVector<double> >::Iterator it = showdata_col_list_.begin(); it != showdata_col_list_.end(); ++it, ++i)
+        if (i == ref_col - 1) {
+            size = it.value().size();
+            name = it.key();
+            break;
+        }
+    last_ref_col_ = ref_col;
+
+    ui->label_selcol_totalcount->setText("'" + name + "'数据量:" + QString::number(size));
+    ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
+}
+
+void Dialog::addSelColDataByRightMenu() {
+    QList<QListWidgetItem *> cols_list = ui->post_proc_after_col_list->selectedItems();
+    for (auto i : cols_list) {
+        if (showdata_col_list_.find(i->text()) != showdata_col_list_.end()) continue; // col data is now in show data widget.
+
+        auto post_data_map = dpclass.getPostProcDataMap();
+        if (post_data_map.find(i->text()) != post_data_map.end())
+            showdata_col_list_[i->text()] = post_data_map[i->text()];
+        else {
+            QVector<double> temp(0);
+            showdata_col_list_[i->text()] = temp;
+        }
+
+        if (showdata_col_list_.size() >= MAXSHOWCOLS) {
+            ui->label_selcol_totalcount->setText("仅显示"+ QString::number(MAXSHOWCOLS) + "列数据，请删除列后再次选择");
+            ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
+            break;
+        }
+    }
+    last_ref_col_ = 1;
+
+    updateShowedDataDetails(0);
+}
+
+void Dialog::removeColDataFromShowDataList() {
+    int col = ui->tableWidget_col_data_details->currentColumn();
+    if (col >= 1 && col < showdata_col_list_.size()) {
+        QMap<QString, QVector<double> >::Iterator find = showdata_col_list_.find(
+                    ui->tableWidget_col_data_details->horizontalHeaderItem(col)->text());
+        if (find != showdata_col_list_.end()) {
+            showdata_col_list_.erase(find);
+        }
+    }
+
+    int begin_row = ui->tableWidget_col_data_details->item(0, 0)->text().toInt();
+
+    updateShowedDataDetails(begin_row);
+}
+
+void Dialog::showSelColDataFirst1000() {
+
+    if (showdata_col_list_.size() <= 0) {
+        ui->label_selcol_totalcount->setText("请先选择展示数据列");
+        ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
+        return;
+    }
+
+    updateShowedDataDetails(0);
+    ui->tableWidget_col_data_details->setCurrentCell(0, last_ref_col_);
+}
+
+void Dialog::showSelColDataLast1000() {
+
+    if (showdata_col_list_.size() <= 0) {
+        ui->label_selcol_totalcount->setText("请先选择展示数据列");
+        ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
+        return;
+    }
+
+    int ref_col = ui->tableWidget_col_data_details->currentColumn();
+    if (ref_col < 1 || ref_col > MAXSHOWCOLS)
+        ref_col = last_ref_col_;
+
+    int size = 0;
+    int i = 0;
+    for (QMap<QString, QVector<double> >::Iterator it = showdata_col_list_.begin(); it != showdata_col_list_.end(); ++it, ++i)
+        if (i == ref_col - 1) {
+            size = it.value().size();
+            break;
+        }
+    last_ref_col_ = ref_col;
+
+    int begin_row = 0;
+    if (size > 1000)
+        begin_row = size - 1000;
+    if (begin_row < 0) begin_row = 0;
+
+    updateShowedDataDetails(begin_row);
+
+    ui->tableWidget_col_data_details->setCurrentCell(999, ref_col);
+}
+
+void Dialog::showSelColDataPre1000() {
+
+    if (showdata_col_list_.size() <= 0) {
+        ui->label_selcol_totalcount->setText("请先选择展示数据列");
+        ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
+        return;
+    }
+
+    int current_row = ui->tableWidget_col_data_details->item(0, 0)->text().toInt();
+    int begin_row = 0;
+    if (current_row <= 1001) begin_row = 0;
+    else begin_row = current_row - 1000 - 1;
+    if (begin_row < 0) begin_row = 0;
+
+    updateShowedDataDetails(begin_row);
+    ui->tableWidget_col_data_details->setCurrentCell(0, last_ref_col_);
+}
+
+void Dialog::showSelColDataNext1000() {
+
+    if (showdata_col_list_.size() <= 0) {
+        ui->label_selcol_totalcount->setText("请先选择展示数据列");
+        ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
+        return;
+    }
+
+    int ref_col = ui->tableWidget_col_data_details->currentColumn();
+    if (ref_col < 1 || ref_col > MAXSHOWCOLS)
+        ref_col = last_ref_col_;
+
+    int size = 0;
+    int i = 0;
+    for (QMap<QString, QVector<double> >::Iterator it = showdata_col_list_.begin(); it != showdata_col_list_.end(); ++it, ++i)
+        if (i == ref_col - 1) {
+            size = it.value().size();
+            break;
+        }
+    last_ref_col_ = ref_col;
+
+    int current_row = ui->tableWidget_col_data_details->item(999, 0)->text().toInt();
+    int begin_row = 0;
+    if (current_row + 1000 <= size) begin_row = current_row;
+    else begin_row = size - 1000;
+
+    if (begin_row < 0) begin_row = 0;
+
+    updateShowedDataDetails(begin_row);
+    ui->tableWidget_col_data_details->setCurrentCell(999, ref_col);
+}
+
+void Dialog::updateShowedDataDetails(int begin_row) {
+    // we find the max size of all cols
+    int max_size = 0;
+    for (QMap<QString, QVector<double> >::Iterator it = showdata_col_list_.begin(); it != showdata_col_list_.end(); ++it) {
+        if (it.value().size() > max_size)
+            max_size = it.value().size();
+    }
+
+    // show the first colume
+    QTableWidgetItem * header_item = new QTableWidgetItem("序号");
+    ui->tableWidget_col_data_details->setHorizontalHeaderItem(0, header_item);
+    for (int i = begin_row; i < max_size && (i - begin_row) < 1000; ++i) {
+        QTableWidgetItem * item = new QTableWidgetItem(QString::number(i + 1));
+        ui->tableWidget_col_data_details->setItem((i - begin_row), 0, item);
+    }
+    ui->tableWidget_col_data_details->setColumnWidth(0, 80);
+
+    // show regular datas.
+    int col = 1;
+    for (QMap<QString, QVector<double> >::Iterator it = showdata_col_list_.begin(); it != showdata_col_list_.end(); ++it) {
+        QVector<double> &data = it.value();
+        QTableWidgetItem * header_item = new QTableWidgetItem(it.key());
+        ui->tableWidget_col_data_details->setHorizontalHeaderItem(col, header_item);
+        for (int i = begin_row; (i - begin_row) < 1000; ++i) {
+            QString value = "";
+            if (i < data.size())
+                value = QString::number(data[i]);
+            QTableWidgetItem * item = new QTableWidgetItem(value);
+            ui->tableWidget_col_data_details->setItem((i - begin_row), col, item);
+        }
+        ui->tableWidget_col_data_details->setColumnWidth(col, 80);
+        col++;
+    }
+    // show empty datas.
+    for (; col < MAXSHOWCOLS; ++col) {
+        QTableWidgetItem * header_item = new QTableWidgetItem(QString::number(col + 1));
+        ui->tableWidget_col_data_details->setHorizontalHeaderItem(col, header_item);
+        for (int i = 1; i <= 1000; ++i) {
+            QTableWidgetItem * item = new QTableWidgetItem("");
+            ui->tableWidget_col_data_details->setItem(i-1, col, item);
+        }
+    }
+    ui->tableWidget_col_data_details->repaint();
+
+    ui->label_selcol_totalcount->setText(QString::number(max_size));
+    ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
 }
 
 void Dialog::setProgressTips(int i) {
@@ -421,7 +676,6 @@ void Dialog::clearPreCache(){
         ui->comboBox_weightfit_x->setItemText(1, "1");
         ui->comboBox_weightfit_y->setItemText(0, "0");
         ui->comboBox_weightfit_y->setItemText(1, "1");
-        show_data_details_col_name.clear();
 
         ui->spinBox_selCol->setValue(map_col_list_analyse_paras.size());
 
@@ -453,7 +707,6 @@ void Dialog::clearPostCache() {
         ui->comboBox_weightfit_x->setItemText(1, "1");
         ui->comboBox_weightfit_y->setItemText(0, "0");
         ui->comboBox_weightfit_y->setItemText(1, "1");
-        show_data_details_col_name.clear();
 
         QMessageBox msgBox;
         msgBox.setText("All Cached Data Cleared!");
@@ -563,15 +816,15 @@ void Dialog::parsePostExpr(bool scalar_checked, QString scalar_data, int scalar_
     repaint();
 }
 
-void Dialog::showSelColData() {
-    show_data_details_col_name = ui->post_proc_after_col_list->currentItem()->text();;
+void Dialog::showSelColDataByDoubleClicked() {
+    //show_data_details_col_name = ui->post_proc_after_col_list->currentItem()->text();;
     QVector<double> *col_data = NULL;
     auto post_data_map = dpclass.getPostProcDataMap();
-    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
-        col_data = &post_data_map[show_data_details_col_name];
-    } else {
-        col_data->clear();
-    }
+//    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
+//        col_data = &post_data_map[show_data_details_col_name];
+//    } else {
+//        col_data->clear();
+//    }
 
     for (int i = 1; i <= 1000 && i <= col_data->size(); ++i) {
         QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
@@ -587,135 +840,6 @@ void Dialog::showSelColData() {
     ui->tableWidget_col_data_details->repaint();
     ui->label_selcol_totalcount->setText(QString::number(col_data->size()));
     ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
-}
-
-void Dialog::showSelColDataFirst1000() {
-    if (show_data_details_col_name.isNull()) {
-        qDebug()<<"请先选择列";
-        return;
-    }
-
-    QVector<double> *col_data = NULL;
-    auto post_data_map = dpclass.getPostProcDataMap();
-    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
-        col_data = &post_data_map[show_data_details_col_name];
-    } else {
-        col_data->clear();
-    }
-
-    for (int i = 1; i <= 1000 && i <= col_data->size(); ++i) {
-        QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
-        ui->tableWidget_col_data_details->setItem(i-1, 0, item1);
-
-        QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
-        ui->tableWidget_col_data_details->setItem(i-1, 1, item2);
-    }
-    ui->tableWidget_col_data_details->setColumnWidth(0, 50);
-    ui->tableWidget_col_data_details->setColumnWidth(1, 50);
-    //ui->tableWidget_col_data_details->resizeColumnsToContents();
-    //ui->tableWidget_col_data_details->resizeRowsToContents();
-    ui->tableWidget_col_data_details->repaint();
-}
-
-void Dialog::showSelColDataLast1000() {
-    if (show_data_details_col_name.isNull()) {
-        qDebug()<<"请先选择列";
-        return;
-    }
-
-    QVector<double> *col_data = NULL;
-    auto post_data_map = dpclass.getPostProcDataMap();
-    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
-        col_data = &post_data_map[show_data_details_col_name];
-    } else {
-        col_data->clear();
-    }
-
-    int base = 1;
-    int size = col_data->size();
-    if (size <= 1000) base = 1;
-    else base = (size - 1000 + 1);
-    if (base <= 0) base = 1;
-    for (int i = base; (i - base + 1)  <= 1000 && i <= size; ++i) {
-        QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
-        ui->tableWidget_col_data_details->setItem(i-base, 0, item1);
-
-        QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
-        ui->tableWidget_col_data_details->setItem(i-base, 1, item2);
-    }
-    ui->tableWidget_col_data_details->setColumnWidth(0, 50);
-    ui->tableWidget_col_data_details->setColumnWidth(1, 50);
-    //ui->tableWidget_col_data_details->resizeColumnsToContents();
-    //ui->tableWidget_col_data_details->resizeRowsToContents();
-    ui->tableWidget_col_data_details->setCurrentCell(999, 0);
-    ui->tableWidget_col_data_details->repaint();
-}
-
-void Dialog::showSelColDataPre1000() {
-    if (show_data_details_col_name.isNull()) {
-        qDebug()<<"请先选择列";
-        return;
-    }
-
-    QVector<double> *col_data = NULL;
-    auto post_data_map = dpclass.getPostProcDataMap();
-    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
-        col_data = &post_data_map[show_data_details_col_name];
-    } else {
-        col_data->clear();
-    }
-
-    int current_index = ui->tableWidget_col_data_details->item(0, 0)->text().toInt();
-    int base = 1;
-    if (current_index <= 1000) base = 1;
-    else base = (current_index - 1000);
-    if (base <= 0) base = 1;
-    for (int i = base; (i - base) < 1000 && i <= col_data->size(); ++i) {
-        QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
-        ui->tableWidget_col_data_details->setItem(i-base, 0, item1);
-
-        QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
-        ui->tableWidget_col_data_details->setItem(i-base, 1, item2);
-    }
-    ui->tableWidget_col_data_details->setColumnWidth(0, 50);
-    ui->tableWidget_col_data_details->setColumnWidth(1, 50);
-    //ui->tableWidget_col_data_details->resizeColumnsToContents();
-    //ui->tableWidget_col_data_details->resizeRowsToContents();
-    ui->tableWidget_col_data_details->repaint();
-}
-
-void Dialog::showSelColDataPost1000() {
-    if (show_data_details_col_name.isNull()) {
-        qDebug()<<"请先选择列";
-        return;
-    }
-
-    QVector<double> *col_data = NULL;
-    auto post_data_map = dpclass.getPostProcDataMap();
-    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
-        col_data = &post_data_map[show_data_details_col_name];
-    } else {
-        col_data->clear();
-    }
-
-    int current_index = ui->tableWidget_col_data_details->item(999, 0)->text().toInt();
-    int base = 1;
-    int size = col_data->size();
-    if (current_index + 1000 < size) base = current_index + 1;
-    else base = (size - 1000 + 1);
-    if (base <=0) base = 1;
-    for (int i = base; (i - base) < 1000 && i <= col_data->size(); ++i) {
-        QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
-        ui->tableWidget_col_data_details->setItem(i-base, 0, item1);
-
-        QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
-        ui->tableWidget_col_data_details->setItem(i-base, 1, item2);
-    }
-    ui->tableWidget_col_data_details->setColumnWidth(0, 50);
-    ui->tableWidget_col_data_details->setColumnWidth(1, 50);
-    //ui->tableWidget_col_data_details->resizeColumnsToContents();
-    //ui->tableWidget_col_data_details->resizeRowsToContents();
-    ui->tableWidget_col_data_details->repaint();
 }
 
 void Dialog::postAddXAxisData() {

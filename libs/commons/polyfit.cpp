@@ -7,7 +7,6 @@
 
 /* Include Files */
 #include "rt_nonfinite.h"
-//#include "cycle_max.h"
 #include "polyfit.h"
 #include "xgeqp3.h"
 

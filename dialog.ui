@@ -1068,8 +1068,14 @@ color: rgb(0, 0, 127);</string>
         <layout class="QVBoxLayout" name="verticalLayout_26">
          <item>
           <widget class="QPushButton" name="pushButton_clear_post">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="text">
             <string>清除缓存</string>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -1165,6 +1171,18 @@ color: rgb(0, 0, 127);</string>
          </item>
          <item>
           <widget class="QListWidget" name="post_proc_after_col_list">
+           <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+           </property>
+           <property name="dragEnabled">
+            <bool>false</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::NoDragDrop</enum>
+           </property>
            <property name="selectionMode">
             <enum>QAbstractItemView::ExtendedSelection</enum>
            </property>
@@ -1541,14 +1559,29 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>10</x>
           <y>50</y>
-          <width>501</width>
+          <width>510</width>
           <height>181</height>
          </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
         </property>
         <property name="font">
          <font>
           <pointsize>10</pointsize>
          </font>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
         </property>
         <property name="autoFillBackground">
          <bool>false</bool>
@@ -1560,10 +1593,19 @@ color: rgb(0, 0, 127);</string>
          <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
         <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+         <enum>QAbstractScrollArea::AdjustIgnored</enum>
         </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::DragDrop</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectColumns</enum>
         </property>
         <property name="showGrid">
          <bool>true</bool>
@@ -1572,27 +1614,39 @@ color: rgb(0, 0, 127);</string>
          <number>1000</number>
         </property>
         <property name="columnCount">
-         <number>5</number>
+         <number>6</number>
         </property>
-        <attribute name="horizontalHeaderVisible">
+        <attribute name="horizontalHeaderCascadingSectionResizes">
          <bool>false</bool>
         </attribute>
         <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>97</number>
+         <number>80</number>
         </attribute>
         <attribute name="horizontalHeaderHighlightSections">
-         <bool>false</bool>
+         <bool>true</bool>
         </attribute>
         <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>100</number>
+         <number>80</number>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
         </attribute>
         <attribute name="verticalHeaderVisible">
          <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderCascadingSectionResizes">
+         <bool>true</bool>
         </attribute>
         <attribute name="verticalHeaderDefaultSectionSize">
          <number>19</number>
         </attribute>
         <attribute name="verticalHeaderHighlightSections">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderStretchLastSection">
          <bool>false</bool>
         </attribute>
         <row/>
@@ -2595,66 +2649,17 @@ color: rgb(0, 0, 127);</string>
         <row/>
         <row/>
         <row/>
-        <column>
-         <property name="text">
-          <string>#</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>val</string>
-         </property>
-        </column>
         <column/>
         <column/>
         <column/>
-        <item row="0" column="1">
+        <column/>
+        <column/>
+        <column/>
+        <item row="0" column="5">
          <property name="text">
           <string/>
          </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-         </property>
         </item>
-       </widget>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>240</y>
-          <width>71</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_32">
-         <item>
-          <widget class="QLabel" name="label_56">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>计数：</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_selcol_totalcount">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>0</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </widget>
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
@@ -2712,7 +2717,7 @@ color: rgb(0, 0, 127);</string>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_post1000_records">
+          <widget class="QPushButton" name="pushButton_next1000_records">
            <property name="font">
             <font>
              <pointsize>9</pointsize>
@@ -2727,6 +2732,51 @@ color: rgb(0, 0, 127);</string>
           </widget>
          </item>
         </layout>
+       </widget>
+       <widget class="QLabel" name="label_56">
+        <property name="geometry">
+         <rect>
+          <x>11</x>
+          <y>241</y>
+          <width>27</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>计数：</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_selcol_totalcount">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>241</y>
+          <width>381</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
        </widget>
       </widget>
       <widget class="QGroupBox" name="groupBox_data_analysis">
@@ -3235,8 +3285,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>81</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">

@@ -79,11 +79,17 @@ public slots:
     void postDelSelectedColList();
     void postPopExprDlg();
     void parsePostExpr(bool, QString, int, double, bool, QString, int, QString, QString);
-    void showSelColData();
+    void addRightMenuToShowData(const QPoint &);
+    void addRightMenuToRemoveCol(const QPoint &);
+    void updateShowedDataDetails(int begin_row);
+    void addSelColDataByRightMenu();
+    void removeColDataFromShowDataList();
+    void showSelColDataCount();
+    void showSelColDataByDoubleClicked();
     void showSelColDataFirst1000();
     void showSelColDataPre1000();
     void showSelColDataLast1000();
-    void showSelColDataPost1000();
+    void showSelColDataNext1000();
     void clearPostCache();
 
     // post data analysis
@@ -113,7 +119,6 @@ private:
     QMap<int, QString> dbIndexNameMap;
 
 
-    QString show_data_details_col_name;
     /***********************************
      * interact with AnalyseParas class
      ***********************************/
@@ -126,7 +131,8 @@ private:
 //    QMap<QString, Pre_FilterType> filter_type_map;
     void initComboboxMap();
 
-
+    int last_ref_col_;
+    QMap<QString, QVector<double> > showdata_col_list_;
     double kendall_val_;
     QVector<QVector<double> > stats_2D_output_;
 };
