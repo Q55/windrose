@@ -185,3 +185,23 @@ QPushButton#pushButton_first1000_records, QPushButton#pushButton_last1000_record
     min-width: 11ex;
     max-width: 11ex;
 }
+
+QToolBox#toolBox_analysis_data 
+{
+    font-size: 7px;
+}
+
+QWidget#toolBoxPage_enpost, QWidget#toolBoxPage_weightedfit, QWidget#toolBoxPage_cyclemax, QWidget#toolBoxPage_spectral, QWidget#toolBoxPage_correlation, QWidget#toolBoxPage_maxshang1, QWidget#toolBoxPage_2dshangstats, QWidget#toolBoxPage_maxshang2
+{
+    /*
+    min-height: 220px;
+    padding: 200px;
+    */
+    font-size: 7px;
+    background-color: #e7eff7;
+}
+
+QToolBoxButton {
+    max-height: 20px;
+}
+

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>938</width>
-    <height>737</height>
+    <height>743</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -400,6 +400,9 @@
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="spacing">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QLabel" name="label_3">
              <property name="text">
@@ -1531,7 +1534,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>10</x>
           <y>80</y>
-          <width>341</width>
+          <width>353</width>
           <height>131</height>
          </rect>
         </property>
@@ -1684,7 +1687,7 @@ color: rgb(0, 0, 127);</string>
           <x>10</x>
           <y>50</y>
           <width>510</width>
-          <height>181</height>
+          <height>171</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -2857,50 +2860,50 @@ color: rgb(0, 0, 127);</string>
          </item>
         </layout>
        </widget>
-       <widget class="QLabel" name="label_56">
+       <widget class="QWidget" name="">
         <property name="geometry">
          <rect>
           <x>11</x>
-          <y>241</y>
-          <width>27</width>
+          <y>220</y>
+          <width>111</width>
           <height>16</height>
          </rect>
         </property>
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>计数：</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_selcol_totalcount">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>241</y>
-          <width>381</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>0</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_56">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>计数：</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_selcol_totalcount">
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QGroupBox" name="groupBox_dataAnalysis">
@@ -2914,6 +2917,9 @@ color: rgb(0, 0, 127);</string>
          <width>361</width>
          <height>411</height>
         </rect>
+       </property>
+       <property name="toolTipDuration">
+        <number>0</number>
        </property>
        <property name="title">
         <string>数据分析</string>
@@ -2942,14 +2948,19 @@ color: rgb(0, 0, 127);</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <kerning>false</kerning>
+         </font>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::NoFocus</enum>
         </property>
         <property name="contextMenuPolicy">
-         <enum>Qt::DefaultContextMenu</enum>
+         <enum>Qt::ActionsContextMenu</enum>
         </property>
         <property name="toolTipDuration">
-         <number>-1</number>
+         <number>0</number>
         </property>
         <property name="autoFillBackground">
          <bool>false</bool>
@@ -2964,7 +2975,7 @@ color: rgb(0, 0, 127);</string>
          <number>1</number>
         </property>
         <property name="midLineWidth">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="toolBoxPage_enpost">
          <property name="geometry">
@@ -2983,7 +2994,7 @@ color: rgb(0, 0, 127);</string>
            <rect>
             <x>10</x>
             <y>7</y>
-            <width>271</width>
+            <width>321</width>
             <height>52</height>
            </rect>
           </property>
@@ -3032,6 +3043,11 @@ color: rgb(0, 0, 127);</string>
                </item>
                <item>
                 <widget class="QLineEdit" name="lineEdit_enpost_lat">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
                  <property name="text">
                   <string>39.04845</string>
                  </property>
@@ -3055,6 +3071,11 @@ color: rgb(0, 0, 127);</string>
                </item>
                <item>
                 <widget class="QLineEdit" name="lineEdit_enpost_lon">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
                  <property name="text">
                   <string>121.5347</string>
                  </property>
@@ -3324,9 +3345,15 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>111</height>
           </rect>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
          </property>
          <attribute name="label">
           <string>曲线拟合</string>
@@ -3545,8 +3572,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>111</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3614,8 +3641,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>111</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3826,8 +3853,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>111</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4035,8 +4062,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>111</height>
           </rect>
          </property>
          <attribute name="label">
