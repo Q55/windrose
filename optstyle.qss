@@ -1,0 +1,187 @@
+QWidget#tab,QWidget#tab_2,QWidget#tab_3 {
+    background-color: white;
+}
+
+QTabWidget::pane { /* The tab widget frame */
+    border-top: 2px solid #b2cbec;
+    position: absolute;
+    top: -0.5em;
+}
+
+QTabWidget::tab-bar {
+    alignment: center;
+}
+
+/* Style the tab using the tab sub-control. Note that
+    it reads QTabBar _not_ QTabWidget */
+QTabBar::tab {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
+                                stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+    border: 0px solid #C4C4C3;
+    border-bottom-color: #C2C7CB; /* same as the pane color */
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    min-width: 15ex;
+    min-height: 7px;
+    padding: 7px;
+}
+
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #e7eff7, stop: 0.3 #b2cbec,
+                                stop: 0.5 #b2cbec, stop: 1.0 #77a5e3);
+}
+/*
+QTabBar::tab:selected, QTabBar::tab:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,
+                                stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
+}
+*/
+QTabBar::tab:selected {
+    border-color: #77a5e3;
+    border-bottom-color: #b2cbec; /* same as pane color */
+}
+
+/*****************************************************/
+/* pre process style sheet */
+
+QGroupBox#groupBox_anaPara,QGroupBox#groupBox_filterCond,QGroupBox#groupBox_timeCond {
+/*    background-color: #e7eff7; */
+    background-color: white;
+    border-width: 1px;
+    border-color: #77a5e3;
+    border-style: solid;
+    border-radius: 5;
+}
+
+QGroupBox#preProcGroupBox {
+    background-color:#e7eff7;
+    border-width: 2px;
+    border-color: #77a5e3;
+    border-style: solid;
+    border-radius: 5;
+}
+
+QGroupBox#groupBox_rangeFilter,QGroupBox#groupBox_timeCont, QGroupBox#groupBox_rangeCont,QGroupBox#groupBox_interConsis {
+    background-color: #e7eff7;
+    border-width: 1px;
+    border-color: #77a5e3;
+    border-style: solid;
+    border-radius: 5;
+}
+
+QGroupBox#preProcGroupBox::title,QGroupBox#groupBox_anaPara::title,QGroupBox#groupBox_filterCond::title,QGroupBox#groupBox_timeCond::title { 
+    color: rgb(25, 64, 129);
+    font: bold;
+ }
+QLineEdit#lineEdit_tips { 
+    border-width: 0px;
+    background-color: transparent;
+ }
+
+/*****************************************************/
+/* post process style sheet */
+
+QGroupBox#groupBox_dataSel, QGroupBox#groupBox_dataAnalysis,QGroupBox#groupBox_dataTable,QGroupBox#groupBox_drawGraph {
+/*    background-color: #e7eff7; */
+    background-color: white;
+    border-width: 2px;
+    border-color: #77a5e3;
+    border-style: solid;
+    border-radius: 5;
+}
+
+QGroupBox#groupBox_dataSel {
+    background-color:#e7eff7;
+    border-width: 2px;
+    border-color: #77a5e3;
+    border-style: solid;
+    border-radius: 5;
+}
+
+QGroupBox#groupBox_dataSel::title,QGroupBox#groupBox_dataAnalysis::title,QGroupBox#groupBox_dataTable::title,QGroupBox#groupBox_drawGraph::title { 
+    color: rgb(25, 64, 129);
+    font: bold;
+ }
+
+/*****************************************************/
+/* predict style sheet */
+
+QGroupBox#groupBox_settingCond, QGroupBox#groupBox_calResult,QGroupBox#groupBox_loadSug,QGroupBox#groupBox_sysPara {
+/*    background-color: #e7eff7; */
+    background-color: white;
+    border-width: 2px;
+    border-color: #77a5e3;
+    border-style: solid;
+    border-radius: 5;
+}
+QGroupBox#groupBox_settingCond::title,QGroupBox#groupBox_calResult::title,QGroupBox#groupBox_loadSug::title,QGroupBox#groupBox_sysPara::title { 
+    color: rgb(25, 64, 129);
+    font: bold;
+ }
+
+
+QPushButton {
+    border: 1px solid #8f8f91;
+    border-radius: 4px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                        stop: 0 #f6f7fa, stop: 1 #dadbde);
+
+    min-height: 2.5ex;
+    max-height: 2.5ex;  
+}
+
+QPushButton:pressed {
+    /*
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #dadbde, stop: 1 #f6f7fa);
+    */
+    background-color: #77a5e3;
+
+}
+
+QPushButton:flat {
+    border: none; /* no border for a flat push button */
+}
+
+QPushButton:default {
+    border-color: navy; /* make the default button prominent */
+}
+
+QPushButton::hover {
+    background-color: #77a5e3;
+    color: white;
+}
+
+QPushButton#pushButton_saveConfig,QPushButton#pushButton_saveData,QPushButton#pushButton_startDeal,QPushButton#pushButton_post_start_analyse,QPushButton#pushButton_start_drawgraph 
+{
+    min-width: 11ex;
+    max-width: 11ex;
+}
+
+QPushButton#pushButton_clear_pre
+{
+    min-width: 13ex;
+    max-width: 13ex;
+}
+
+QPushButton#pushButton_pre_add_cols, QPushButton#pushButton_pre_del_cols
+{
+    min-width: 11ex;
+    max-width: 11ex;
+}
+
+QPushButton#pushButton_clear_post, QPushButton#pushButton_post_add_cols, QPushButton#pushButton_post_del_cols, QPushButton#pushButton_post_input_expr
+{
+    min-width: 13ex;
+    max-width: 13ex;
+}
+
+QPushButton#pushButton_first1000_records, QPushButton#pushButton_last1000_records, QPushButton#pushButton_pre1000_records, QPushButton#pushButton_post1000_records
+{
+    min-width: 11ex;
+    max-width: 11ex;
+}
