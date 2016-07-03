@@ -7,7 +7,6 @@
 
 /* Include Files */
 #include "rt_nonfinite.h"
-//#include "cycle_max.h"
 #include "sum.h"
 
 /* Function Definitions */

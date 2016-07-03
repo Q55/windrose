@@ -25,6 +25,7 @@ QChartWindRosePlot::QChartWindRosePlot(int angular_count, const QVector<double> 
     for (int i = 0; i < radialCount; ++i) {
         QHBoxLayout *sublayout = new QHBoxLayout();
         QLabel *label = new QLabel("        ");
+        label->setMaximumHeight(10);
         label->setAutoFillBackground(true);
         QPalette palette = label->palette();
         palette.setColor(label->backgroundRole(), (Qt::GlobalColor)(base_color_ + i));
@@ -65,7 +66,7 @@ void QChartWindRosePlot::createPolarChartView() {
 
     chart_radial_axis_ = new QValueAxis();
     chart_radial_axis_->setRange(0, radial_max_);
-    chart_radial_axis_->setTickCount( (int)radial_max_ + 1 );
+    chart_radial_axis_->setTickCount( (int)radialCount + 1 );
     chart_radial_axis_->setLabelsVisible(false);
     //radialAxis->setLabelFormat("%.1f");
     chart_->addAxis(chart_radial_axis_, QPolarChart::PolarOrientationRadial);

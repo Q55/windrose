@@ -490,6 +490,7 @@ double Utils::qtCycleMax(QVector<double> in_data, double resol, double obs_time,
     for (int j = 0; j < in_data.size(); j++)
         data->data[j] = in_data[j];
 
+    //result = cycle_max(data, 0.1, 0.5, 100);
     result = cycle_max(data, resol, obs_time, regression_cycle);
 
     emxDestroyArray_real_T(data);
