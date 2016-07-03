@@ -232,3 +232,6 @@ FORMS    += \
     dialog.ui \
     postexprdialog.ui
 
+RESOURCES += \
+    stylesheet.qrc
+

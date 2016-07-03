@@ -10,10 +10,36 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 
+#include <QFile>
+#include <QTextStream>
+
+void loadStyleSheet(const QString qssName)//加入下面函数
+{
+
+    QFile file(":/qss/"+qssName.toLower() + ".qss");
+
+    QString styleSheet;
+
+    if(file.open(QFile::ReadOnly))
+
+    {
+        styleSheet = QString::fromLatin1(file.readAll());
+        //QTextStream styleIn(&data);
+
+        //qssFile = styleIn.readAll();
+
+        qApp->setStyleSheet(styleSheet);
+
+        file.close();
+
+    }
+}
+
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
+    loadStyleSheet(QString("optStyle"));
     ui->setupUi(this);
 
     /////////////////////////////////////////////
@@ -47,9 +73,9 @@ Dialog::Dialog(QWidget *parent) :
 //    for (int i = 0; i < out.size(); ++i) {
 //        qDebug()<<i<<":"<<out.at(i).size()<<":"<<out.at(i);
 //    }
-    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/bar.tem.test.preprocdata.csv", 1, 100000000, 2);
-    double ret = Utils::qtCycleMax(data1, 0.1, 0.5, 100);
-    qDebug()<<ret;
+//    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/bar.tem.test.preprocdata.csv", 1, 100000000, 2);
+//    double ret = Utils::qtCycleMax(data1, 0.1, 0.5, 100);
+//    qDebug()<<ret;
 
 //    QVector<QVector<double> > data;
 //    data.resize(33);
