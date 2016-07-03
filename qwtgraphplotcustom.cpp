@@ -8,6 +8,9 @@
 #include <qwt_plot_histogram.h>
 #include <qwt_plot_barchart.h>
 #include <qwt_plot_spectrogram.h>
+#include <qwt_legend.h>
+#include <qwt_plot_magnifier.h>
+#include <qwt_plot_panner.h>
 
 //************for spectrogram***************
 #include <QVector>
@@ -25,8 +28,10 @@ QwtGraphPlotCustom::QwtGraphPlotCustom() {
     graph_plot = new Plot(this);
     graph_plot->setTitle( "数据分析图" );
     setCentralWidget( graph_plot );
+//    (void) new QwtPlotMagnifier(graph_plot->canvas()); //使用滚轮放大/缩小
+//    (void) new QwtPlotPanner(graph_plot->canvas());//使用鼠标左键平移
 
-    graph_plot->setFixedSize(QSize(800, 600));
+    //graph_plot->setFixedSize(QSize(800, 600));
 }
 
 void QwtGraphPlotCustom::plotForCorrelation(const QVector<double> &x, const QVector<double> &y) {
@@ -174,9 +179,10 @@ void QwtGraphPlotCustom::plotFor2DMaxEntropyDensity(const QVector<QVector<double
     btnContour->setChecked( false );
 }
 
-void QwtGraphPlotCustom::plotForCurve(const QVector<double> &x, const QVector<QVector<double> > &yy) {
+void QwtGraphPlotCustom::plotForCurve(const QVector<double> &x, const QVector<QVector<double> > &yy, const QVector<QString> &yy_names) {
     int i = 7;
-    for (auto it = yy.begin(); it != yy.end(); ++it, ++i) {
+    int j = 0;
+    for (auto it = yy.begin(); it != yy.end(); ++it, ++i, ++j) {
         QPolygonF samples;
         for (int j = 0; j < it->size(); ++j) {
             if (x.size() == 0)
@@ -184,15 +190,17 @@ void QwtGraphPlotCustom::plotForCurve(const QVector<double> &x, const QVector<QV
             else
                 samples += QPointF(x[j], (*it)[j]);
         }
-        QwtPlotCurve *curve = new QwtPlotCurve("curve1");
+        QwtPlotCurve *curve = new QwtPlotCurve(yy_names[j]);
         curve->setSamples(samples);
-        curve->setStyle(QwtPlotCurve::Lines);
+        //curve->setStyle(QwtPlotCurve::Lines);
+        curve->setStyle(QwtPlotCurve::Dots);
         QwtSymbol *curve_symbols = new QwtSymbol( QwtSymbol::XCross);
         curve_symbols->setSize(3);
         curve_symbols->setPen((Qt::GlobalColor)i);
         curve->setSymbol(curve_symbols);
         curve->setPen((Qt::GlobalColor)i);
         curve->attach(graph_plot);
+        graph_plot->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
     }
 }
 

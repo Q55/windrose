@@ -127,7 +127,8 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->pushButton_post_del_cols, SIGNAL(clicked()), this, SLOT(postDelSelectedColList()));
     connect(ui->pushButton_post_input_expr, SIGNAL(clicked()), this, SLOT( postPopExprDlg() ) );
     connect(ui->post_proc_after_col_list, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(addRightMenuToShowData(const QPoint &)));
-    connect(ui->post_proc_after_col_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(showSelColDataByDoubleClicked())); // show 1000 data.
+    connect(ui->post_proc_after_col_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(renameSelCol())); // rename
+    //connect(ui->post_proc_after_col_list, SIGNAL(currentItemChanged (QListWidgetItem *, QListWidgetItem *)), this, SLOT(dealRenameSelCol(QListWidgetItem *, QListWidgetItem *)));
     connect(ui->pushButton_first1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataFirst1000()));
     connect(ui->pushButton_pre1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataPre1000()));
     connect(ui->pushButton_last1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataLast1000()));
@@ -138,6 +139,8 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->pushButton_post_start_analyse, SIGNAL(clicked()), this, SLOT(postStartDataAnalysis()));
     connect(ui->toolBox_analysis_data, SIGNAL(currentChanged(int)), this, SLOT(postPrepareDataForAnalysis(int)));
     connect(ui->pushButton_clear_post, SIGNAL(clicked()), this, SLOT(clearPostCache()));
+    connect(ui->radioButton_correlation, SIGNAL(clicked(bool)), this, SLOT(postDataAnalysisRadioButtonDisableInput(bool)));
+    connect(ui->radioButton_kendall, SIGNAL(clicked(bool)), this, SLOT(postDataAnalysisRadioButtonEnableInput(bool)));
 
     // post draw graph
     connect(ui->pushButton_add_xdata, SIGNAL(clicked()), this, SLOT(postAddXAxisData()));
@@ -148,41 +151,119 @@ Dialog::Dialog(QWidget *parent) :
 }
 
 
+void Dialog::postDataAnalysisRadioButtonDisableInput(bool clicked) {
+    if (clicked) {
+        ui->lineEdit_kendall_limit_min1->setEnabled(false);
+        ui->lineEdit_kendall_limit_min2->setEnabled(false);
+    }
+}
+void Dialog::postDataAnalysisRadioButtonEnableInput(bool clicked) {
+    if (clicked) {
+        ui->lineEdit_kendall_limit_min1->setEnabled(true);
+        ui->lineEdit_kendall_limit_min2->setEnabled(true);
+    }
+}
+
 
 void Dialog::addRightMenuToShowData(const QPoint &pos) {
     QMenu *right_menu = new QMenu(ui->post_proc_after_col_list);
     QAction *show_data = new QAction(tr("查看数据"), ui->post_proc_after_col_list);
+    QAction *col_rename = new QAction(tr("重命名"), ui->post_proc_after_col_list);
 
     connect(show_data, SIGNAL(triggered(bool)), this, SLOT(addSelColDataByRightMenu()));
+    connect(col_rename, SIGNAL(triggered(bool)), this, SLOT(renameSelCol()));
 
     if (ui->post_proc_after_col_list->selectedItems().size() > 0) {
         right_menu->addAction(show_data);
+        right_menu->addAction(col_rename);
     }
 
     right_menu->exec(QCursor::pos());
 
     delete right_menu;
     delete show_data;
+    delete col_rename;
+}
+
+void Dialog::renameSelCol() {
+    ui->post_proc_after_col_list->currentItem()->setFlags(
+                ui->post_proc_after_col_list->currentItem()->flags() | Qt::ItemIsEditable);
+    old_col_name_ = ui->post_proc_after_col_list->currentItem()->text();
+
+    // TODO: This line will be called multiple times, i don't know why, till now, by shiqiang, 2016.07.03
+    // Maybe it doesn't matter...
+    // Maybe change QListWidget to QListView could solve this problem
+    connect(ui->post_proc_after_col_list->itemDelegate(), SIGNAL(commitData(QWidget*)),
+            this, SLOT(dealRenameSelCol(QWidget*)));
+}
+
+void Dialog::dealRenameSelCol(QWidget* editor) {
+    QString new_col_name = reinterpret_cast<QLineEdit*>(editor)->text();
+//    qDebug() << "new:"<<new_col_name;
+//    qDebug() << "old:"<<old_col_name_;
+//    int nRow = ui->post_proc_after_col_list->currentRow();
+//    qDebug() <<"nrow: "<< nRow;
+    if (new_col_name == old_col_name_) return;
+
+    QStringList new_list;
+    QMap<QString, QVector<double> > exist_cols = dpclass.getPostProcDataMap();
+    qDebug()<<"exist size1 = "<<exist_cols.size();
+    for (QMap<QString, QVector<double> >::Iterator it = exist_cols.begin(); it != exist_cols.end(); ++it) {
+        if (it.key() != old_col_name_) {
+            new_list<<it.key();
+        }
+    }
+    if (!new_list.contains(new_col_name, Qt::CaseSensitive)) {
+        new_list << new_col_name;
+        dpclass.addColToPostProcDataDirectly(new_col_name, exist_cols[old_col_name_]);
+    }
+    dpclass.removeColFromPostProcData(old_col_name_);
+
+    ui->post_proc_after_col_list->clear();
+    ui->post_proc_after_col_list->addItems(new_list);
+
+//    QList<QListWidgetItem *> set_item_selected = ui->post_proc_after_col_list->findItems(
+//                new_list.first(), Qt::MatchFixedString);
+//    ui->post_proc_after_col_list->setCurrentItem(set_item_selected.first());
+    ui->post_proc_after_col_list->repaint();
 }
 
 void Dialog::addRightMenuToRemoveCol(const QPoint &pos) {
     QMenu *right_menu = new QMenu(ui->tableWidget_col_data_details);
     QAction *remove_data = new QAction(tr("删除数据"), ui->tableWidget_col_data_details);
     QAction *show_data_count = new QAction(tr("显示数据量"), ui->tableWidget_col_data_details);
+    QAction *refresh_data = new QAction(tr("刷新数据"), ui->tableWidget_col_data_details);
+    QAction *clear_data = new QAction(tr("清空数据"), ui->tableWidget_col_data_details);
 
     connect(remove_data, SIGNAL(triggered(bool)), this, SLOT(removeColDataFromShowDataList()));
     connect(show_data_count, SIGNAL(triggered(bool)), this, SLOT(showSelColDataCount()));
+    connect(refresh_data, SIGNAL(triggered(bool)), this, SLOT(refreshDataToDefault()));
+    connect(clear_data, SIGNAL(triggered(bool)), this, SLOT(clearAllData()));
 
     int col = ui->tableWidget_col_data_details->currentColumn();
     if (col - 1 >= 0 && col - 1 < showdata_col_list_.size()) {
         right_menu->addAction(remove_data);
         right_menu->addAction(show_data_count);
+        right_menu->addAction(refresh_data);
+        right_menu->addAction(clear_data);
     }
 
     right_menu->exec(QCursor::pos());
 
     delete right_menu;
     delete remove_data;
+}
+
+void Dialog::clearAllData() {
+    showdata_col_list_.clear();
+    updateShowedDataDetails(0);
+}
+
+void Dialog::refreshDataToDefault() {
+    int begin_row = ui->tableWidget_col_data_details->item(0, 0)->text().toInt() - 1;
+    if (begin_row < 0) begin_row = 0;
+
+    updateShowedDataDetails(begin_row);
 }
 
 void Dialog::showSelColDataCount() {
@@ -217,18 +298,18 @@ void Dialog::addSelColDataByRightMenu() {
     for (auto i : cols_list) {
         if (showdata_col_list_.find(i->text()) != showdata_col_list_.end()) continue; // col data is now in show data widget.
 
+        if (showdata_col_list_.size() >= MAXSHOWCOLS) {
+            ui->label_selcol_totalcount->setText("仅显示"+ QString::number(MAXSHOWCOLS) + "列数据，请删除列后再次选择");
+            ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
+            break;
+        }
+
         auto post_data_map = dpclass.getPostProcDataMap();
         if (post_data_map.find(i->text()) != post_data_map.end())
             showdata_col_list_[i->text()] = post_data_map[i->text()];
         else {
             QVector<double> temp(0);
             showdata_col_list_[i->text()] = temp;
-        }
-
-        if (showdata_col_list_.size() >= MAXSHOWCOLS) {
-            ui->label_selcol_totalcount->setText("仅显示"+ QString::number(MAXSHOWCOLS) + "列数据，请删除列后再次选择");
-            ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
-            break;
         }
     }
     last_ref_col_ = 1;
@@ -238,7 +319,8 @@ void Dialog::addSelColDataByRightMenu() {
 
 void Dialog::removeColDataFromShowDataList() {
     int col = ui->tableWidget_col_data_details->currentColumn();
-    if (col >= 1 && col < showdata_col_list_.size()) {
+    if ((col - 1) >= 0 && (col - 1) < showdata_col_list_.size()) {
+        qDebug()<<ui->tableWidget_col_data_details->horizontalHeaderItem(col)->text();
         QMap<QString, QVector<double> >::Iterator find = showdata_col_list_.find(
                     ui->tableWidget_col_data_details->horizontalHeaderItem(col)->text());
         if (find != showdata_col_list_.end()) {
@@ -246,7 +328,8 @@ void Dialog::removeColDataFromShowDataList() {
         }
     }
 
-    int begin_row = ui->tableWidget_col_data_details->item(0, 0)->text().toInt();
+    int begin_row = ui->tableWidget_col_data_details->item(0, 0)->text().toInt() - 1;
+    if (begin_row < 0) begin_row = 0;
 
     updateShowedDataDetails(begin_row);
 }
@@ -258,6 +341,10 @@ void Dialog::showSelColDataFirst1000() {
         ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
         return;
     }
+
+    int ref_col = ui->tableWidget_col_data_details->currentColumn();
+    if (ref_col < 1 || ref_col > MAXSHOWCOLS)
+        ref_col = last_ref_col_;
 
     updateShowedDataDetails(0);
     ui->tableWidget_col_data_details->setCurrentCell(0, last_ref_col_);
@@ -292,6 +379,8 @@ void Dialog::showSelColDataLast1000() {
     updateShowedDataDetails(begin_row);
 
     ui->tableWidget_col_data_details->setCurrentCell(999, ref_col);
+    ui->label_selcol_totalcount->setText(QString::number(size));
+    ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
 }
 
 void Dialog::showSelColDataPre1000() {
@@ -301,6 +390,11 @@ void Dialog::showSelColDataPre1000() {
         ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
         return;
     }
+
+    int ref_col = ui->tableWidget_col_data_details->currentColumn();
+    if (ref_col < 1 || ref_col > MAXSHOWCOLS)
+        ref_col = last_ref_col_;
+    last_ref_col_ = ref_col;
 
     int current_row = ui->tableWidget_col_data_details->item(0, 0)->text().toInt();
     int begin_row = 0;
@@ -342,6 +436,8 @@ void Dialog::showSelColDataNext1000() {
 
     updateShowedDataDetails(begin_row);
     ui->tableWidget_col_data_details->setCurrentCell(999, ref_col);
+    ui->label_selcol_totalcount->setText(QString::number(size));
+    ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
 }
 
 void Dialog::updateShowedDataDetails(int begin_row) {
@@ -359,7 +455,7 @@ void Dialog::updateShowedDataDetails(int begin_row) {
         QTableWidgetItem * item = new QTableWidgetItem(QString::number(i + 1));
         ui->tableWidget_col_data_details->setItem((i - begin_row), 0, item);
     }
-    ui->tableWidget_col_data_details->setColumnWidth(0, 80);
+    ui->tableWidget_col_data_details->setColumnWidth(0, 85);
 
     // show regular datas.
     int col = 1;
@@ -374,11 +470,11 @@ void Dialog::updateShowedDataDetails(int begin_row) {
             QTableWidgetItem * item = new QTableWidgetItem(value);
             ui->tableWidget_col_data_details->setItem((i - begin_row), col, item);
         }
-        ui->tableWidget_col_data_details->setColumnWidth(col, 80);
+        ui->tableWidget_col_data_details->setColumnWidth(col, 85);
         col++;
     }
     // show empty datas.
-    for (; col < MAXSHOWCOLS; ++col) {
+    for (; col <= MAXSHOWCOLS; ++col) {
         QTableWidgetItem * header_item = new QTableWidgetItem(QString::number(col + 1));
         ui->tableWidget_col_data_details->setHorizontalHeaderItem(col, header_item);
         for (int i = 1; i <= 1000; ++i) {
@@ -388,8 +484,8 @@ void Dialog::updateShowedDataDetails(int begin_row) {
     }
     ui->tableWidget_col_data_details->repaint();
 
-    ui->label_selcol_totalcount->setText(QString::number(max_size));
-    ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
+    //ui->label_selcol_totalcount->setText(QString::number(max_size));
+    //ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
 }
 
 void Dialog::setProgressTips(int i) {
@@ -441,7 +537,7 @@ void Dialog::setDBTableList( int style ) {
         ui->comboBox_tb_list->addItems(table118);
     } else {
         QErrorMessage *errDialog = new QErrorMessage(this);
-        errDialog->showMessage("The database is not exist!");
+        errDialog->showMessage("数据库不存在!");
         return;
     }
     ui->comboBox_tb_list->setCurrentIndex(0);
@@ -646,7 +742,7 @@ void Dialog::startPreProcess()
 
 void Dialog::clearPreCache(){
     QMessageBox msgBox;
-    msgBox.setText("Clear All Cached Data in Memory?");
+    msgBox.setText("确认清除内存中所有缓存?");
     msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Ok);
     int ret = msgBox.exec();
@@ -676,18 +772,30 @@ void Dialog::clearPreCache(){
         ui->comboBox_weightfit_x->setItemText(1, "1");
         ui->comboBox_weightfit_y->setItemText(0, "0");
         ui->comboBox_weightfit_y->setItemText(1, "1");
+        showdata_col_list_.clear();
+        updateShowedDataDetails(0);
+        ui->comboBox_stats_data1->setItemText(0, "0");
+        ui->comboBox_stats_data1->setItemText(1, "1");
+        ui->comboBox_stats_data2->setItemText(0, "0");
+        ui->comboBox_stats_data2->setItemText(1, "1");
+        for (int i = 0; i < 4; ++i) {
+            ui->comboBox_2dshang_ff1->setItemText(i, QString::number(i));
+            ui->comboBox_2dshang_ff2->setItemText(i, QString::number(i));
+            ui->comboBox_2dshang_FF1->setItemText(i, QString::number(i));
+            ui->comboBox_2dshang_FF2->setItemText(i, QString::number(i));
+        }
 
         ui->spinBox_selCol->setValue(map_col_list_analyse_paras.size());
 
         QMessageBox msgBox;
-        msgBox.setText("All Cached Data Cleared!");
+        msgBox.setText("所有缓存已被清除!");
         msgBox.exec();
     }
 }
 
 void Dialog::clearPostCache() {
     QMessageBox msgBox;
-    msgBox.setText("Clear Post Cached Data in Memory?");
+    msgBox.setText("确认清除后处理的所有缓存数据?");
     msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Ok);
     int ret = msgBox.exec();
@@ -707,9 +815,22 @@ void Dialog::clearPostCache() {
         ui->comboBox_weightfit_x->setItemText(1, "1");
         ui->comboBox_weightfit_y->setItemText(0, "0");
         ui->comboBox_weightfit_y->setItemText(1, "1");
+        showdata_col_list_.clear();
+        updateShowedDataDetails(0);
+        ui->comboBox_stats_data1->setItemText(0, "0");
+        ui->comboBox_stats_data1->setItemText(1, "1");
+        ui->comboBox_stats_data2->setItemText(0, "0");
+        ui->comboBox_stats_data2->setItemText(1, "1");
+        for (int i = 0; i < 4; ++i) {
+            ui->comboBox_2dshang_ff1->setItemText(i, QString::number(i));
+            ui->comboBox_2dshang_ff2->setItemText(i, QString::number(i));
+            ui->comboBox_2dshang_FF1->setItemText(i, QString::number(i));
+            ui->comboBox_2dshang_FF2->setItemText(i, QString::number(i));
+        }
+
 
         QMessageBox msgBox;
-        msgBox.setText("All Cached Data Cleared!");
+        msgBox.setText("后处理缓存被清除!");
         msgBox.exec();
     }
 }
@@ -816,31 +937,31 @@ void Dialog::parsePostExpr(bool scalar_checked, QString scalar_data, int scalar_
     repaint();
 }
 
-void Dialog::showSelColDataByDoubleClicked() {
-    //show_data_details_col_name = ui->post_proc_after_col_list->currentItem()->text();;
-    QVector<double> *col_data = NULL;
-    auto post_data_map = dpclass.getPostProcDataMap();
-//    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
-//        col_data = &post_data_map[show_data_details_col_name];
-//    } else {
-//        col_data->clear();
+//void Dialog::showSelColDataByDoubleClicked() {
+//    //show_data_details_col_name = ui->post_proc_after_col_list->currentItem()->text();;
+//    QVector<double> *col_data = NULL;
+//    auto post_data_map = dpclass.getPostProcDataMap();
+////    if (post_data_map.find(show_data_details_col_name) != post_data_map.end()) {
+////        col_data = &post_data_map[show_data_details_col_name];
+////    } else {
+////        col_data->clear();
+////    }
+
+//    for (int i = 1; i <= 1000 && i <= col_data->size(); ++i) {
+//        QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
+//        ui->tableWidget_col_data_details->setItem(i-1, 0, item1);
+
+//        QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
+//        ui->tableWidget_col_data_details->setItem(i-1, 1, item2);
 //    }
-
-    for (int i = 1; i <= 1000 && i <= col_data->size(); ++i) {
-        QTableWidgetItem * item1 = new QTableWidgetItem(QString::number(i));
-        ui->tableWidget_col_data_details->setItem(i-1, 0, item1);
-
-        QTableWidgetItem * item2 = new QTableWidgetItem(QString::number(col_data->at(i - 1)));
-        ui->tableWidget_col_data_details->setItem(i-1, 1, item2);
-    }
-    ui->tableWidget_col_data_details->setColumnWidth(0, 50);
-    ui->tableWidget_col_data_details->setColumnWidth(1, 50);
-    //ui->tableWidget_col_data_details->resizeColumnsToContents();
-    //ui->tableWidget_col_data_details->resizeRowsToContents();
-    ui->tableWidget_col_data_details->repaint();
-    ui->label_selcol_totalcount->setText(QString::number(col_data->size()));
-    ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
-}
+//    ui->tableWidget_col_data_details->setColumnWidth(0, 50);
+//    ui->tableWidget_col_data_details->setColumnWidth(1, 50);
+//    //ui->tableWidget_col_data_details->resizeColumnsToContents();
+//    //ui->tableWidget_col_data_details->resizeRowsToContents();
+//    ui->tableWidget_col_data_details->repaint();
+//    ui->label_selcol_totalcount->setText(QString::number(col_data->size()));
+//    ui->label_selcol_totalcount->setStyleSheet("color: rgb(231,66,67);");
+//}
 
 void Dialog::postAddXAxisData() {
     QList<QListWidgetItem *> xaxis_col = ui->post_proc_after_col_list->selectedItems();
@@ -927,7 +1048,11 @@ void Dialog::postPrepareDataForAnalysis(int index) {
     for (auto it = sel_items.begin(); it != sel_items.end(); ++it)
         sel_col_list.push_back((*it)->text());
 
+    //ui->label_drawgraph_note->setText("画玫瑰图时，Speed添加到X轴，Dir添加到Y轴");
+
     if (index == 4) { // correlation
+        ui->lineEdit_kendall_limit_min1->setEnabled(false);
+        ui->lineEdit_kendall_limit_min2->setEnabled(false);
         if (sel_col_list.size() != 2) {
             ui->label_dataanalysis_note->setText("请为相关性分析/肯德尔系数选择2列数据");
             ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
@@ -954,14 +1079,22 @@ void Dialog::postPrepareDataForAnalysis(int index) {
         ui->comboBox_weightfit_y->setCurrentIndex(1);
         ui->toolBoxPage_weightedfit->repaint();
     } else if (index == 6) { // stats
-        if (sel_col_list.size() != 2) {
-            ui->label_dataanalysis_note->setText("请为统计分析选择2列数据");
+        QModelIndex index = ui->comboBox_stats_type->model()->index(3, 0);
+        if (stats_2D_output_.size() <= 0) {
+            ui->comboBox_stats_type->model()->setData(index, 0, Qt::UserRole - 1); // diable
+        } else {
+            ui->comboBox_stats_type->model()->setData(index, 33, Qt::UserRole - 1); // enable
+        }
+        if (sel_col_list.size() != 1 && sel_col_list.size() != 2) {
+            ui->label_dataanalysis_note->setText("请为统计分析选择1~2列数据");
             ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
             return;
         }
-        for (int i = 0; i < 2; ++i) {
-            ui->comboBox_stats_data1->setItemText(i, sel_col_list[i]);
-            ui->comboBox_stats_data2->setItemText(i, sel_col_list[i]);
+        if (sel_col_list.size() == 1)
+            ui->comboBox_stats_data1->setItemText(0, sel_col_list[0]);
+        else if (sel_col_list.size() == 2) {
+            ui->comboBox_stats_data1->setItemText(0, sel_col_list[0]);
+            ui->comboBox_stats_data2->setItemText(1, sel_col_list[1]);
         }
         ui->comboBox_stats_data1->setCurrentIndex(0);
         ui->comboBox_stats_data2->setCurrentIndex(1);
@@ -1035,6 +1168,14 @@ void Dialog::postStartDataAnalysis() {
             //in_data1 = {1,2,3,4,5,6,7,8,9,10,11,12,13};
             //in_data2 = {2.68009505, 4.440152786, 6.955791581,8.264737552, 10.32401073, 12.21620137, 14.56359881,
             //                            16.29702541, 18.01835966, 20.84322102, 22.86014104,24.31722384, 26.72096637};
+            if (in_data1.size() <= 0) {
+                msg = "输入数据X尺寸为0，请重新选择";
+                break;
+            }
+            if (in_data2.size() <= 0) {
+                msg = "输入数据Y尺寸为0，请重新选择";
+                break;
+            }
             if (in_data1.size() != in_data2.size()) {
                 msg = "输入数据X与Y尺寸不匹配";
                 break;
@@ -1052,7 +1193,10 @@ void Dialog::postStartDataAnalysis() {
                 break;
             }
             in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
-            //qDebug()<<in_data1;
+            if (in_data1.size() <= 0) {
+                msg = "输入数据列尺寸为0，请重新选择";
+                break;
+            }
             double result = Utils::qtCycleMax(in_data1,
                                               ui->lineEdit_cyclemax_resol->text().toDouble(),
                                               ui->lineEdit_cyclemax_obstime->text().toDouble(),
@@ -1067,6 +1211,10 @@ void Dialog::postStartDataAnalysis() {
                 break;
             }
             in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
+            if (in_data1.size() <= 0) {
+                msg = "输入数据列尺寸为0，请重新选择";
+                break;
+            }
             Utils::qtSpectral(in_data1, ui->lineEdit_spectral_freq->text().toDouble(), out_data1, out_data2); // out1: f, out2: YY
             if (out_data1.size() != out_data2.size()) {
                 msg = "谱分析计算错误:f/YY元素不等";
@@ -1086,6 +1234,14 @@ void Dialog::postStartDataAnalysis() {
             in_data2 = all_data_map[ui->comboBox_correlation_y->currentText()]; // y
 //            in_data1 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 //            in_data2 = {0,2,4,6,8,10,12,14,16,18,20,22,24,26};
+            if (in_data1.size() <= 0) {
+                msg = "输入数据列X尺寸为0，请重新选择";
+                break;
+            }
+            if (in_data2.size() <= 0) {
+                msg = "输入数据列Y尺寸为0，请重新选择";
+                break;
+            }
             if (in_data1.size() != in_data2.size()) {
                 msg = "X列和Y列数据尺寸不匹配";
                 break;
@@ -1119,6 +1275,10 @@ void Dialog::postStartDataAnalysis() {
                 break;
             }
             in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
+            if (in_data1.size() <= 0) {
+                msg = "输入数据列尺寸为0，请重新选择";
+                break;
+            }
             Utils::qt1DMaxEntropy(in_data1, ui->lineEdit_maxshang1_limitmin->text().toDouble(),
                                   ui->lineEdit_maxshang1_a0resol->text().toDouble(),
                                   ui->lineEdit_maxshang1_estkesimin->text().toDouble(),
@@ -1133,15 +1293,22 @@ void Dialog::postStartDataAnalysis() {
             break;
         }
         case 6: { // stats for max shang 2
-            if (sel_items.size() != 2) {
-                msg = "统计分析需要2列数据";
+            if (sel_items.size() != 1 && sel_items.size() != 2) {
+                msg = "请选择1~2列数据列后重新切换标签页";
                 break;
             }
-            in_data1 = all_data_map[ui->comboBox_stats_data1->currentText()]; // data1
-            in_data2 = all_data_map[ui->comboBox_stats_data2->currentText()]; // data2
             int type = ui->comboBox_stats_type->currentIndex();
             switch (type) {
             case 0: { // stats 1D
+                if (sel_items.size() < 0 && sel_items.size() > 2) {
+                    msg = "Stats 1D需要1~2列数据";
+                    break;
+                }
+                in_data1 = all_data_map[ui->comboBox_stats_data1->currentText()]; // data1
+                if (in_data1.size() <= 0) {
+                    msg = "输入数据列1尺寸为0，请重新选择";
+                    break;
+                }
                 Utils::qtStats1D(in_data1, ui->lineEdit_stats_step1->text().toDouble(), out_data1, out_data2);
                 if (out_data1.size() != out_data2.size()) {
                     msg = "结果序列X和Y元素个数不匹配";
@@ -1153,6 +1320,21 @@ void Dialog::postStartDataAnalysis() {
                 break;
             }
             case 1: { // stats 2D
+                if (sel_items.size() != 2) {
+                    msg = "Stats 2D需要2列数据";
+                    break;
+                }
+                in_data1 = all_data_map[ui->comboBox_stats_data1->currentText()]; // data1
+                if (in_data1.size() <= 0) {
+                    msg = "输入数据列1尺寸为0，请重新选择";
+                    break;
+                }
+
+                in_data2 = all_data_map[ui->comboBox_stats_data2->currentText()]; // data2
+                if (in_data2.size() <= 0) {
+                    msg = "输入数据列2尺寸为0，请重新选择";
+                    break;
+                }
                 stats_2D_output_.clear();
                 Utils::qtStats2D(in_data1, in_data2, ui->lineEdit_stats_limit_min1->text().toDouble(),
                                  ui->lineEdit_stats_limit_min2->text().toDouble(),
@@ -1162,6 +1344,9 @@ void Dialog::postStartDataAnalysis() {
                     msg = "输出结果为空";
                     break;
                 }
+                QModelIndex index = ui->comboBox_stats_type->model()->index(3, 0);
+                if (stats_2D_output_.size() > 0)
+                    ui->comboBox_stats_type->model()->setData(index, 33, Qt::UserRole - 1); // enable
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
                 graph->plotFor2DMaxEntropyDensity(stats_2D_output_);
@@ -1170,6 +1355,21 @@ void Dialog::postStartDataAnalysis() {
                 break;
             }
             case 2: { // Distr F1
+                if (sel_items.size() != 2) {
+                    msg = "Distr 1D需要2列数据";
+                    break;
+                }
+                in_data1 = all_data_map[ui->comboBox_stats_data1->currentText()]; // data1
+                if (in_data1.size() <= 0) {
+                    msg = "输入数据列1尺寸为0，请重新选择";
+                    break;
+                }
+
+                in_data2 = all_data_map[ui->comboBox_stats_data2->currentText()]; // data2
+                if (in_data2.size() <= 0) {
+                    msg = "输入数据列2尺寸为0，请重新选择";
+                    break;
+                }
                 Utils::qtDistrF1(in_data1, in_data2, out_data1, out_data2);
                 if (out_data1.size() != out_data2.size()) {
                     msg = "结果序列X和Y元素个数不匹配";
@@ -1214,6 +1414,22 @@ void Dialog::postStartDataAnalysis() {
             QVector<double> ff2 = all_data_map[ui->comboBox_2dshang_ff2->currentText()]; // ff2
             QVector<double> FF1 = all_data_map[ui->comboBox_2dshang_FF1->currentText()]; // FF1
             QVector<double> FF2 = all_data_map[ui->comboBox_2dshang_FF2->currentText()]; // FF2
+            if (ff1.size() <= 0) {
+                msg = "输入数据列ff1尺寸为0，请重新选择";
+                break;
+            }
+            if (ff2.size() <= 0) {
+                msg = "输入数据列ff2尺寸为0，请重新选择";
+                break;
+            }
+            if (FF1.size() <= 0) {
+                msg = "输入数据列FF1尺寸为0，请重新选择";
+                break;
+            }
+            if (FF2.size() <= 0) {
+                msg = "输入数据列FF2尺寸为0，请重新选择";
+                break;
+            }
             int type = ui->comboBox_2dshang_type->currentIndex();
             QVector<QVector<double> > out; // should be replaced by a more global variable--lsq, 2016.06.26
             Utils::qt2DMaxEntropy(ff1, FF1, ff2, FF2, ui->lineEdit_2dshang_R->text().toDouble(), type, out);
@@ -1246,35 +1462,49 @@ void Dialog::postStartDrawGraph() {
         switch (graph_type) {
         case 0: { // curve chart
             if (ui->xaxis_data_list->count() > 1) {
-                msg = "x data shoule be non or 1 col.";
+                msg = "X轴数据列数为0或1";
                 break;
             }
             QVector<double> x_col;
-            for (int i = 0; i < ui->xaxis_data_list->count(); ++i)
+            for (int i = 0; i < ui->xaxis_data_list->count(); ++i) {
                 x_col = all_data_map[ui->xaxis_data_list->item(i)->text()];
+                if (x_col.size() <= 0) {
+                    msg = "X轴输入数据列" + ui->xaxis_data_list->item(i)->text() + "尺寸为0，请重新选择";
+                    break;
+                }
+            }
 
             if (ui->yaxis_data_list->count() < 1 || ui->yaxis_data_list->count() > 5) {
-                msg = "y data cols should between 1 ~ 5.";
+                msg = "Y轴数据列数为1 ~ 5.";
                 break;
             }
             QVector<QVector<double> > y_cols;
-            for (int i = 0; i < ui->yaxis_data_list->count(); ++i)
+            QVector<QString> y_cols_name;
+            for (int i = 0; i < ui->yaxis_data_list->count(); ++i) {
                 y_cols.push_back(all_data_map[ui->yaxis_data_list->item(i)->text()]);
+                y_cols_name.push_back(ui->yaxis_data_list->item(i)->text());
+                if (y_cols[i].size() <= 0) {
+                    msg = "Y轴输入数据列" + ui->yaxis_data_list->item(i)->text() + "尺寸为0，请重新选择";
+                    break;
+                }
+            }
 
             int records = x_col.size();
             if (records == 0) records = y_cols[0].size();
             bool matched = true;
             for (auto it = y_cols.begin(); it != y_cols.end(); ++it) {
                 if (it->size() != records) {
-                    msg = "records of x & y not matched.";
+                    msg = "X与Y的记录数不匹配";
                     matched = false;
                     break;
                 }
             }
 
+            qDebug()<<y_cols_name;
+
             if (matched) {
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
-                graph->plotForCurve(x_col, y_cols);
+                graph->plotForCurve(x_col, y_cols, y_cols_name);
                 graph->setXAxisLabel(ui->lineEdit_xlabel->text());
                 graph->setYAxisLabel(ui->lineEdit_ylabel->text());
                 graph->show();
@@ -1283,19 +1513,27 @@ void Dialog::postStartDrawGraph() {
         }
         case 1: { // scatter graph
             if (ui->xaxis_data_list->count() != 1) {
-                msg = "x data shoule be 1 col.";
+                msg = "X轴数据列数为1";
                 break;
             }
             QVector<double> x_col = all_data_map[ui->xaxis_data_list->item(0)->text()];
+            if (x_col.size() <= 0) {
+                msg = "X轴输入数据列" + ui->xaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
+                break;
+            }
 
             if (ui->yaxis_data_list->count() != 1) {
-                msg = "y data should be 1 col.";
+                msg = "Y轴数据列数为1";
                 break;
             }
             QVector<double> y_col = all_data_map[ui->yaxis_data_list->item(0)->text()];
+            if (y_col.size() <= 0) {
+                msg = "Y轴输入数据列" + ui->yaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
+                break;
+            }
 
             if (x_col.size() != y_col.size()) {
-                msg = "records of x & y not matched.";
+                msg = "X与Y的记录数不匹配.";
                 break;
             }
 
@@ -1308,27 +1546,35 @@ void Dialog::postStartDrawGraph() {
         }
         case 2: { // rose plot
             if (ui->xaxis_data_list->count() != 1) {
-                msg = "x data shoule be 1 col.";
+                msg = "X轴数据列数为1";
                 break;
             }
             if (!(ui->xaxis_data_list->item(0)->text().contains("windspeed", Qt::CaseInsensitive))) {
-                msg = "The x col should be 'WindSpeed'";
+                msg = "X轴数据应该为'WindSpeed'";
                 break;
             }
             QVector<double> x_col = all_data_map[ui->xaxis_data_list->item(0)->text()];
+            if (x_col.size() <= 0) {
+                msg = "X轴输入数据列" + ui->xaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
+                break;
+            }
 
             if (ui->yaxis_data_list->count() != 1) {
-                msg = "y data shoule be 1 col.";
+                msg = "Y轴数据列数为1";
                 break;
             }
             if (!(ui->yaxis_data_list->item(0)->text().contains("winddir", Qt::CaseInsensitive))) {
-                msg = "The y col should be 'WindDir'";
+                msg = "Y轴数据应该为'WindDir'";
                 break;
             }
             QVector<double> y_col = all_data_map[ui->yaxis_data_list->item(0)->text()];
+            if (y_col.size() <= 0) {
+                msg = "Y轴输入数据列" + ui->yaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
+                break;
+            }
 
             if (x_col.size() != y_col.size()) {
-                msg = "records of x & y not matched.";
+                msg = "X轴与Y轴数据记录数不匹配";
                 break;
             }
 //            QVector<double> x_col = {6,7.2,6.5,7.1,5.6,3.5,4.4,4.3,3.4,3.8,4.8,3.6,2.8,2.2,2.9,4.2,4.7,6,
@@ -1341,21 +1587,30 @@ void Dialog::postStartDrawGraph() {
         }
         case 3: { // histgraph
             if (ui->xaxis_data_list->count() > 1) {
-                msg = "x data shoule be non or 1 col.";
+                msg = "X轴数据列数为0或1.";
                 break;
             }
             QVector<double> x_col;
-            for (int i = 0; i < ui->xaxis_data_list->count(); ++i)
+            for (int i = 0; i < ui->xaxis_data_list->count(); ++i) {
                 x_col = all_data_map[ui->xaxis_data_list->item(i)->text()];
+                if (x_col.size() <= 0) {
+                    msg = "X轴输入数据列" + ui->xaxis_data_list->item(i)->text() + "尺寸为0，请重新选择";
+                    break;
+                }
+            }
 
             if (ui->yaxis_data_list->count() != 1) {
-                msg = "y data shoule be 1 col.";
+                msg = "Y轴数据列数为1";
                 break;
             }
             QVector<double> y_col = all_data_map[ui->yaxis_data_list->item(0)->text()];
+            if (y_col.size() <= 0) {
+                msg = "Y轴输入数据列" + ui->yaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
+                break;
+            }
 
             if ((x_col.size() != 0) && (x_col.size() != y_col.size())) {
-                msg = "records of x & y not matched.";
+                msg = "X轴与Y轴数据记录数不匹配";
                 break;
             }
 

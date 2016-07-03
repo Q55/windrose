@@ -50,7 +50,14 @@ public:
 
     // post-processing // 2016.6.10 by lsq.
     const QMap<QString, QVector<double> > &getPostProcDataMap() { return this->postproc_data_map; }
+    void removeColFromPostProcData(QString col_name) {
+        QMap<QString, QVector<double> >::Iterator findit = postproc_data_map.find(col_name);
+        if (findit != postproc_data_map.end()) postproc_data_map.erase(findit);
+    }
     void addColsToPostProcDataDirectly(QStringList col_name_list);
+    void addColToPostProcDataDirectly(QString name, QVector<double> value) {
+        postproc_data_map[name] = value;
+    }
     QString addColToPostProcDataByExpr(bool is_scalar, QString data1, QString data2, int op, double operand, QString new_col_name);
     void delColsFromPostProcDataByName(QStringList col_name_list);
     void clearPostproc_data_map() { postproc_data_map.clear(); }
