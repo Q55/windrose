@@ -156,7 +156,7 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->pushButton_post_del_cols, SIGNAL(clicked()), this, SLOT(postDelSelectedColList()));
     connect(ui->pushButton_post_input_expr, SIGNAL(clicked()), this, SLOT( postPopExprDlg() ) );
     connect(ui->post_proc_after_col_list, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(addRightMenuToShowData(const QPoint &)));
-    connect(ui->post_proc_after_col_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(renameSelCol())); // rename
+    //connect(ui->post_proc_after_col_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(renameSelCol())); // rename
     //connect(ui->post_proc_after_col_list, SIGNAL(currentItemChanged (QListWidgetItem *, QListWidgetItem *)), this, SLOT(dealRenameSelCol(QListWidgetItem *, QListWidgetItem *)));
     connect(ui->pushButton_first1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataFirst1000()));
     connect(ui->pushButton_pre1000_records, SIGNAL(clicked()), this, SLOT(showSelColDataPre1000()));
@@ -182,14 +182,18 @@ Dialog::Dialog(QWidget *parent) :
 
 void Dialog::postDataAnalysisRadioButtonDisableInput(bool clicked) {
     if (clicked) {
-        ui->lineEdit_kendall_limit_min1->setEnabled(false);
-        ui->lineEdit_kendall_limit_min2->setEnabled(false);
+        ui->label_kendall_min1->setVisible(false);
+        ui->label_kendall_min2->setVisible(false);
+        ui->lineEdit_kendall_limit_min1->setVisible(false);
+        ui->lineEdit_kendall_limit_min2->setVisible(false);
     }
 }
 void Dialog::postDataAnalysisRadioButtonEnableInput(bool clicked) {
     if (clicked) {
-        ui->lineEdit_kendall_limit_min1->setEnabled(true);
-        ui->lineEdit_kendall_limit_min2->setEnabled(true);
+        ui->label_kendall_min1->setVisible(true);
+        ui->label_kendall_min2->setVisible(true);
+        ui->lineEdit_kendall_limit_min1->setVisible(true);
+        ui->lineEdit_kendall_limit_min2->setVisible(true);
     }
 }
 
@@ -344,6 +348,7 @@ void Dialog::addSelColDataByRightMenu() {
     last_ref_col_ = 1;
 
     updateShowedDataDetails(0);
+    ui->tableWidget_col_data_details->setCurrentCell(0, 1);
 }
 
 void Dialog::removeColDataFromShowDataList() {
@@ -1072,102 +1077,97 @@ void Dialog::postDelYAxisData() {
 }
 
 void Dialog::postPrepareDataForAnalysis(int index) {
-    QList<QListWidgetItem *> sel_items = ui->post_proc_after_col_list->selectedItems();
-    QVector<QString> sel_col_list;
-    for (auto it = sel_items.begin(); it != sel_items.end(); ++it)
-        sel_col_list.push_back((*it)->text());
+//    QList<QListWidgetItem *> sel_items = ui->post_proc_after_col_list->selectedItems();
+//    QVector<QString> sel_col_list;
+//    for (auto it = sel_items.begin(); it != sel_items.end(); ++it)
+//        sel_col_list.push_back((*it)->text());
 
     //ui->label_drawgraph_note->setText("画玫瑰图时，Speed添加到X轴，Dir添加到Y轴");
+    QMap<QString, QVector<double> > all_data_map = dpclass.getPostProcDataMap();
+    QString msg = "";
+    QString msg_style = "color: rgb(44,104,7);";
 
-    if (index == 4) { // correlation
-        ui->lineEdit_kendall_limit_min1->setEnabled(false);
-        ui->lineEdit_kendall_limit_min2->setEnabled(false);
-        if (sel_col_list.size() != 2) {
-            ui->label_dataanalysis_note->setText("请为相关性分析/肯德尔系数选择2列数据");
-            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
-            return;
-        }
-        for (int i = 0; i < 2; ++i) {
-            ui->comboBox_correlation_x->setItemText(i, sel_col_list[i]);
-            ui->comboBox_correlation_y->setItemText(i, sel_col_list[i]);
-        }
-        ui->comboBox_correlation_x->setCurrentIndex(0);
-        ui->comboBox_correlation_y->setCurrentIndex(1);
-        ui->toolBoxPage_correlation->repaint();
+    if (index == 0) { // enpost
+        msg = "船体位置计算无需数据列";
+        msg_style = "color: rgb(44,104,7);";
     } else if (index == 1) { // weighted fit
-        if (sel_col_list.size() != 2) {
-            ui->label_dataanalysis_note->setText("请为曲线拟合选择2列数据");
-            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
-            return;
+        msg = "曲线拟合需要2列数据";
+        msg_style = "color: rgb(44,104,7);";
+        for (QMap<QString, QVector<double> >::Iterator it = all_data_map.begin(); it != all_data_map.end(); ++it) {
+            ui->comboBox_weightfit_x->addItem(it.key());
+            ui->comboBox_weightfit_y->addItem(it.key());
         }
-        for (int i = 0; i < 2; ++i) {
-            ui->comboBox_weightfit_x->setItemText(i, sel_col_list[i]);
-            ui->comboBox_weightfit_y->setItemText(i, sel_col_list[i]);
+    } else if (index == 2) { // cycle max
+        msg = "回归分析需要1列数据";
+        msg_style = "color: rgb(44,104,7);";
+        for (QMap<QString, QVector<double> >::Iterator it = all_data_map.begin(); it != all_data_map.end(); ++it) {
+            ui->comboBox_cyclemax->addItem(it.key());
         }
-        ui->comboBox_weightfit_x->setCurrentIndex(0);
-        ui->comboBox_weightfit_y->setCurrentIndex(1);
-        ui->toolBoxPage_weightedfit->repaint();
-    } else if (index == 6) { // stats
+    } else if (index == 3) { // spectral
+        msg = "谱分析需要1列数据";
+        msg_style = "color: rgb(44,104,7);";
+        for (QMap<QString, QVector<double> >::Iterator it = all_data_map.begin(); it != all_data_map.end(); ++it) {
+            ui->comboBox_spectral->addItem(it.key());
+        }
+    } else if (index == 4) { // correlation
+        msg = "相关性分析/肯德尔系数需要2列数据";
+        msg_style = "color: rgb(44,104,7);";
+        for (QMap<QString, QVector<double> >::Iterator it = all_data_map.begin(); it != all_data_map.end(); ++it) {
+            ui->comboBox_correlation_x->addItem(it.key());
+            ui->comboBox_correlation_y->addItem(it.key());
+        }
+        ui->label_kendall_min1->setVisible(false);
+        ui->label_kendall_min2->setVisible(false);
+        ui->lineEdit_kendall_limit_min1->setVisible(false);
+        ui->lineEdit_kendall_limit_min2->setVisible(false);
+    } else if (index == 5) { // max shang 1
+        msg = "一维最大熵需要1列数据";
+        msg_style = "color: rgb(44,104,7);";
+        for (QMap<QString, QVector<double> >::Iterator it = all_data_map.begin(); it != all_data_map.end(); ++it) {
+            ui->comboBox_maxshang1->addItem(it.key());
+        }
+    } else if (index == 6) {// stats
+        msg = "统计分析需要1或2列数据";
+        msg_style = "color: rgb(44,104,7);";
+        for (QMap<QString, QVector<double> >::Iterator it = all_data_map.begin(); it != all_data_map.end(); ++it) {
+            ui->comboBox_stats_data1->addItem(it.key());
+            ui->comboBox_stats_data2->addItem(it.key());
+        }
         QModelIndex index = ui->comboBox_stats_type->model()->index(3, 0);
         if (stats_2D_output_.size() <= 0) {
             ui->comboBox_stats_type->model()->setData(index, 0, Qt::UserRole - 1); // diable
         } else {
             ui->comboBox_stats_type->model()->setData(index, 33, Qt::UserRole - 1); // enable
         }
-        if (sel_col_list.size() != 1 && sel_col_list.size() != 2) {
-            ui->label_dataanalysis_note->setText("请为统计分析选择1~2列数据");
-            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
-            return;
+    } else if (index == 7) { // max shang 2
+        msg = "二维最大熵需要4列数据";
+        msg_style = "color: rgb(44,104,7);";
+        for (QMap<QString, QVector<double> >::Iterator it = all_data_map.begin(); it != all_data_map.end(); ++it) {
+            ui->comboBox_2dshang_FF1->addItem(it.key());
+            ui->comboBox_2dshang_FF2->addItem(it.key());
+            ui->comboBox_2dshang_ff1->addItem(it.key());
+            ui->comboBox_2dshang_ff2->addItem(it.key());
         }
-        if (sel_col_list.size() == 1)
-            ui->comboBox_stats_data1->setItemText(0, sel_col_list[0]);
-        else if (sel_col_list.size() == 2) {
-            ui->comboBox_stats_data1->setItemText(0, sel_col_list[0]);
-            ui->comboBox_stats_data2->setItemText(1, sel_col_list[1]);
-        }
-        ui->comboBox_stats_data1->setCurrentIndex(0);
-        ui->comboBox_stats_data2->setCurrentIndex(1);
-        ui->toolBoxPage_2dshangstats->repaint();
-    } else if (index == 7) { // 2d max entropy
-        if (sel_col_list.size() != 4) {
-            ui->label_dataanalysis_note->setText("请为二维最大熵分析选择4列数据");
-            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
-            return;
-        }
-        for (int i = 0; i < 4; ++i) {
-            ui->comboBox_2dshang_ff1->setItemText(i, sel_col_list[i]);
-            ui->comboBox_2dshang_ff2->setItemText(i, sel_col_list[i]);
-            ui->comboBox_2dshang_FF1->setItemText(i, sel_col_list[i]);
-            ui->comboBox_2dshang_FF2->setItemText(i, sel_col_list[i]);
-        }
-        ui->comboBox_2dshang_ff1->setCurrentIndex(0);
-        ui->comboBox_2dshang_ff2->setCurrentIndex(1);
-        ui->comboBox_2dshang_FF1->setCurrentIndex(2);
-        ui->comboBox_2dshang_FF2->setCurrentIndex(3);
-        ui->lineEdit_2dshang_R->setText(QString::number(kendall_val_));
-        ui->toolBoxPage_maxshang2->repaint();
     }
-
-    ui->label_dataanalysis_note->setText("Ok.");
-    ui->label_dataanalysis_note->setStyleSheet("color: rgb(44,104,7);");
+    ui->label_dataanalysis_note->setText(msg);
+    ui->label_dataanalysis_note->setStyleSheet(msg_style);
 }
 
 void Dialog::postStartDataAnalysis() {
-//    if (ui->groupBox_data_analysis->isChecked()) {
-        QList<QListWidgetItem *> sel_items = ui->post_proc_after_col_list->selectedItems();
-        int analysis_type = ui->toolBox_analysis_data->currentIndex();
-//        if (sel_items.size() <= 0 && analysis_type != 4) {
-//            ui->label_dataanalysis_note->setText("Please Sel Correlation Columns.");
-//            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
-//            return;
-//        }
 
         // prepare for data
-        auto all_data_map = dpclass.getPostProcDataMap();
-        QVector<double> in_data1, in_data2;
-        QVector<double> out_data1, out_data2;
-        double ret_val;
-        QString msg = "Ok.";
+        int analysis_type = ui->toolBox_analysis_data->currentIndex();
+        QMap<QString, QVector<double> > all_data_map = dpclass.getPostProcDataMap();
+        QString msg = "";
+        QString msg_style = "color: rgb(44,104,7);";
+
+        if (analysis_type != 0 && all_data_map.size() <= 0) {
+            msg = "后处理数据列为空，请先添加数据列";
+            msg_style = "color: rgb(231,66,67);";
+            ui->label_dataanalysis_note->setText(msg);
+            ui->label_dataanalysis_note->setStyleSheet(msg_style);
+            return;
+        }
 
         switch (analysis_type) {
         case 0: { // enpost
@@ -1185,45 +1185,48 @@ void Dialog::postStartDataAnalysis() {
             ui->lineEdit_enpost_aftx->setText(QString::number(aftx));
             ui->lineEdit_enpost_afty->setText(QString::number(afty));
             ui->lineEdit_enpost_aftz->setText(QString::number(aftz));
+            msg = "船体位置计算成功，结果见输出文件框";
+            msg_style = "color: rgb(44,104,7);";
             break;
         }
         case 1: { // weighted fit
-            if (sel_items.size() != 2) {
-                msg = "曲线拟合需要2列数据";
-                break;
-            }
-            in_data1 = all_data_map[ui->comboBox_weightfit_x->currentText()]; // x
-            in_data2 = all_data_map[ui->comboBox_weightfit_y->currentText()]; // y
+            QVector<double> in_data1 = all_data_map[ui->comboBox_weightfit_x->currentText()]; // x
+            QVector<double> in_data2 = all_data_map[ui->comboBox_weightfit_y->currentText()]; // y
             //in_data1 = {1,2,3,4,5,6,7,8,9,10,11,12,13};
             //in_data2 = {2.68009505, 4.440152786, 6.955791581,8.264737552, 10.32401073, 12.21620137, 14.56359881,
             //                            16.29702541, 18.01835966, 20.84322102, 22.86014104,24.31722384, 26.72096637};
             if (in_data1.size() <= 0) {
                 msg = "输入数据X尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             if (in_data2.size() <= 0) {
                 msg = "输入数据Y尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             if (in_data1.size() != in_data2.size()) {
                 msg = "输入数据X与Y尺寸不匹配";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
+
             double a, b;
             Utils::weightedFit(in_data1, in_data2, a, b);
+
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
             graph->plotForWeightedFit(in_data1, in_data2, a, b);
             graph->show();
+
+            msg = "曲线拟合计算成功，结果见输出图形";
+            msg_style = "color: rgb(44,104,7);";
             break;
         }
         case 2: { // cyclemax
-            if (sel_items.size() != 1) {
-                msg = "回归分析需要1列数据";
-                break;
-            }
-            in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
+            QVector<double> in_data1 = all_data_map[ui->comboBox_cyclemax->currentText()];
             if (in_data1.size() <= 0) {
                 msg = "输入数据列尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             double result = Utils::qtCycleMax(in_data1,
@@ -1231,48 +1234,53 @@ void Dialog::postStartDataAnalysis() {
                                               ui->lineEdit_cyclemax_obstime->text().toDouble(),
                                               ui->lineEdit_cyclemax_regressioncycle->text().toDouble());
             ui->lineEdit_cyclemax_result->setText(QString::number(result));
-            msg = QString::number(result);
+            //msg = QString::number(result);
+            msg = "回归分析计算成功，结果见输出文本框";
+            msg_style = "color: rgb(44,104,7);";
             break;
         }
         case 3: { // spectral
-            if (sel_items.size() != 1) {
-                msg = "谱分析需要1列数据";
-                break;
-            }
-            in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
+            QVector<double> in_data1 = all_data_map[ui->comboBox_spectral->currentText()];
             if (in_data1.size() <= 0) {
                 msg = "输入数据列尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
+
+            QVector<double> out_data1, out_data2;
             Utils::qtSpectral(in_data1, ui->lineEdit_spectral_freq->text().toDouble(), out_data1, out_data2); // out1: f, out2: YY
             if (out_data1.size() != out_data2.size()) {
-                msg = "谱分析计算错误:f/YY元素不等";
+                msg = "谱分析计算错误:输出f和YY元素个数不相等";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
+
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
             graph->plotForSpectral(out_data1, out_data2);
             graph->show();
+
+            msg = "谱分析计算成功，结果见输出图形";
+            msg_style = "color: rgb(44,104,7);";
             break;
         }
         case 4: { // correlation & kendall
-            if (sel_items.size() != 2) {
-                msg = "相关性分析/肯德尔系数需要2列数据";
-                break;
-            }
-            in_data1 = all_data_map[ui->comboBox_correlation_x->currentText()]; // x
-            in_data2 = all_data_map[ui->comboBox_correlation_y->currentText()]; // y
+            QVector<double> in_data1 = all_data_map[ui->comboBox_correlation_x->currentText()]; // x
+            QVector<double> in_data2 = all_data_map[ui->comboBox_correlation_y->currentText()]; // y
 //            in_data1 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 //            in_data2 = {0,2,4,6,8,10,12,14,16,18,20,22,24,26};
             if (in_data1.size() <= 0) {
-                msg = "输入数据列X尺寸为0，请重新选择";
+                msg = "输入数据X尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             if (in_data2.size() <= 0) {
-                msg = "输入数据列Y尺寸为0，请重新选择";
+                msg = "输入数据Y尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             if (in_data1.size() != in_data2.size()) {
                 msg = "X列和Y列数据尺寸不匹配";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
 
@@ -1282,32 +1290,40 @@ void Dialog::postStartDataAnalysis() {
             else if (ui->radioButton_kendall->isChecked()) // kendall
                 type = 2;
 
+            double ret_val = 0;
             if (type == 1) {
+                QVector<double> out_data1, out_data2;
                 ret_val = Utils::qtCorrelation(in_data1, in_data2, out_data1, out_data2); // a, b
+
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
                 graph->plotForCorrelation(out_data2, out_data1);
-                //graph->plotForCorrelation(out_data1, out_data2);
                 graph->show();
+
+                msg = "相关性分析计算成功，结果见输出图形";
+                msg_style = "color: rgb(44,104,7);";
             } else if (type == 2) {
                 ret_val = Utils::qtKendall(in_data1, in_data2, ui->lineEdit_kendall_limit_min1->text().toDouble(),
                                            ui->lineEdit_kendall_limit_min2->text().toDouble());
                 kendall_val_ = ret_val;
-                msg = QString::number(ret_val);
+                ui->lineEdit_kendall_result->setText(QString::number(ret_val));
+                //msg = QString::number(ret_val);
+                msg = "肯德尔系数计算成功，结果见输出文本框";
+                msg_style = "color: rgb(44,104,7);";
             } else {
                 msg = "请选择分析类型:相关性分析 or 肯德尔系数";
+                msg_style = "color: rgb(231,66,67);";
             }
             break;
         }
         case 5: { // max shang 1
-            if (sel_items.size() != 1) {
-                msg = "1维最大熵需要1列数据";
-                break;
-            }
-            in_data1 = all_data_map[ui->post_proc_after_col_list->currentItem()->text()];
+            QVector<double> in_data1 = all_data_map[ui->comboBox_maxshang1->currentText()];
             if (in_data1.size() <= 0) {
                 msg = "输入数据列尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
+
+            QVector<double> out_data1, out_data2;
             Utils::qt1DMaxEntropy(in_data1, ui->lineEdit_maxshang1_limitmin->text().toDouble(),
                                   ui->lineEdit_maxshang1_a0resol->text().toDouble(),
                                   ui->lineEdit_maxshang1_estkesimin->text().toDouble(),
@@ -1316,54 +1332,57 @@ void Dialog::postStartDataAnalysis() {
                                   ui->lineEdit_maxshang1_whsample->text().toDouble(),
                                   ui->lineEdit_maxshang1_whmax->text().toDouble(),
                                   out_data1, out_data2); // output: yy1, yy2
+
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
             graph->plotFor1DMaxEntropy(out_data1, out_data2);
             graph->show();
+
+            msg = "一维最大熵计算成功，结果见输出图形";
+            msg_style = "color: rgb(44,104,7);";
             break;
         }
         case 6: { // stats for max shang 2
-            if (sel_items.size() != 1 && sel_items.size() != 2) {
-                msg = "请选择1~2列数据列后重新切换标签页";
-                break;
-            }
             int type = ui->comboBox_stats_type->currentIndex();
             switch (type) {
             case 0: { // stats 1D
-                if (sel_items.size() < 0 && sel_items.size() > 2) {
-                    msg = "Stats 1D需要1~2列数据";
-                    break;
-                }
-                in_data1 = all_data_map[ui->comboBox_stats_data1->currentText()]; // data1
+                QVector<double> in_data1 = all_data_map[ui->comboBox_stats_data1->currentText()]; // data1
                 if (in_data1.size() <= 0) {
                     msg = "输入数据列1尺寸为0，请重新选择";
-                    break;
-                }
-                Utils::qtStats1D(in_data1, ui->lineEdit_stats_step1->text().toDouble(), out_data1, out_data2);
-                if (out_data1.size() != out_data2.size()) {
-                    msg = "结果序列X和Y元素个数不匹配";
-                    break;
-                }
-                QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
-                graph->plotForXYData(out_data1, out_data2);
-                graph->show();
-                break;
-            }
-            case 1: { // stats 2D
-                if (sel_items.size() != 2) {
-                    msg = "Stats 2D需要2列数据";
-                    break;
-                }
-                in_data1 = all_data_map[ui->comboBox_stats_data1->currentText()]; // data1
-                if (in_data1.size() <= 0) {
-                    msg = "输入数据列1尺寸为0，请重新选择";
+                    msg_style = "color: rgb(231,66,67);";
                     break;
                 }
 
-                in_data2 = all_data_map[ui->comboBox_stats_data2->currentText()]; // data2
-                if (in_data2.size() <= 0) {
-                    msg = "输入数据列2尺寸为0，请重新选择";
+                QVector<double> out_data1, out_data2;
+                Utils::qtStats1D(in_data1, ui->lineEdit_stats_step1->text().toDouble(), out_data1, out_data2);
+                if (out_data1.size() != out_data2.size()) {
+                    msg = "结果序列X和Y元素个数不匹配";
+                    msg_style = "color: rgb(231,66,67);";
                     break;
                 }
+
+                QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+                graph->plotForXYData(out_data1, out_data2);
+                graph->show();
+
+                msg = "Stats1D计算成功，结果见输出图形";
+                msg_style = "color: rgb(44,104,7);";
+                break;
+            }
+            case 1: { // stats 2D
+                QVector<double> in_data1 = all_data_map[ui->comboBox_stats_data1->currentText()]; // data1
+                if (in_data1.size() <= 0) {
+                    msg = "输入数据列1尺寸为0，请重新选择";
+                    msg_style = "color: rgb(231,66,67);";
+                    break;
+                }
+
+                QVector<double> in_data2 = all_data_map[ui->comboBox_stats_data2->currentText()]; // data2
+                if (in_data2.size() <= 0) {
+                    msg = "输入数据列2尺寸为0，请重新选择";
+                    msg_style = "color: rgb(231,66,67);";
+                    break;
+                }
+
                 stats_2D_output_.clear();
                 Utils::qtStats2D(in_data1, in_data2, ui->lineEdit_stats_limit_min1->text().toDouble(),
                                  ui->lineEdit_stats_limit_min2->text().toDouble(),
@@ -1371,8 +1390,10 @@ void Dialog::postStartDataAnalysis() {
                                  ui->lineEdit_stats_step2->text().toDouble(), stats_2D_output_);
                 if (stats_2D_output_.size() <= 0) {
                     msg = "输出结果为空";
+                    msg_style = "color: rgb(231,66,67);";
                     break;
                 }
+
                 QModelIndex index = ui->comboBox_stats_type->model()->index(3, 0);
                 if (stats_2D_output_.size() > 0)
                     ui->comboBox_stats_type->model()->setData(index, 33, Qt::UserRole - 1); // enable
@@ -1381,32 +1402,41 @@ void Dialog::postStartDataAnalysis() {
                 graph->plotFor2DMaxEntropyDensity(stats_2D_output_);
                 graph->show();
 
+                msg = "Stats2D计算成功，结果见输出图形";
+                msg_style = "color: rgb(44,104,7);";
+
                 break;
             }
             case 2: { // Distr F1
-                if (sel_items.size() != 2) {
-                    msg = "Distr 1D需要2列数据";
-                    break;
-                }
-                in_data1 = all_data_map[ui->comboBox_stats_data1->currentText()]; // data1
+                QVector<double> in_data1 = all_data_map[ui->comboBox_stats_data1->currentText()]; // data1
                 if (in_data1.size() <= 0) {
                     msg = "输入数据列1尺寸为0，请重新选择";
+                    msg_style = "color: rgb(231,66,67);";
                     break;
                 }
 
-                in_data2 = all_data_map[ui->comboBox_stats_data2->currentText()]; // data2
+                QVector<double> in_data2 = all_data_map[ui->comboBox_stats_data2->currentText()]; // data2
                 if (in_data2.size() <= 0) {
                     msg = "输入数据列2尺寸为0，请重新选择";
+                    msg_style = "color: rgb(231,66,67);";
                     break;
                 }
+
+                QVector<double> out_data1, out_data2;
                 Utils::qtDistrF1(in_data1, in_data2, out_data1, out_data2);
                 if (out_data1.size() != out_data2.size()) {
                     msg = "结果序列X和Y元素个数不匹配";
+                    msg_style = "color: rgb(231,66,67);";
                     break;
                 }
+
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
                 graph->plotForXYData(out_data1, out_data2);
                 graph->show();
+
+                msg = "DistrF1计算成功，结果见输出图形";
+                msg_style = "color: rgb(44,104,7);";
+
                 break;
             }
             case 3: { // Distr F2
@@ -1420,12 +1450,16 @@ void Dialog::postStartDataAnalysis() {
 
                 if (out.size() <= 0) {
                     msg = "输出结果为空";
+                    msg_style = "color: rgb(231,66,67);";
                     break;
                 }
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
                 graph->plotFor2DMaxEntropyDensity(out);
                 graph->show();
+
+                msg = "DistrF2计算成功，结果见输出图形";
+                msg_style = "color: rgb(44,104,7);";
 
                 break;
             }
@@ -1435,36 +1469,38 @@ void Dialog::postStartDataAnalysis() {
             break;
         }
         case 7: { // max shang 2
-            if (sel_items.size() != 4) {
-                msg = "二维最大熵分析需要4列数据";
-                break;
-            }
             QVector<double> ff1 = all_data_map[ui->comboBox_2dshang_ff1->currentText()]; // ff1
             QVector<double> ff2 = all_data_map[ui->comboBox_2dshang_ff2->currentText()]; // ff2
             QVector<double> FF1 = all_data_map[ui->comboBox_2dshang_FF1->currentText()]; // FF1
             QVector<double> FF2 = all_data_map[ui->comboBox_2dshang_FF2->currentText()]; // FF2
             if (ff1.size() <= 0) {
                 msg = "输入数据列ff1尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             if (ff2.size() <= 0) {
                 msg = "输入数据列ff2尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             if (FF1.size() <= 0) {
                 msg = "输入数据列FF1尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             if (FF2.size() <= 0) {
                 msg = "输入数据列FF2尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
+
             int type = ui->comboBox_2dshang_type->currentIndex();
             QVector<QVector<double> > out; // should be replaced by a more global variable--lsq, 2016.06.26
             Utils::qt2DMaxEntropy(ff1, FF1, ff2, FF2, ui->lineEdit_2dshang_R->text().toDouble(), type, out);
 
             if (out.size() <= 0) {
                 msg = "输出结果为空";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
 
@@ -1472,15 +1508,14 @@ void Dialog::postStartDataAnalysis() {
             graph->plotFor2DMaxEntropyDensity(out);
             graph->show();
 
+            msg = "二维最大熵计算成功，结果见输出图形";
+            msg_style = "color: rgb(44,104,7);";
+
             break;
         }
         }
         ui->label_dataanalysis_note->setText(msg);
-        if (msg != "Ok.")
-            ui->label_dataanalysis_note->setStyleSheet("color: rgb(231,66,67);");
-        else
-            ui->label_dataanalysis_note->setStyleSheet("color: rgb(44,104,7);");
-//    }
+        ui->label_dataanalysis_note->setStyleSheet(msg_style);
 }
 
 void Dialog::postStartDrawGraph() {

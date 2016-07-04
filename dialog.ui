@@ -2860,7 +2860,7 @@ color: rgb(0, 0, 127);</string>
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>11</x>
@@ -3345,8 +3345,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>111</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="maximumSize">
@@ -3385,16 +3385,6 @@ color: rgb(0, 0, 127);</string>
             <height>26</height>
            </rect>
           </property>
-          <item>
-           <property name="text">
-            <string>0</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </item>
          </widget>
          <widget class="QLabel" name="label_86">
           <property name="geometry">
@@ -3423,16 +3413,6 @@ color: rgb(0, 0, 127);</string>
             <height>26</height>
            </rect>
           </property>
-          <item>
-           <property name="text">
-            <string>0</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </item>
          </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_cyclemax">
@@ -3440,8 +3420,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3566,14 +3546,42 @@ color: rgb(0, 0, 127);</string>
            </item>
           </layout>
          </widget>
+         <widget class="QComboBox" name="comboBox_cyclemax">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>67</y>
+            <width>111</width>
+            <height>26</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_168">
+          <property name="geometry">
+           <rect>
+            <x>15</x>
+            <y>70</y>
+            <width>31</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>数据列</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_spectral">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>111</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3634,6 +3642,34 @@ color: rgb(0, 0, 127);</string>
             </spacer>
            </item>
           </layout>
+         </widget>
+         <widget class="QLabel" name="label_169">
+          <property name="geometry">
+           <rect>
+            <x>25</x>
+            <y>43</y>
+            <width>31</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>数据列</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox_spectral">
+          <property name="geometry">
+           <rect>
+            <x>60</x>
+            <y>40</y>
+            <width>111</width>
+            <height>26</height>
+           </rect>
+          </property>
          </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_correlation">
@@ -3713,7 +3749,7 @@ color: rgb(0, 0, 127);</string>
            <string>肯德尔系数</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_121">
+         <widget class="QLabel" name="label_kendall_min1">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -3731,7 +3767,7 @@ color: rgb(0, 0, 127);</string>
            <string>min1</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_122">
+         <widget class="QLabel" name="label_kendall_min2">
           <property name="geometry">
            <rect>
             <x>100</x>
@@ -3782,16 +3818,6 @@ color: rgb(0, 0, 127);</string>
             <height>26</height>
            </rect>
           </property>
-          <item>
-           <property name="text">
-            <string>0</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </item>
          </widget>
          <widget class="QLabel" name="label_84">
           <property name="geometry">
@@ -3826,16 +3852,37 @@ color: rgb(0, 0, 127);</string>
             <height>26</height>
            </rect>
           </property>
-          <item>
-           <property name="text">
-            <string>0</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </item>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_kendall_result">
+          <property name="geometry">
+           <rect>
+            <x>100</x>
+            <y>80</y>
+            <width>51</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_128">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>80</y>
+            <width>81</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>肯德尔系数结果</string>
+          </property>
          </widget>
          <zorder>label_85</zorder>
          <zorder>comboBox_correlation_y</zorder>
@@ -3845,16 +3892,18 @@ color: rgb(0, 0, 127);</string>
          <zorder>lineEdit_kendall_limit_min2</zorder>
          <zorder>radioButton_correlation</zorder>
          <zorder>radioButton_kendall</zorder>
-         <zorder>label_121</zorder>
-         <zorder>label_122</zorder>
+         <zorder>label_kendall_min1</zorder>
+         <zorder>label_kendall_min2</zorder>
+         <zorder>lineEdit_kendall_result</zorder>
+         <zorder>label_128</zorder>
         </widget>
         <widget class="QWidget" name="toolBoxPage_maxshang1">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>111</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4056,14 +4105,42 @@ color: rgb(0, 0, 127);</string>
            </item>
           </layout>
          </widget>
+         <widget class="QComboBox" name="comboBox_maxshang1">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>87</y>
+            <width>111</width>
+            <height>26</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_172">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>90</y>
+            <width>16</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>X</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_2dshangstats">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>111</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4074,7 +4151,7 @@ color: rgb(0, 0, 127);</string>
            <rect>
             <x>10</x>
             <y>50</y>
-            <width>90</width>
+            <width>120</width>
             <height>26</height>
            </rect>
           </property>
@@ -4098,18 +4175,7 @@ color: rgb(0, 0, 127);</string>
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="comboBox_stats_data1">
-             <item>
-              <property name="text">
-               <string>0</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>1</string>
-              </property>
-             </item>
-            </widget>
+            <widget class="QComboBox" name="comboBox_stats_data1"/>
            </item>
           </layout>
          </widget>
@@ -4118,7 +4184,7 @@ color: rgb(0, 0, 127);</string>
            <rect>
             <x>100</x>
             <y>50</y>
-            <width>91</width>
+            <width>121</width>
             <height>26</height>
            </rect>
           </property>
@@ -4142,18 +4208,7 @@ color: rgb(0, 0, 127);</string>
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="comboBox_stats_data2">
-             <item>
-              <property name="text">
-               <string>0</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>1</string>
-              </property>
-             </item>
-            </widget>
+            <widget class="QComboBox" name="comboBox_stats_data2"/>
            </item>
           </layout>
          </widget>
@@ -4333,8 +4388,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4439,26 +4494,6 @@ color: rgb(0, 0, 127);</string>
             <height>26</height>
            </rect>
           </property>
-          <item>
-           <property name="text">
-            <string>0</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>2</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>3</string>
-           </property>
-          </item>
          </widget>
          <widget class="QLabel" name="label_91">
           <property name="geometry">
@@ -4517,26 +4552,6 @@ color: rgb(0, 0, 127);</string>
             <height>26</height>
            </rect>
           </property>
-          <item>
-           <property name="text">
-            <string>0</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>2</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>3</string>
-           </property>
-          </item>
          </widget>
          <widget class="QLabel" name="label_92">
           <property name="geometry">
@@ -4571,26 +4586,6 @@ color: rgb(0, 0, 127);</string>
             <height>26</height>
            </rect>
           </property>
-          <item>
-           <property name="text">
-            <string>0</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>2</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>3</string>
-           </property>
-          </item>
          </widget>
          <widget class="QLabel" name="label_94">
           <property name="geometry">
@@ -4625,26 +4620,6 @@ color: rgb(0, 0, 127);</string>
             <height>26</height>
            </rect>
           </property>
-          <item>
-           <property name="text">
-            <string>0</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>2</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>3</string>
-           </property>
-          </item>
          </widget>
         </widget>
        </widget>
