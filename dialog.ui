@@ -505,13 +505,13 @@ color: rgb(0, 0, 127);</string>
        <property name="title">
         <string>时间条件</string>
        </property>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>20</x>
           <y>20</y>
           <width>241</width>
-          <height>51</height>
+          <height>55</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_49">
@@ -654,7 +654,7 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -825,7 +825,7 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -949,7 +949,7 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -1131,7 +1131,7 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -1797,8 +1797,8 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>10</x>
           <y>80</y>
-          <width>341</width>
-          <height>111</height>
+          <width>437</width>
+          <height>112</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_43">
@@ -1931,7 +1931,6 @@ color: rgb(0, 0, 127);</string>
        <zorder>layoutWidget</zorder>
        <zorder>layoutWidget</zorder>
        <zorder>pushButton_start_drawgraph</zorder>
-       <zorder>label_79</zorder>
       </widget>
       <widget class="QGroupBox" name="groupBox_dataTable">
        <property name="geometry">
@@ -3313,38 +3312,12 @@ color: rgb(0, 0, 127);</string>
           <string>船体位置计算</string>
          </attribute>
          <widget class="QWidget" name="">
-          <layout class="QHBoxLayout" name="horizontalLayout_79">
-           <item>
-            <widget class="QLabel" name="label_119">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>aftz: </string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit_enpost_aftz">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>0.0</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="">
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>10</y>
+            <y>0</y>
             <width>321</width>
-            <height>124</height>
+            <height>131</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_24">
@@ -3371,6 +3344,12 @@ color: rgb(0, 0, 127);</string>
                  </item>
                  <item>
                   <widget class="QLineEdit" name="lineEdit_enpost_roll">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -3394,6 +3373,12 @@ color: rgb(0, 0, 127);</string>
                  </item>
                  <item>
                   <widget class="QLineEdit" name="lineEdit_enpost_lat">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
                      <pointsize>9</pointsize>
@@ -3422,6 +3407,12 @@ color: rgb(0, 0, 127);</string>
                  </item>
                  <item>
                   <widget class="QLineEdit" name="lineEdit_enpost_lon">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
                      <pointsize>9</pointsize>
@@ -3454,6 +3445,12 @@ color: rgb(0, 0, 127);</string>
                  </item>
                  <item>
                   <widget class="QLineEdit" name="lineEdit_enpost_pitch">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -3477,6 +3474,12 @@ color: rgb(0, 0, 127);</string>
                  </item>
                  <item>
                   <widget class="QLineEdit" name="lineEdit_enpost_heading">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0</string>
                    </property>
@@ -3500,6 +3503,12 @@ color: rgb(0, 0, 127);</string>
                  </item>
                  <item>
                   <widget class="QLineEdit" name="lineEdit_enpost_altitude">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>45</string>
                    </property>
@@ -3512,7 +3521,7 @@ color: rgb(0, 0, 127);</string>
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_17">
+            <layout class="QHBoxLayout" name="horizontalLayout_75">
              <item>
               <layout class="QVBoxLayout" name="verticalLayout">
                <item>
@@ -3534,6 +3543,12 @@ color: rgb(0, 0, 127);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0.0</string>
                    </property>
@@ -3545,6 +3560,12 @@ color: rgb(0, 0, 127);</string>
                 <layout class="QHBoxLayout" name="horizontalLayout_8">
                  <item>
                   <widget class="QLabel" name="label_117">
+                   <property name="minimumSize">
+                    <size>
+                     <width>34</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
                      <pointsize>9</pointsize>
@@ -3565,6 +3586,12 @@ color: rgb(0, 0, 127);</string>
                   <widget class="QLineEdit" name="lineEdit_enpost_aftx">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
                    </property>
                    <property name="text">
                     <string>0.0</string>
@@ -3596,6 +3623,12 @@ color: rgb(0, 0, 127);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0.0</string>
                    </property>
@@ -3607,6 +3640,12 @@ color: rgb(0, 0, 127);</string>
                 <layout class="QHBoxLayout" name="horizontalLayout_78">
                  <item>
                   <widget class="QLabel" name="label_118">
+                   <property name="minimumSize">
+                    <size>
+                     <width>34</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
                      <pointsize>9</pointsize>
@@ -3622,6 +3661,12 @@ color: rgb(0, 0, 127);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>0.0</string>
                    </property>
@@ -3634,9 +3679,15 @@ color: rgb(0, 0, 127);</string>
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_8">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_75">
+                <layout class="QHBoxLayout" name="horizontalLayout_17">
                  <item>
                   <widget class="QLabel" name="label_116">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
                      <pointsize>9</pointsize>
@@ -3651,6 +3702,50 @@ color: rgb(0, 0, 127);</string>
                   <widget class="QLineEdit" name="lineEdit_enpost_spmz">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0.0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_79">
+                 <item>
+                  <widget class="QLabel" name="label_119">
+                   <property name="minimumSize">
+                    <size>
+                     <width>34</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>aftz: </string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_aftz">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>20</height>
+                    </size>
                    </property>
                    <property name="text">
                     <string>0.0</string>
@@ -3684,7 +3779,7 @@ color: rgb(0, 0, 127);</string>
          <attribute name="label">
           <string>曲线拟合</string>
          </attribute>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -3778,7 +3873,7 @@ color: rgb(0, 0, 127);</string>
          <attribute name="label">
           <string>回归分析</string>
          </attribute>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -3830,7 +3925,7 @@ color: rgb(0, 0, 127);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -3958,7 +4053,7 @@ color: rgb(0, 0, 127);</string>
          <attribute name="label">
           <string>谱分析</string>
          </attribute>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -4103,7 +4198,7 @@ color: rgb(0, 0, 127);</string>
          <attribute name="label">
           <string>相关性分析/肯德尔系数</string>
          </attribute>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -4396,22 +4491,6 @@ color: rgb(0, 0, 127);</string>
            </item>
           </layout>
          </widget>
-         <zorder>label_85</zorder>
-         <zorder>comboBox_correlation_y</zorder>
-         <zorder>label_84</zorder>
-         <zorder>comboBox_correlation_x</zorder>
-         <zorder>lineEdit_kendall_limit_min1</zorder>
-         <zorder>lineEdit_kendall_limit_min2</zorder>
-         <zorder>radioButton_correlation</zorder>
-         <zorder>radioButton_kendall</zorder>
-         <zorder>label_kendall_min1</zorder>
-         <zorder>label_kendall_min2</zorder>
-         <zorder>lineEdit_kendall_result</zorder>
-         <zorder>label_128</zorder>
-         <zorder>horizontalSpacer_6</zorder>
-         <zorder>horizontalSpacer_7</zorder>
-         <zorder>horizontalSpacer_8</zorder>
-         <zorder>horizontalSpacer_10</zorder>
         </widget>
         <widget class="QWidget" name="toolBoxPage_maxshang1">
          <property name="geometry">
@@ -4425,12 +4504,12 @@ color: rgb(0, 0, 127);</string>
          <attribute name="label">
           <string>一维最大殇计算</string>
          </attribute>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>0</y>
-            <width>321</width>
+            <width>371</width>
             <height>121</height>
            </rect>
           </property>
@@ -4829,11 +4908,6 @@ color: rgb(0, 0, 127);</string>
            </item>
           </layout>
          </widget>
-         <zorder>layoutWidget_10</zorder>
-         <zorder>comboBox_maxshang1</zorder>
-         <zorder>label_172</zorder>
-         <zorder>horizontalSpacer_11</zorder>
-         <zorder>label_172</zorder>
         </widget>
         <widget class="QWidget" name="toolBoxPage_2dshangstats">
          <property name="geometry">
@@ -4847,7 +4921,7 @@ color: rgb(0, 0, 127);</string>
          <attribute name="label">
           <string>统计分析</string>
          </attribute>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -4944,13 +5018,13 @@ color: rgb(0, 0, 127);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>50</y>
-            <width>331</width>
-            <height>71</height>
+            <width>321</width>
+            <height>81</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_42">
@@ -5087,7 +5161,7 @@ color: rgb(0, 0, 127);</string>
                 <widget class="QComboBox" name="comboBox_stats_type">
                  <property name="minimumSize">
                   <size>
-                   <width>136</width>
+                   <width>132</width>
                    <height>20</height>
                   </size>
                  </property>
@@ -5151,13 +5225,13 @@ color: rgb(0, 0, 127);</string>
          <attribute name="label">
           <string>二维最大殇计算</string>
          </attribute>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>1</y>
             <width>221</width>
-            <height>111</height>
+            <height>129</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_44">
@@ -5390,20 +5464,6 @@ color: rgb(0, 0, 127);</string>
            </item>
           </layout>
          </widget>
-         <zorder>lineEdit_2dshang_R</zorder>
-         <zorder>label_127</zorder>
-         <zorder>comboBox_2dshang_type</zorder>
-         <zorder>label_95</zorder>
-         <zorder>comboBox_2dshang_ff1</zorder>
-         <zorder>label_91</zorder>
-         <zorder>label_93</zorder>
-         <zorder>comboBox_2dshang_ff2</zorder>
-         <zorder>label_92</zorder>
-         <zorder>comboBox_2dshang_FF1</zorder>
-         <zorder>label_94</zorder>
-         <zorder>comboBox_2dshang_FF2</zorder>
-         <zorder>label_92</zorder>
-         <zorder>label_95</zorder>
         </widget>
        </widget>
        <widget class="QPushButton" name="pushButton_post_start_analyse">
@@ -5471,6 +5531,9 @@ color: rgb(0, 0, 127);</string>
          </item>
         </layout>
        </widget>
+       <zorder>pushButton_post_start_analyse</zorder>
+       <zorder>layoutWidget</zorder>
+       <zorder>toolBox_analysis_data</zorder>
       </widget>
      </widget>
      <widget class="QWidget" name="tab_3">
@@ -5811,7 +5874,7 @@ color: rgb(0, 0, 127);</string>
        <property name="title">
         <string>计算结果</string>
        </property>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -6112,7 +6175,7 @@ color: rgb(0, 0, 127);</string>
           <x>20</x>
           <y>40</y>
           <width>831</width>
-          <height>23</height>
+          <height>25</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_15">
