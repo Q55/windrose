@@ -18,6 +18,7 @@
     <widget class="QTabWidget" name="tabWidget">
      <property name="font">
       <font>
+       <family>微软雅黑</family>
        <pointsize>9</pointsize>
       </font>
      </property>
@@ -43,6 +44,11 @@
          <height>132</height>
         </rect>
        </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
+       </property>
        <property name="title">
         <string>分析参数</string>
        </property>
@@ -59,7 +65,7 @@
            <widget class="QLabel" name="label_4">
             <property name="font">
              <font>
-              <pointsize>11</pointsize>
+              <pointsize>9</pointsize>
              </font>
             </property>
             <property name="text">
@@ -71,7 +77,7 @@
            <widget class="QLabel" name="label_11">
             <property name="font">
              <font>
-              <pointsize>11</pointsize>
+              <pointsize>9</pointsize>
              </font>
             </property>
             <property name="text">
@@ -83,7 +89,7 @@
            <widget class="QLabel" name="label_13">
             <property name="font">
              <font>
-              <pointsize>11</pointsize>
+              <pointsize>9</pointsize>
              </font>
             </property>
             <property name="text">
@@ -95,7 +101,7 @@
            <widget class="QLabel" name="label_41">
             <property name="font">
              <font>
-              <pointsize>11</pointsize>
+              <pointsize>9</pointsize>
              </font>
             </property>
             <property name="text">
@@ -246,6 +252,12 @@
          <height>581</height>
         </rect>
        </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string>数据选择</string>
        </property>
@@ -255,7 +267,7 @@
           <x>220</x>
           <y>320</y>
           <width>75</width>
-          <height>21</height>
+          <height>25</height>
          </rect>
         </property>
         <property name="focusPolicy">
@@ -271,7 +283,7 @@
           <x>220</x>
           <y>270</y>
           <width>75</width>
-          <height>21</height>
+          <height>25</height>
          </rect>
         </property>
         <property name="focusPolicy">
@@ -464,8 +476,8 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>412</x>
           <y>30</y>
-          <width>111</width>
-          <height>32</height>
+          <width>101</width>
+          <height>25</height>
          </rect>
         </property>
         <property name="focusPolicy">
@@ -485,77 +497,81 @@ color: rgb(0, 0, 127);</string>
          <height>74</height>
         </rect>
        </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
+       </property>
        <property name="title">
         <string>时间条件</string>
        </property>
-       <widget class="QLabel" name="label_14">
+       <widget class="QWidget" name="">
         <property name="geometry">
          <rect>
-          <x>17</x>
-          <y>35</y>
-          <width>153</width>
-          <height>16</height>
+          <x>20</x>
+          <y>20</y>
+          <width>241</width>
+          <height>51</height>
          </rect>
         </property>
-        <property name="font">
-         <font>
-          <pointsize>11</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>起始时间</string>
-        </property>
-       </widget>
-       <widget class="QDateTimeEdit" name="dateTimeEdit_startTime">
-        <property name="geometry">
-         <rect>
-          <x>17</x>
-          <y>50</y>
-          <width>153</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="displayFormat">
-         <string>yyyy-MM-dd HH:mm:ss</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_15">
-        <property name="geometry">
-         <rect>
-          <x>182</x>
-          <y>35</y>
-          <width>152</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>11</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>结束时间</string>
-        </property>
-       </widget>
-       <widget class="QDateTimeEdit" name="dateTimeEdit_endTime">
-        <property name="geometry">
-         <rect>
-          <x>182</x>
-          <y>50</y>
-          <width>152</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="date">
-         <date>
-          <year>2016</year>
-          <month>6</month>
-          <day>1</day>
-         </date>
-        </property>
-        <property name="displayFormat">
-         <string>yyyy-MM-dd HH:mm:ss</string>
-        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_49">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_104">
+           <item>
+            <widget class="QLabel" name="label_14">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>起始时间:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDateTimeEdit" name="dateTimeEdit_startTime">
+             <property name="displayFormat">
+              <string>yyyy-MM-dd HH:mm:ss</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_105">
+           <item>
+            <widget class="QLabel" name="label_15">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>结束时间</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDateTimeEdit" name="dateTimeEdit_endTime">
+             <property name="date">
+              <date>
+               <year>2016</year>
+               <month>6</month>
+               <day>1</day>
+              </date>
+             </property>
+             <property name="displayFormat">
+              <string>yyyy-MM-dd HH:mm:ss</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QPushButton" name="pushButton_startDeal">
@@ -566,6 +582,11 @@ color: rgb(0, 0, 127);</string>
          <width>101</width>
          <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
        </property>
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
@@ -583,6 +604,11 @@ color: rgb(0, 0, 127);</string>
          <height>31</height>
         </rect>
        </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
+       </property>
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
@@ -598,6 +624,11 @@ color: rgb(0, 0, 127);</string>
          <width>351</width>
          <height>361</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
        </property>
        <property name="title">
         <string>筛查条件</string>
@@ -623,123 +654,157 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_max">
+        <widget class="QWidget" name="">
          <property name="geometry">
           <rect>
-           <x>37</x>
-           <y>34</y>
-           <width>60</width>
-           <height>16</height>
+           <x>10</x>
+           <y>20</y>
+           <width>315</width>
+           <height>27</height>
           </rect>
          </property>
-         <property name="minimumSize">
-          <size>
-           <width>60</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximum">
-          <double>9999.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>9999.000000000000000</double>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_6">
-         <property name="geometry">
-          <rect>
-           <x>16</x>
-           <y>34</y>
-           <width>21</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Max:</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_7">
-         <property name="geometry">
-          <rect>
-           <x>109</x>
-           <y>34</y>
-           <width>19</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Min:</string>
-         </property>
-        </widget>
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_min">
-         <property name="geometry">
-          <rect>
-           <x>136</x>
-           <y>34</y>
-           <width>60</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>60</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximum">
-          <double>9999.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>0.000000000000000</double>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_8">
-         <property name="geometry">
-          <rect>
-           <x>208</x>
-           <y>33</y>
-           <width>39</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>类型：</string>
-         </property>
-        </widget>
-        <widget class="QComboBox" name="comboBox_rangeFilterCheckType">
-         <property name="geometry">
-          <rect>
-           <x>244</x>
-           <y>31</y>
-           <width>72</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <item>
-          <property name="text">
-           <string>标记</string>
+         <layout class="QHBoxLayout" name="horizontalLayout_94">
+          <property name="spacing">
+           <number>3</number>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>插值</string>
-          </property>
-         </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_91">
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="minimumSize">
+               <size>
+                <width>32</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>max:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_max">
+              <property name="minimumSize">
+               <size>
+                <width>70</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <double>9999.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>9999.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_92">
+            <item>
+             <widget class="QLabel" name="label_7">
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>32</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>min:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_min">
+              <property name="minimumSize">
+               <size>
+                <width>70</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <double>9999.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_93">
+            <item>
+             <widget class="QLabel" name="label_8">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>类型:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_rangeFilterCheckType">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>20</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>标记</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>插值</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
         </widget>
        </widget>
        <widget class="QGroupBox" name="groupBox_timeCont">
@@ -760,72 +825,110 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QLabel" name="label_44">
+        <widget class="QWidget" name="">
          <property name="geometry">
           <rect>
-           <x>16</x>
-           <y>34</y>
-           <width>72</width>
-           <height>16</height>
+           <x>10</x>
+           <y>20</y>
+           <width>311</width>
+           <height>27</height>
           </rect>
          </property>
-         <property name="text">
-          <string>time_step:</string>
-         </property>
-        </widget>
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_timeContTimeStep">
-         <property name="geometry">
-          <rect>
-           <x>88</x>
-           <y>34</y>
-           <width>72</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>70</width>
-           <height>0</height>
-          </size>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_47">
-         <property name="geometry">
-          <rect>
-           <x>172</x>
-           <y>35</y>
-           <width>66</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>检查类型：</string>
-         </property>
-        </widget>
-        <widget class="QComboBox" name="comboBox_timeContCheckType">
-         <property name="geometry">
-          <rect>
-           <x>243</x>
-           <y>33</y>
-           <width>73</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <item>
-          <property name="text">
-           <string>标记</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>插值</string>
-          </property>
-         </item>
+         <layout class="QHBoxLayout" name="horizontalLayout_97">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_95">
+            <item>
+             <widget class="QLabel" name="label_44">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>time_step:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_timeContTimeStep">
+              <property name="minimumSize">
+               <size>
+                <width>70</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>20</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_96">
+            <item>
+             <widget class="QLabel" name="label_47">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>60</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>60</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>9</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>检查类型：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_timeContCheckType">
+              <property name="minimumSize">
+               <size>
+                <width>72</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>72</width>
+                <height>20</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>标记</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>插值</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
         </widget>
        </widget>
        <widget class="QGroupBox" name="groupBox_interConsis">
@@ -846,104 +949,168 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QLineEdit" name="lineEdit_preFormula">
+        <widget class="QWidget" name="">
          <property name="geometry">
           <rect>
-           <x>93</x>
-           <y>34</y>
-           <width>222</width>
-           <height>16</height>
+           <x>10</x>
+           <y>30</y>
+           <width>311</width>
+           <height>56</height>
           </rect>
          </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEdit_preVarName">
-         <property name="geometry">
-          <rect>
-           <x>94</x>
-           <y>61</y>
-           <width>69</width>
-           <height>16</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_52">
-         <property name="geometry">
-          <rect>
-           <x>173</x>
-           <y>61</y>
-           <width>65</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>检查类型：</string>
-         </property>
-        </widget>
-        <widget class="QComboBox" name="comboBox_interConsisCheckType">
-         <property name="geometry">
-          <rect>
-           <x>243</x>
-           <y>57</y>
-           <width>72</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <item>
-          <property name="text">
-           <string>大于</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>小于</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>等于</string>
-          </property>
-         </item>
-        </widget>
-        <widget class="QLabel" name="label_51">
-         <property name="geometry">
-          <rect>
-           <x>16</x>
-           <y>34</y>
-           <width>50</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>计算式子：</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_53">
-         <property name="geometry">
-          <rect>
-           <x>16</x>
-           <y>59</y>
-           <width>40</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>变量名：</string>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_48">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_102">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_99">
+              <item>
+               <widget class="QLabel" name="label_51">
+                <property name="minimumSize">
+                 <size>
+                  <width>74</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>74</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>9</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>计算式子：</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_preFormula">
+                <property name="maximumSize">
+                 <size>
+                  <width>180</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_9">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_103">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_100">
+              <item>
+               <widget class="QLabel" name="label_53">
+                <property name="minimumSize">
+                 <size>
+                  <width>72</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>72</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>9</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>变量名：</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_preVarName">
+                <property name="maximumSize">
+                 <size>
+                  <width>80</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_101">
+              <item>
+               <widget class="QLabel" name="label_52">
+                <property name="minimumSize">
+                 <size>
+                  <width>72</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>72</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>检查类型：</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_interConsisCheckType">
+                <property name="minimumSize">
+                 <size>
+                  <width>60</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>60</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>大于</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>小于</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>等于</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
         </widget>
        </widget>
        <widget class="QGroupBox" name="groupBox_rangeCont">
@@ -964,128 +1131,154 @@ color: rgb(0, 0, 127);</string>
         <property name="checked">
          <bool>false</bool>
         </property>
-        <widget class="QWidget" name="layoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>170</x>
-           <y>22</y>
-           <width>152</width>
-           <height>58</height>
-          </rect>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_35">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_20">
-            <item>
-             <widget class="QLabel" name="label_49">
-              <property name="minimumSize">
-               <size>
-                <width>72</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>72</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>检查类型：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBox_rangeContCheckType">
-              <property name="maximumSize">
-               <size>
-                <width>72</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <item>
-               <property name="text">
-                <string>标记</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>插值</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>128</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="layoutWidget">
+        <widget class="QWidget" name="">
          <property name="geometry">
           <rect>
            <x>10</x>
            <y>22</y>
-           <width>151</width>
-           <height>62</height>
+           <width>311</width>
+           <height>58</height>
           </rect>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_40">
+         <layout class="QHBoxLayout" name="horizontalLayout_98">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_25">
+           <layout class="QHBoxLayout" name="horizontalLayout_40">
             <item>
-             <widget class="QLabel" name="label_48">
-              <property name="text">
-               <string>time_step:</string>
-              </property>
-             </widget>
+             <layout class="QVBoxLayout" name="verticalLayout_25">
+              <item>
+               <widget class="QLabel" name="label_48">
+                <property name="minimumSize">
+                 <size>
+                  <width>74</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>74</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>time_step:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_50">
+                <property name="text">
+                 <string>gsd:</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
-             <widget class="QLabel" name="label_50">
-              <property name="text">
-               <string>gsd:</string>
-              </property>
-             </widget>
+             <layout class="QVBoxLayout" name="verticalLayout_34">
+              <item>
+               <widget class="QDoubleSpinBox" name="doubleSpinBox_rangeContTimeStep">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="doubleSpinBox_rangeContGsd">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>70</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_34">
+           <layout class="QVBoxLayout" name="verticalLayout_35">
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_rangeContTimeStep">
-              <property name="minimumSize">
-               <size>
-                <width>70</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_20">
+              <item>
+               <widget class="QLabel" name="label_49">
+                <property name="minimumSize">
+                 <size>
+                  <width>60</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>60</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>9</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>检查类型：</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_rangeContCheckType">
+                <property name="minimumSize">
+                 <size>
+                  <width>72</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>72</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>标记</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>插值</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_rangeContGsd">
-              <property name="minimumSize">
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
                <size>
-                <width>70</width>
-                <height>0</height>
+                <width>128</width>
+                <height>20</height>
                </size>
               </property>
-             </widget>
+             </spacer>
             </item>
            </layout>
           </item>
@@ -1137,8 +1330,13 @@ color: rgb(0, 0, 127);</string>
          <x>820</x>
          <y>130</y>
          <width>81</width>
-         <height>31</height>
+         <height>25</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
        </property>
        <property name="text">
         <string>保存配置</string>
@@ -1174,8 +1372,13 @@ color: rgb(0, 0, 127);</string>
          <x>10</x>
          <y>20</y>
          <width>521</width>
-         <height>411</height>
+         <height>431</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
        </property>
        <property name="title">
         <string>数据选择</string>
@@ -1183,10 +1386,10 @@ color: rgb(0, 0, 127);</string>
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>213</x>
+          <x>220</x>
           <y>150</y>
-          <width>101</width>
-          <height>134</height>
+          <width>81</width>
+          <height>135</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -1194,6 +1397,18 @@ color: rgb(0, 0, 127);</string>
           <widget class="QPushButton" name="pushButton_clear_post">
            <property name="enabled">
             <bool>true</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>78</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>25</height>
+            </size>
            </property>
            <property name="text">
             <string>清除缓存</string>
@@ -1205,6 +1420,18 @@ color: rgb(0, 0, 127);</string>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_post_add_cols">
+           <property name="minimumSize">
+            <size>
+             <width>78</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>25</height>
+            </size>
+           </property>
            <property name="focusPolicy">
             <enum>Qt::NoFocus</enum>
            </property>
@@ -1215,6 +1442,18 @@ color: rgb(0, 0, 127);</string>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_post_del_cols">
+           <property name="minimumSize">
+            <size>
+             <width>78</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>25</height>
+            </size>
+           </property>
            <property name="focusPolicy">
             <enum>Qt::NoFocus</enum>
            </property>
@@ -1225,9 +1464,21 @@ color: rgb(0, 0, 127);</string>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_post_input_expr">
+           <property name="minimumSize">
+            <size>
+             <width>78</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>25</height>
+            </size>
+           </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>9</pointsize>
             </font>
            </property>
            <property name="focusPolicy">
@@ -1321,11 +1572,16 @@ color: rgb(0, 0, 127);</string>
       <widget class="QGroupBox" name="groupBox_drawGraph">
        <property name="geometry">
         <rect>
-         <x>540</x>
+         <x>550</x>
          <y>450</y>
          <width>361</width>
          <height>241</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
        </property>
        <property name="title">
         <string>曲线作图</string>
@@ -1342,7 +1598,7 @@ color: rgb(0, 0, 127);</string>
           <x>260</x>
           <y>210</y>
           <width>91</width>
-          <height>31</height>
+          <height>25</height>
          </rect>
         </property>
         <property name="focusPolicy">
@@ -1356,17 +1612,23 @@ color: rgb(0, 0, 127);</string>
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>220</y>
-          <width>238</width>
+          <y>190</y>
+          <width>341</width>
           <height>16</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_18">
          <item>
           <widget class="QLabel" name="label_59">
+           <property name="maximumSize">
+            <size>
+             <width>28</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="font">
             <font>
-             <pointsize>9</pointsize>
+             <family>华文楷体</family>
             </font>
            </property>
            <property name="styleSheet">
@@ -1387,6 +1649,7 @@ color: rgb(0, 0, 127);</string>
            </property>
            <property name="font">
             <font>
+             <family>华文楷体</family>
              <pointsize>9</pointsize>
             </font>
            </property>
@@ -1406,7 +1669,7 @@ color: rgb(0, 0, 127);</string>
           <x>11</x>
           <y>51</y>
           <width>213</width>
-          <height>28</height>
+          <height>32</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_27">
@@ -1477,7 +1740,7 @@ color: rgb(0, 0, 127);</string>
           <x>11</x>
           <y>21</y>
           <width>339</width>
-          <height>25</height>
+          <height>32</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_22">
@@ -1534,8 +1797,8 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>10</x>
           <y>80</y>
-          <width>353</width>
-          <height>131</height>
+          <width>341</width>
+          <height>111</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_43">
@@ -1668,6 +1931,7 @@ color: rgb(0, 0, 127);</string>
        <zorder>layoutWidget</zorder>
        <zorder>layoutWidget</zorder>
        <zorder>pushButton_start_drawgraph</zorder>
+       <zorder>label_79</zorder>
       </widget>
       <widget class="QGroupBox" name="groupBox_dataTable">
        <property name="geometry">
@@ -1677,6 +1941,11 @@ color: rgb(0, 0, 127);</string>
          <width>521</width>
          <height>241</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
        </property>
        <property name="title">
         <string>数据表格</string>
@@ -2793,13 +3062,25 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>11</x>
           <y>20</y>
-          <width>320</width>
+          <width>360</width>
           <height>32</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_39">
          <item>
           <widget class="QPushButton" name="pushButton_first1000_records">
+           <property name="minimumSize">
+            <size>
+             <width>85</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>85</width>
+             <height>25</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>9</pointsize>
@@ -2815,6 +3096,18 @@ color: rgb(0, 0, 127);</string>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_last1000_records">
+           <property name="minimumSize">
+            <size>
+             <width>85</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>85</width>
+             <height>25</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>9</pointsize>
@@ -2830,6 +3123,18 @@ color: rgb(0, 0, 127);</string>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_pre1000_records">
+           <property name="minimumSize">
+            <size>
+             <width>85</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>85</width>
+             <height>25</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>9</pointsize>
@@ -2845,6 +3150,18 @@ color: rgb(0, 0, 127);</string>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_next1000_records">
+           <property name="minimumSize">
+            <size>
+             <width>85</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>85</width>
+             <height>25</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>9</pointsize>
@@ -2866,7 +3183,7 @@ color: rgb(0, 0, 127);</string>
           <x>11</x>
           <y>220</y>
           <width>111</width>
-          <height>16</height>
+          <height>20</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -2874,7 +3191,7 @@ color: rgb(0, 0, 127);</string>
           <widget class="QLabel" name="label_56">
            <property name="font">
             <font>
-             <pointsize>9</pointsize>
+             <family>华文楷体</family>
             </font>
            </property>
            <property name="text">
@@ -2892,6 +3209,7 @@ color: rgb(0, 0, 127);</string>
            </property>
            <property name="font">
             <font>
+             <family>华文楷体</family>
              <pointsize>9</pointsize>
             </font>
            </property>
@@ -2912,11 +3230,16 @@ color: rgb(0, 0, 127);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>540</x>
+         <x>550</x>
          <y>20</y>
          <width>361</width>
-         <height>411</height>
+         <height>431</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
        </property>
        <property name="toolTipDuration">
         <number>0</number>
@@ -2939,7 +3262,7 @@ color: rgb(0, 0, 127);</string>
           <x>10</x>
           <y>20</y>
           <width>341</width>
-          <height>361</height>
+          <height>381</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -2983,355 +3306,358 @@ color: rgb(0, 0, 127);</string>
            <x>0</x>
            <y>0</y>
            <width>339</width>
-           <height>111</height>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
           <string>船体位置计算</string>
          </attribute>
-         <widget class="QWidget" name="layoutWidget_9">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>7</y>
-            <width>321</width>
-            <height>52</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_43">
-           <property name="spacing">
-            <number>0</number>
-           </property>
+         <widget class="QWidget" name="">
+          <layout class="QHBoxLayout" name="horizontalLayout_79">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_59">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_60">
-               <item>
-                <widget class="QLabel" name="label_101">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>横摇:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_roll">
-                 <property name="text">
-                  <string>0</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_61">
-               <item>
-                <widget class="QLabel" name="label_102">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>纬度:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_lat">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>39.04845</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_62">
-               <item>
-                <widget class="QLabel" name="label_103">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>经度:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_lon">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>121.5347</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
+            <widget class="QLabel" name="label_119">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>aftz: </string>
+             </property>
+            </widget>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_63">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_64">
-               <item>
-                <widget class="QLabel" name="label_104">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>纵摇:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_pitch">
-                 <property name="text">
-                  <string>0</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_65">
-               <item>
-                <widget class="QLabel" name="label_105">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>艏首:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_heading">
-                 <property name="text">
-                  <string>0</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_66">
-               <item>
-                <widget class="QLabel" name="label_106">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>海拔:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_altitude">
-                 <property name="text">
-                  <string>45</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
+            <widget class="QLineEdit" name="lineEdit_enpost_aftz">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>0.0</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="layoutWidget_11">
+         <widget class="QWidget" name="">
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>61</y>
-            <width>290</width>
-            <height>52</height>
+            <y>10</y>
+            <width>321</width>
+            <height>124</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_49">
-           <property name="spacing">
-            <number>0</number>
-           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_24">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_72">
+            <layout class="QVBoxLayout" name="verticalLayout_43">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_73">
+              <layout class="QHBoxLayout" name="horizontalLayout_59">
                <item>
-                <widget class="QLabel" name="label_114">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>spmx</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_60">
+                 <item>
+                  <widget class="QLabel" name="label_101">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>横摇:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_roll">
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_spmx">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>0.0</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_61">
+                 <item>
+                  <widget class="QLabel" name="label_102">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>纬度:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_lat">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>39.04845</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_62">
+                 <item>
+                  <widget class="QLabel" name="label_103">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>经度:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_lon">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>121.5347</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_74">
+              <layout class="QHBoxLayout" name="horizontalLayout_63">
                <item>
-                <widget class="QLabel" name="label_115">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>spmy</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_64">
+                 <item>
+                  <widget class="QLabel" name="label_104">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>纵摇:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_pitch">
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_spmy">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>0.0</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_75">
-               <item>
-                <widget class="QLabel" name="label_116">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>spmz</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_65">
+                 <item>
+                  <widget class="QLabel" name="label_105">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>艏首:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_heading">
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_spmz">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>0.0</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_66">
+                 <item>
+                  <widget class="QLabel" name="label_106">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>海拔:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_altitude">
+                   <property name="text">
+                    <string>45</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_76">
+            <layout class="QHBoxLayout" name="horizontalLayout_17">
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_77">
+              <layout class="QVBoxLayout" name="verticalLayout">
                <item>
-                <widget class="QLabel" name="label_117">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>aftx: </string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_7">
+                 <item>
+                  <widget class="QLabel" name="label_114">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>spmx:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_spmx">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>0.0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_aftx">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>0.0</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <item>
+                  <widget class="QLabel" name="label_117">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="toolTipDuration">
+                    <number>0</number>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="text">
+                    <string>aftx:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_aftx">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>0.0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_78">
+              <layout class="QVBoxLayout" name="verticalLayout_2">
                <item>
-                <widget class="QLabel" name="label_118">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>afty:  </string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_74">
+                 <item>
+                  <widget class="QLabel" name="label_115">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>spmy:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_spmy">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>0.0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_afty">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>0.0</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_78">
+                 <item>
+                  <widget class="QLabel" name="label_118">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>afty:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_afty">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>0.0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_79">
+              <layout class="QVBoxLayout" name="verticalLayout_8">
                <item>
-                <widget class="QLabel" name="label_119">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>aftz: </string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_enpost_aftz">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>0.0</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_75">
+                 <item>
+                  <widget class="QLabel" name="label_116">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>spmz:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_enpost_spmz">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>0.0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -3345,8 +3671,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <property name="maximumSize">
@@ -3358,61 +3684,86 @@ color: rgb(0, 0, 127);</string>
          <attribute name="label">
           <string>曲线拟合</string>
          </attribute>
-         <widget class="QLabel" name="label_87">
+         <widget class="QWidget" name="">
           <property name="geometry">
            <rect>
-            <x>190</x>
-            <y>14</y>
-            <width>16</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Y</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox_weightfit_y">
-          <property name="geometry">
-           <rect>
-            <x>210</x>
+            <x>10</x>
             <y>10</y>
-            <width>111</width>
-            <height>26</height>
+            <width>211</width>
+            <height>59</height>
            </rect>
           </property>
-         </widget>
-         <widget class="QLabel" name="label_86">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>13</y>
-            <width>16</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>X</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox_weightfit_x">
-          <property name="geometry">
-           <rect>
-            <x>50</x>
-            <y>10</y>
-            <width>111</width>
-            <height>26</height>
-           </rect>
-          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_31">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QLabel" name="label_86">
+               <property name="minimumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>X:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_weightfit_x">
+               <property name="minimumSize">
+                <size>
+                 <width>181</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>181</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QLabel" name="label_87">
+               <property name="maximumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Y:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_weightfit_y"/>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_cyclemax">
@@ -3420,159 +3771,179 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
           <string>回归分析</string>
          </attribute>
-         <widget class="QWidget" name="layoutWidget_5">
+         <widget class="QWidget" name="">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>10</y>
-            <width>146</width>
-            <height>56</height>
+            <width>208</width>
+            <height>22</height>
            </rect>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_30">
+          <layout class="QHBoxLayout" name="horizontalLayout_32">
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
+            <widget class="QLabel" name="label_168">
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>数据列:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_cyclemax">
+             <property name="minimumSize">
+              <size>
+               <width>160</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>160</width>
+               <height>20</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>321</width>
+            <height>66</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_33">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_30">
              <item>
-              <widget class="QLabel" name="label_97">
-               <property name="font">
-                <font>
-                 <pointsize>9</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>估计精度:</string>
-               </property>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <widget class="QLabel" name="label_97">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>估计精度:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_99">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>回归周期:</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
              <item>
-              <widget class="QLabel" name="label_99">
-               <property name="font">
-                <font>
-                 <pointsize>9</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>回归周期:</string>
-               </property>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_27">
+               <item>
+                <widget class="QLineEdit" name="lineEdit_cyclemax_resol">
+                 <property name="text">
+                  <string>0.1</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_cyclemax_regressioncycle">
+                 <property name="text">
+                  <string>100</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_27">
+            <layout class="QHBoxLayout" name="horizontalLayout_29">
              <item>
-              <widget class="QLineEdit" name="lineEdit_cyclemax_resol">
-               <property name="text">
-                <string>0.1</string>
-               </property>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_28">
+               <item>
+                <widget class="QLabel" name="label_98">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>观测周期:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_100">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>结果:</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_cyclemax_regressioncycle">
-               <property name="text">
-                <string>100</string>
-               </property>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_29">
+               <item>
+                <widget class="QLineEdit" name="lineEdit_cyclemax_obstime">
+                 <property name="text">
+                  <string>0.5</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_cyclemax_result">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>
           </layout>
-         </widget>
-         <widget class="QWidget" name="layoutWidget_6">
-          <property name="geometry">
-           <rect>
-            <x>170</x>
-            <y>10</y>
-            <width>146</width>
-            <height>56</height>
-           </rect>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_29">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_28">
-             <item>
-              <widget class="QLabel" name="label_98">
-               <property name="font">
-                <font>
-                 <pointsize>9</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>观测周期:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_100">
-               <property name="font">
-                <font>
-                 <pointsize>9</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>结果:</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_29">
-             <item>
-              <widget class="QLineEdit" name="lineEdit_cyclemax_obstime">
-               <property name="text">
-                <string>0.5</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_cyclemax_result">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>0</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QComboBox" name="comboBox_cyclemax">
-          <property name="geometry">
-           <rect>
-            <x>50</x>
-            <y>67</y>
-            <width>111</width>
-            <height>26</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_168">
-          <property name="geometry">
-           <rect>
-            <x>15</x>
-            <y>70</y>
-            <width>31</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>数据列</string>
-          </property>
          </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_spectral">
@@ -3580,96 +3951,144 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
           <string>谱分析</string>
          </attribute>
-         <widget class="QWidget" name="layoutWidget">
+         <widget class="QWidget" name="">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>10</y>
-            <width>193</width>
-            <height>23</height>
+            <width>241</width>
+            <height>54</height>
            </rect>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_28">
+          <layout class="QVBoxLayout" name="verticalLayout_32">
            <item>
-            <widget class="QLabel" name="label_66">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>频率</string>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_35">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_34">
+               <item>
+                <widget class="QLabel" name="label_169">
+                 <property name="minimumSize">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>数据列:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboBox_spectral">
+                 <property name="minimumSize">
+                  <size>
+                   <width>160</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>160</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>13</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_spectral_freq">
-             <property name="text">
-              <string>0.2</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_67">
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Hz</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>13</height>
-              </size>
-             </property>
-            </spacer>
+            <layout class="QHBoxLayout" name="horizontalLayout_28">
+             <item>
+              <widget class="QLabel" name="label_66">
+               <property name="minimumSize">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>频率:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_spectral_freq">
+               <property name="minimumSize">
+                <size>
+                 <width>160</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>160</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0.2</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_67">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Hz</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
-         </widget>
-         <widget class="QLabel" name="label_169">
-          <property name="geometry">
-           <rect>
-            <x>25</x>
-            <y>43</y>
-            <width>31</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>数据列</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox_spectral">
-          <property name="geometry">
-           <rect>
-            <x>60</x>
-            <y>40</y>
-            <width>111</width>
-            <height>26</height>
-           </rect>
-          </property>
          </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_correlation">
@@ -3678,211 +4097,304 @@ color: rgb(0, 0, 127);</string>
            <x>0</x>
            <y>0</y>
            <width>339</width>
-           <height>111</height>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
           <string>相关性分析/肯德尔系数</string>
          </attribute>
-         <widget class="QLineEdit" name="lineEdit_kendall_limit_min1">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>48</y>
-            <width>51</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>0</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_kendall_limit_min2">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>50</y>
-            <width>51</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>0</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="radioButton_correlation">
-          <property name="geometry">
-           <rect>
-            <x>220</x>
-            <y>12</y>
-            <width>100</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>相关性分析</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="radioButton_kendall">
-          <property name="geometry">
-           <rect>
-            <x>219</x>
-            <y>50</y>
-            <width>100</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>肯德尔系数</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_kendall_min1">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>50</y>
-            <width>21</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>min1</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_kendall_min2">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>50</y>
-            <width>21</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>min2</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_85">
-          <property name="geometry">
-           <rect>
-            <x>101</x>
-            <y>17</y>
-            <width>10</width>
-            <height>10</height>
-           </rect>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>10</width>
-            <height>10</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Y</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox_correlation_y">
-          <property name="geometry">
-           <rect>
-            <x>113</x>
-            <y>10</y>
-            <width>91</width>
-            <height>26</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_84">
-          <property name="geometry">
-           <rect>
-            <x>1</x>
-            <y>14</y>
-            <width>10</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>10</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>X</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox_correlation_x">
-          <property name="geometry">
-           <rect>
-            <x>16</x>
-            <y>10</y>
-            <width>81</width>
-            <height>26</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_kendall_result">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>80</y>
-            <width>51</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>0</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_128">
+         <widget class="QWidget" name="">
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>80</y>
-            <width>81</width>
-            <height>20</height>
+            <y>0</y>
+            <width>321</width>
+            <height>156</height>
            </rect>
           </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>肯德尔系数结果</string>
-          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_45">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_87">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_84">
+               <item>
+                <widget class="QRadioButton" name="radioButton_correlation">
+                 <property name="font">
+                  <font>
+                   <family>微软雅黑</family>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>相关性分析</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_kendall">
+                 <property name="minimumSize">
+                  <size>
+                   <width>3</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>微软雅黑</family>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>肯德尔系数</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>32</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_88">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_36">
+               <item>
+                <widget class="QLabel" name="label_84">
+                 <property name="minimumSize">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>X:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboBox_correlation_x">
+                 <property name="minimumSize">
+                  <size>
+                   <width>181</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>181</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_89">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_37">
+               <item>
+                <widget class="QLabel" name="label_85">
+                 <property name="minimumSize">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>20</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Arial</family>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Y:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboBox_correlation_y">
+                 <property name="minimumSize">
+                  <size>
+                   <width>181</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>181</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_10">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_46">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_85">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_81">
+                 <item>
+                  <widget class="QLabel" name="label_kendall_min1">
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>min1:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_kendall_limit_min1">
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_82">
+                 <item>
+                  <widget class="QLabel" name="label_kendall_min2">
+                   <property name="font">
+                    <font>
+                     <family>Arial</family>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>min2:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_kendall_limit_min2">
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_86">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_83">
+                 <item>
+                  <widget class="QLabel" name="label_128">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>肯德尔系数结果:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_kendall_result">
+                   <property name="maximumSize">
+                    <size>
+                     <width>62</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_6">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>158</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
          <zorder>label_85</zorder>
          <zorder>comboBox_correlation_y</zorder>
@@ -3896,208 +4408,420 @@ color: rgb(0, 0, 127);</string>
          <zorder>label_kendall_min2</zorder>
          <zorder>lineEdit_kendall_result</zorder>
          <zorder>label_128</zorder>
+         <zorder>horizontalSpacer_6</zorder>
+         <zorder>horizontalSpacer_7</zorder>
+         <zorder>horizontalSpacer_8</zorder>
+         <zorder>horizontalSpacer_10</zorder>
         </widget>
         <widget class="QWidget" name="toolBoxPage_maxshang1">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
           <string>一维最大殇计算</string>
          </attribute>
-         <widget class="QWidget" name="layoutWidget_10">
+         <widget class="QWidget" name="">
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>10</y>
-            <width>311</width>
-            <height>74</height>
+            <y>0</y>
+            <width>321</width>
+            <height>121</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_44">
-           <property name="spacing">
-            <number>6</number>
-           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_47">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_67">
+            <layout class="QHBoxLayout" name="horizontalLayout_90">
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_68">
+              <layout class="QHBoxLayout" name="horizontalLayout_38">
                <item>
-                <widget class="QLabel" name="label_107">
+                <widget class="QLabel" name="label_172">
+                 <property name="minimumSize">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
                  <property name="font">
                   <font>
                    <pointsize>9</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>limitmin</string>
+                  <string>数据列:</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_limitmin">
-                 <property name="text">
-                  <string>0.12</string>
+                <widget class="QComboBox" name="comboBox_maxshang1">
+                 <property name="minimumSize">
+                  <size>
+                   <width>160</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>160</width>
+                   <height>20</height>
+                  </size>
                  </property>
                 </widget>
                </item>
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_69">
-               <item>
-                <widget class="QLabel" name="label_108">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>a0resol</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_a0resol">
-                 <property name="text">
-                  <string>0.001</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_70">
-               <item>
-                <widget class="QLabel" name="label_109">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>kesimin</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_estkesimin">
-                 <property name="text">
-                  <string>0.001</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <spacer name="horizontalSpacer_11">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_71">
+            <layout class="QVBoxLayout" name="verticalLayout_37">
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_45">
-               <property name="spacing">
-                <number>0</number>
-               </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_50">
                <item>
-                <widget class="QLabel" name="label_110">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>kesimax</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_68">
+                 <item>
+                  <widget class="QLabel" name="label_107">
+                   <property name="minimumSize">
+                    <size>
+                     <width>52</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>52</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>limitmin:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_maxshang1_limitmin">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>60</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0.12</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_kesimax">
-                 <property name="text">
-                  <string>20</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_69">
+                 <item>
+                  <widget class="QLabel" name="label_108">
+                   <property name="minimumSize">
+                    <size>
+                     <width>45</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>a0resol:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_maxshang1_a0resol">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>60</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0.001</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_70">
+                 <item>
+                  <widget class="QLabel" name="label_109">
+                   <property name="minimumSize">
+                    <size>
+                     <width>52</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>52</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>kesimin:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_maxshang1_estkesimin">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>60</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0.001</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_46">
-               <property name="spacing">
-                <number>0</number>
-               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_33">
                <item>
-                <widget class="QLabel" name="label_111">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>kesiresol</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_49">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_41">
+                   <item>
+                    <widget class="QLabel" name="label_110">
+                     <property name="minimumSize">
+                      <size>
+                       <width>80</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <pointsize>9</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>kesimax:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit_maxshang1_kesimax">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>20</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_47">
+                   <item>
+                    <widget class="QLabel" name="label_112">
+                     <property name="minimumSize">
+                      <size>
+                       <width>55</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <pointsize>9</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>whsample:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit_maxshang1_whsample">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.1</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_kesiresol">
-                 <property name="text">
-                  <string>0.001</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_47">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="label_112">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>whsample</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_whsample">
-                 <property name="text">
-                  <string>0.1</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_48">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="label_113">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>whmax</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_maxshang1_whmax">
-                 <property name="text">
-                  <string>4</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_51">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_46">
+                   <item>
+                    <widget class="QLabel" name="label_111">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <pointsize>9</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>kesiresol:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit_maxshang1_kesiresol">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.001</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_48">
+                   <item>
+                    <widget class="QLabel" name="label_113">
+                     <property name="font">
+                      <font>
+                       <pointsize>9</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>whmax:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit_maxshang1_whmax">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>4</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -4105,222 +4829,114 @@ color: rgb(0, 0, 127);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QComboBox" name="comboBox_maxshang1">
-          <property name="geometry">
-           <rect>
-            <x>40</x>
-            <y>87</y>
-            <width>111</width>
-            <height>26</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_172">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>90</y>
-            <width>16</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>X</string>
-          </property>
-         </widget>
+         <zorder>layoutWidget_10</zorder>
+         <zorder>comboBox_maxshang1</zorder>
+         <zorder>label_172</zorder>
+         <zorder>horizontalSpacer_11</zorder>
+         <zorder>label_172</zorder>
         </widget>
         <widget class="QWidget" name="toolBoxPage_2dshangstats">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
           <string>统计分析</string>
          </attribute>
-         <widget class="QWidget" name="layoutWidget_2">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>50</y>
-            <width>120</width>
-            <height>26</height>
-           </rect>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_44">
-           <item>
-            <widget class="QLabel" name="label_88">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>10</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>data1</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboBox_stats_data1"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="layoutWidget_3">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>50</y>
-            <width>121</width>
-            <height>26</height>
-           </rect>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_45">
-           <item>
-            <widget class="QLabel" name="label_89">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>data2</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboBox_stats_data2"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="layoutWidget_4">
+         <widget class="QWidget" name="">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>0</y>
-            <width>311</width>
-            <height>41</height>
+            <width>221</width>
+            <height>52</height>
            </rect>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_80">
+          <layout class="QVBoxLayout" name="verticalLayout_39">
+           <property name="spacing">
+            <number>3</number>
+           </property>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_50">
-             <property name="spacing">
-              <number>0</number>
-             </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_44">
              <item>
-              <widget class="QLabel" name="label_123">
+              <widget class="QLabel" name="label_88">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>20</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <pointsize>9</pointsize>
                 </font>
                </property>
                <property name="text">
-                <string>limit_min1</string>
+                <string>数据列1:</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_stats_limit_min1">
-               <property name="text">
-                <string>0.12</string>
+              <widget class="QComboBox" name="comboBox_stats_data1">
+               <property name="minimumSize">
+                <size>
+                 <width>160</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>160</width>
+                 <height>20</height>
+                </size>
                </property>
               </widget>
              </item>
             </layout>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_51">
-             <property name="spacing">
-              <number>0</number>
-             </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_45">
              <item>
-              <widget class="QLabel" name="label_124">
+              <widget class="QLabel" name="label_89">
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <pointsize>9</pointsize>
                 </font>
                </property>
                <property name="text">
-                <string>limit_min2</string>
+                <string>数据列2:</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_stats_limit_min2">
-               <property name="text">
-                <string>0.12</string>
+              <widget class="QComboBox" name="comboBox_stats_data2">
+               <property name="minimumSize">
+                <size>
+                 <width>160</width>
+                 <height>20</height>
+                </size>
                </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_52">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="label_125">
-               <property name="font">
-                <font>
-                 <pointsize>9</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>step1</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_stats_step1">
-               <property name="text">
-                <string>0.1</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_53">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="label_126">
-               <property name="font">
-                <font>
-                 <pointsize>9</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>step2</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_stats_step2">
-               <property name="text">
-                <string>0.1</string>
+               <property name="maximumSize">
+                <size>
+                 <width>160</width>
+                 <height>20</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -4328,59 +4944,199 @@ color: rgb(0, 0, 127);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QLabel" name="label_90">
+         <widget class="QWidget" name="">
           <property name="geometry">
            <rect>
-            <x>210</x>
+            <x>10</x>
             <y>50</y>
-            <width>21</width>
-            <height>20</height>
+            <width>331</width>
+            <height>71</height>
            </rect>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>类型</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox_stats_type">
-          <property name="geometry">
-           <rect>
-            <x>238</x>
-            <y>50</y>
-            <width>81</width>
-            <height>26</height>
-           </rect>
-          </property>
-          <item>
-           <property name="text">
-            <string>Stats1D</string>
+          <layout class="QVBoxLayout" name="verticalLayout_42">
+           <property name="spacing">
+            <number>0</number>
            </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Stats2D</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>DistrF1</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>DistrF2</string>
-           </property>
-          </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_57">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_41">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_53">
+                 <item>
+                  <widget class="QLabel" name="label_123">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>limit_min1:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_stats_limit_min1">
+                   <property name="text">
+                    <string>0.12</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_54">
+                 <item>
+                  <widget class="QLabel" name="label_124">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>limit_min2:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_stats_limit_min2">
+                   <property name="text">
+                    <string>0.12</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_40">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_55">
+                 <item>
+                  <widget class="QLabel" name="label_125">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>step1:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_stats_step1">
+                   <property name="text">
+                    <string>0.1</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_56">
+                 <item>
+                  <widget class="QLabel" name="label_126">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>step2:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_stats_step2">
+                   <property name="text">
+                    <string>0.1</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_58">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_52">
+               <item>
+                <widget class="QLabel" name="label_90">
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>类型:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboBox_stats_type">
+                 <property name="minimumSize">
+                  <size>
+                   <width>136</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Stats1D</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Stats2D</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DistrF1</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DistrF2</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>108</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
         </widget>
         <widget class="QWidget" name="toolBoxPage_maxshang2">
@@ -4388,248 +5144,275 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
           <string>二维最大殇计算</string>
          </attribute>
-         <widget class="QLineEdit" name="lineEdit_2dshang_R">
+         <widget class="QWidget" name="">
           <property name="geometry">
            <rect>
-            <x>270</x>
-            <y>10</y>
-            <width>51</width>
-            <height>21</height>
+            <x>10</x>
+            <y>1</y>
+            <width>221</width>
+            <height>111</height>
            </rect>
           </property>
-          <property name="text">
-           <string>0.4954</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_127">
-          <property name="geometry">
-           <rect>
-            <x>240</x>
-            <y>10</y>
-            <width>21</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>R</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox_2dshang_type">
-          <property name="geometry">
-           <rect>
-            <x>270</x>
-            <y>38</y>
-            <width>60</width>
-            <height>26</height>
-           </rect>
-          </property>
-          <item>
-           <property name="text">
-            <string>AMH</string>
+          <layout class="QVBoxLayout" name="verticalLayout_44">
+           <property name="spacing">
+            <number>3</number>
            </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Cla</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Fra</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>GB</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Gum</string>
-           </property>
-          </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_67">
+             <item>
+              <widget class="QLabel" name="label_91">
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>10</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>ff1:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_2dshang_ff1">
+               <property name="minimumSize">
+                <size>
+                 <width>160</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_71">
+             <item>
+              <widget class="QLabel" name="label_93">
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>10</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>ff2:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_2dshang_ff2">
+               <property name="minimumSize">
+                <size>
+                 <width>160</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_72">
+             <item>
+              <widget class="QLabel" name="label_92">
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>10</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>FF1:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_2dshang_FF1">
+               <property name="minimumSize">
+                <size>
+                 <width>160</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_73">
+             <item>
+              <widget class="QLabel" name="label_94">
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>10</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>FF2:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_2dshang_FF2">
+               <property name="minimumSize">
+                <size>
+                 <width>160</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_80">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_77">
+               <item>
+                <widget class="QLabel" name="label_127">
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>R:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_2dshang_R">
+                 <property name="text">
+                  <string>0.4954</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_76">
+               <item>
+                <widget class="QLabel" name="label_95">
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>类型:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboBox_2dshang_type">
+                 <item>
+                  <property name="text">
+                   <string>AMH</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Cla</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Fra</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>GB</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Gum</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
-         <widget class="QLabel" name="label_95">
-          <property name="geometry">
-           <rect>
-            <x>240</x>
-            <y>40</y>
-            <width>31</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>类型</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox_2dshang_ff1">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>10</y>
-            <width>81</width>
-            <height>26</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_91">
-          <property name="geometry">
-           <rect>
-            <x>11</x>
-            <y>17</y>
-            <width>35</width>
-            <height>10</height>
-           </rect>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>10</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>ff1</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_93">
-          <property name="geometry">
-           <rect>
-            <x>11</x>
-            <y>47</y>
-            <width>24</width>
-            <height>10</height>
-           </rect>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>10</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>ff2</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox_2dshang_ff2">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>40</y>
-            <width>81</width>
-            <height>26</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_92">
-          <property name="geometry">
-           <rect>
-            <x>121</x>
-            <y>17</y>
-            <width>24</width>
-            <height>10</height>
-           </rect>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>10</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>FF1</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox_2dshang_FF1">
-          <property name="geometry">
-           <rect>
-            <x>150</x>
-            <y>10</y>
-            <width>81</width>
-            <height>26</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_94">
-          <property name="geometry">
-           <rect>
-            <x>121</x>
-            <y>47</y>
-            <width>24</width>
-            <height>10</height>
-           </rect>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>10</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>FF2</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBox_2dshang_FF2">
-          <property name="geometry">
-           <rect>
-            <x>150</x>
-            <y>40</y>
-            <width>81</width>
-            <height>26</height>
-           </rect>
-          </property>
-         </widget>
+         <zorder>lineEdit_2dshang_R</zorder>
+         <zorder>label_127</zorder>
+         <zorder>comboBox_2dshang_type</zorder>
+         <zorder>label_95</zorder>
+         <zorder>comboBox_2dshang_ff1</zorder>
+         <zorder>label_91</zorder>
+         <zorder>label_93</zorder>
+         <zorder>comboBox_2dshang_ff2</zorder>
+         <zorder>label_92</zorder>
+         <zorder>comboBox_2dshang_FF1</zorder>
+         <zorder>label_94</zorder>
+         <zorder>comboBox_2dshang_FF2</zorder>
+         <zorder>label_92</zorder>
+         <zorder>label_95</zorder>
         </widget>
        </widget>
        <widget class="QPushButton" name="pushButton_post_start_analyse">
         <property name="geometry">
          <rect>
           <x>260</x>
-          <y>380</y>
+          <y>400</y>
           <width>91</width>
-          <height>31</height>
+          <height>25</height>
          </rect>
         </property>
         <property name="focusPolicy">
@@ -4643,7 +5426,7 @@ color: rgb(0, 0, 127);</string>
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>387</y>
+          <y>400</y>
           <width>238</width>
           <height>16</height>
          </rect>
@@ -4653,7 +5436,7 @@ color: rgb(0, 0, 127);</string>
           <widget class="QLabel" name="label_58">
            <property name="font">
             <font>
-             <pointsize>9</pointsize>
+             <family>华文楷体</family>
             </font>
            </property>
            <property name="styleSheet">
@@ -4674,6 +5457,7 @@ color: rgb(0, 0, 127);</string>
            </property>
            <property name="font">
             <font>
+             <family>楷体</family>
              <pointsize>9</pointsize>
             </font>
            </property>
@@ -4708,10 +5492,10 @@ color: rgb(0, 0, 127);</string>
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>22</x>
+          <x>12</x>
           <y>20</y>
-          <width>251</width>
-          <height>64</height>
+          <width>261</width>
+          <height>71</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_20">
@@ -4792,7 +5576,7 @@ color: rgb(0, 0, 127);</string>
           <x>310</x>
           <y>20</y>
           <width>241</width>
-          <height>96</height>
+          <height>97</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_13">
@@ -4887,7 +5671,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>20</x>
           <y>20</y>
-          <width>282</width>
+          <width>281</width>
           <height>130</height>
          </rect>
         </property>
@@ -5027,213 +5811,218 @@ color: rgb(0, 0, 127);</string>
        <property name="title">
         <string>计算结果</string>
        </property>
-       <widget class="QWidget" name="layoutWidget">
+       <widget class="QWidget" name="">
         <property name="geometry">
          <rect>
-          <x>20</x>
+          <x>10</x>
           <y>30</y>
-          <width>271</width>
-          <height>62</height>
+          <width>851</width>
+          <height>61</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_11">
+        <layout class="QHBoxLayout" name="horizontalLayout_106">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_17">
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
            <item>
-            <widget class="QLabel" name="label_34">
-             <property name="text">
-              <string>平均水平偏移:</string>
-             </property>
-            </widget>
+            <layout class="QVBoxLayout" name="verticalLayout_17">
+             <item>
+              <widget class="QLabel" name="label_34">
+               <property name="text">
+                <string>平均水平偏移:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_36">
+               <property name="text">
+                <string>最大水平系泊力:</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
-            <widget class="QLabel" name="label_36">
-             <property name="text">
-              <string>最大水平系泊力:</string>
-             </property>
-            </widget>
+            <layout class="QVBoxLayout" name="verticalLayout_18">
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_12">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="minimum">
+                <double>-100000000000000000.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>99999999999999.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_13">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="minimum">
+                <double>-100000000000000000.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>99999999999999.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_19">
+             <item>
+              <widget class="QLabel" name="label_38">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_39">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_18">
+          <layout class="QHBoxLayout" name="horizontalLayout_14">
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_12">
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::NoButtons</enum>
-             </property>
-             <property name="minimum">
-              <double>-100000000000000000.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>99999999999999.000000000000000</double>
-             </property>
-            </widget>
+            <layout class="QVBoxLayout" name="verticalLayout_21">
+             <item>
+              <widget class="QLabel" name="label_42">
+               <property name="text">
+                <string>平均艏向角:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_43">
+               <property name="text">
+                <string>极限张力:</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_13">
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::NoButtons</enum>
-             </property>
-             <property name="minimum">
-              <double>-100000000000000000.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>99999999999999.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_19">
-           <item>
-            <widget class="QLabel" name="label_38">
-             <property name="text">
-              <string>m</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_39">
-             <property name="text">
-              <string>m</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>300</x>
-          <y>30</y>
-          <width>261</width>
-          <height>62</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_14">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_21">
-           <item>
-            <widget class="QLabel" name="label_42">
-             <property name="text">
-              <string>平均艏向角:</string>
-             </property>
-            </widget>
+            <layout class="QVBoxLayout" name="verticalLayout_22">
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_16">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="minimum">
+                <double>-100000000000000000.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>99999999999999.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_17">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="minimum">
+                <double>-100000000000000000.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>99999999999999.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
-            <widget class="QLabel" name="label_43">
-             <property name="text">
-              <string>极限张力:</string>
-             </property>
-            </widget>
+            <layout class="QVBoxLayout" name="verticalLayout_23">
+             <item>
+              <widget class="QLabel" name="label_45">
+               <property name="text">
+                <string>°</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_46">
+               <property name="text">
+                <string>°</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_22">
+          <layout class="QVBoxLayout" name="verticalLayout_50">
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_16">
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::NoButtons</enum>
-             </property>
-             <property name="minimum">
-              <double>-100000000000000000.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>99999999999999.000000000000000</double>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_16">
+             <item>
+              <widget class="QLabel" name="label_35">
+               <property name="text">
+                <string>极限水平偏移:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_14">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
+               <property name="minimum">
+                <double>-100000000000000000.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>99999999999999.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_40">
+               <property name="text">
+                <string>KN</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_17">
-             <property name="readOnly">
-              <bool>true</bool>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
              </property>
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::NoButtons</enum>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>18</height>
+              </size>
              </property>
-             <property name="minimum">
-              <double>-100000000000000000.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>99999999999999.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_23">
-           <item>
-            <widget class="QLabel" name="label_45">
-             <property name="text">
-              <string>°</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_46">
-             <property name="text">
-              <string>°</string>
-             </property>
-            </widget>
+            </spacer>
            </item>
           </layout>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>570</x>
-          <y>30</y>
-          <width>281</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_16">
-         <item>
-          <widget class="QLabel" name="label_35">
-           <property name="text">
-            <string>极限水平偏移:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_14">
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-           <property name="buttonSymbols">
-            <enum>QAbstractSpinBox::NoButtons</enum>
-           </property>
-           <property name="minimum">
-            <double>-100000000000000000.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>99999999999999.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_40">
-           <property name="text">
-            <string>KN</string>
-           </property>
-          </widget>
          </item>
         </layout>
        </widget>
@@ -5368,8 +6157,8 @@ color: rgb(0, 0, 127);</string>
         <rect>
          <x>120</x>
          <y>150</y>
-         <width>101</width>
-         <height>31</height>
+         <width>85</width>
+         <height>25</height>
         </rect>
        </property>
        <property name="focusPolicy">

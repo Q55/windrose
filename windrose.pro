@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 ###### for qwt. changed reply on enviroment ##########
-include (/usr/local/qwt-6.1.2/features/qwt.prf)
+include (C:\Qwt-6.1.2\features\qwt.prf)
 
 QT       += core gui
 QT       += sql

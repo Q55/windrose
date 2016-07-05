@@ -130,8 +130,8 @@ QPushButton {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                         stop: 0 #f6f7fa, stop: 1 #dadbde);
 
-    min-height: 2.5ex;
-    max-height: 2.5ex;  
+/*    min-height: 2.5ex;
+    max-height: 2.5ex;  */
 }
 
 QPushButton:pressed {
@@ -156,6 +156,7 @@ QPushButton::hover {
     color: white;
 }
 
+/*
 QPushButton#pushButton_saveConfig,QPushButton#pushButton_saveData,QPushButton#pushButton_startDeal,QPushButton#pushButton_post_start_analyse,QPushButton#pushButton_start_drawgraph 
 {
     min-width: 11ex;
@@ -190,14 +191,15 @@ QToolBox#toolBox_analysis_data
 {
     font-size: 7px;
 }
-
+*/
 QWidget#toolBoxPage_enpost, QWidget#toolBoxPage_weightedfit, QWidget#toolBoxPage_cyclemax, QWidget#toolBoxPage_spectral, QWidget#toolBoxPage_correlation, QWidget#toolBoxPage_maxshang1, QWidget#toolBoxPage_2dshangstats, QWidget#toolBoxPage_maxshang2
 {
     /*
     min-height: 220px;
     padding: 200px;
-    */
+
     font-size: 7px;
+    */
     background-color: #e7eff7;
 }
 
