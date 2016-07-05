@@ -22,9 +22,9 @@ QTabBar::tab {
     border-bottom-color: #C2C7CB; /* same as the pane color */
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    min-width: 15ex;
-    min-height: 7px;
-    padding: 7px;
+    min-width: 20ex;
+    min-height: 6px;
+    padding: 6px;
 }
 
 
@@ -75,7 +75,7 @@ QGroupBox#groupBox_rangeFilter,QGroupBox#groupBox_timeCont, QGroupBox#groupBox_r
 
 QGroupBox#preProcGroupBox::title,QGroupBox#groupBox_anaPara::title,QGroupBox#groupBox_filterCond::title,QGroupBox#groupBox_timeCond::title { 
     color: rgb(25, 64, 129);
-    font: bold;
+    /*font: bold;*/
  }
 QLineEdit#lineEdit_tips { 
     border-width: 0px;
@@ -104,7 +104,7 @@ QGroupBox#groupBox_dataSel {
 
 QGroupBox#groupBox_dataSel::title,QGroupBox#groupBox_dataAnalysis::title,QGroupBox#groupBox_dataTable::title,QGroupBox#groupBox_drawGraph::title { 
     color: rgb(25, 64, 129);
-    font: bold;
+    /*font: bold;*/
  }
 
 /*****************************************************/
@@ -120,42 +120,51 @@ QGroupBox#groupBox_settingCond, QGroupBox#groupBox_calResult,QGroupBox#groupBox_
 }
 QGroupBox#groupBox_settingCond::title,QGroupBox#groupBox_calResult::title,QGroupBox#groupBox_loadSug::title,QGroupBox#groupBox_sysPara::title { 
     color: rgb(25, 64, 129);
-    font: bold;
+    /*font: bold;*/
  }
 
-
+/******************************
 QPushButton {
     border: 1px solid #8f8f91;
     border-radius: 4px;
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                         stop: 0 #f6f7fa, stop: 1 #dadbde);
-
+********************************/
 /*    min-height: 2.5ex;
     max-height: 2.5ex;  */
+/******************************
 }
-
+********************************/
+/******************************
 QPushButton:pressed {
+********************************/
     /*
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #dadbde, stop: 1 #f6f7fa);
     */
+    /******************************
     background-color: #77a5e3;
-
 }
+********************************/
 
+/* no border for a flat push button */
+/******************************
 QPushButton:flat {
-    border: none; /* no border for a flat push button */
+    border: none;
 }
-
+********************************/
+/* make the default button prominent */
+/******************************
 QPushButton:default {
-    border-color: navy; /* make the default button prominent */
+    border-color: navy;
 }
-
+********************************/
+/******************************
 QPushButton::hover {
     background-color: #77a5e3;
     color: white;
 }
-
+********************************/
 /*
 QPushButton#pushButton_saveConfig,QPushButton#pushButton_saveData,QPushButton#pushButton_startDeal,QPushButton#pushButton_post_start_analyse,QPushButton#pushButton_start_drawgraph 
 {
@@ -186,11 +195,12 @@ QPushButton#pushButton_first1000_records, QPushButton#pushButton_last1000_record
     min-width: 11ex;
     max-width: 11ex;
 }
-
+/*
 QToolBox#toolBox_analysis_data 
 {
     font-size: 7px;
 }
+*/
 */
 QWidget#toolBoxPage_enpost, QWidget#toolBoxPage_weightedfit, QWidget#toolBoxPage_cyclemax, QWidget#toolBoxPage_spectral, QWidget#toolBoxPage_correlation, QWidget#toolBoxPage_maxshang1, QWidget#toolBoxPage_2dshangstats, QWidget#toolBoxPage_maxshang2
 {

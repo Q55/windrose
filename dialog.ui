@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>938</width>
+    <width>932</width>
     <height>743</height>
    </rect>
   </property>
@@ -474,7 +474,7 @@ color: rgb(0, 0, 127);</string>
        <widget class="QPushButton" name="pushButton_clear_pre">
         <property name="geometry">
          <rect>
-          <x>412</x>
+          <x>420</x>
           <y>30</y>
           <width>101</width>
           <height>25</height>
@@ -551,7 +551,7 @@ color: rgb(0, 0, 127);</string>
               </font>
              </property>
              <property name="text">
-              <string>结束时间</string>
+              <string>结束时间:</string>
              </property>
             </widget>
            </item>
@@ -579,8 +579,8 @@ color: rgb(0, 0, 127);</string>
         <rect>
          <x>320</x>
          <y>620</y>
-         <width>101</width>
-         <height>31</height>
+         <width>85</width>
+         <height>25</height>
         </rect>
        </property>
        <property name="font">
@@ -600,8 +600,8 @@ color: rgb(0, 0, 127);</string>
         <rect>
          <x>490</x>
          <y>620</y>
-         <width>101</width>
-         <height>31</height>
+         <width>85</width>
+         <height>25</height>
         </rect>
        </property>
        <property name="font">
@@ -1285,6 +1285,11 @@ color: rgb(0, 0, 127);</string>
          </layout>
         </widget>
        </widget>
+       <zorder>groupBox_rangeFilter</zorder>
+       <zorder>groupBox_timeCont</zorder>
+       <zorder>groupBox_interConsis</zorder>
+       <zorder>groupBox_rangeCont</zorder>
+       <zorder>pre_selected_col_list</zorder>
       </widget>
       <widget class="QLineEdit" name="lineEdit_tips">
        <property name="geometry">
@@ -1361,6 +1366,18 @@ color: rgb(0, 0, 127);</string>
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
+      <zorder>groupBox_anaPara</zorder>
+      <zorder>preProcGroupBox</zorder>
+      <zorder>groupBox_timeCond</zorder>
+      <zorder>pushButton_startDeal</zorder>
+      <zorder>pushButton_saveData</zorder>
+      <zorder>groupBox_filterCond</zorder>
+      <zorder>lineEdit_tips</zorder>
+      <zorder>pushButton_saveConfig</zorder>
+      <zorder>progressBar</zorder>
+      <zorder>scrollArea</zorder>
+      <zorder>pre_selected_col_list</zorder>
+      <zorder>verticalScrollBar</zorder>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -1372,7 +1389,7 @@ color: rgb(0, 0, 127);</string>
          <x>10</x>
          <y>20</y>
          <width>521</width>
-         <height>431</height>
+         <height>421</height>
         </rect>
        </property>
        <property name="font">
@@ -1797,7 +1814,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>10</x>
           <y>80</y>
-          <width>437</width>
+          <width>341</width>
           <height>112</height>
          </rect>
         </property>
@@ -3305,18 +3322,18 @@ color: rgb(0, 0, 127);</string>
            <x>0</x>
            <y>0</y>
            <width>339</width>
-           <height>131</height>
+           <height>121</height>
           </rect>
          </property>
          <attribute name="label">
           <string>船体位置计算</string>
          </attribute>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>0</y>
-            <width>321</width>
+            <width>322</width>
             <height>131</height>
            </rect>
           </property>
@@ -3528,6 +3545,18 @@ color: rgb(0, 0, 127);</string>
                 <layout class="QHBoxLayout" name="horizontalLayout_7">
                  <item>
                   <widget class="QLabel" name="label_114">
+                   <property name="minimumSize">
+                    <size>
+                     <width>34</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>34</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
                      <pointsize>9</pointsize>
@@ -3543,9 +3572,15 @@ color: rgb(0, 0, 127);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>58</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
+                     <width>58</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3563,7 +3598,13 @@ color: rgb(0, 0, 127);</string>
                    <property name="minimumSize">
                     <size>
                      <width>34</width>
-                     <height>0</height>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>34</width>
+                     <height>20</height>
                     </size>
                    </property>
                    <property name="font">
@@ -3587,9 +3628,15 @@ color: rgb(0, 0, 127);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>58</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
+                     <width>58</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3608,6 +3655,18 @@ color: rgb(0, 0, 127);</string>
                 <layout class="QHBoxLayout" name="horizontalLayout_74">
                  <item>
                   <widget class="QLabel" name="label_115">
+                   <property name="minimumSize">
+                    <size>
+                     <width>34</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>34</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
                      <pointsize>9</pointsize>
@@ -3623,9 +3682,15 @@ color: rgb(0, 0, 127);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>58</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
+                     <width>58</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3643,7 +3708,13 @@ color: rgb(0, 0, 127);</string>
                    <property name="minimumSize">
                     <size>
                      <width>34</width>
-                     <height>0</height>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>34</width>
+                     <height>20</height>
                     </size>
                    </property>
                    <property name="font">
@@ -3661,9 +3732,15 @@ color: rgb(0, 0, 127);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>58</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
+                     <width>58</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3682,9 +3759,15 @@ color: rgb(0, 0, 127);</string>
                 <layout class="QHBoxLayout" name="horizontalLayout_17">
                  <item>
                   <widget class="QLabel" name="label_116">
+                   <property name="minimumSize">
+                    <size>
+                     <width>34</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
+                     <width>34</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3703,9 +3786,15 @@ color: rgb(0, 0, 127);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>58</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
+                     <width>58</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3723,7 +3812,13 @@ color: rgb(0, 0, 127);</string>
                    <property name="minimumSize">
                     <size>
                      <width>34</width>
-                     <height>0</height>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>34</width>
+                     <height>20</height>
                     </size>
                    </property>
                    <property name="font">
@@ -3741,9 +3836,15 @@ color: rgb(0, 0, 127);</string>
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>58</width>
+                     <height>20</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
+                     <width>58</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3837,6 +3938,12 @@ color: rgb(0, 0, 127);</string>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
               <widget class="QLabel" name="label_87">
+               <property name="minimumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>20</width>
@@ -3854,7 +3961,20 @@ color: rgb(0, 0, 127);</string>
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="comboBox_weightfit_y"/>
+              <widget class="QComboBox" name="comboBox_weightfit_y">
+               <property name="minimumSize">
+                <size>
+                 <width>181</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>181</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -3867,7 +3987,7 @@ color: rgb(0, 0, 127);</string>
            <x>0</x>
            <y>0</y>
            <width>339</width>
-           <height>131</height>
+           <height>111</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4047,7 +4167,7 @@ color: rgb(0, 0, 127);</string>
            <x>0</x>
            <y>0</y>
            <width>339</width>
-           <height>131</height>
+           <height>111</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4192,7 +4312,7 @@ color: rgb(0, 0, 127);</string>
            <x>0</x>
            <y>0</y>
            <width>339</width>
-           <height>131</height>
+           <height>111</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4498,7 +4618,7 @@ color: rgb(0, 0, 127);</string>
            <x>0</x>
            <y>0</y>
            <width>339</width>
-           <height>131</height>
+           <height>111</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4509,7 +4629,7 @@ color: rgb(0, 0, 127);</string>
            <rect>
             <x>10</x>
             <y>0</y>
-            <width>371</width>
+            <width>321</width>
             <height>121</height>
            </rect>
           </property>
@@ -4915,7 +5035,7 @@ color: rgb(0, 0, 127);</string>
            <x>0</x>
            <y>0</y>
            <width>339</width>
-           <height>131</height>
+           <height>121</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5024,7 +5144,7 @@ color: rgb(0, 0, 127);</string>
             <x>10</x>
             <y>50</y>
             <width>321</width>
-            <height>81</height>
+            <height>86</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_42">
@@ -5231,7 +5351,7 @@ color: rgb(0, 0, 127);</string>
             <x>10</x>
             <y>1</y>
             <width>221</width>
-            <height>129</height>
+            <height>121</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_44">
@@ -5242,10 +5362,16 @@ color: rgb(0, 0, 127);</string>
             <layout class="QHBoxLayout" name="horizontalLayout_67">
              <item>
               <widget class="QLabel" name="label_91">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>20</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>50</width>
-                 <height>10</height>
+                 <width>30</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="font">
@@ -5274,10 +5400,16 @@ color: rgb(0, 0, 127);</string>
             <layout class="QHBoxLayout" name="horizontalLayout_71">
              <item>
               <widget class="QLabel" name="label_93">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>20</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>50</width>
-                 <height>10</height>
+                 <width>30</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="font">
@@ -5312,10 +5444,16 @@ color: rgb(0, 0, 127);</string>
             <layout class="QHBoxLayout" name="horizontalLayout_72">
              <item>
               <widget class="QLabel" name="label_92">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>20</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>50</width>
-                 <height>10</height>
+                 <width>30</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="font">
@@ -5350,10 +5488,16 @@ color: rgb(0, 0, 127);</string>
             <layout class="QHBoxLayout" name="horizontalLayout_73">
              <item>
               <widget class="QLabel" name="label_94">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>20</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>50</width>
-                 <height>10</height>
+                 <width>30</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="font">
@@ -5390,6 +5534,18 @@ color: rgb(0, 0, 127);</string>
               <layout class="QHBoxLayout" name="horizontalLayout_77">
                <item>
                 <widget class="QLabel" name="label_127">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>20</height>
+                  </size>
+                 </property>
                  <property name="font">
                   <font>
                    <pointsize>9</pointsize>
@@ -5486,7 +5642,7 @@ color: rgb(0, 0, 127);</string>
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>400</y>
+          <y>410</y>
           <width>238</width>
           <height>16</height>
          </rect>

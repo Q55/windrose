@@ -42,7 +42,7 @@ Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
-    loadStyleSheet(QString("optStyle"));
+    //loadStyleSheet(QString("optStyle"));
     ui->setupUi(this);
     // a bug in QT, so we cannot set it in *.ui file, by shiqiang, 2016.07.02
     ui->tableWidget_col_data_details->horizontalHeader()->setVisible(true);

@@ -22,6 +22,11 @@
      <height>75</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
+   </property>
    <property name="title">
     <string>标量计算公式</string>
    </property>
@@ -31,121 +36,127 @@
    <property name="checked">
     <bool>true</bool>
    </property>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>287</x>
-      <y>21</y>
-      <width>127</width>
-      <height>50</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
-     <item>
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>操作数：</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEdit_scalar_operand">
-       <property name="styleSheet">
-        <string notr="true">gridline-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255), stop:0.166 rgba(255, 255, 0, 255), stop:0.333 rgba(0, 255, 0, 255), stop:0.5 rgba(0, 255, 255, 255), stop:0.666 rgba(0, 0, 255, 255), stop:0.833 rgba(255, 0, 255, 255), stop:1 rgba(255, 0, 0, 255));</string>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-       <property name="placeholderText">
-        <string>1</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>20</y>
-      <width>121</width>
-      <height>52</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>运算类型：</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBox_scarlar_operator">
-       <item>
-        <property name="text">
-         <string>加</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>减</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>乘</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>除</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>平方</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>开方</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>对数</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>5</x>
       <y>20</y>
-      <width>131</width>
-      <height>52</height>
+      <width>411</width>
+      <height>53</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QLabel" name="label_12">
-       <property name="text">
-        <string>数据列：</string>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="minimumSize">
+          <size>
+           <width>130</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>数据列：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_scalar_data">
+         <item>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_scalar_data">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <property name="text">
-         <string>0</string>
-        </property>
+        <widget class="QLabel" name="label_7">
+         <property name="minimumSize">
+          <size>
+           <width>130</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>运算类型：</string>
+         </property>
+        </widget>
        </item>
-      </widget>
+       <item>
+        <widget class="QComboBox" name="comboBox_scarlar_operator">
+         <item>
+          <property name="text">
+           <string>加</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>减</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>乘</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>除</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>平方</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>开方</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>对数</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_8">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>操作数：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_scalar_operand">
+         <property name="styleSheet">
+          <string notr="true">gridline-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255), stop:0.166 rgba(255, 255, 0, 255), stop:0.333 rgba(0, 255, 0, 255), stop:0.5 rgba(0, 255, 255, 255), stop:0.666 rgba(0, 0, 255, 255), stop:0.833 rgba(255, 0, 255, 255), stop:1 rgba(255, 0, 0, 255));</string>
+         </property>
+         <property name="text">
+          <string>1</string>
+         </property>
+         <property name="placeholderText">
+          <string>1</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>
@@ -158,6 +169,11 @@
      <width>421</width>
      <height>74</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
    </property>
    <property name="title">
     <string>向量计算公式</string>
@@ -291,6 +307,11 @@
     </item>
     <item>
      <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+       </font>
+      </property>
       <property name="standardButtons">
        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
       </property>
@@ -298,13 +319,13 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>161</x>
      <y>10</y>
      <width>261</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -312,7 +333,8 @@
      <widget class="QLabel" name="label_3">
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>微软雅黑</family>
+        <pointsize>9</pointsize>
        </font>
       </property>
       <property name="frameShape">
@@ -325,6 +347,11 @@
     </item>
     <item>
      <widget class="QLineEdit" name="lineEdit_new_col_name">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+       </font>
+      </property>
       <property name="styleSheet">
        <string notr="true">gridline-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255), stop:0.166 rgba(255, 255, 0, 255), stop:0.333 rgba(0, 255, 0, 255), stop:0.5 rgba(0, 255, 255, 255), stop:0.666 rgba(0, 0, 255, 255), stop:0.833 rgba(255, 0, 255, 255), stop:1 rgba(255, 0, 0, 255));</string>
       </property>
@@ -349,7 +376,8 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>11</pointsize>
+     <family>微软雅黑</family>
+     <pointsize>9</pointsize>
     </font>
    </property>
    <property name="frameShape">
