@@ -78,17 +78,17 @@ public slots:
     void postAddSelectedColList(QListWidgetItem*) { postAddSelectedColList(); }
     void postDelSelectedColList();
     void postPopExprDlg();
+    void postPopRenameColDlg();
     void parsePostExpr(bool, QString, int, double, bool, QString, int, QString, QString);
     void addRightMenuToShowData(const QPoint &);
     void addRightMenuToRemoveCol(const QPoint &);
     void updateShowedDataDetails(int begin_row);
     void addSelColDataByRightMenu();
-    void refreshDataToDefault();
+    //void refreshDataToDefault();
     void clearAllData();
-    void renameSelCol();
-    void dealRenameSelCol(QWidget*);
+    void dealRenameSelCol(QString orig_col_name, QString new_col_name);
     void removeColDataFromShowDataList();
-    void showSelColDataCount();
+    //void showSelColDataCount();
     //void showSelColDataByDoubleClicked();
     void showSelColDataFirst1000();
     void showSelColDataPre1000();
@@ -139,7 +139,6 @@ private:
     void initComboboxMap();
 
     int last_ref_col_;
-    QString old_col_name_;
     QMap<QString, QVector<double> > showdata_col_list_;
     double kendall_val_;
     QVector<QVector<double> > stats_2D_output_;

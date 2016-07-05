@@ -511,7 +511,7 @@ color: rgb(0, 0, 127);</string>
           <x>20</x>
           <y>20</y>
           <width>241</width>
-          <height>55</height>
+          <height>57</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_49">
@@ -659,7 +659,7 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>10</x>
            <y>20</y>
-           <width>315</width>
+           <width>332</width>
            <height>27</height>
           </rect>
          </property>
@@ -831,7 +831,7 @@ color: rgb(0, 0, 127);</string>
            <x>10</x>
            <y>20</y>
            <width>311</width>
-           <height>27</height>
+           <height>28</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_97">
@@ -955,7 +955,7 @@ color: rgb(0, 0, 127);</string>
            <x>10</x>
            <y>30</y>
            <width>311</width>
-           <height>56</height>
+           <height>64</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_48">
@@ -1136,8 +1136,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>10</x>
            <y>22</y>
-           <width>311</width>
-           <height>58</height>
+           <width>312</width>
+           <height>60</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_98">
@@ -1285,11 +1285,6 @@ color: rgb(0, 0, 127);</string>
          </layout>
         </widget>
        </widget>
-       <zorder>groupBox_rangeFilter</zorder>
-       <zorder>groupBox_timeCont</zorder>
-       <zorder>groupBox_interConsis</zorder>
-       <zorder>groupBox_rangeCont</zorder>
-       <zorder>pre_selected_col_list</zorder>
       </widget>
       <widget class="QLineEdit" name="lineEdit_tips">
        <property name="geometry">
@@ -1366,18 +1361,6 @@ color: rgb(0, 0, 127);</string>
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <zorder>groupBox_anaPara</zorder>
-      <zorder>preProcGroupBox</zorder>
-      <zorder>groupBox_timeCond</zorder>
-      <zorder>pushButton_startDeal</zorder>
-      <zorder>pushButton_saveData</zorder>
-      <zorder>groupBox_filterCond</zorder>
-      <zorder>lineEdit_tips</zorder>
-      <zorder>pushButton_saveConfig</zorder>
-      <zorder>progressBar</zorder>
-      <zorder>scrollArea</zorder>
-      <zorder>pre_selected_col_list</zorder>
-      <zorder>verticalScrollBar</zorder>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -1814,8 +1797,8 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>10</x>
           <y>80</y>
-          <width>341</width>
-          <height>112</height>
+          <width>350</width>
+          <height>127</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_43">
@@ -3067,9 +3050,44 @@ color: rgb(0, 0, 127);</string>
         <column/>
         <column/>
         <column/>
+        <item row="0" column="1">
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
         <item row="0" column="5">
          <property name="text">
           <string/>
+         </property>
+        </item>
+        <item row="1" column="0">
+         <property name="flags">
+          <set>ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item row="1" column="1">
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item row="1" column="2">
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item row="1" column="3">
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item row="1" column="4">
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item row="1" column="5">
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
          </property>
         </item>
        </widget>
@@ -3322,7 +3340,7 @@ color: rgb(0, 0, 127);</string>
            <x>0</x>
            <y>0</y>
            <width>339</width>
-           <height>121</height>
+           <height>139</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3333,7 +3351,7 @@ color: rgb(0, 0, 127);</string>
            <rect>
             <x>10</x>
             <y>0</y>
-            <width>322</width>
+            <width>336</width>
             <height>131</height>
            </rect>
           </property>
@@ -3867,8 +3885,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="maximumSize">
@@ -3886,7 +3904,7 @@ color: rgb(0, 0, 127);</string>
             <x>10</x>
             <y>10</y>
             <width>211</width>
-            <height>59</height>
+            <height>64</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_31">
@@ -3986,8 +4004,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>111</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -3999,7 +4017,7 @@ color: rgb(0, 0, 127);</string>
             <x>10</x>
             <y>10</y>
             <width>208</width>
-            <height>22</height>
+            <height>26</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_32">
@@ -4166,8 +4184,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>111</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4179,7 +4197,7 @@ color: rgb(0, 0, 127);</string>
             <x>10</x>
             <y>10</y>
             <width>241</width>
-            <height>54</height>
+            <height>62</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_32">
@@ -4311,8 +4329,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>111</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4324,7 +4342,7 @@ color: rgb(0, 0, 127);</string>
             <x>10</x>
             <y>0</y>
             <width>321</width>
-            <height>156</height>
+            <height>171</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_45">
@@ -4617,8 +4635,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>111</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4629,8 +4647,8 @@ color: rgb(0, 0, 127);</string>
            <rect>
             <x>10</x>
             <y>0</y>
-            <width>321</width>
-            <height>121</height>
+            <width>385</width>
+            <height>136</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_47">
@@ -5034,8 +5052,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>121</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5338,8 +5356,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5351,7 +5369,7 @@ color: rgb(0, 0, 127);</string>
             <x>10</x>
             <y>1</y>
             <width>221</width>
-            <height>121</height>
+            <height>146</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_44">
@@ -5643,7 +5661,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>10</x>
           <y>410</y>
-          <width>238</width>
+          <width>239</width>
           <height>16</height>
          </rect>
         </property>
@@ -6036,7 +6054,7 @@ color: rgb(0, 0, 127);</string>
           <x>10</x>
           <y>30</y>
           <width>851</width>
-          <height>61</height>
+          <height>64</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_106">

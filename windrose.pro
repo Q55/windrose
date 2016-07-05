@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 ###### for qwt. changed reply on enviroment ##########
-include (C:\Qwt-6.1.2\features\qwt.prf)
+##include (C:\Qwt-6.1.2\features\qwt.prf)
+include(/usr/local/qwt-6.1.2/features/qwt.prf)
 
 QT       += core gui
 QT       += sql
@@ -120,7 +121,8 @@ SOURCES += main.cpp\
     libs/ff_GB/ff_GB.cpp \
     libs/ff_GB/ff_GB_initialize.cpp \
     libs/ff_GB/ff_GB_terminate.cpp \
-    plotspectrogram.cpp
+    plotspectrogram.cpp \
+    postcolrenamedialog.cpp
 
 HEADERS  += \
     dataprocess.h \
@@ -226,11 +228,13 @@ HEADERS  += \
     libs/ff_GB/ff_GB_initialize.h \
     libs/ff_GB/ff_GB_terminate.h \
     libs/ff_GB/ff_GB.h \
-    plotspectrogram.h
+    plotspectrogram.h \
+    postcolrenamedialog.h
 
 FORMS    += \
     dialog.ui \
-    postexprdialog.ui
+    postexprdialog.ui \
+    postcolrenamedialog.ui
 
 RESOURCES += \
     stylesheet.qrc
