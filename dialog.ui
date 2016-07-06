@@ -1667,7 +1667,7 @@ color: rgb(0, 0, 127);</string>
         <property name="geometry">
          <rect>
           <x>11</x>
-          <y>51</y>
+          <y>20</y>
           <width>213</width>
           <height>32</height>
          </rect>
@@ -1737,66 +1737,8 @@ color: rgb(0, 0, 127);</string>
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>11</x>
-          <y>21</y>
-          <width>339</width>
-          <height>32</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_22">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_19">
-           <item>
-            <widget class="QLabel" name="label_80">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>X轴Label</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit_xlabel">
-             <property name="text">
-              <string>X</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_21">
-           <item>
-            <widget class="QLabel" name="label_81">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Y轴Label</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit_ylabel">
-             <property name="text">
-              <string>Y</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
           <x>10</x>
-          <y>80</y>
+          <y>50</y>
           <width>350</width>
           <height>127</height>
          </rect>
@@ -1926,7 +1868,6 @@ color: rgb(0, 0, 127);</string>
          </item>
         </layout>
        </widget>
-       <zorder>layoutWidget</zorder>
        <zorder>layoutWidget</zorder>
        <zorder>layoutWidget</zorder>
        <zorder>layoutWidget</zorder>
@@ -3211,51 +3152,51 @@ color: rgb(0, 0, 127);</string>
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="layoutWidget">
+       <widget class="QLabel" name="label_selcol_totalcount">
         <property name="geometry">
          <rect>
-          <x>11</x>
-          <y>220</y>
-          <width>111</width>
-          <height>20</height>
+          <x>71</x>
+          <y>221</y>
+          <width>241</width>
+          <height>16</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLabel" name="label_56">
-           <property name="font">
-            <font>
-             <family>华文楷体</family>
-            </font>
-           </property>
-           <property name="text">
-            <string>计数：</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_selcol_totalcount">
-           <property name="minimumSize">
-            <size>
-             <width>40</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>华文楷体</family>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>0</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>华文楷体</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_56">
+        <property name="geometry">
+         <rect>
+          <x>12</x>
+          <y>221</y>
+          <width>39</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>华文楷体</family>
+         </font>
+        </property>
+        <property name="text">
+         <string>计数：</string>
+        </property>
        </widget>
       </widget>
       <widget class="QGroupBox" name="groupBox_dataAnalysis">

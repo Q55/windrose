@@ -843,6 +843,7 @@ void Dialog::clearPreCache(){
         dpclass.clearAfterPreProcDataMap();
         dpclass.clearFreqList();
         dpclass.clearPostproc_data_map();
+        postPrepareDataForAnalysis(ui->toolBox_analysis_data->currentIndex());
 
         //pre_sel_colrepeatlist_map.clear();
         pre_selcol_count_map.clear();
@@ -852,29 +853,17 @@ void Dialog::clearPreCache(){
         ui->post_proc_raw_col_list->clear();
         ui->post_proc_after_col_list->clear();
         ui->tableWidget_col_data_details->clear();
+        for (int i = 1; i <= 1000; ++i) {
+            QTableWidgetItem * item = new QTableWidgetItem(QString::number(i));
+            ui->tableWidget_col_data_details->setItem(i-1, 0, item);
+        }
+
         ui->xaxis_data_list->clear();
         ui->yaxis_data_list->clear();
         ui->label_selcol_totalcount->setText("0");
-        ui->comboBox_correlation_x->setItemText(0, "0");
-        ui->comboBox_correlation_x->setItemText(1, "1");
-        ui->comboBox_correlation_y->setItemText(0, "0");
-        ui->comboBox_correlation_y->setItemText(1, "1");
-        ui->comboBox_weightfit_x->setItemText(0, "0");
-        ui->comboBox_weightfit_x->setItemText(1, "1");
-        ui->comboBox_weightfit_y->setItemText(0, "0");
-        ui->comboBox_weightfit_y->setItemText(1, "1");
+
         showdata_col_list_.clear();
         updateShowedDataDetails(0);
-        ui->comboBox_stats_data1->setItemText(0, "0");
-        ui->comboBox_stats_data1->setItemText(1, "1");
-        ui->comboBox_stats_data2->setItemText(0, "0");
-        ui->comboBox_stats_data2->setItemText(1, "1");
-        for (int i = 0; i < 4; ++i) {
-            ui->comboBox_2dshang_ff1->setItemText(i, QString::number(i));
-            ui->comboBox_2dshang_ff2->setItemText(i, QString::number(i));
-            ui->comboBox_2dshang_FF1->setItemText(i, QString::number(i));
-            ui->comboBox_2dshang_FF2->setItemText(i, QString::number(i));
-        }
 
         ui->spinBox_selCol->setValue(map_col_list_analyse_paras.size());
 
@@ -893,32 +882,21 @@ void Dialog::clearPostCache() {
 
     if (ret == QMessageBox::Ok) {
         dpclass.clearPostproc_data_map();
+        postPrepareDataForAnalysis(ui->toolBox_analysis_data->currentIndex());
+
         ui->post_proc_after_col_list->clear();
         ui->tableWidget_col_data_details->clear();
+        for (int i = 1; i <= 1000; ++i) {
+            QTableWidgetItem * item = new QTableWidgetItem(QString::number(i));
+            ui->tableWidget_col_data_details->setItem(i-1, 0, item);
+        }
+
         ui->xaxis_data_list->clear();
         ui->yaxis_data_list->clear();
         ui->label_selcol_totalcount->setText("0");
-        ui->comboBox_correlation_x->setItemText(0, "0");
-        ui->comboBox_correlation_x->setItemText(1, "1");
-        ui->comboBox_correlation_y->setItemText(0, "0");
-        ui->comboBox_correlation_y->setItemText(1, "1");
-        ui->comboBox_weightfit_x->setItemText(0, "0");
-        ui->comboBox_weightfit_x->setItemText(1, "1");
-        ui->comboBox_weightfit_y->setItemText(0, "0");
-        ui->comboBox_weightfit_y->setItemText(1, "1");
+
         showdata_col_list_.clear();
         updateShowedDataDetails(0);
-        ui->comboBox_stats_data1->setItemText(0, "0");
-        ui->comboBox_stats_data1->setItemText(1, "1");
-        ui->comboBox_stats_data2->setItemText(0, "0");
-        ui->comboBox_stats_data2->setItemText(1, "1");
-        for (int i = 0; i < 4; ++i) {
-            ui->comboBox_2dshang_ff1->setItemText(i, QString::number(i));
-            ui->comboBox_2dshang_ff2->setItemText(i, QString::number(i));
-            ui->comboBox_2dshang_FF1->setItemText(i, QString::number(i));
-            ui->comboBox_2dshang_FF2->setItemText(i, QString::number(i));
-        }
-
 
         QMessageBox msgBox;
         msgBox.setText("后处理缓存被清除!");
@@ -1058,7 +1036,7 @@ void Dialog::postAddXAxisData() {
     QList<QListWidgetItem *> xaxis_col = ui->post_proc_after_col_list->selectedItems();
     if (xaxis_col.size() != 1) {
         QErrorMessage *xOnlyOneColErr = new QErrorMessage(this);
-        xOnlyOneColErr->showMessage("X轴仅能选择1列数据");
+        xOnlyOneColErr->showMessage("请为X轴选择1列数据");
         return;
     }
 
@@ -1590,13 +1568,15 @@ void Dialog::postStartDataAnalysis() {
 
 void Dialog::postStartDrawGraph() {
 //    if (ui->groupBox_draw_graph->isChecked()) {
-        QString msg = "Ok.";
+        QString msg = "";
+        QString msg_style = "color: rgb(44,104,7);";
         auto all_data_map = dpclass.getPostProcDataMap();
         int graph_type = ui->comboBox_curveType->currentIndex();
         switch (graph_type) {
         case 0: { // curve chart
             if (ui->xaxis_data_list->count() > 1) {
                 msg = "X轴数据列数为0或1";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             QVector<double> x_col;
@@ -1604,12 +1584,14 @@ void Dialog::postStartDrawGraph() {
                 x_col = all_data_map[ui->xaxis_data_list->item(i)->text()];
                 if (x_col.size() <= 0) {
                     msg = "X轴输入数据列" + ui->xaxis_data_list->item(i)->text() + "尺寸为0，请重新选择";
+                    msg_style = "color: rgb(231,66,67);";
                     break;
                 }
             }
 
             if (ui->yaxis_data_list->count() < 1 || ui->yaxis_data_list->count() > 5) {
                 msg = "Y轴数据列数为1 ~ 5.";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             QVector<QVector<double> > y_cols;
@@ -1619,6 +1601,7 @@ void Dialog::postStartDrawGraph() {
                 y_cols_name.push_back(ui->yaxis_data_list->item(i)->text());
                 if (y_cols[i].size() <= 0) {
                     msg = "Y轴输入数据列" + ui->yaxis_data_list->item(i)->text() + "尺寸为0，请重新选择";
+                    msg_style = "color: rgb(231,66,67);";
                     break;
                 }
             }
@@ -1629,18 +1612,19 @@ void Dialog::postStartDrawGraph() {
             for (auto it = y_cols.begin(); it != y_cols.end(); ++it) {
                 if (it->size() != records) {
                     msg = "X与Y的记录数不匹配";
+                    msg_style = "color: rgb(231,66,67);";
                     matched = false;
                     break;
                 }
             }
 
-            qDebug()<<y_cols_name;
-
             if (matched) {
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
                 graph->plotForCurve(x_col, y_cols, y_cols_name);
-                graph->setXAxisLabel(ui->lineEdit_xlabel->text());
-                graph->setYAxisLabel(ui->lineEdit_ylabel->text());
+//                graph->setXAxisLabel(ui->lineEdit_xlabel->text());
+//                graph->setYAxisLabel(ui->lineEdit_ylabel->text());
+                graph->setXAxisLabel("");
+                graph->setYAxisLabel("");
                 graph->show();
             }
             break;
@@ -1648,67 +1632,81 @@ void Dialog::postStartDrawGraph() {
         case 1: { // scatter graph
             if (ui->xaxis_data_list->count() != 1) {
                 msg = "X轴数据列数为1";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             QVector<double> x_col = all_data_map[ui->xaxis_data_list->item(0)->text()];
             if (x_col.size() <= 0) {
                 msg = "X轴输入数据列" + ui->xaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
 
             if (ui->yaxis_data_list->count() != 1) {
                 msg = "Y轴数据列数为1";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             QVector<double> y_col = all_data_map[ui->yaxis_data_list->item(0)->text()];
             if (y_col.size() <= 0) {
                 msg = "Y轴输入数据列" + ui->yaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
 
             if (x_col.size() != y_col.size()) {
                 msg = "X与Y的记录数不匹配.";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
             graph->plotForScatter(x_col, y_col);
-            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
-            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
+//            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
+//            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
+            graph->setXAxisLabel(ui->xaxis_data_list->item(0)->text());
+            graph->setYAxisLabel("");
             graph->show();
             break;
         }
         case 2: { // rose plot
             if (ui->xaxis_data_list->count() != 1) {
                 msg = "X轴数据列数为1";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             if (!(ui->xaxis_data_list->item(0)->text().contains("windspeed", Qt::CaseInsensitive))) {
                 msg = "X轴数据应该为'WindSpeed'";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             QVector<double> x_col = all_data_map[ui->xaxis_data_list->item(0)->text()];
             if (x_col.size() <= 0) {
                 msg = "X轴输入数据列" + ui->xaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
 
             if (ui->yaxis_data_list->count() != 1) {
                 msg = "Y轴数据列数为1";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             if (!(ui->yaxis_data_list->item(0)->text().contains("winddir", Qt::CaseInsensitive))) {
                 msg = "Y轴数据应该为'WindDir'";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             QVector<double> y_col = all_data_map[ui->yaxis_data_list->item(0)->text()];
             if (y_col.size() <= 0) {
                 msg = "Y轴输入数据列" + ui->yaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
 
             if (x_col.size() != y_col.size()) {
                 msg = "X轴与Y轴数据记录数不匹配";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
 //            QVector<double> x_col = {6,7.2,6.5,7.1,5.6,3.5,4.4,4.3,3.4,3.8,4.8,3.6,2.8,2.2,2.9,4.2,4.7,6,
@@ -1722,6 +1720,7 @@ void Dialog::postStartDrawGraph() {
         case 3: { // histgraph
             if (ui->xaxis_data_list->count() > 1) {
                 msg = "X轴数据列数为0或1.";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             QVector<double> x_col;
@@ -1729,29 +1728,35 @@ void Dialog::postStartDrawGraph() {
                 x_col = all_data_map[ui->xaxis_data_list->item(i)->text()];
                 if (x_col.size() <= 0) {
                     msg = "X轴输入数据列" + ui->xaxis_data_list->item(i)->text() + "尺寸为0，请重新选择";
+                    msg_style = "color: rgb(231,66,67);";
                     break;
                 }
             }
 
             if (ui->yaxis_data_list->count() != 1) {
                 msg = "Y轴数据列数为1";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
             QVector<double> y_col = all_data_map[ui->yaxis_data_list->item(0)->text()];
             if (y_col.size() <= 0) {
                 msg = "Y轴输入数据列" + ui->yaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
 
             if ((x_col.size() != 0) && (x_col.size() != y_col.size())) {
                 msg = "X轴与Y轴数据记录数不匹配";
+                msg_style = "color: rgb(231,66,67);";
                 break;
             }
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
             graph->plotForBarChart(x_col, y_col);
-            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
-            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
+//            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
+//            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
+            graph->setXAxisLabel(ui->xaxis_data_list->item(0)->text());
+            graph->setYAxisLabel("");
             graph->show();
             break;
         }
@@ -1772,11 +1777,7 @@ void Dialog::postStartDrawGraph() {
             break;
         }
         ui->label_drawgraph_note->setText(msg);
-        if (msg != "Ok.")
-            ui->label_drawgraph_note->setStyleSheet("color: rgb(231,66,67);");
-        else
-            ui->label_drawgraph_note->setStyleSheet("color: rgb(44,104,7);");
-//    }
+        ui->label_drawgraph_note->setStyleSheet(msg_style);
 }
 
 void Dialog::initComboboxMap()

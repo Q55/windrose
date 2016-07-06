@@ -92,6 +92,7 @@ void QwtGraphPlotCustom::plotForSpectral(const QVector<double> &f, const QVector
     for (int i = 0; i < f.size(); ++i)
         samples += QPointF(f[i], YY[i]);
 
+    graph_plot->setTitle( "谱分析曲线图" );
     QwtPlotCurve *curve = new QwtPlotCurve("谱分析曲线");
     curve->setSamples(samples);
     curve->setStyle(QwtPlotCurve::Lines);
@@ -108,6 +109,7 @@ void QwtGraphPlotCustom::plotForXYData(const QVector<double> &x, const QVector<d
     for (int i = 0; i < x.size(); ++i)
         samples += QPointF(x[i], y[i]);
 
+    graph_plot->setTitle( "X-Y曲线图" );
     QwtPlotCurve *curve = new QwtPlotCurve("X-Y曲线");
     curve->setSamples(samples);
     curve->setStyle(QwtPlotCurve::Lines);
@@ -124,6 +126,7 @@ void QwtGraphPlotCustom::plotFor1DMaxEntropy(const QVector<double> &yy1, const Q
     for (int i = 0; i < yy1.size(); ++i)
         samples += QPointF(yy1[i], yy2[i]);
 
+    graph_plot->setTitle( "一维最大熵曲线图" );
     QwtPlotCurve *curve = new QwtPlotCurve("一维最大熵曲线");
     curve->setSamples(samples);
     curve->setStyle(QwtPlotCurve::Lines);
@@ -182,6 +185,7 @@ void QwtGraphPlotCustom::plotFor2DMaxEntropyDensity(const QVector<QVector<double
 void QwtGraphPlotCustom::plotForCurve(const QVector<double> &x, const QVector<QVector<double> > &yy, const QVector<QString> &yy_names) {
     int i = 7;
     int j = 0;
+    graph_plot->setTitle("曲线图");
     for (auto it = yy.begin(); it != yy.end(); ++it, ++i, ++j) {
         QPolygonF samples;
         for (int j = 0; j < it->size(); ++j) {
@@ -192,7 +196,7 @@ void QwtGraphPlotCustom::plotForCurve(const QVector<double> &x, const QVector<QV
         }
         QwtPlotCurve *curve = new QwtPlotCurve(yy_names[j]);
         curve->setSamples(samples);
-        //curve->setStyle(QwtPlotCurve::Lines);
+       // curve->setStyle(QwtPlotCurve::Lines);
         curve->setStyle(QwtPlotCurve::Dots);
         QwtSymbol *curve_symbols = new QwtSymbol( QwtSymbol::XCross);
         curve_symbols->setSize(3);
@@ -209,6 +213,7 @@ void QwtGraphPlotCustom::plotForScatter(const QVector<double> &x, const QVector<
     for (int i = 0; i < x.size(); ++i)
         samples += QPointF(x[i], y[i]);
 
+    graph_plot->setTitle("散点图");
     QwtPlotCurve *curve = new QwtPlotCurve("散点图");
     curve->setSamples(samples);
     curve->setStyle(QwtPlotCurve::NoCurve);
@@ -229,28 +234,11 @@ void QwtGraphPlotCustom::plotForBarChart(const QVector<double> &x, const QVector
             samples += QPointF(x[j], y[j]);
     }
 
+    graph_plot->setTitle("柱状图");
     QwtPlotBarChart *bar_chart = new QwtPlotBarChart("柱状图");
     bar_chart->setSamples(samples);
     bar_chart->attach(graph_plot);
 }
-
-//void QwtGraphPlotCustom::plotForPolarRose(const QVector<double> &windspeed, const QVector<double> &winddir) {
-
-//    qDebug()<<"size speed = "<<windspeed.size()<<", size dir = "<<winddir.size();
-//}
-
-//void ScatterPlot::setSamples(const QVector<double> &x, const QVector<double> &y) {
-//    //qDebug() << "enter setSamples";
-//    if (x.size() != y.size()) {
-//        //qDebug() << "Input Data Size Error!";
-//        return;
-//    }
-//    QPolygonF samples;
-//    for (int i = 0; i < x.size(); ++i)
-//        samples += QPointF(x[i], y[i]);
-//    scatter_plot->setSamples( samples );
-//    scatter_plot->replot();
-//}
 
 void QwtGraphPlotCustom::setXAxisLabel(QString xlabel)
 {
