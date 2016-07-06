@@ -188,8 +188,25 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->pushButton_add_ydata, SIGNAL(clicked()), this, SLOT(postAddYAxisData()));
     connect(ui->pushButton_del_ydata, SIGNAL(clicked()), this, SLOT(postDelYAxisData()));
     connect(ui->pushButton_start_drawgraph, SIGNAL(clicked()), this, SLOT(postStartDrawGraph()));
+    connect(ui->comboBox_curveType, SIGNAL(currentIndexChanged(int)), this, SLOT(drawRoseNote(int)));
 }
 
+
+void Dialog::drawRoseNote(int index) {
+    QString msg = "";
+    QString msg_style = "color: rgb(44,104,7);";
+    if (index == 0) {
+        msg = "画曲线图时，X轴可以是0~1列数据，Y轴可以是1~5列数据";
+    } else if (index == 1) {
+        msg = "画散点图时，X轴和Y轴各1列数据";
+    } else if (index == 2) { // 画玫瑰图
+        msg = "画玫瑰图时，Speed添加到X轴，Dir添加到Y轴";
+    } else if (index == 3) {
+        msg = "画直方图时，X轴和Y轴各1列数据";
+    }
+    ui->label_drawgraph_note->setText(msg);
+    ui->label_drawgraph_note->setStyleSheet(msg_style);
+}
 
 void Dialog::postDataAnalysisRadioButtonDisableInput(bool clicked) {
     if (clicked) {
@@ -926,8 +943,9 @@ void Dialog::postAddSelectedColList() {
     auto exist_cols = dpclass.getPostProcDataMap();
     for (auto it = add_items.begin(); it != add_items.end(); ++it) {
         QString col_name = (*it)->text();
-        if(exist_cols.find(col_name) == exist_cols.end()) // cannot add duplicate columns in post process.
+        if(exist_cols.find(col_name) == exist_cols.end()) {// cannot add duplicate columns in post process.
             selected_col_items << col_name;
+        }
     }
     if (selected_col_items.size() <= 0 ) {
         //qDebug()<<"Please don't select duplicate column(s).";
@@ -939,6 +957,9 @@ void Dialog::postAddSelectedColList() {
                 selected_col_items.first(), Qt::MatchFixedString);
     ui->post_proc_after_col_list->setCurrentItem(set_item_selected.first());
     ui->post_proc_after_col_list->repaint();
+
+    postPrepareDataForAnalysis(ui->toolBox_analysis_data->currentIndex());
+
 }
 
 void Dialog::postDelSelectedColList() {
@@ -959,6 +980,8 @@ void Dialog::postDelSelectedColList() {
     dpclass.delColsFromPostProcDataByName(del_col_list);
     ui->post_proc_after_col_list->setCurrentRow(cur_row);
     ui->post_proc_after_col_list->repaint();
+
+    postPrepareDataForAnalysis(ui->toolBox_analysis_data->currentIndex());
 }
 
 void Dialog::postPopExprDlg() {
@@ -1264,6 +1287,8 @@ void Dialog::postStartDataAnalysis() {
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
             graph->plotForWeightedFit(in_data1, in_data2, a, b);
+            graph->setXAxisLabel(ui->comboBox_weightfit_x->currentText());
+            graph->setYAxisLabel(ui->comboBox_weightfit_y->currentText());
             graph->show();
 
             msg = "曲线拟合计算成功，结果见输出图形";
@@ -1305,6 +1330,8 @@ void Dialog::postStartDataAnalysis() {
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
             graph->plotForSpectral(out_data1, out_data2);
+            graph->setXAxisLabel("f");
+            graph->setYAxisLabel("YY");
             graph->show();
 
             msg = "谱分析计算成功，结果见输出图形";
@@ -1345,6 +1372,8 @@ void Dialog::postStartDataAnalysis() {
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
                 graph->plotForCorrelation(out_data2, out_data1);
+                graph->setXAxisLabel("a");
+                graph->setYAxisLabel("b");
                 graph->show();
 
                 msg = "相关性分析计算成功，结果见输出图形";
@@ -1383,6 +1412,8 @@ void Dialog::postStartDataAnalysis() {
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
             graph->plotFor1DMaxEntropy(out_data1, out_data2);
+            graph->setXAxisLabel("yy1");
+            graph->setYAxisLabel("yy2");
             graph->show();
 
             msg = "一维最大熵计算成功，结果见输出图形";
@@ -1480,6 +1511,8 @@ void Dialog::postStartDataAnalysis() {
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
                 graph->plotForXYData(out_data1, out_data2);
+                graph->setXAxisLabel("FF1");
+                graph->setYAxisLabel("FF2");
                 graph->show();
 
                 msg = "DistrF1计算成功，结果见输出图形";
@@ -1623,7 +1656,10 @@ void Dialog::postStartDrawGraph() {
                 graph->plotForCurve(x_col, y_cols, y_cols_name);
 //                graph->setXAxisLabel(ui->lineEdit_xlabel->text());
 //                graph->setYAxisLabel(ui->lineEdit_ylabel->text());
-                graph->setXAxisLabel("");
+                if (ui->xaxis_data_list->count() == 1)
+                    graph->setXAxisLabel(ui->xaxis_data_list->item(0)->text());
+                else
+                    graph->setXAxisLabel("序列");
                 graph->setYAxisLabel("");
                 graph->show();
             }
@@ -1665,7 +1701,7 @@ void Dialog::postStartDrawGraph() {
 //            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
 //            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
             graph->setXAxisLabel(ui->xaxis_data_list->item(0)->text());
-            graph->setYAxisLabel("");
+            graph->setYAxisLabel(ui->yaxis_data_list->item(0)->text());
             graph->show();
             break;
         }
@@ -1756,7 +1792,7 @@ void Dialog::postStartDrawGraph() {
 //            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
 //            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
             graph->setXAxisLabel(ui->xaxis_data_list->item(0)->text());
-            graph->setYAxisLabel("");
+            graph->setYAxisLabel(ui->yaxis_data_list->item(0)->text());
             graph->show();
             break;
         }

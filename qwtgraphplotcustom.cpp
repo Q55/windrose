@@ -11,6 +11,7 @@
 #include <qwt_legend.h>
 #include <qwt_plot_magnifier.h>
 #include <qwt_plot_panner.h>
+#include <qwt_plot_item.h>
 
 //************for spectrogram***************
 #include <QVector>
@@ -32,6 +33,7 @@ QwtGraphPlotCustom::QwtGraphPlotCustom() {
 //    (void) new QwtPlotPanner(graph_plot->canvas());//使用鼠标左键平移
 
     //graph_plot->setFixedSize(QSize(800, 600));
+    resize(800, 600);
 }
 
 void QwtGraphPlotCustom::plotForCorrelation(const QVector<double> &x, const QVector<double> &y) {
@@ -40,6 +42,7 @@ void QwtGraphPlotCustom::plotForCorrelation(const QVector<double> &x, const QVec
     for (int i = 0; i < x.size(); ++i)
         samples += QPointF(x[i], y[i]);
 
+    graph_plot->setTitle("相关性分析结果示意图");
     QwtPlotCurve *curve1 = new QwtPlotCurve("curve1");
     curve1->setSamples(samples);
     curve1->setStyle(QwtPlotCurve::Sticks);
@@ -60,6 +63,7 @@ void QwtGraphPlotCustom::plotForWeightedFit(const QVector<double> &x, const QVec
     for (int i = 0; i < x.size(); ++i)
         samples += QPointF(x[i], y[i]);
 
+    graph_plot->setTitle("曲线拟合结果示意图");
     QwtPlotCurve *curve1 = new QwtPlotCurve("原始数据");
     curve1->setSamples(samples);
     curve1->setStyle(QwtPlotCurve::Dots);
@@ -92,7 +96,7 @@ void QwtGraphPlotCustom::plotForSpectral(const QVector<double> &f, const QVector
     for (int i = 0; i < f.size(); ++i)
         samples += QPointF(f[i], YY[i]);
 
-    graph_plot->setTitle( "谱分析曲线图" );
+    graph_plot->setTitle( "谱分析结果示意图" );
     QwtPlotCurve *curve = new QwtPlotCurve("谱分析曲线");
     curve->setSamples(samples);
     curve->setStyle(QwtPlotCurve::Lines);
@@ -140,6 +144,7 @@ void QwtGraphPlotCustom::plotFor1DMaxEntropy(const QVector<double> &yy1, const Q
 
 void QwtGraphPlotCustom::plotFor2DMaxEntropyDensity(const QVector<QVector<double> > &data) {
     spectrogram_plot = new PlotSpectrogram(data, this );
+    spectrogram_plot->setTitle("密度图");
 
     setCentralWidget( spectrogram_plot );
 
@@ -196,15 +201,16 @@ void QwtGraphPlotCustom::plotForCurve(const QVector<double> &x, const QVector<QV
         }
         QwtPlotCurve *curve = new QwtPlotCurve(yy_names[j]);
         curve->setSamples(samples);
-       // curve->setStyle(QwtPlotCurve::Lines);
-        curve->setStyle(QwtPlotCurve::Dots);
+        curve->setStyle(QwtPlotCurve::Lines);
+        //curve->setStyle(QwtPlotCurve::Dots);
         QwtSymbol *curve_symbols = new QwtSymbol( QwtSymbol::XCross);
-        curve_symbols->setSize(3);
+        curve_symbols->setSize(1);
         curve_symbols->setPen((Qt::GlobalColor)i);
         curve->setSymbol(curve_symbols);
         curve->setPen((Qt::GlobalColor)i);
         curve->attach(graph_plot);
-        graph_plot->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
+        QwtLegend *legend = new QwtLegend();
+        graph_plot->insertLegend(legend, QwtPlot::RightLegend);
     }
 }
 

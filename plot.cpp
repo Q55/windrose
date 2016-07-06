@@ -1,5 +1,6 @@
 #include "plot.h"
 #include <qwt_plot_magnifier.h>
+#include <qwt_plot_zoomer.h>
 #include <qwt_plot_panner.h>
 #include <qwt_plot_picker.h>
 #include <qwt_picker_machine.h>
@@ -208,17 +209,17 @@ Plot::Plot( QWidget *parent ):
     //plotLayout->AlignScales();
 
     // attach curve
-    d_curve = new QwtPlotCurve();
-    d_curve->setPen( QColor( "Black" ) );
-    //d_curve->setCurveAttribute(fitten);
+//    d_curve = new QwtPlotCurve();
+//    d_curve->setPen( QColor( "Black" ) );
+//    //d_curve->setCurveAttribute(fitten);
 
-    // when using QwtPlotCurve::ImageBuffer simple dots can be
-    // rendered in parallel on multicore systems.
-    d_curve->setRenderThreadCount( 0 ); // 0: use QThread::idealThreadCount()
+//    // when using QwtPlotCurve::ImageBuffer simple dots can be
+//    // rendered in parallel on multicore systems.
+//    d_curve->setRenderThreadCount( 0 ); // 0: use QThread::idealThreadCount()
 
-    d_curve->setCurveAttribute(QwtPlotCurve::Fitted, true);
+//    d_curve->setCurveAttribute(QwtPlotCurve::Fitted, true);
 
-    d_curve->attach( this );
+//    d_curve->attach( this );
 
     //QwtSymbol * symbol2 = new QwtSymbol( QwtSymbol::XCross, QBrush(Qt::white), QPen(Qt::red, 1), QSize(6,6));
     //QwtSymbol::Style  style = Cross;
@@ -229,7 +230,9 @@ Plot::Plot( QWidget *parent ):
     (void )new QwtPlotPanner( canvas() );
 
     // zoom in/out with the wheel
-    QwtPlotMagnifier *magnifier = new QwtPlotMagnifier( canvas() );
+    QwtPlotMagnifier *magnifier = new QwtPlotMagnifier( canvas() ); //鼠标滚轮放大缩小，左键拖动浮点型
+    QwtPlotZoomer* zoomer = new QwtPlotZoomer( canvas() ); // 鼠标左键选择区域放大,右键还原
+    zoomer->zoom(0);
     //magnifier->setMouseButton( Qt::NoButton );
 
     // distanve measurement with the right mouse button

@@ -109,6 +109,7 @@ public slots:
     void postAddYAxisData();
     void postDelYAxisData();
     void postStartDrawGraph();
+    void drawRoseNote(int);
 
 private:
     Ui::Dialog *ui;

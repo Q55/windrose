@@ -436,14 +436,14 @@ void Utils::weightedFit(QVector<double> in_data1, QVector<double> in_data2, doub
     for (int i = 0; i < in_data2.size(); ++i)
         temp[k++] = in_data2.at(i);
 
-    for (int i = 0; i < size; ++i)
-        qDebug()<<temp[i];
+//    for (int i = 0; i < size; ++i)
+//        qDebug()<<temp[i];
 
     emxArray_real_T *data =emxCreateWrapper_real_T(temp, in_data1.size(), 2); // (row, col)
 
     weightedfit(data, &a, &b);
 
-    qDebug()<<a<<","<<b;
+    //qDebug()<<a<<","<<b;
 
     emxDestroyArray_real_T(data);
 
