@@ -685,11 +685,29 @@ void Dialog::preAddSelectedColList() {
 
         QString sel_col_name = dbName + "." + tableName + "." + (*it)->text();
 
-        if (pre_selcol_count_map.find(sel_col_name) == pre_selcol_count_map.end()) {
-            pre_selcol_count_map.insert(sel_col_name, 1);
-        } else {
-            pre_selcol_count_map[sel_col_name]++;
-            sel_col_name += QString::number(pre_selcol_count_map[sel_col_name]);
+        int i;
+        for (i = 0; i < INT_MAX; ++i) {
+            QString sel_col_name_temp = sel_col_name + QString::number(i);
+            if (map_col_list_analyse_paras.find(sel_col_name_temp) == map_col_list_analyse_paras.end())
+            {
+                sel_col_name = sel_col_name_temp;
+                break;
+            }
+        }
+
+//        if (pre_selcol_count_map.find(sel_col_name) == pre_selcol_count_map.end()) {
+//            pre_selcol_count_map.insert(sel_col_name, 1);
+//        } else {
+//            pre_selcol_count_map[sel_col_name]++;
+//            sel_col_name += QString::number(pre_selcol_count_map[sel_col_name]);
+//        }
+        if (i == INT_MAX) {
+            QMessageBox msgBox;
+            msgBox.setText("数据列加载过多");
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            int ret = msgBox.exec();
+            return;
         }
         map_col_list_analyse_paras.insert(sel_col_name, cur_analyse_paras);
         selected_col_items << sel_col_name;
