@@ -125,6 +125,9 @@ Dialog::Dialog(QWidget *parent) :
     pre_selcol_count_map.clear();
     kendall_val_ = 0.4954;
     stats_2D_output_.clear();
+
+    //init start and end datetime. by zyn. 2016-07-07
+    initStartEndDateTime();
     //pre_sel_colrepeatlist_map.clear();
 
     // pre-processing
@@ -214,6 +217,8 @@ void Dialog::postDataAnalysisRadioButtonDisableInput(bool clicked) {
         ui->label_kendall_min2->setVisible(false);
         ui->lineEdit_kendall_limit_min1->setVisible(false);
         ui->lineEdit_kendall_limit_min2->setVisible(false);
+        ui->label_kendall_result->setVisible(false);
+        ui->lineEdit_kendall_result->setVisible(false);
     }
 }
 void Dialog::postDataAnalysisRadioButtonEnableInput(bool clicked) {
@@ -222,6 +227,8 @@ void Dialog::postDataAnalysisRadioButtonEnableInput(bool clicked) {
         ui->label_kendall_min2->setVisible(true);
         ui->lineEdit_kendall_limit_min1->setVisible(true);
         ui->lineEdit_kendall_limit_min2->setVisible(true);
+        ui->label_kendall_result->setVisible(true);
+        ui->lineEdit_kendall_result->setVisible(true);
     }
 }
 
@@ -583,7 +590,7 @@ void Dialog::updateShowedDataDetails(int begin_row) {
     }
     // show empty datas.
     for (; col <= MAXSHOWCOLS; ++col) {
-        QTableWidgetItem * header_item = new QTableWidgetItem(QString::number(col + 1));
+        QTableWidgetItem * header_item = new QTableWidgetItem(QString::number(col));
         ui->tableWidget_col_data_details->setHorizontalHeaderItem(col, header_item);
         for (int i = 1; i <= 1000; ++i) {
             QTableWidgetItem * item = new QTableWidgetItem("");
@@ -1202,6 +1209,8 @@ void Dialog::postPrepareDataForAnalysis(int index) {
         ui->label_kendall_min2->setVisible(false);
         ui->lineEdit_kendall_limit_min1->setVisible(false);
         ui->lineEdit_kendall_limit_min2->setVisible(false);
+        ui->label_kendall_result->setVisible(false);
+        ui->lineEdit_kendall_result->setVisible(false);
     } else if (index == 5) { // max shang 1
         msg = "一维最大熵需要1列数据";
         msg_style = "color: rgb(44,104,7);";
@@ -1849,6 +1858,11 @@ void Dialog::initComboboxMap()
     consist_check_anti_map.insert(1.0, 0);
     consist_check_anti_map.insert(2.0, 1);
     consist_check_anti_map.insert(0.5, 2);
+}
+
+void Dialog::initStartEndDateTime()
+{
+    ui->dateTimeEdit_endTime->setDateTime(QDateTime::currentDateTime());
 }
 
 Dialog::~Dialog()

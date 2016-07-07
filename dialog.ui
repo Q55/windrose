@@ -559,9 +559,9 @@ color: rgb(0, 0, 127);</string>
             <widget class="QDateTimeEdit" name="dateTimeEdit_endTime">
              <property name="date">
               <date>
-               <year>2016</year>
-               <month>6</month>
-               <day>1</day>
+               <year>2099</year>
+               <month>12</month>
+               <day>31</day>
               </date>
              </property>
              <property name="displayFormat">
@@ -3826,8 +3826,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <property name="maximumSize">
@@ -3945,8 +3945,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>139</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4125,8 +4125,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>139</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4270,8 +4270,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>139</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4525,7 +4525,7 @@ color: rgb(0, 0, 127);</string>
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_83">
                  <item>
-                  <widget class="QLabel" name="label_128">
+                  <widget class="QLabel" name="label_kendall_result">
                    <property name="font">
                     <font>
                      <pointsize>9</pointsize>
@@ -4576,8 +4576,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>139</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4993,8 +4993,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>139</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5297,8 +5297,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>339</width>
+           <height>139</height>
           </rect>
          </property>
          <attribute name="label">

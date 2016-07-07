@@ -138,6 +138,7 @@ private:
 //    QMap<QString, Pre_AnalyseType> analyse_type_map;
 //    QMap<QString, Pre_FilterType> filter_type_map;
     void initComboboxMap();
+    void initStartEndDateTime();
 
     int last_ref_col_;
     QMap<QString, QVector<double> > showdata_col_list_;
