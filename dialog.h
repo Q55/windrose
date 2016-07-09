@@ -44,6 +44,7 @@ public:
     ~Dialog();
 
     void initTableList(int index, QStringList strings);
+    void setBackgroud();
 
 public slots:
     /*****************************
@@ -110,6 +111,8 @@ public slots:
     void postDelYAxisData();
     void postStartDrawGraph();
     void drawRoseNote(int);
+
+
 
 private:
     Ui::Dialog *ui;

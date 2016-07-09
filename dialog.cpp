@@ -130,6 +130,9 @@ Dialog::Dialog(QWidget *parent) :
     initStartEndDateTime();
     //pre_sel_colrepeatlist_map.clear();
 
+    //for test zyn
+    setBackgroud();
+
     // pre-processing
     //initial Table list
     initTableList(0, dpclass.queryTableNameListbyDBName(dbIndexNameMap[0]));
@@ -1863,6 +1866,103 @@ void Dialog::initComboboxMap()
 void Dialog::initStartEndDateTime()
 {
     ui->dateTimeEdit_endTime->setDateTime(QDateTime::currentDateTime());
+}
+
+void Dialog::setBackgroud()
+{
+    QPalette p;
+
+
+    p = ui->preProcGroupBox->palette();
+    p.setColor(QPalette::Window, QColor(217, 228, 241));
+    ui->preProcGroupBox->setPalette(p);
+
+    p = ui->groupBox_anaPara->palette();
+    p.setColor(QPalette::Window, QColor(217, 228, 241));
+    ui->groupBox_anaPara->setPalette(p);
+
+
+    p = ui->groupBox_filterCond->palette();
+    p.setColor(QPalette::Window, QColor(217, 228, 241));
+    ui->groupBox_filterCond->setPalette(p);
+
+
+
+    p = ui->groupBox_timeCond->palette();
+    p.setColor(QPalette::Window, QColor(217, 228, 241));
+    ui->groupBox_timeCond->setPalette(p);
+
+    p = ui->spinBox_selCol->palette();
+    p.setColor(QPalette::Window, Qt::white);
+    ui->spinBox_selCol->setPalette(p);
+
+
+    //post process
+//    p = ui->groupBox_dataTable->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->groupBox_dataTable->setPalette(p);
+
+//    p = ui->groupBox_dataSel->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->groupBox_dataSel->setPalette(p);
+
+//    p = ui->groupBox_dataAnalysis->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->groupBox_dataAnalysis->setPalette(p);
+
+//    p = ui->groupBox_drawGraph->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->groupBox_drawGraph->setPalette(p);
+
+//    p = ui->toolBoxPage_2dshangstats->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->toolBoxPage_2dshangstats->setPalette(p);
+
+//    p = ui->toolBoxPage_correlation->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->toolBoxPage_correlation->setPalette(p);
+
+//    p = ui->toolBoxPage_cyclemax->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->toolBoxPage_cyclemax->setPalette(p);
+
+//    p = ui->toolBoxPage_enpost->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->toolBoxPage_enpost->setPalette(p);
+
+//    p = ui->toolBoxPage_maxshang1->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->toolBoxPage_maxshang1->setPalette(p);
+
+//    p = ui->toolBoxPage_maxshang2->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->toolBoxPage_maxshang2->setPalette(p);
+
+//    p = ui->toolBoxPage_spectral->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->toolBoxPage_spectral->setPalette(p);
+
+//    p = ui->toolBoxPage_weightedfit->palette();
+//    p.setColor(QPalette::Window, QColor(199, 237, 204));
+//    ui->toolBoxPage_weightedfit->setPalette(p);
+
+    //predict
+    p = ui->groupBox_settingCond->palette();
+    p.setColor(QPalette::Window, QColor(199, 237, 204));
+    ui->groupBox_settingCond->setPalette(p);
+
+    p = ui->groupBox_calResult->palette();
+    p.setColor(QPalette::Window, QColor(199, 237, 204));
+    ui->groupBox_calResult->setPalette(p);
+
+    p = ui->groupBox_loadSug->palette();
+    p.setColor(QPalette::Window, QColor(199, 237, 204));
+    ui->groupBox_loadSug->setPalette(p);
+
+    p = ui->groupBox_sysPara->palette();
+    p.setColor(QPalette::Window, QColor(199, 237, 204));
+    ui->groupBox_sysPara->setPalette(p);
+
 }
 
 Dialog::~Dialog()
