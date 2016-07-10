@@ -6569,22 +6569,22 @@ color: rgb(0, 0, 127);</string>
          <enum>Qt::SolidLine</enum>
         </property>
         <property name="rowCount">
-         <number>5</number>
+         <number>12</number>
         </property>
         <property name="columnCount">
-         <number>10</number>
+         <number>14</number>
         </property>
         <attribute name="horizontalHeaderVisible">
          <bool>false</bool>
         </attribute>
         <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>false</bool>
+         <bool>true</bool>
         </attribute>
         <attribute name="horizontalHeaderDefaultSectionSize">
          <number>105</number>
         </attribute>
         <attribute name="horizontalHeaderHighlightSections">
-         <bool>false</bool>
+         <bool>true</bool>
         </attribute>
         <attribute name="horizontalHeaderMinimumSectionSize">
          <number>40</number>
@@ -6606,6 +6606,17 @@ color: rgb(0, 0, 127);</string>
         <row/>
         <row/>
         <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
         <column/>
         <column/>
         <column/>
