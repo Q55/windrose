@@ -6522,7 +6522,11 @@ color: rgb(0, 0, 127);</string>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="output_safe_level"/>
+              <widget class="QLineEdit" name="output_safe_level">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
