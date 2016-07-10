@@ -6550,7 +6550,7 @@ color: rgb(0, 0, 127);</string>
        <property name="title">
         <string>装载建议</string>
        </property>
-       <widget class="QTableWidget" name="tableWidget">
+       <widget class="QTableWidget" name="output_table_details">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -6635,7 +6635,7 @@ color: rgb(0, 0, 127);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_2">
+          <widget class="QLineEdit" name="output_suggest">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(0, 255, 0);</string>
            </property>
