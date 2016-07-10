@@ -53,7 +53,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -1809,7 +1809,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>10</x>
           <y>10</y>
-          <width>341</width>
+          <width>436</width>
           <height>135</height>
          </rect>
         </property>
@@ -2187,8 +2187,14 @@ color: rgb(0, 0, 127);</string>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
         </property>
+        <property name="showDropIndicator" stdset="0">
+         <bool>false</bool>
+        </property>
         <property name="dragEnabled">
-         <bool>true</bool>
+         <bool>false</bool>
+        </property>
+        <property name="dragDropOverwriteMode">
+         <bool>false</bool>
         </property>
         <property name="dragDropMode">
          <enum>QAbstractItemView::DragDrop</enum>
@@ -3547,7 +3553,7 @@ color: rgb(0, 0, 127);</string>
           </rect>
          </property>
          <property name="autoFillBackground">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <attribute name="label">
           <string>船体位置计算</string>
@@ -4091,8 +4097,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <property name="maximumSize">
@@ -4210,8 +4216,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4390,8 +4396,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4535,8 +4541,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4847,8 +4853,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5267,8 +5273,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5577,8 +5583,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
