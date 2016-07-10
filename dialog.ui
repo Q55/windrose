@@ -6562,6 +6562,9 @@ color: rgb(0, 0, 127);</string>
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
+        <property name="dragDropOverwriteMode">
+         <bool>false</bool>
+        </property>
         <property name="alternatingRowColors">
          <bool>false</bool>
         </property>
