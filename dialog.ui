@@ -2197,7 +2197,7 @@ color: rgb(0, 0, 127);</string>
          <bool>false</bool>
         </property>
         <property name="dragDropMode">
-         <enum>QAbstractItemView::DragDrop</enum>
+         <enum>QAbstractItemView::NoDragDrop</enum>
         </property>
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectColumns</enum>
