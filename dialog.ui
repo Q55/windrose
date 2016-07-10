@@ -53,7 +53,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -4097,8 +4097,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <property name="maximumSize">
@@ -4216,8 +4216,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4396,8 +4396,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4541,8 +4541,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4853,8 +4853,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5273,8 +5273,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5583,8 +5583,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>28</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5976,12 +5976,15 @@ color: rgb(0, 0, 127);</string>
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+            <widget class="QDoubleSpinBox" name="input_draft_bow">
              <property name="minimum">
               <double>-100000000000000000.000000000000000</double>
              </property>
              <property name="maximum">
               <double>99999999999999.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>10.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -6004,12 +6007,15 @@ color: rgb(0, 0, 127);</string>
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+            <widget class="QDoubleSpinBox" name="input_draft_aft">
              <property name="minimum">
               <double>-100000000000000000.000000000000000</double>
              </property>
              <property name="maximum">
               <double>99999999999999.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>13.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -6078,7 +6084,7 @@ color: rgb(0, 0, 127);</string>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_15">
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_6">
+            <widget class="QDoubleSpinBox" name="input_dir_win">
              <property name="minimum">
               <double>-100000000000000000.000000000000000</double>
              </property>
@@ -6088,7 +6094,7 @@ color: rgb(0, 0, 127);</string>
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_8">
+            <widget class="QDoubleSpinBox" name="input_dir_cur">
              <property name="minimum">
               <double>-100000000000000000.000000000000000</double>
              </property>
@@ -6098,7 +6104,7 @@ color: rgb(0, 0, 127);</string>
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_10">
+            <widget class="QDoubleSpinBox" name="input_dir_wave">
              <property name="minimum">
               <double>-100000000000000000.000000000000000</double>
              </property>
@@ -6181,42 +6187,54 @@ color: rgb(0, 0, 127);</string>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_12">
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+            <widget class="QDoubleSpinBox" name="input_Vw">
              <property name="minimum">
               <double>-100000000000000000.000000000000000</double>
              </property>
              <property name="maximum">
               <double>99999999999999.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>15.500000000000000</double>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_7">
+            <widget class="QDoubleSpinBox" name="input_Vc">
              <property name="minimum">
               <double>-100000000000000000.000000000000000</double>
              </property>
              <property name="maximum">
               <double>99999999999999.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>0.750000000000000</double>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_9">
+            <widget class="QDoubleSpinBox" name="input_Hs">
              <property name="minimum">
               <double>-100000000000000000.000000000000000</double>
              </property>
              <property name="maximum">
               <double>99999999999999.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>3.400000000000000</double>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_11">
+            <widget class="QDoubleSpinBox" name="input_Tp">
              <property name="minimum">
               <double>-100000000000000000.000000000000000</double>
              </property>
              <property name="maximum">
               <double>99999999999999.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>8.300000000000001</double>
              </property>
             </widget>
            </item>
@@ -6317,7 +6335,7 @@ color: rgb(0, 0, 127);</string>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_18">
              <item>
-              <widget class="QDoubleSpinBox" name="doubleSpinBox_12">
+              <widget class="QDoubleSpinBox" name="output_statoffset">
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -6333,7 +6351,7 @@ color: rgb(0, 0, 127);</string>
               </widget>
              </item>
              <item>
-              <widget class="QDoubleSpinBox" name="doubleSpinBox_13">
+              <widget class="QDoubleSpinBox" name="output_maxTe">
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -6393,7 +6411,7 @@ color: rgb(0, 0, 127);</string>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_22">
              <item>
-              <widget class="QDoubleSpinBox" name="doubleSpinBox_16">
+              <widget class="QDoubleSpinBox" name="output_heading">
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -6409,7 +6427,7 @@ color: rgb(0, 0, 127);</string>
               </widget>
              </item>
              <item>
-              <widget class="QDoubleSpinBox" name="doubleSpinBox_17">
+              <widget class="QDoubleSpinBox" name="output_maxTx">
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -6458,7 +6476,7 @@ color: rgb(0, 0, 127);</string>
               </widget>
              </item>
              <item>
-              <widget class="QDoubleSpinBox" name="doubleSpinBox_14">
+              <widget class="QDoubleSpinBox" name="output_maxoffset_ind">
                <property name="readOnly">
                 <bool>true</bool>
                </property>
