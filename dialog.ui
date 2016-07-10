@@ -53,7 +53,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -1808,8 +1808,8 @@ color: rgb(0, 0, 127);</string>
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>10</y>
-          <width>436</width>
+          <y>14</y>
+          <width>341</width>
           <height>135</height>
          </rect>
         </property>
@@ -4097,8 +4097,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <property name="maximumSize">
@@ -4216,8 +4216,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4396,8 +4396,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4541,8 +4541,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4853,8 +4853,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5273,8 +5273,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5583,8 +5583,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>339</width>
+           <height>131</height>
           </rect>
          </property>
          <attribute name="label">
@@ -6506,13 +6506,13 @@ color: rgb(0, 0, 127);</string>
               <widget class="QLabel" name="label_57">
                <property name="minimumSize">
                 <size>
-                 <width>82</width>
+                 <width>92</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>75</width>
+                 <width>92</width>
                  <height>16777215</height>
                 </size>
                </property>

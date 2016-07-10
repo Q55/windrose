@@ -355,6 +355,8 @@ void Dialog::dealRenameSelCol(QString orig_col_name, QString new_col_name) {
 
     if (new_col_name == "") {
         QMessageBox msgBox;
+        msgBox.setWindowTitle(tr("警告"));
+        msgBox.setWindowTitle(tr("重命名列"));
         msgBox.setText("请输入新列名");
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
@@ -363,6 +365,8 @@ void Dialog::dealRenameSelCol(QString orig_col_name, QString new_col_name) {
 
     if (new_col_name == orig_col_name) {
         QMessageBox msgBox;
+        msgBox.setWindowTitle(tr("警告"));
+        msgBox.setWindowTitle("重命名列");
         msgBox.setText("列名没有变化");
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
@@ -372,6 +376,8 @@ void Dialog::dealRenameSelCol(QString orig_col_name, QString new_col_name) {
     auto exist_cols = dpclass.getPostProcDataMap();
     if (exist_cols.find(new_col_name) != exist_cols.end()) {
         QMessageBox msgBox;
+        msgBox.setWindowTitle(tr("警告"));
+        msgBox.setWindowTitle("重命名列");
         msgBox.setText("该列名已存在，请重命名");
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
@@ -804,6 +810,7 @@ void Dialog::preAddSelectedColList() {
 //        }
         if (i == INT_MAX) {
             QMessageBox msgBox;
+            msgBox.setWindowTitle("警告");
             msgBox.setText("数据列加载过多");
             msgBox.setStandardButtons(QMessageBox::Ok);
             msgBox.setDefaultButton(QMessageBox::Ok);
@@ -973,6 +980,7 @@ void Dialog::startPreProcess()
 
 void Dialog::clearPreCache(){
     QMessageBox msgBox;
+    msgBox.setWindowTitle(tr("清除缓存"));
     msgBox.setText("确认清除内存中所有缓存?");
     msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Ok);
@@ -1008,6 +1016,7 @@ void Dialog::clearPreCache(){
         ui->spinBox_selCol->setValue(map_col_list_analyse_paras.size());
 
         QMessageBox msgBox;
+        msgBox.setWindowTitle(tr("清除缓存"));
         msgBox.setText("所有缓存已被清除!");
         msgBox.exec();
     }
@@ -1017,6 +1026,7 @@ void Dialog::clearPostCache() {
     int ret = QMessageBox::Ok;
     if (!clear_post_silentmode_) {
         QMessageBox msgBox;
+        msgBox.setWindowTitle("清除缓存");
         msgBox.setText("确认清除后处理的所有缓存数据?");
         msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
         msgBox.setDefaultButton(QMessageBox::Ok);
@@ -1043,6 +1053,7 @@ void Dialog::clearPostCache() {
 
         if (!clear_post_silentmode_) {
             QMessageBox msgBox;
+            msgBox.setWindowTitle("清除缓存");
             msgBox.setText("后处理缓存被清除!");
             msgBox.exec();
         }
@@ -1117,6 +1128,7 @@ void Dialog::postPopExprDlg() {
     int size = sel_col_items.size();
     if (size <= 0 || size >= 3) {
         QMessageBox msgBox;
+        msgBox.setWindowTitle(tr("警告"));
         msgBox.setText("请先选择1列或2列数据");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
@@ -1141,6 +1153,7 @@ void Dialog::parsePostExpr(bool scalar_checked, QString scalar_data, int scalar_
                            QString vec_data1, int vec_op, QString vec_data2, QString new_col_name) {
     if (new_col_name == "") {
         QMessageBox msgBox;
+        msgBox.setWindowTitle(tr("警告"));
         msgBox.setText("请输入新列名");
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
