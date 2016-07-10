@@ -4,8 +4,8 @@
 #
 #-------------------------------------------------
 ###### for qwt. changed reply on enviroment ##########
-include (C:\Qwt-6.1.2\features\qwt.prf)
-#include(/usr/local/qwt-6.1.2/features/qwt.prf)
+#include (C:\Qwt-6.1.2\features\qwt.prf)
+include(/usr/local/qwt-6.1.2/features/qwt.prf)
 
 QT       += core gui
 QT       += sql
@@ -122,7 +122,34 @@ SOURCES += main.cpp\
     libs/ff_GB/ff_GB_initialize.cpp \
     libs/ff_GB/ff_GB_terminate.cpp \
     plotspectrogram.cpp \
-    postcolrenamedialog.cpp
+    postcolrenamedialog.cpp \
+    libs/fpso_motions/FPSO_MOTIONS_initialize.cpp \
+    libs/fpso_motions/FPSO_MOTIONS_rtwutil.cpp \
+    libs/fpso_motions/FPSO_MOTIONS_terminate.cpp \
+    libs/fpso_motions/bsearch.cpp \
+    libs/fpso_motions/exp.cpp \
+    libs/fpso_motions/fliplr.cpp \
+    libs/fpso_motions/flipud.cpp \
+    libs/fpso_motions/FPSO_MOTIONS.cpp \
+    libs/fpso_motions/interp1.cpp \
+    libs/fpso_motions/mpower.cpp \
+    libs/fpso_motions/mrdivide.cpp \
+    libs/fpso_motions/qrsolve.cpp \
+    libs/fpso_motions/sign.cpp \
+    libs/fpso_motions/sortIdx.cpp \
+    libs/fpso_motions/sqrt.cpp \
+    libs/fpso_motions/trapz.cpp \
+    libs/fpso_motions/unique.cpp \
+    libs/fpso_motions/asin.cpp \
+    libs/fpso_motions/sortrows.cpp \
+    libs/fpso_motions/xzlarfg.cpp \
+    libs/fpso_motions/fpso_sum.cpp \
+    libs/fpso_motions/fpso_abs.cpp \
+    libs/fpso_motions/fpso_power.cpp \
+    libs/fpso_motions/fpso_sortLE.cpp \
+    libs/fpso_motions/fpso_xgeqp3.cpp \
+    libs/fpso_motions/fpso_rdivide.cpp \
+    libs/fpso_motions/fpso_xnrm2.cpp
 
 HEADERS  += \
     dataprocess.h \
@@ -229,7 +256,34 @@ HEADERS  += \
     libs/ff_GB/ff_GB_terminate.h \
     libs/ff_GB/ff_GB.h \
     plotspectrogram.h \
-    postcolrenamedialog.h
+    postcolrenamedialog.h \
+    libs/fpso_motions/FPSO_MOTIONS_initialize.h \
+    libs/fpso_motions/FPSO_MOTIONS_rtwutil.h \
+    libs/fpso_motions/FPSO_MOTIONS_terminate.h \
+    libs/fpso_motions/bsearch.h \
+    libs/fpso_motions/exp.h \
+    libs/fpso_motions/fliplr.h \
+    libs/fpso_motions/flipud.h \
+    libs/fpso_motions/FPSO_MOTIONS.h \
+    libs/fpso_motions/interp1.h \
+    libs/fpso_motions/mpower.h \
+    libs/fpso_motions/mrdivide.h \
+    libs/fpso_motions/qrsolve.h \
+    libs/fpso_motions/sign.h \
+    libs/fpso_motions/sortIdx.h \
+    libs/fpso_motions/sqrt.h \
+    libs/fpso_motions/trapz.h \
+    libs/fpso_motions/unique.h \
+    libs/fpso_motions/asin.h \
+    libs/fpso_motions/sortrows.h \
+    libs/fpso_motions/xzlarfg.h \
+    libs/fpso_motions/fpso_sum.h \
+    libs/fpso_motions/fpso_abs.h \
+    libs/fpso_motions/fpso_power.h \
+    libs/fpso_motions/fpso_sortLE.h \
+    libs/fpso_motions/fpso_xgeqp3.h \
+    libs/fpso_motions/fpso_rdivide.h \
+    libs/fpso_motions/fpso_xnrm2.h
 
 FORMS    += \
     dialog.ui \

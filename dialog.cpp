@@ -57,6 +57,16 @@ Dialog::Dialog(QWidget *parent) :
         QTableWidgetItem * item = new QTableWidgetItem(QString::number(i));
         ui->tableWidget_col_data_details->setItem(i-1, 0, item);
     }
+    // a bug in QT, so we cannot set it in *.ui file, by shiqiang, 2016.07.10
+    ui->output_table_details->horizontalHeader()->setVisible(true);
+    QVector<QString> headname_list = {"最大水平恢复力", "最大锚链张力", "安全系数", "最大水平位移", "st_clearance", "最大横摇角", "最大纵摇角"};
+    for (int i = 0; i < headname_list.size(); ++i) {
+        QTableWidgetItem * header_item1 = new QTableWidgetItem("序号");
+        ui->output_table_details->setHorizontalHeaderItem(i * 2, header_item1);
+        QTableWidgetItem * header_item2 = new QTableWidgetItem(headname_list[i]);
+        ui->output_table_details->setHorizontalHeaderItem(i * 2 + 1, header_item2);
+    }
+
     //ui->tableWidget_col_data_details->verticalHeader()->setVisible(true);
     //ui->tableWidget_col_data_details->horizontalHeader()->setc
 
@@ -195,6 +205,80 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->pushButton_del_ydata, SIGNAL(clicked()), this, SLOT(postDelYAxisData()));
     connect(ui->pushButton_start_drawgraph, SIGNAL(clicked()), this, SLOT(postStartDrawGraph()));
     connect(ui->comboBox_curveType, SIGNAL(currentIndexChanged(int)), this, SLOT(drawRoseNote(int)));
+
+    // forecast
+    connect(ui->pushButton_forcast, SIGNAL(clicked()), this, SLOT(forecastStart()));
+}
+
+
+//    void FPSO_MOTIONS(double Hs, double Tp, double dir_wave, double Vw, double
+//                      dir_win, double Vc, double dir_cur, double draft_aft, double
+//                      draft_bow, double *heading, double *statoffset, double
+//                      *maxoffset_ind, double *clearance, double *maxTx, double
+//                      *maxTe, double *Sf, double st_xforce[24], double st_tension[24],
+//                      double st_sf[24], double st_offset[24], double st_clearance[24],
+//                      double st_roll[24], double st_pitch[24]);
+void Dialog::forecastStart() {
+
+    // input
+    double Hs = ui->input_Hs->text().toDouble();
+    double Tp = ui->input_Tp->text().toDouble();
+    double dir_wave = ui->input_dir_wave->text().toDouble();
+    double Vw = ui->input_Vw->text().toDouble();
+    double dir_win = ui->input_dir_win->text().toDouble();
+    double Vc = ui->input_Vc->text().toDouble();
+    double dir_cur = ui->input_dir_cur->text().toDouble();
+    double draft_aft = ui->input_draft_aft->text().toDouble();
+    double draft_bow = ui->input_draft_bow->text().toDouble();
+    // output1
+    double st_pitch[24], st_roll[24], st_clearance[24], st_offset[24], st_sf[24], st_tension[24], st_xforce[24];
+    // output2
+    double Sf, maxTe, maxTx, clearance, maxoffset_ind, statoffset, heading;
+
+    Utils::qtFPSOMotions(Hs, Tp, dir_wave, Vw, dir_win, Vc, dir_cur, draft_aft, draft_bow, heading, statoffset, maxoffset_ind,
+                         clearance, maxTx, maxTe, Sf, st_xforce, st_tension, st_sf, st_offset, st_clearance, st_roll, st_pitch);
+
+    // output
+    ui->output_heading->setValue(heading);
+    ui->output_statoffset->setValue(statoffset);
+    ui->output_maxTe->setValue(maxTe);
+    ui->output_maxTx->setValue(maxTx);
+    ui->output_maxoffset_ind->setValue(maxoffset_ind);
+
+    // safe level
+    QPalette p2 = ui->output_safe_level->palette();
+    if (maxTe < 5379.95) {
+        p2.setColor(QPalette::Base, Qt::green);
+    } else if (maxTe < 7173.26 && maxTe >= 5379.95) {
+        p2.setColor(QPalette::Base, Qt::yellow);
+    } else if (maxTe >= 7173.26) {
+        p2.setColor(QPalette::Base, Qt::red);
+    }
+    ui->output_safe_level->setPalette(p2);
+
+    // load suggestion
+    QVector<double> draft = {11.5, 12, 12.5, 12.5, 12.75, 13, 13.25, 13.5, 13.75, 13.5, 13.75, 14.25};
+    QMap<int, QString> text;
+    for (int i = 1; i <=12; ++i)
+        text.insert(i, "Optimum loading: " + QString::number(i) + ", Draft = " + QString::number(draft[i - 1]) + "m");
+    int index = (int)st_tension[0];
+    if (text.find(index) != text.end())
+        ui->output_suggest->setText(text.value(index));
+
+    // data table details
+    QVector<double*> data;
+    data.push_back(st_xforce); data.push_back(st_tension); data.push_back(st_sf); data.push_back(st_offset);
+    data.push_back(st_clearance); data.push_back(st_roll); data.push_back(st_pitch);
+    for (int i = 0; i < data.size(); ++i) {
+        int col = i * 2;
+        for (int j = 0; j < 12; j = j + 1) {
+            QTableWidgetItem * item1 = new QTableWidgetItem(QString::number((data.value(i))[j]));
+            ui->output_table_details->setItem(j, col, item1);
+            QTableWidgetItem * item2 = new QTableWidgetItem(QString::number((data.value(i))[j + 12]));
+            ui->output_table_details->setItem(j, col + 1, item2);
+        }
+    }
+
 }
 
 
@@ -204,11 +288,11 @@ void Dialog::drawRoseNote(int index) {
     if (index == 0) {
         msg = "画曲线图时，X轴可以是0~1列数据，Y轴可以是1~5列数据";
     } else if (index == 1) {
-        msg = "画散点图时，X轴和Y轴各1列数据";
+        msg = "画散点图时，X轴可以是0~1列数据，Y轴可以是1~5列数据";
     } else if (index == 2) { // 画玫瑰图
         msg = "画玫瑰图时，Speed添加到X轴，Dir添加到Y轴";
     } else if (index == 3) {
-        msg = "画直方图时，X轴和Y轴各1列数据";
+        msg = "画直方图时，X轴可以是0~1列数据，Y轴是1列数据";
     }
     ui->label_drawgraph_note->setText(msg);
     ui->label_drawgraph_note->setStyleSheet(msg_style);
@@ -696,13 +780,20 @@ void Dialog::preAddSelectedColList() {
         QString sel_col_name = dbName + "." + tableName + "." + (*it)->text();
 
         int i;
-        for (i = 0; i < INT_MAX; ++i) {
-            QString sel_col_name_temp = sel_col_name + QString::number(i);
-            if (map_col_list_analyse_paras.find(sel_col_name_temp) == map_col_list_analyse_paras.end())
-            {
+        QString sel_col_name_temp = sel_col_name;
+        for (i = 1; i < INT_MAX; ++i) {
+
+            if (map_col_list_analyse_paras.find(sel_col_name_temp) == map_col_list_analyse_paras.end()) {
                 sel_col_name = sel_col_name_temp;
                 break;
             }
+
+            sel_col_name_temp = sel_col_name + QString::number(i);
+//            if (map_col_list_analyse_paras.find(sel_col_name_temp) == map_col_list_analyse_paras.end())
+//            {
+//                sel_col_name = sel_col_name_temp;
+//                break;
+//            }
         }
 
 //        if (pre_selcol_count_map.find(sel_col_name) == pre_selcol_count_map.end()) {
@@ -857,6 +948,9 @@ void Dialog::exportDataToFile() {
 
 void Dialog::startPreProcess()
 {
+    clear_post_silentmode_ = true;
+    clearPostCache(); // added by shiqiang, 2016.07.10
+
     int all_sel_col_row = ui->pre_selected_col_list->count();
     //qDebug() << all_sel_col_row;
     for (int cur_row = 0; cur_row < all_sel_col_row; ++cur_row)
@@ -874,6 +968,7 @@ void Dialog::startPreProcess()
     //for test
     dpclass.preProccess(map_col_list_analyse_paras);
 
+    clear_post_silentmode_ = false;
 }
 
 void Dialog::clearPreCache(){
@@ -919,11 +1014,14 @@ void Dialog::clearPreCache(){
 }
 
 void Dialog::clearPostCache() {
-    QMessageBox msgBox;
-    msgBox.setText("确认清除后处理的所有缓存数据?");
-    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-    msgBox.setDefaultButton(QMessageBox::Ok);
-    int ret = msgBox.exec();
+    int ret = QMessageBox::Ok;
+    if (!clear_post_silentmode_) {
+        QMessageBox msgBox;
+        msgBox.setText("确认清除后处理的所有缓存数据?");
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        ret = msgBox.exec();
+    }
 
     if (ret == QMessageBox::Ok) {
         dpclass.clearPostproc_data_map();
@@ -943,9 +1041,11 @@ void Dialog::clearPostCache() {
         showdata_col_list_.clear();
         updateShowedDataDetails(0);
 
-        QMessageBox msgBox;
-        msgBox.setText("后处理缓存被清除!");
-        msgBox.exec();
+        if (!clear_post_silentmode_) {
+            QMessageBox msgBox;
+            msgBox.setText("后处理缓存被清除!");
+            msgBox.exec();
+        }
     }
 }
 
@@ -1208,12 +1308,26 @@ void Dialog::postPrepareDataForAnalysis(int index) {
             ui->comboBox_correlation_x->addItem(it.key());
             ui->comboBox_correlation_y->addItem(it.key());
         }
-        ui->label_kendall_min1->setVisible(false);
-        ui->label_kendall_min2->setVisible(false);
-        ui->lineEdit_kendall_limit_min1->setVisible(false);
-        ui->lineEdit_kendall_limit_min2->setVisible(false);
-        ui->label_kendall_result->setVisible(false);
-        ui->lineEdit_kendall_result->setVisible(false);
+        int type = 0;
+        if (ui->radioButton_correlation->isChecked()) // correlation
+            type = 1;
+        else if (ui->radioButton_kendall->isChecked()) // kendall
+            type = 2;
+        if (type == 1) {
+            ui->label_kendall_min1->setVisible(false);
+            ui->label_kendall_min2->setVisible(false);
+            ui->lineEdit_kendall_limit_min1->setVisible(false);
+            ui->lineEdit_kendall_limit_min2->setVisible(false);
+            ui->label_kendall_result->setVisible(false);
+            ui->lineEdit_kendall_result->setVisible(false);
+        } else if (type == 2) {
+            ui->label_kendall_min1->setVisible(true);
+            ui->label_kendall_min2->setVisible(true);
+            ui->lineEdit_kendall_limit_min1->setVisible(true);
+            ui->lineEdit_kendall_limit_min2->setVisible(true);
+            ui->label_kendall_result->setVisible(true);
+            ui->lineEdit_kendall_result->setVisible(true);
+        }
     } else if (index == 5) { // max shang 1
         msg = "一维最大熵需要1列数据";
         msg_style = "color: rgb(44,104,7);";
@@ -1259,8 +1373,10 @@ void Dialog::postStartDataAnalysis() {
         // prepare for data
         int analysis_type = ui->toolBox_analysis_data->currentIndex();
         QMap<QString, QVector<double> > all_data_map = dpclass.getPostProcDataMap();
-        QString msg = "";
+        QString msg = "正在计算...";
         QString msg_style = "color: rgb(44,104,7);";
+        ui->label_dataanalysis_note->setText(msg);
+        ui->label_dataanalysis_note->repaint();
 
         if (analysis_type != 0 && all_data_map.size() <= 0) {
             msg = "后处理数据列为空，请先添加数据列";
@@ -1316,6 +1432,7 @@ void Dialog::postStartDataAnalysis() {
             Utils::weightedFit(in_data1, in_data2, a, b);
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
+            graph->setWindowTitle("曲线拟合结合示意图");
             graph->plotForWeightedFit(in_data1, in_data2, a, b);
             graph->setXAxisLabel(ui->comboBox_weightfit_x->currentText());
             graph->setYAxisLabel(ui->comboBox_weightfit_y->currentText());
@@ -1359,9 +1476,10 @@ void Dialog::postStartDataAnalysis() {
             }
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+            graph->setWindowTitle("谱分析结果示意图");
             graph->plotForSpectral(out_data1, out_data2);
-            graph->setXAxisLabel("f");
-            graph->setYAxisLabel("YY");
+            graph->setXAxisLabel("频率(Hz)");
+            graph->setYAxisLabel("幅度");
             graph->show();
 
             msg = "谱分析计算成功，结果见输出图形";
@@ -1401,6 +1519,7 @@ void Dialog::postStartDataAnalysis() {
                 ret_val = Utils::qtCorrelation(in_data1, in_data2, out_data1, out_data2); // a, b
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
+                graph->setWindowTitle("相关性分析结果示意图");
                 graph->plotForCorrelation(out_data2, out_data1);
                 graph->setXAxisLabel("a");
                 graph->setYAxisLabel("b");
@@ -1413,6 +1532,7 @@ void Dialog::postStartDataAnalysis() {
                                            ui->lineEdit_kendall_limit_min2->text().toDouble());
                 kendall_val_ = ret_val;
                 ui->lineEdit_kendall_result->setText(QString::number(ret_val));
+                ui->lineEdit_2dshang_R->setText(QString::number(kendall_val_)); // this value will be used in max shang 2.
                 //msg = QString::number(ret_val);
                 msg = "肯德尔系数计算成功，结果见输出文本框";
                 msg_style = "color: rgb(44,104,7);";
@@ -1441,6 +1561,7 @@ void Dialog::postStartDataAnalysis() {
                                   out_data1, out_data2); // output: yy1, yy2
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+            graph->setWindowTitle("一维最大熵曲线图");
             graph->plotFor1DMaxEntropy(out_data1, out_data2);
             graph->setXAxisLabel("yy1");
             graph->setYAxisLabel("yy2");
@@ -1470,6 +1591,7 @@ void Dialog::postStartDataAnalysis() {
                 }
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+                graph->setWindowTitle("stats 1D输出结果: X-Y曲线图");
                 graph->plotForXYData(out_data1, out_data2);
                 graph->show();
 
@@ -1508,6 +1630,7 @@ void Dialog::postStartDataAnalysis() {
                     ui->comboBox_stats_type->model()->setData(index, 33, Qt::UserRole - 1); // enable
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
+                graph->setWindowTitle("stats 2D输出结果: 密度图");
                 graph->plotFor2DMaxEntropyDensity(stats_2D_output_);
                 graph->show();
 
@@ -1540,6 +1663,7 @@ void Dialog::postStartDataAnalysis() {
                 }
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+                graph->setWindowTitle("Distr F1输出结果: X-Y曲线图");
                 graph->plotForXYData(out_data1, out_data2);
                 graph->setXAxisLabel("FF1");
                 graph->setYAxisLabel("FF2");
@@ -1566,6 +1690,7 @@ void Dialog::postStartDataAnalysis() {
                 }
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
+                graph->setWindowTitle("Distr F2输出结果: 密度图");
                 graph->plotFor2DMaxEntropyDensity(out);
                 graph->show();
 
@@ -1605,17 +1730,37 @@ void Dialog::postStartDataAnalysis() {
                 break;
             }
 
+            // TEST: added by shiqiang, 2016.07.10
+//            ff1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_ff_Cla.pass.csv",
+//                                                                 3, 1000000, 1);
+//            FF1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_ff_Cla.pass.csv",
+//                                                                 3, 1000000, 2);
+//            ff2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_ff_Cla.pass.csv",
+//                                                                 3, 1000000, 3);
+//            FF2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_ff_Cla.pass.csv",
+//                                                                 3, 1000000, 4);
+
             int type = ui->comboBox_2dshang_type->currentIndex();
             QVector<QVector<double> > out; // should be replaced by a more global variable--lsq, 2016.06.26
             Utils::qt2DMaxEntropy(ff1, FF1, ff2, FF2, ui->lineEdit_2dshang_R->text().toDouble(), type, out);
-
             if (out.size() <= 0) {
                 msg = "输出结果为空";
                 msg_style = "color: rgb(231,66,67);";
                 break;
             }
+            double max_val = 0.0;
+            for (int i = 0; i < out.size(); ++i)
+                for (int j = 0; j < out[0].size(); ++j)
+                    if (max_val < out[i][j])
+                        max_val = out[i][j];
+            if (max_val <= 0) {
+                msg = "结果矩阵最大值<=0，请检查输入列是否合适";
+                msg_style = "color: rgb(231,66,67);";
+                break;
+            }
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
+            graph->setWindowTitle("二维最大熵分析结果: 密度图");
             graph->plotFor2DMaxEntropyDensity(out);
             graph->show();
 
@@ -1683,6 +1828,7 @@ void Dialog::postStartDrawGraph() {
 
             if (matched) {
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+                graph->setWindowTitle("曲线图");
                 graph->plotForCurve(x_col, y_cols, y_cols_name);
 //                graph->setXAxisLabel(ui->lineEdit_xlabel->text());
 //                graph->setYAxisLabel(ui->lineEdit_ylabel->text());
@@ -1696,43 +1842,63 @@ void Dialog::postStartDrawGraph() {
             break;
         }
         case 1: { // scatter graph
-            if (ui->xaxis_data_list->count() != 1) {
-                msg = "X轴数据列数为1";
+            if (ui->xaxis_data_list->count() > 1) {
+                msg = "X轴数据列数为0或1";
                 msg_style = "color: rgb(231,66,67);";
                 break;
             }
-            QVector<double> x_col = all_data_map[ui->xaxis_data_list->item(0)->text()];
-            if (x_col.size() <= 0) {
-                msg = "X轴输入数据列" + ui->xaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
-                msg_style = "color: rgb(231,66,67);";
-                break;
-            }
-
-            if (ui->yaxis_data_list->count() != 1) {
-                msg = "Y轴数据列数为1";
-                msg_style = "color: rgb(231,66,67);";
-                break;
-            }
-            QVector<double> y_col = all_data_map[ui->yaxis_data_list->item(0)->text()];
-            if (y_col.size() <= 0) {
-                msg = "Y轴输入数据列" + ui->yaxis_data_list->item(0)->text() + "尺寸为0，请重新选择";
-                msg_style = "color: rgb(231,66,67);";
-                break;
+            QVector<double> x_col;
+            for (int i = 0; i < ui->xaxis_data_list->count(); ++i) {
+                x_col = all_data_map[ui->xaxis_data_list->item(i)->text()];
+                if (x_col.size() <= 0) {
+                    msg = "X轴输入数据列" + ui->xaxis_data_list->item(i)->text() + "尺寸为0，请重新选择";
+                    msg_style = "color: rgb(231,66,67);";
+                    break;
+                }
             }
 
-            if (x_col.size() != y_col.size()) {
-                msg = "X与Y的记录数不匹配.";
+            if (ui->yaxis_data_list->count() < 1 || ui->yaxis_data_list->count() > 5) {
+                msg = "Y轴数据列数为1 ~ 3.";
                 msg_style = "color: rgb(231,66,67);";
                 break;
             }
+            QVector<QVector<double> > y_cols;
+            QVector<QString> y_cols_name;
+            for (int i = 0; i < ui->yaxis_data_list->count(); ++i) {
+                y_cols.push_back(all_data_map[ui->yaxis_data_list->item(i)->text()]);
+                y_cols_name.push_back(ui->yaxis_data_list->item(i)->text());
+                if (y_cols[i].size() <= 0) {
+                    msg = "Y轴输入数据列" + ui->yaxis_data_list->item(i)->text() + "尺寸为0，请重新选择";
+                    msg_style = "color: rgb(231,66,67);";
+                    break;
+                }
+            }
 
-            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
-            graph->plotForScatter(x_col, y_col);
-//            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
-//            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
-            graph->setXAxisLabel(ui->xaxis_data_list->item(0)->text());
-            graph->setYAxisLabel(ui->yaxis_data_list->item(0)->text());
-            graph->show();
+            int records = x_col.size();
+            if (records == 0) records = y_cols[0].size();
+            bool matched = true;
+            for (auto it = y_cols.begin(); it != y_cols.end(); ++it) {
+                if (it->size() != records) {
+                    msg = "X与Y的记录数不匹配";
+                    msg_style = "color: rgb(231,66,67);";
+                    matched = false;
+                    break;
+                }
+            }
+
+            if (matched) {
+                QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+                graph->setWindowTitle("散点图");
+                graph->plotForScatter(x_col, y_cols, y_cols_name);
+//              graph->setXAxisLabel(ui->lineEdit_xlabel->text());
+//              graph->setYAxisLabel(ui->lineEdit_ylabel->text());
+                if (ui->xaxis_data_list->count() == 1)
+                    graph->setXAxisLabel(ui->xaxis_data_list->item(0)->text());
+                else
+                    graph->setXAxisLabel("序列");
+                graph->setYAxisLabel("");
+                graph->show();
+            }
             break;
         }
         case 2: { // rose plot
@@ -1780,6 +1946,7 @@ void Dialog::postStartDrawGraph() {
 //            QVector<double> y_col = {57,44,56,57,57,81,59,56,66,9,56,62,41,65,11,44,65,64,46,46,24,73,105,
 //                                     65,83,52,67,4,73,62,23,56,46,61,50,64,53,74,66,51}; // dir
             QChartWindRosePlot *windrose = new QChartWindRosePlot(18, x_col, y_col);
+            windrose->setWindowTitle("风玫瑰图");
             windrose->show();
             break;
         }
@@ -1818,27 +1985,18 @@ void Dialog::postStartDrawGraph() {
             }
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
+            graph->setWindowTitle("直方图");
             graph->plotForBarChart(x_col, y_col);
 //            graph->setXAxisLabel(ui->lineEdit_xlabel->text());
 //            graph->setYAxisLabel(ui->lineEdit_ylabel->text());
-            graph->setXAxisLabel(ui->xaxis_data_list->item(0)->text());
+            if (ui->xaxis_data_list->count() == 1)
+                graph->setXAxisLabel(ui->xaxis_data_list->item(0)->text());
+            else
+                graph->setXAxisLabel("");
             graph->setYAxisLabel(ui->yaxis_data_list->item(0)->text());
             graph->show();
             break;
         }
-//        case 4: //spectrogram
-//        {
-//            QwtGraphPlotCustom *graph = new QwtGraphPlotCustom();
-//            QVector<QVector<double> > test_data;
-//            test_data.resize(1000);
-//            for (int i = 0; i < 1000; ++i)
-//            {
-//                test_data[i].resize(1000);
-//                for (int j = 0; j < 1000; ++j)
-//                    test_data[i][j] = 1.11+i+j*1.2;
-//            }
-//            graph->plotFor2DMaxEntropyDensity(test_data);
-//        }
         default:
             break;
         }

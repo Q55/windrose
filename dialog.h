@@ -113,6 +113,9 @@ public slots:
     void drawRoseNote(int);
 
 
+    // forecast
+    void forecastStart();
+
 
 private:
     Ui::Dialog *ui;
@@ -143,6 +146,7 @@ private:
     void initComboboxMap();
     void initStartEndDateTime();
 
+    bool clear_post_silentmode_;
     int last_ref_col_;
     QMap<QString, QVector<double> > showdata_col_list_;
     double kendall_val_;

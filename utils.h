@@ -54,6 +54,20 @@ public:
     //static void qtFFGum(QVector<double> ff1, QVector<double> FF1, QVector<double> ff2, QVector<double> FF2, double R, QVector<QVector<double> > &out);
 
     static QVector<double> getQVectorFromFile(QString filename, int ignore_rows, int rd_rows, int col_index);
+
+//    void FPSO_MOTIONS(double Hs, double Tp, double dir_wave, double Vw, double
+//                      dir_win, double Vc, double dir_cur, double draft_aft, double
+//                      draft_bow, double *heading, double *statoffset, double
+//                      *maxoffset_ind, double *clearance, double *maxTx, double
+//                      *maxTe, double *Sf, double st_xforce[24], double st_tension[24],
+//                      double st_sf[24], double st_offset[24], double st_clearance[24],
+//                      double st_roll[24], double st_pitch[24]);
+    static void qtFPSOMotions(double Hs, double Tp, double dir_wave, double Vw, double dir_win,  // input
+                              double Vc, double dir_cur, double draft_aft, double draft_bow,  // input
+                              double &heading, double &statoffset, double &maxoffset_ind, double &clearance, // output
+                              double &maxTx, double &maxTe, double &Sf, double st_xforce[24], double st_tension[24],
+                              double st_sf[24], double st_offset[24], double st_clearance[24], double st_roll[24],
+                              double st_pitch[24]);
 };
 
 #endif // UTILS_H

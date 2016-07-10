@@ -6,7 +6,7 @@ QSqlError QueryDB::connectDB(QString db_name) {
     else
       db_ = QSqlDatabase::addDatabase("QMYSQL");
     db_.setHostName("127.0.0.1");
-    db_.setHostName("192.168.1.126");
+    //db_.setHostName("192.168.1.126");
     db_.setDatabaseName(db_name);
     db_.setUserName("root");
     db_.setPassword("123456");

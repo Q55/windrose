@@ -9,6 +9,7 @@
 #include <qwt_plot_renderer.h>
 #include <QVector>
 #include "plotspectrogram.h"
+#include <QMessageBox>
 
 class MyZoomer: public QwtPlotZoomer
 {
@@ -49,7 +50,7 @@ public:
                 if (max_val < array2d_data[i][j])
                     max_val = array2d_data[i][j];
 
-//        qDebug()<<"max value = "<<max_val;
+        //qDebug()<<"max value = "<<max_val;
 
         setInterval( Qt::XAxis, QwtInterval( 0, array2d_col ) ); // 42
         setInterval( Qt::YAxis, QwtInterval( 0, array2d_row ) ); // 34

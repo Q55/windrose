@@ -27,7 +27,7 @@
 QwtGraphPlotCustom::QwtGraphPlotCustom() {
 
     graph_plot = new Plot(this);
-    graph_plot->setTitle( "数据分析图" );
+    //graph_plot->setTitle( "数据分析图" );
     setCentralWidget( graph_plot );
 //    (void) new QwtPlotMagnifier(graph_plot->canvas()); //使用滚轮放大/缩小
 //    (void) new QwtPlotPanner(graph_plot->canvas());//使用鼠标左键平移
@@ -42,7 +42,7 @@ void QwtGraphPlotCustom::plotForCorrelation(const QVector<double> &x, const QVec
     for (int i = 0; i < x.size(); ++i)
         samples += QPointF(x[i], y[i]);
 
-    graph_plot->setTitle("相关性分析结果示意图");
+    //graph_plot->setTitle("相关性分析结果示意图");
     QwtPlotCurve *curve1 = new QwtPlotCurve("curve1");
     curve1->setSamples(samples);
     curve1->setStyle(QwtPlotCurve::Sticks);
@@ -63,16 +63,21 @@ void QwtGraphPlotCustom::plotForWeightedFit(const QVector<double> &x, const QVec
     for (int i = 0; i < x.size(); ++i)
         samples += QPointF(x[i], y[i]);
 
-    graph_plot->setTitle("曲线拟合结果示意图");
+    //graph_plot->setTitle("曲线拟合结果示意图");
     QwtPlotCurve *curve1 = new QwtPlotCurve("原始数据");
     curve1->setSamples(samples);
     curve1->setStyle(QwtPlotCurve::Dots);
 
     QwtSymbol *curve1_symbols = new QwtSymbol( QwtSymbol::Ellipse);
     curve1_symbols->setSize(5);
-    curve1_symbols->setPen( Qt::red );
+    //curve1_symbols->setPen( Qt::red );
     curve1->setSymbol(curve1_symbols);
     curve1->attach(graph_plot);
+    QwtLegend *legend_orig = new QwtLegend();
+    QFont font;
+    font.setPointSize(10);
+    legend_orig->setFont(font);
+    graph_plot->insertLegend(legend_orig, QwtPlot::RightLegend);
 
     samples.clear();
     for (int i = 0; i < x.size(); ++i)
@@ -86,6 +91,11 @@ void QwtGraphPlotCustom::plotForWeightedFit(const QVector<double> &x, const QVec
     curve2->setSymbol(curve2_symbols);
     curve2->setPen(Qt::blue);
     curve2->attach(graph_plot);
+    QwtLegend *legend_weight = new QwtLegend();
+    QFont font2;
+    font2.setPointSize(10);
+    legend_weight->setFont(font2);
+    graph_plot->insertLegend(legend_weight, QwtPlot::RightLegend);
 
     //scatter_plot->resize(800, 600);
     //scatter_plot->replot();
@@ -96,7 +106,7 @@ void QwtGraphPlotCustom::plotForSpectral(const QVector<double> &f, const QVector
     for (int i = 0; i < f.size(); ++i)
         samples += QPointF(f[i], YY[i]);
 
-    graph_plot->setTitle( "谱分析结果示意图" );
+    //graph_plot->setTitle( "谱分析结果示意图" );
     QwtPlotCurve *curve = new QwtPlotCurve("谱分析曲线");
     curve->setSamples(samples);
     curve->setStyle(QwtPlotCurve::Lines);
@@ -113,7 +123,7 @@ void QwtGraphPlotCustom::plotForXYData(const QVector<double> &x, const QVector<d
     for (int i = 0; i < x.size(); ++i)
         samples += QPointF(x[i], y[i]);
 
-    graph_plot->setTitle( "X-Y曲线图" );
+    //graph_plot->setTitle( "X-Y曲线图" );
     QwtPlotCurve *curve = new QwtPlotCurve("X-Y曲线");
     curve->setSamples(samples);
     curve->setStyle(QwtPlotCurve::Lines);
@@ -130,7 +140,7 @@ void QwtGraphPlotCustom::plotFor1DMaxEntropy(const QVector<double> &yy1, const Q
     for (int i = 0; i < yy1.size(); ++i)
         samples += QPointF(yy1[i], yy2[i]);
 
-    graph_plot->setTitle( "一维最大熵曲线图" );
+    //graph_plot->setTitle( "一维最大熵曲线图" );
     QwtPlotCurve *curve = new QwtPlotCurve("一维最大熵曲线");
     curve->setSamples(samples);
     curve->setStyle(QwtPlotCurve::Lines);
@@ -144,7 +154,7 @@ void QwtGraphPlotCustom::plotFor1DMaxEntropy(const QVector<double> &yy1, const Q
 
 void QwtGraphPlotCustom::plotFor2DMaxEntropyDensity(const QVector<QVector<double> > &data) {
     spectrogram_plot = new PlotSpectrogram(data, this );
-    spectrogram_plot->setTitle("密度图");
+    //spectrogram_plot->setTitle("密度图");
 
     setCentralWidget( spectrogram_plot );
 
@@ -190,7 +200,6 @@ void QwtGraphPlotCustom::plotFor2DMaxEntropyDensity(const QVector<QVector<double
 void QwtGraphPlotCustom::plotForCurve(const QVector<double> &x, const QVector<QVector<double> > &yy, const QVector<QString> &yy_names) {
     int i = 7;
     int j = 0;
-    graph_plot->setTitle("曲线图");
     for (auto it = yy.begin(); it != yy.end(); ++it, ++i, ++j) {
         QPolygonF samples;
         for (int j = 0; j < it->size(); ++j) {
@@ -210,25 +219,41 @@ void QwtGraphPlotCustom::plotForCurve(const QVector<double> &x, const QVector<QV
         curve->setPen((Qt::GlobalColor)i);
         curve->attach(graph_plot);
         QwtLegend *legend = new QwtLegend();
+        QFont font;
+        font.setPointSize(10);
+        legend->setFont(font);
         graph_plot->insertLegend(legend, QwtPlot::RightLegend);
     }
 }
 
-void QwtGraphPlotCustom::plotForScatter(const QVector<double> &x, const QVector<double> &y) {
-    QPolygonF samples;
-    for (int i = 0; i < x.size(); ++i)
-        samples += QPointF(x[i], y[i]);
+void QwtGraphPlotCustom::plotForScatter(const QVector<double> &x, const QVector<QVector<double> > &yy, const QVector<QString> &yy_names) {
+    int i = 7;
+    int j = 0;
 
-    graph_plot->setTitle("散点图");
-    QwtPlotCurve *curve = new QwtPlotCurve("散点图");
-    curve->setSamples(samples);
-    curve->setStyle(QwtPlotCurve::NoCurve);
-    QwtSymbol *curve_symbols = new QwtSymbol( QwtSymbol::XCross);
-    curve_symbols->setSize(3);
-    curve_symbols->setPen( Qt::blue );
-    curve->setSymbol(curve_symbols);
-    curve->setPen(Qt::blue);
-    curve->attach(graph_plot);
+    for (auto it = yy.begin(); it != yy.end(); ++it, ++i, ++j) {
+        QPolygonF samples;
+        for (int j = 0; j < it->size(); ++j) {
+            if (x.size() == 0)
+                samples += QPointF(j + 1, (*it)[j]);
+            else
+                samples += QPointF(x[j], (*it)[j]);
+        }
+
+        QwtPlotCurve *curve = new QwtPlotCurve(yy_names[j]);
+        curve->setSamples(samples);
+        curve->setStyle(QwtPlotCurve::NoCurve);
+        QwtSymbol *curve_symbols = new QwtSymbol( QwtSymbol::XCross);
+        curve_symbols->setSize(3);
+        curve_symbols->setPen( (Qt::GlobalColor)i );
+        curve->setSymbol(curve_symbols);
+        curve->setPen((Qt::GlobalColor)i);
+        curve->attach(graph_plot);
+        QwtLegend *legend = new QwtLegend();
+        QFont font;
+        font.setPointSize(10);
+        legend->setFont(font);
+        graph_plot->insertLegend(legend, QwtPlot::RightLegend);
+    }
 }
 
 void QwtGraphPlotCustom::plotForBarChart(const QVector<double> &x, const QVector<double> &y) {
@@ -240,8 +265,7 @@ void QwtGraphPlotCustom::plotForBarChart(const QVector<double> &x, const QVector
             samples += QPointF(x[j], y[j]);
     }
 
-    graph_plot->setTitle("柱状图");
-    QwtPlotBarChart *bar_chart = new QwtPlotBarChart("柱状图");
+    QwtPlotBarChart *bar_chart = new QwtPlotBarChart("直方图");
     bar_chart->setSamples(samples);
     bar_chart->attach(graph_plot);
 }

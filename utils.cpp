@@ -74,6 +74,9 @@
 #include "libs/diraverage/diraverage.h"
 #include "libs/diraverage/diraverage_initialize.h"
 #include "libs/diraverage/diraverage_terminate.h"
+#include "libs/fpso_motions/FPSO_MOTIONS_initialize.h"
+#include "libs/fpso_motions/FPSO_MOTIONS.h"
+#include "libs/fpso_motions/FPSO_MOTIONS_terminate.h"
 #include <QFile>
 #include <QDebug>
 
@@ -828,4 +831,18 @@ QVector<double> Utils::getQVectorFromFile(QString filename, int ignore_rows, int
     return rd_vec_data;
 }
 
+void Utils::qtFPSOMotions(double Hs, double Tp, double dir_wave, double Vw, double dir_win,  // input
+                          double Vc, double dir_cur, double draft_aft, double draft_bow,  // input
+                          double &heading, double &statoffset, double &maxoffset_ind, double &clearance, // output
+                          double &maxTx, double &maxTe, double &Sf, double st_xforce[24], double st_tension[24],
+                          double st_sf[24], double st_offset[24], double st_clearance[24], double st_roll[24],
+                          double st_pitch[24]) {
+
+    FPSO_MOTIONS_initialize();
+
+    FPSO_MOTIONS(Hs, Tp, dir_wave, Vw, dir_win, Vc, dir_cur, draft_aft, draft_bow, &heading, &statoffset, &maxoffset_ind, &clearance,
+                 &maxTx, &maxTe, &Sf, st_xforce, st_tension, st_sf, st_offset, st_clearance, st_roll, st_pitch);
+
+    FPSO_MOTIONS_terminate();
+}
 

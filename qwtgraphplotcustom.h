@@ -21,7 +21,7 @@ public:
     void plotFor2DMaxEntropyDensity(const QVector<QVector<double> > &array_2d);
 
     void plotForCurve(const QVector<double> &x, const QVector<QVector<double> > &yy, const QVector<QString> &yy_names);
-    void plotForScatter(const QVector<double> &x, const QVector<double> &y);
+    void plotForScatter(const QVector<double> &x, const QVector<QVector<double> > &yy, const QVector<QString> &yy_names);
     void plotForBarChart(const QVector<double> &x, const QVector<double> &y);
     //void plotForPolarRose(const QVector<double> &windspeed, const QVector<double> &winddir);
 

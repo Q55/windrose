@@ -6,6 +6,7 @@ PostColRenameDialog::PostColRenameDialog(QWidget *parent) :
     ui(new Ui::PostColRenameDialog)
 {
     ui->setupUi(this);
+    this->setWindowTitle("列重命名");
 }
 
 PostColRenameDialog::PostColRenameDialog(QString orig_col_name, QWidget *parent) :
@@ -13,6 +14,8 @@ PostColRenameDialog::PostColRenameDialog(QString orig_col_name, QWidget *parent)
     ui(new Ui::PostColRenameDialog)
 {
     ui->setupUi(this);
+    this->setWindowTitle("列重命名");
+
     ui->lineEdit_orig_col_name->setText(orig_col_name);
     ui->lineEdit_orig_col_name->setEnabled(false);
 
