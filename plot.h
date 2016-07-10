@@ -7,6 +7,7 @@
 #include <qwt_plot.h>
 #include <qwt_plot_spectrogram.h>
 #include <qwt_plot_picker.h>
+#include <qwt_plot_zoomer.h>
 
 class QwtSymbol;
 
@@ -30,6 +31,8 @@ public:
 
 private:
     QwtPlotCurve *d_curve;
+public:
+    QwtPlotZoomer* zoomer;
 };
 
 

@@ -230,10 +230,13 @@ Plot::Plot( QWidget *parent ):
     (void )new QwtPlotPanner( canvas() );
 
     // zoom in/out with the wheel
-    QwtPlotMagnifier *magnifier = new QwtPlotMagnifier( canvas() ); //鼠标滚轮放大缩小，左键拖动浮点型
-    QwtPlotZoomer* zoomer = new QwtPlotZoomer( canvas() ); // 鼠标左键选择区域放大,右键还原
-    zoomer->zoom(0);
-    //magnifier->setMouseButton( Qt::NoButton );
+    //QwtPlotMagnifier *magnifier = new QwtPlotMagnifier( canvas() ); //鼠标滚轮放大缩小，左键拖动浮点型
+    zoomer = new QwtPlotZoomer( canvas() );
+    zoomer->setRubberBandPen( QColor( Qt::blue ) );
+    zoomer->setTrackerPen( QColor( Qt::blue ) );
+    zoomer->setMousePattern(QwtEventPattern::MouseSelect2,Qt::RightButton, Qt::ControlModifier );
+    zoomer->setMousePattern(QwtEventPattern::MouseSelect3,Qt::RightButton );
+    //zoomer->setZoomBase(false);
 
     // distanve measurement with the right mouse button
 //    DistancePicker *picker = new DistancePicker( canvas() );
