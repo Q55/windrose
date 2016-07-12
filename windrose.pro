@@ -4,8 +4,8 @@
 #
 #-------------------------------------------------
 ###### for qwt. changed reply on enviroment ##########
-include (C:\Qwt-6.1.2\features\qwt.prf)
-#include(/usr/local/qwt-6.1.2/features/qwt.prf)
+#include (C:\Qwt-6.1.2\features\qwt.prf)
+include(/usr/local/qwt-6.1.2/features/qwt.prf)
 
 QT       += core gui
 QT       += sql
@@ -149,7 +149,8 @@ SOURCES += main.cpp\
     libs/fpso_motions/fpso_sortLE.cpp \
     libs/fpso_motions/fpso_xgeqp3.cpp \
     libs/fpso_motions/fpso_rdivide.cpp \
-    libs/fpso_motions/fpso_xnrm2.cpp
+    libs/fpso_motions/fpso_xnrm2.cpp \
+    configdatabase.cpp
 
 HEADERS  += \
     dataprocess.h \
@@ -283,12 +284,14 @@ HEADERS  += \
     libs/fpso_motions/fpso_sortLE.h \
     libs/fpso_motions/fpso_xgeqp3.h \
     libs/fpso_motions/fpso_rdivide.h \
-    libs/fpso_motions/fpso_xnrm2.h
+    libs/fpso_motions/fpso_xnrm2.h \
+    configdatabase.h
 
 FORMS    += \
     dialog.ui \
     postexprdialog.ui \
-    postcolrenamedialog.ui
+    postcolrenamedialog.ui \
+    configdatabase.ui
 
 RESOURCES += \
     stylesheet.qrc

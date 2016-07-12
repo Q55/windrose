@@ -2,6 +2,7 @@
 #include "ui_dialog.h"
 #include "postexprdialog.h"
 #include "postcolrenamedialog.h"
+#include "configdatabase.h"
 #include "qwtgraphplotcustom.h"
 #include "qwtpolarwindroseplot.h"
 #include "qchartwindroseplot.h"
@@ -59,10 +60,12 @@ Dialog::Dialog(QWidget *parent) :
     }
     // a bug in QT, so we cannot set it in *.ui file, by shiqiang, 2016.07.10
     ui->output_table_details->horizontalHeader()->setVisible(true);
-    QVector<QString> headname_list = {"最大水平恢复力", "最大锚链张力", "安全系数", "最大水平位移", "st_clearance", "最大横摇角", "最大纵摇角"};
+    QVector<QString> headname_list = {"最大水平恢复力", "最大锚链张力", "最大水平位移", "最大横摇角", "最大纵摇角", "安全系数", /*"st_clearance"*/};
     for (int i = 0; i < headname_list.size(); ++i) {
         QTableWidgetItem * header_item1 = new QTableWidgetItem("序号");
         ui->output_table_details->setHorizontalHeaderItem(i * 2, header_item1);
+        ui->output_table_details->setColumnWidth(i * 2, 50);
+
         QTableWidgetItem * header_item2 = new QTableWidgetItem(headname_list[i]);
         ui->output_table_details->setHorizontalHeaderItem(i * 2 + 1, header_item2);
     }
@@ -141,17 +144,18 @@ Dialog::Dialog(QWidget *parent) :
     //pre_sel_colrepeatlist_map.clear();
 
     //for test zyn
-    setBackgroud();
+//    setBackgroud();
 
     // pre-processing
     //initial Table list
-    initTableList(0, dpclass.queryTableNameListbyDBName(dbIndexNameMap[0]));
-    initTableList(1, dpclass.queryTableNameListbyDBName(dbIndexNameMap[1]));
-    initTableList(2, dpclass.queryTableNameListbyDBName(dbIndexNameMap[2]));
+    configDataBaseDialog();
+//    initTableList(0, dpclass.queryTableNameListbyDBName(dbIndexNameMap[0]));
+//    initTableList(1, dpclass.queryTableNameListbyDBName(dbIndexNameMap[1]));
+//    initTableList(2, dpclass.queryTableNameListbyDBName(dbIndexNameMap[2]));
     // default selected database, and default selected table.
-    ui->comboBox_db_list->setCurrentIndex(1);
-    setDBTableList(ui->comboBox_db_list->currentIndex());
-    setTableColList(ui->comboBox_tb_list->currentText());
+    //ui->comboBox_db_list->setCurrentIndex(1);
+    //setDBTableList(ui->comboBox_db_list->currentIndex());
+    //setTableColList(ui->comboBox_tb_list->currentText());
     // signals and slots for database, table, colume.
     connect(ui->comboBox_db_list, SIGNAL( currentIndexChanged(int) ), this, SLOT( setDBTableList(int) ) );
     connect(ui->comboBox_tb_list, SIGNAL( currentIndexChanged(QString) ), this, SLOT( setTableColList(QString) ) );
@@ -211,6 +215,41 @@ Dialog::Dialog(QWidget *parent) :
 }
 
 
+void Dialog::configDataBaseDialog() {
+
+    ConfigDataBase *config_db_dlg = new ConfigDataBase(
+                dpclass.getDBAddress(),
+                dpclass.getDBUsername(),
+                dpclass.getDBPassword(),
+                dpclass.getDBNameList());
+    config_db_dlg->show();
+
+    connect(config_db_dlg, SIGNAL(configDataBase(QString, QString, QString, QVector<QString>)),
+            this, SLOT(dealConfigDataBase(QString, QString, QString, QVector<QString>)));
+}
+
+void Dialog::dealConfigDataBase(QString db_address, QString db_username, QString db_passwd, QVector<QString> namelist) {
+    if (namelist.size() <= 0) {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle(tr("数据库配置"));
+        msgBox.setText("请至少输入一个数据库名");
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+        return;
+    }
+
+    dpclass.setDBAddress(db_address);
+    dpclass.setDBUsername(db_username);
+    dpclass.setDBPassword(db_passwd);
+    dpclass.setDBNameList(namelist);
+
+    // if re-config database, clear all buffer. added by shiqiang, 2016.07.13
+    clearAllData();
+    for (int i = 0; i < namelist.size(); ++i)
+        ui->comboBox_db_list->addItem(namelist.value(i));
+}
+
+
 //    void FPSO_MOTIONS(double Hs, double Tp, double dir_wave, double Vw, double
 //                      dir_win, double Vc, double dir_cur, double draft_aft, double
 //                      draft_bow, double *heading, double *statoffset, double
@@ -267,8 +306,8 @@ void Dialog::forecastStart() {
 
     // data table details
     QVector<double*> data;
-    data.push_back(st_xforce); data.push_back(st_tension); data.push_back(st_sf); data.push_back(st_offset);
-    data.push_back(st_clearance); data.push_back(st_roll); data.push_back(st_pitch);
+    data.push_back(st_xforce); data.push_back(st_tension); data.push_back(st_offset);
+     data.push_back(st_roll); data.push_back(st_pitch);data.push_back(st_sf); //data.push_back(st_clearance);
     for (int i = 0; i < data.size(); ++i) {
         int col = i * 2;
         for (int j = 0; j < 12; j = j + 1) {
@@ -355,7 +394,6 @@ void Dialog::dealRenameSelCol(QString orig_col_name, QString new_col_name) {
 
     if (new_col_name == "") {
         QMessageBox msgBox;
-        msgBox.setWindowTitle(tr("警告"));
         msgBox.setWindowTitle(tr("重命名列"));
         msgBox.setText("请输入新列名");
         msgBox.setDefaultButton(QMessageBox::Ok);
@@ -365,7 +403,6 @@ void Dialog::dealRenameSelCol(QString orig_col_name, QString new_col_name) {
 
     if (new_col_name == orig_col_name) {
         QMessageBox msgBox;
-        msgBox.setWindowTitle(tr("警告"));
         msgBox.setWindowTitle("重命名列");
         msgBox.setText("列名没有变化");
         msgBox.setDefaultButton(QMessageBox::Ok);
@@ -376,7 +413,6 @@ void Dialog::dealRenameSelCol(QString orig_col_name, QString new_col_name) {
     auto exist_cols = dpclass.getPostProcDataMap();
     if (exist_cols.find(new_col_name) != exist_cols.end()) {
         QMessageBox msgBox;
-        msgBox.setWindowTitle(tr("警告"));
         msgBox.setWindowTitle("重命名列");
         msgBox.setText("该列名已存在，请重命名");
         msgBox.setDefaultButton(QMessageBox::Ok);
@@ -704,7 +740,7 @@ void Dialog::setProgressTips(int i) {
     QString progress_tips = QString::number(i, 10);
     qDebug()<<"progress_tips = "<<progress_tips;
     progress_tips += " %";
-    ui->lineEdit_tips->setText(progress_tips);
+//    ui->lineEdit_tips->setText(progress_tips);
     qDebug()<<"tips: "<<progress_tips;
     repaint();
 }
@@ -713,7 +749,7 @@ void Dialog::initProgress()
 {
     ui->progressBar->setValue(0);
     ui->progressBar->show();
-    ui->lineEdit_tips->setText("0");
+//    ui->lineEdit_tips->setText("0");
 }
 
 void Dialog::initTableList(int index, QStringList strings)
@@ -775,7 +811,8 @@ void Dialog::preAddSelectedColList() {
     QStringList selected_col_items;
 
     for(QList<QListWidgetItem*>::iterator it = addItems.begin(); it != addItems.end(); ++it) {
-        QString dbName = dbIndexNameMap[ui->comboBox_db_list->currentIndex()];
+        //QString dbName = dbIndexNameMap[ui->comboBox_db_list->currentIndex()];
+        QString dbName = ui->comboBox_db_list->currentText();
         QString tableName = ui->comboBox_tb_list->currentText();
 
         AnalyseParas cur_analyse_paras;

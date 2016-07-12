@@ -6,6 +6,10 @@
 DataProcess::DataProcess(QObject *parent) :
     QObject(parent)
 {
+    db_address_ = "127.0.0.1";
+    db_username_ = "root";
+    db_password_ = "123456";
+    db_name_list_ = {"111", "112", "118"};
 }
 
 

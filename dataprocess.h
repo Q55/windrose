@@ -66,7 +66,22 @@ signals:
     void preProcessRate(int);
     void preProcessEnd();
 
+public:
+    QString getDBAddress() {return db_address_;};
+    void setDBAddress(QString addr) { db_address_ = addr; }
+    QString getDBUsername() {return db_username_;}
+    void setDBUsername(QString username) {db_username_ = username;}
+    QString getDBPassword() {return db_password_;}
+    void setDBPassword(QString passwd) {db_password_ = passwd;}
+    QVector<QString> getDBNameList() { return db_name_list_; }
+    void setDBNameList(QVector<QString> list) { db_name_list_ = list; }
+
 private :
+    QString db_address_;
+    QString db_username_;
+    QString db_password_;
+    QVector<QString> db_name_list_;
+
     // pre-processing
     // map: <tablename.colname, arrayvalue>
     QMap<QString, QVector<double> > raw_data_map;
