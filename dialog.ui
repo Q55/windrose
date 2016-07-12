@@ -366,21 +366,6 @@
                <family>微软雅黑</family>
               </font>
              </property>
-             <item>
-              <property name="text">
-               <string>111 FPSO</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>112 FPSO</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>118 FPSO</string>
-              </property>
-             </item>
             </widget>
            </item>
           </layout>
@@ -541,6 +526,27 @@ color: rgb(0, 0, 127);</string>
         </property>
         <property name="text">
          <string>清除缓存(全部)</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_config_db">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>30</y>
+          <width>101</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+         </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="text">
+         <string>配置数据库</string>
         </property>
        </widget>
       </widget>
@@ -1809,7 +1815,7 @@ color: rgb(0, 0, 127);</string>
          <rect>
           <x>10</x>
           <y>14</y>
-          <width>341</width>
+          <width>436</width>
           <height>135</height>
          </rect>
         </property>
@@ -4097,8 +4103,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <property name="maximumSize">
@@ -4216,8 +4222,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4396,8 +4402,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4541,8 +4547,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -4853,8 +4859,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5273,8 +5279,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">
@@ -5583,8 +5589,8 @@ color: rgb(0, 0, 127);</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>339</width>
-           <height>131</height>
+           <width>100</width>
+           <height>30</height>
           </rect>
          </property>
          <attribute name="label">

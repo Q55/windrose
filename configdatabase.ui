@@ -32,9 +32,9 @@
   <widget class="QListWidget" name="listWidget_db_name_list">
    <property name="geometry">
     <rect>
-     <x>84</x>
+     <x>76</x>
      <y>146</y>
-     <width>163</width>
+     <width>171</width>
      <height>61</height>
     </rect>
    </property>
@@ -57,7 +57,7 @@
     <string>库列表：</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -140,7 +140,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -180,21 +180,11 @@
     </item>
    </layout>
   </widget>
+  <zorder>layoutWidget</zorder>
   <zorder>buttonBox</zorder>
   <zorder>layoutWidget</zorder>
-  <zorder>config_db_name</zorder>
-  <zorder>label_2</zorder>
-  <zorder>config_db_username</zorder>
-  <zorder>config_db_address</zorder>
-  <zorder>config_db_password</zorder>
-  <zorder>label_3</zorder>
-  <zorder>label_4</zorder>
   <zorder>listWidget_db_name_list</zorder>
   <zorder>label_5</zorder>
-  <zorder>config_add_dbname</zorder>
-  <zorder>label_2</zorder>
-  <zorder>label_3</zorder>
-  <zorder>label_3</zorder>
  </widget>
  <resources/>
  <connections>
