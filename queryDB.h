@@ -12,10 +12,10 @@ public:
     QueryDB() {}
     ~QueryDB() {}
 
-    QSqlQuery queryDB(QString db_name, QString query_sql);
+    QSqlQuery queryDB(QString db_name, QString db_address, QString db_username, QString db_passwd, QString query_sql);
 
 public:
-    QSqlError connectDB(QString db_name);
+    QSqlError connectDB(QString db_name, QString db_address, QString db_username, QString db_passwd);
     QSqlError closeDB();
 
 private:

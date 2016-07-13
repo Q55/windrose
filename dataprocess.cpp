@@ -16,7 +16,7 @@ DataProcess::DataProcess(QObject *parent) :
 QStringList DataProcess::queryTableNameListbyDBName(QString db_name) {
     QueryDB qdb;
     QString sql = "show tables;";
-    QSqlQuery query = qdb.queryDB(db_name, sql);
+    QSqlQuery query = qdb.queryDB(db_name, db_address_, db_username_, db_password_, sql);
 //    qDebug() << "DataBase: "<< db_name << " table count = " << query.size();
     QStringList qsl;
     while(query.next()) {
@@ -28,7 +28,7 @@ QStringList DataProcess::queryTableNameListbyDBName(QString db_name) {
 QStringList DataProcess::queryColumnNameListInTable(QString db_name, QString table_name) {
     QString sql = "show COLUMNS from " + table_name + "";
     QueryDB qdb;
-    QSqlQuery query = qdb.queryDB(db_name, sql);
+    QSqlQuery query = qdb.queryDB(db_name, db_address_, db_username_, db_password_, sql);
 //    qDebug() << "DataBase: "<< db_name << " table " << table_name <<" colume count = " << query.size();
     QStringList qsl;
     while(query.next()) {
@@ -46,7 +46,7 @@ QVector<double> DataProcess::queryRawDataBySelTableColName(QString db_name, QStr
                 "' and '" + end_time.toString("yyyy-MM-dd HH:mm:ss") + "';";
     qDebug()<<sql;
     QueryDB qdb;
-    QSqlQuery query = qdb.queryDB(db_name, sql);
+    QSqlQuery query = qdb.queryDB(db_name, db_address_, db_username_, db_password_, sql);
     QVector<double> result;
     while(query.next()) {
         result.push_back(query.value(0).toDouble());

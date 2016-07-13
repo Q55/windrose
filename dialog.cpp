@@ -148,7 +148,7 @@ Dialog::Dialog(QWidget *parent) :
 
     // pre-processing
     //initial Table list
-    configDataBaseDialog();
+    //configDataBasePopDialog();
 //    initTableList(0, dpclass.queryTableNameListbyDBName(dbIndexNameMap[0]));
 //    initTableList(1, dpclass.queryTableNameListbyDBName(dbIndexNameMap[1]));
 //    initTableList(2, dpclass.queryTableNameListbyDBName(dbIndexNameMap[2]));
@@ -157,6 +157,8 @@ Dialog::Dialog(QWidget *parent) :
     //setDBTableList(ui->comboBox_db_list->currentIndex());
     //setTableColList(ui->comboBox_tb_list->currentText());
     // signals and slots for database, table, colume.
+
+    connect(ui->pushButton_config_db, SIGNAL(clicked()), this, SLOT(configDataBasePopDialog()));
     connect(ui->comboBox_db_list, SIGNAL( currentIndexChanged(int) ), this, SLOT( setDBTableList(int) ) );
     connect(ui->comboBox_tb_list, SIGNAL( currentIndexChanged(QString) ), this, SLOT( setTableColList(QString) ) );
     // select col list:
@@ -215,7 +217,7 @@ Dialog::Dialog(QWidget *parent) :
 }
 
 
-void Dialog::configDataBaseDialog() {
+void Dialog::configDataBasePopDialog() {
 
     ConfigDataBase *config_db_dlg = new ConfigDataBase(
                 dpclass.getDBAddress(),
@@ -245,8 +247,14 @@ void Dialog::dealConfigDataBase(QString db_address, QString db_username, QString
 
     // if re-config database, clear all buffer. added by shiqiang, 2016.07.13
     clearAllData();
-    for (int i = 0; i < namelist.size(); ++i)
+    ui->comboBox_db_list->clear();
+    ui->comboBox_tb_list->clear();
+    ui->pre_table_cols_list->clear();
+    for (int i = 0; i < namelist.size(); ++i) {
         ui->comboBox_db_list->addItem(namelist.value(i));
+    }
+
+    //setDBTableList(ui->comboBox_db_list->currentIndex());
 }
 
 
@@ -752,45 +760,67 @@ void Dialog::initProgress()
 //    ui->lineEdit_tips->setText("0");
 }
 
-void Dialog::initTableList(int index, QStringList strings)
-{
-    switch (index) {
-    case 0:
-        table111 = strings;
-        break;
-    case 1:
-        table112 = strings;
-        break;
-    case 2:
-        table118 = strings;
-        break;
-    default:
-        break;
-    }
-}
+//void Dialog::initTableList(int index, QStringList strings)
+//{
+//    switch (index) {
+//    case 0:
+//        table111 = strings;
+//        break;
+//    case 1:
+//        table112 = strings;
+//        break;
+//    case 2:
+//        table118 = strings;
+//        break;
+//    default:
+//        break;
+//    }
+//}
 
-void Dialog::setDBTableList( int style ) {
-    if ( style == FPSO111 ) {
+void Dialog::setDBTableList( int index ) {
+
+    QString db_name = ui->comboBox_db_list->itemText(index);
+    QStringList tb_list = dpclass.queryTableNameListbyDBName(db_name);
+
+    if (tb_list.size() <= 0) {
+//        QMessageBox msgBox;
+//        msgBox.setWindowTitle(tr("获取数据库表失败"));
+//        msgBox.setText("请检查用户名、密码和数据库名称是否正确！");
+//        msgBox.setDefaultButton(QMessageBox::Ok);
+//        msgBox.exec();
         ui->comboBox_tb_list->clear();
-        ui->comboBox_tb_list->addItems(table111);
-    } else if ( style == FPSO112 ) {
-        ui->comboBox_tb_list->clear();
-        ui->comboBox_tb_list->addItems(table112);
-    } else if ( style == FPSO118 ) {
-        ui->comboBox_tb_list->clear();
-        ui->comboBox_tb_list->addItems(table118);
-    } else {
-        QErrorMessage *errDialog = new QErrorMessage(this);
-        errDialog->showMessage("数据库不存在!");
+        ui->pre_table_cols_list->clear();
         return;
     }
+
+    ui->comboBox_tb_list->clear();
+    ui->comboBox_tb_list->addItems(tb_list);
     ui->comboBox_tb_list->setCurrentIndex(0);
     repaint();
+
+//    if ( style == FPSO111 ) {
+//        ui->comboBox_tb_list->clear();
+//        ui->comboBox_tb_list->addItems(table111);
+//    } else if ( style == FPSO112 ) {
+//        ui->comboBox_tb_list->clear();
+//        ui->comboBox_tb_list->addItems(table112);
+//    } else if ( style == FPSO118 ) {
+//        ui->comboBox_tb_list->clear();
+//        ui->comboBox_tb_list->addItems(table118);
+//    } else {
+//        QErrorMessage *errDialog = new QErrorMessage(this);
+//        errDialog->showMessage("数据库不存在!");
+//        return;
+//    }
+//    ui->comboBox_tb_list->setCurrentIndex(0);
+//    repaint();
 }
 
 void Dialog::setTableColList(QString tablename) {
-    if (tablename == "")
+    if (tablename == "") {
+        ui->pre_table_cols_list->clear();
         return;
+    }
     int dbIndex = ui->comboBox_db_list->currentIndex();
     QString dbName = dbIndexNameMap[dbIndex];
     QStringList dbListItems = dpclass.queryColumnNameListInTable(dbName, tablename);

@@ -47,7 +47,7 @@ public:
     void setBackgroud();
 
 public slots:
-    void configDataBaseDialog();
+    void configDataBasePopDialog();
     void dealConfigDataBase(QString, QString, QString, QVector<QString>);
 
     /*****************************

@@ -20,6 +20,7 @@ signals:
     void configDataBase(QString, QString, QString, QVector<QString>);
 
 public slots:
+    void addDBName();
     void accept();
 
 private:
