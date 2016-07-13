@@ -53,7 +53,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -959,7 +959,7 @@ color: rgb(0, 0, 127);</string>
                </size>
               </property>
               <property name="text">
-               <string>time_step:</string>
+               <string>时间步长:</string>
               </property>
              </widget>
             </item>
@@ -1280,7 +1280,7 @@ color: rgb(0, 0, 127);</string>
                </size>
               </property>
               <property name="text">
-               <string>time_step:</string>
+               <string>时间步长:</string>
               </property>
              </widget>
             </item>
@@ -1388,7 +1388,7 @@ color: rgb(0, 0, 127);</string>
                </size>
               </property>
               <property name="text">
-               <string>gsd:</string>
+               <string>总体方差:</string>
               </property>
              </widget>
             </item>
@@ -1814,9 +1814,9 @@ color: rgb(0, 0, 127);</string>
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>14</y>
-          <width>436</width>
-          <height>135</height>
+          <y>20</y>
+          <width>341</width>
+          <height>131</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_51">
@@ -3562,7 +3562,7 @@ color: rgb(0, 0, 127);</string>
           <bool>true</bool>
          </property>
          <attribute name="label">
-          <string>船体位置计算</string>
+          <string>GPS坐标转换</string>
          </attribute>
          <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
@@ -3799,7 +3799,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>spmx:</string>
+                    <string>单东:</string>
                    </property>
                   </widget>
                  </item>
@@ -3855,7 +3855,7 @@ color: rgb(0, 0, 127);</string>
                     <enum>QFrame::NoFrame</enum>
                    </property>
                    <property name="text">
-                    <string>aftx:</string>
+                    <string>船东:</string>
                    </property>
                   </widget>
                  </item>
@@ -3909,7 +3909,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>spmy:</string>
+                    <string>单北:</string>
                    </property>
                   </widget>
                  </item>
@@ -3959,7 +3959,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>afty:</string>
+                    <string>船北:</string>
                    </property>
                   </widget>
                  </item>
@@ -4013,7 +4013,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>spmz:</string>
+                    <string>单海拔:</string>
                    </property>
                   </widget>
                  </item>
@@ -4063,7 +4063,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>aftz: </string>
+                    <string>船海拔: </string>
                    </property>
                   </widget>
                  </item>
@@ -4234,8 +4234,8 @@ color: rgb(0, 0, 127);</string>
            <rect>
             <x>10</x>
             <y>10</y>
-            <width>208</width>
-            <height>26</height>
+            <width>223</width>
+            <height>22</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_32">
@@ -4243,7 +4243,7 @@ color: rgb(0, 0, 127);</string>
             <widget class="QLabel" name="label_168">
              <property name="minimumSize">
               <size>
-               <width>40</width>
+               <width>55</width>
                <height>20</height>
               </size>
              </property>
@@ -4259,7 +4259,7 @@ color: rgb(0, 0, 127);</string>
               </font>
              </property>
              <property name="text">
-              <string>数据列:</string>
+              <string>监测数据</string>
              </property>
             </widget>
            </item>
@@ -4303,7 +4303,7 @@ color: rgb(0, 0, 127);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>估计精度:</string>
+                  <string>统计步长:</string>
                  </property>
                 </widget>
                </item>
@@ -4365,7 +4365,7 @@ color: rgb(0, 0, 127);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>结果:</string>
+                  <string>统计极值:</string>
                  </property>
                 </widget>
                </item>
@@ -4414,7 +4414,7 @@ color: rgb(0, 0, 127);</string>
            <rect>
             <x>10</x>
             <y>10</y>
-            <width>241</width>
+            <width>247</width>
             <height>62</height>
            </rect>
           </property>
@@ -4427,7 +4427,7 @@ color: rgb(0, 0, 127);</string>
                 <widget class="QLabel" name="label_169">
                  <property name="minimumSize">
                   <size>
-                   <width>40</width>
+                   <width>55</width>
                    <height>20</height>
                   </size>
                  </property>
@@ -4443,7 +4443,7 @@ color: rgb(0, 0, 127);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>数据列:</string>
+                  <string>时域数据:</string>
                  </property>
                 </widget>
                </item>
@@ -4486,7 +4486,7 @@ color: rgb(0, 0, 127);</string>
               <widget class="QLabel" name="label_66">
                <property name="minimumSize">
                 <size>
-                 <width>40</width>
+                 <width>55</width>
                  <height>20</height>
                 </size>
                </property>
@@ -4502,7 +4502,7 @@ color: rgb(0, 0, 127);</string>
                 </font>
                </property>
                <property name="text">
-                <string>频率:</string>
+                <string>采样频率:</string>
                </property>
               </widget>
              </item>
@@ -4764,7 +4764,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>min1:</string>
+                    <string>极小控制值1</string>
                    </property>
                   </widget>
                  </item>
@@ -4788,7 +4788,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>min2:</string>
+                    <string>极小控制值2</string>
                    </property>
                   </widget>
                  </item>
@@ -4815,7 +4815,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>肯德尔系数结果:</string>
+                    <string>肯德尔系数:</string>
                    </property>
                   </widget>
                  </item>
@@ -4871,7 +4871,7 @@ color: rgb(0, 0, 127);</string>
            <rect>
             <x>10</x>
             <y>0</y>
-            <width>326</width>
+            <width>331</width>
             <height>121</height>
            </rect>
           </property>
@@ -4887,7 +4887,7 @@ color: rgb(0, 0, 127);</string>
                 <widget class="QLabel" name="label_172">
                  <property name="minimumSize">
                   <size>
-                   <width>40</width>
+                   <width>55</width>
                    <height>20</height>
                   </size>
                  </property>
@@ -4903,7 +4903,7 @@ color: rgb(0, 0, 127);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>数据列:</string>
+                  <string>监测数据:</string>
                  </property>
                 </widget>
                </item>
@@ -4950,7 +4950,7 @@ color: rgb(0, 0, 127);</string>
                   <widget class="QLabel" name="label_107">
                    <property name="minimumSize">
                     <size>
-                     <width>52</width>
+                     <width>55</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -4962,11 +4962,11 @@ color: rgb(0, 0, 127);</string>
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>9</pointsize>
+                     <pointsize>8</pointsize>
                     </font>
                    </property>
                    <property name="text">
-                    <string>limitmin:</string>
+                    <string>拟合极小值</string>
                    </property>
                   </widget>
                  </item>
@@ -5003,11 +5003,11 @@ color: rgb(0, 0, 127);</string>
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>9</pointsize>
+                     <pointsize>8</pointsize>
                     </font>
                    </property>
                    <property name="text">
-                    <string>a0resol:</string>
+                    <string>a0分辨率</string>
                    </property>
                   </widget>
                  </item>
@@ -5050,11 +5050,11 @@ color: rgb(0, 0, 127);</string>
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>9</pointsize>
+                     <pointsize>7</pointsize>
                     </font>
                    </property>
                    <property name="text">
-                    <string>kesimin:</string>
+                    <string>kesi最小估值</string>
                    </property>
                   </widget>
                  </item>
@@ -5107,7 +5107,7 @@ color: rgb(0, 0, 127);</string>
                       </font>
                      </property>
                      <property name="text">
-                      <string>kesimax:</string>
+                      <string>kesi最大估值</string>
                      </property>
                     </widget>
                    </item>
@@ -5154,7 +5154,7 @@ color: rgb(0, 0, 127);</string>
                       </font>
                      </property>
                      <property name="text">
-                      <string>whsample:</string>
+                      <string>输出分辨率</string>
                      </property>
                     </widget>
                    </item>
@@ -5205,7 +5205,7 @@ color: rgb(0, 0, 127);</string>
                       </font>
                      </property>
                      <property name="text">
-                      <string>kesiresol:</string>
+                      <string>kesi分辨率</string>
                      </property>
                     </widget>
                    </item>
@@ -5240,7 +5240,7 @@ color: rgb(0, 0, 127);</string>
                       </font>
                      </property>
                      <property name="text">
-                      <string>whmax:</string>
+                      <string>输出最大值</string>
                      </property>
                     </widget>
                    </item>
@@ -5413,7 +5413,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>limit_min1:</string>
+                    <string>极小控制值1</string>
                    </property>
                   </widget>
                  </item>
@@ -5436,7 +5436,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>limit_min2:</string>
+                    <string>极小控制值2:</string>
                    </property>
                   </widget>
                  </item>
@@ -5466,7 +5466,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>step1:</string>
+                    <string>步长1</string>
                    </property>
                   </widget>
                  </item>
@@ -5489,7 +5489,7 @@ color: rgb(0, 0, 127);</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>step2:</string>
+                    <string>步长2</string>
                    </property>
                   </widget>
                  </item>
@@ -5544,22 +5544,22 @@ color: rgb(0, 0, 127);</string>
                  </property>
                  <item>
                   <property name="text">
-                   <string>Stats1D</string>
+                   <string>一维概率密度函数</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>Stats2D</string>
+                   <string>二维概率密度函数</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>DistrF1</string>
+                   <string>一维概率分布函数</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>DistrF2</string>
+                   <string>二维概率分布函数</string>
                   </property>
                  </item>
                 </widget>
@@ -5601,7 +5601,7 @@ color: rgb(0, 0, 127);</string>
            <rect>
             <x>10</x>
             <y>1</y>
-            <width>221</width>
+            <width>280</width>
             <height>131</height>
            </rect>
           </property>
@@ -5615,13 +5615,13 @@ color: rgb(0, 0, 127);</string>
               <widget class="QLabel" name="label_91">
                <property name="minimumSize">
                 <size>
-                 <width>30</width>
+                 <width>110</width>
                  <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>30</width>
+                 <width>110</width>
                  <height>20</height>
                 </size>
                </property>
@@ -5631,7 +5631,7 @@ color: rgb(0, 0, 127);</string>
                 </font>
                </property>
                <property name="text">
-                <string>ff1:</string>
+                <string>一维概率密度函数1:</string>
                </property>
               </widget>
              </item>
@@ -5653,13 +5653,13 @@ color: rgb(0, 0, 127);</string>
               <widget class="QLabel" name="label_93">
                <property name="minimumSize">
                 <size>
-                 <width>30</width>
+                 <width>110</width>
                  <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>30</width>
+                 <width>110</width>
                  <height>20</height>
                 </size>
                </property>
@@ -5669,7 +5669,7 @@ color: rgb(0, 0, 127);</string>
                 </font>
                </property>
                <property name="text">
-                <string>ff2:</string>
+                <string>一维概率密度函数2:</string>
                </property>
               </widget>
              </item>
@@ -5697,13 +5697,13 @@ color: rgb(0, 0, 127);</string>
               <widget class="QLabel" name="label_92">
                <property name="minimumSize">
                 <size>
-                 <width>30</width>
+                 <width>110</width>
                  <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>30</width>
+                 <width>110</width>
                  <height>20</height>
                 </size>
                </property>
@@ -5713,7 +5713,7 @@ color: rgb(0, 0, 127);</string>
                 </font>
                </property>
                <property name="text">
-                <string>FF1:</string>
+                <string>一维概率分布函数1:</string>
                </property>
               </widget>
              </item>
@@ -5741,13 +5741,13 @@ color: rgb(0, 0, 127);</string>
               <widget class="QLabel" name="label_94">
                <property name="minimumSize">
                 <size>
-                 <width>30</width>
+                 <width>110</width>
                  <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>30</width>
+                 <width>110</width>
                  <height>20</height>
                 </size>
                </property>
@@ -5757,7 +5757,7 @@ color: rgb(0, 0, 127);</string>
                 </font>
                </property>
                <property name="text">
-                <string>FF2:</string>
+                <string>一维概率分布函数2:</string>
                </property>
               </widget>
              </item>
@@ -5787,13 +5787,13 @@ color: rgb(0, 0, 127);</string>
                 <widget class="QLabel" name="label_127">
                  <property name="minimumSize">
                   <size>
-                   <width>30</width>
+                   <width>110</width>
                    <height>20</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>30</width>
+                   <width>110</width>
                    <height>20</height>
                   </size>
                  </property>
@@ -5803,7 +5803,7 @@ color: rgb(0, 0, 127);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>R:</string>
+                  <string>肯德尔系数:</string>
                  </property>
                 </widget>
                </item>
