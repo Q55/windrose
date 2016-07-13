@@ -38,6 +38,9 @@
      <height>61</height>
     </rect>
    </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::CustomContextMenu</enum>
+   </property>
   </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">

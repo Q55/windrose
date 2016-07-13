@@ -67,7 +67,7 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
 
     if (analyse_paras.empty()) {
         QErrorMessage * errDialog = new QErrorMessage();
-        errDialog->showMessage("No column data is selected.");
+        errDialog->showMessage("没有选择任何数据列");
         return;
     }
 

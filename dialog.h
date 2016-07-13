@@ -150,6 +150,7 @@ private:
     void initStartEndDateTime();
 
     bool clear_post_silentmode_;
+    bool clear_pre_silentmode_;
     int last_ref_col_;
     QMap<QString, QVector<double> > showdata_col_list_;
     double kendall_val_;

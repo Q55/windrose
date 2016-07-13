@@ -22,6 +22,8 @@ signals:
 public slots:
     void addDBName();
     void accept();
+    void addRightMenuToRemoveDBName(const QPoint &);
+    void removeSelDBName();
 
 private:
     Ui::ConfigDataBase *ui;

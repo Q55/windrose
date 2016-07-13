@@ -73,6 +73,8 @@ Dialog::Dialog(QWidget *parent) :
     //ui->tableWidget_col_data_details->verticalHeader()->setVisible(true);
     //ui->tableWidget_col_data_details->horizontalHeader()->setc
 
+    clear_post_silentmode_ = false;
+    clear_pre_silentmode_ = false;
     /////////////////////////////////////////////
     /// for cust lib test.
 //    QVector<double> data1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_stats_2d.csv",
@@ -246,25 +248,68 @@ void Dialog::dealConfigDataBase(QString db_address, QString db_username, QString
     dpclass.setDBNameList(namelist);
 
     // if re-config database, clear all buffer. added by shiqiang, 2016.07.13
-    clearAllData();
+    clear_pre_silentmode_ = true;
+    clearPreCache();
+    clear_pre_silentmode_ = false;
     ui->comboBox_db_list->clear();
     ui->comboBox_tb_list->clear();
     ui->pre_table_cols_list->clear();
     for (int i = 0; i < namelist.size(); ++i) {
+        DataProcess dptemp;
+        dptemp.setDBAddress(db_address);
+        dptemp.setDBUsername(db_username);
+        dptemp.setDBPassword(db_passwd);
+        QStringList temp = dptemp.queryTableNameListbyDBName(namelist.value(i));
+        if (temp.size() <= 0) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle(tr("警告"));
+            msgBox.setText("数据库查询失败或数据库为空，请检查用户名、密码和数据库名称是否正确！");
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.exec();
+            return;
+        }
         ui->comboBox_db_list->addItem(namelist.value(i));
     }
 
-    //setDBTableList(ui->comboBox_db_list->currentIndex());
+    ui->comboBox_db_list->repaint();
+}
+
+void Dialog::setDBTableList( int index ) {
+
+    if (index < 0) {
+
+        return;
+    }
+
+    QString db_name = ui->comboBox_db_list->itemText(index);
+    QStringList tb_list = dpclass.queryTableNameListbyDBName(db_name);
+
+    if (tb_list.size() <= 0) {
+        ui->comboBox_tb_list->clear();
+        ui->pre_table_cols_list->clear();
+        return;
+    }
+
+    ui->comboBox_tb_list->clear();
+    ui->comboBox_tb_list->addItems(tb_list);
+    ui->comboBox_tb_list->setCurrentIndex(0);
+    ui->comboBox_tb_list->repaint();
+}
+
+void Dialog::setTableColList(QString tablename) {
+    if (tablename == "") {
+        ui->pre_table_cols_list->clear();
+        return;
+    }
+    QString dbName = ui->comboBox_db_list->currentText();
+    QStringList dbListItems = dpclass.queryColumnNameListInTable(dbName, tablename);
+    ui->pre_table_cols_list->clear();
+    ui->pre_table_cols_list->addItems(dbListItems);
+    ui->pre_table_cols_list->setCurrentItem(0);
+    ui->pre_table_cols_list->repaint();
 }
 
 
-//    void FPSO_MOTIONS(double Hs, double Tp, double dir_wave, double Vw, double
-//                      dir_win, double Vc, double dir_cur, double draft_aft, double
-//                      draft_bow, double *heading, double *statoffset, double
-//                      *maxoffset_ind, double *clearance, double *maxTx, double
-//                      *maxTe, double *Sf, double st_xforce[24], double st_tension[24],
-//                      double st_sf[24], double st_offset[24], double st_clearance[24],
-//                      double st_roll[24], double st_pitch[24]);
 void Dialog::forecastStart() {
 
     // input
@@ -777,59 +822,6 @@ void Dialog::initProgress()
 //    }
 //}
 
-void Dialog::setDBTableList( int index ) {
-
-    QString db_name = ui->comboBox_db_list->itemText(index);
-    QStringList tb_list = dpclass.queryTableNameListbyDBName(db_name);
-
-    if (tb_list.size() <= 0) {
-//        QMessageBox msgBox;
-//        msgBox.setWindowTitle(tr("获取数据库表失败"));
-//        msgBox.setText("请检查用户名、密码和数据库名称是否正确！");
-//        msgBox.setDefaultButton(QMessageBox::Ok);
-//        msgBox.exec();
-        ui->comboBox_tb_list->clear();
-        ui->pre_table_cols_list->clear();
-        return;
-    }
-
-    ui->comboBox_tb_list->clear();
-    ui->comboBox_tb_list->addItems(tb_list);
-    ui->comboBox_tb_list->setCurrentIndex(0);
-    repaint();
-
-//    if ( style == FPSO111 ) {
-//        ui->comboBox_tb_list->clear();
-//        ui->comboBox_tb_list->addItems(table111);
-//    } else if ( style == FPSO112 ) {
-//        ui->comboBox_tb_list->clear();
-//        ui->comboBox_tb_list->addItems(table112);
-//    } else if ( style == FPSO118 ) {
-//        ui->comboBox_tb_list->clear();
-//        ui->comboBox_tb_list->addItems(table118);
-//    } else {
-//        QErrorMessage *errDialog = new QErrorMessage(this);
-//        errDialog->showMessage("数据库不存在!");
-//        return;
-//    }
-//    ui->comboBox_tb_list->setCurrentIndex(0);
-//    repaint();
-}
-
-void Dialog::setTableColList(QString tablename) {
-    if (tablename == "") {
-        ui->pre_table_cols_list->clear();
-        return;
-    }
-    int dbIndex = ui->comboBox_db_list->currentIndex();
-    QString dbName = dbIndexNameMap[dbIndex];
-    QStringList dbListItems = dpclass.queryColumnNameListInTable(dbName, tablename);
-    ui->pre_table_cols_list->clear();
-    ui->pre_table_cols_list->addItems(dbListItems);
-    ui->pre_table_cols_list->setCurrentItem(0);
-    repaint();
-}
-
 void Dialog::preAddSelectedColList(QListWidgetItem *item) {
     preAddSelectedColList();
 }
@@ -1046,12 +1038,15 @@ void Dialog::startPreProcess()
 }
 
 void Dialog::clearPreCache(){
-    QMessageBox msgBox;
-    msgBox.setWindowTitle(tr("清除缓存"));
-    msgBox.setText("确认清除内存中所有缓存?");
-    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-    msgBox.setDefaultButton(QMessageBox::Ok);
-    int ret = msgBox.exec();
+    int ret = QMessageBox::Ok;
+    if (!clear_pre_silentmode_) {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle(tr("清除缓存"));
+        msgBox.setText("确认清除内存中所有缓存?");
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        ret = msgBox.exec();
+    }
 
     if (ret == QMessageBox::Ok) {
         dpclass.clearRawDataMap();
@@ -1063,6 +1058,11 @@ void Dialog::clearPreCache(){
         //pre_sel_colrepeatlist_map.clear();
         pre_selcol_count_map.clear();
         map_col_list_analyse_paras.clear();
+
+        ui->groupBox_rangeCont->setChecked(false);
+        ui->groupBox_interConsis->setChecked(false);
+        ui->groupBox_rangeFilter->setChecked(false);
+        ui->groupBox_timeCont->setChecked(false);
 
         ui->pre_selected_col_list->clear();
         ui->post_proc_raw_col_list->clear();
@@ -1082,10 +1082,12 @@ void Dialog::clearPreCache(){
 
         ui->spinBox_selCol->setValue(map_col_list_analyse_paras.size());
 
-        QMessageBox msgBox;
-        msgBox.setWindowTitle(tr("清除缓存"));
-        msgBox.setText("所有缓存已被清除!");
-        msgBox.exec();
+        if (!clear_pre_silentmode_) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle(tr("清除缓存"));
+            msgBox.setText("所有缓存已被清除!");
+            msgBox.exec();
+        }
     }
 }
 

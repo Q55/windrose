@@ -296,3 +296,5 @@ FORMS    += \
 RESOURCES += \
     stylesheet.qrc
 
+RC_FILE += icon.rc
+

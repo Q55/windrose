@@ -2,6 +2,7 @@
 #include "ui_configdatabase.h"
 #include "dataprocess.h"
 #include <QMessageBox>
+#include <QMenu>
 
 ConfigDataBase::ConfigDataBase(QWidget *parent) :
     QDialog(parent),
@@ -12,6 +13,8 @@ ConfigDataBase::ConfigDataBase(QWidget *parent) :
     this->setWindowTitle("配置数据库");
     this->setFixedSize(QSize(343, 243));
     connect(ui->config_add_dbname, SIGNAL(clicked()), this, SLOT(addDBName()));
+    connect(ui->listWidget_db_name_list, SIGNAL(customContextMenuRequested(const QPoint &)),
+            this, SLOT(addRightMenuToRemoveDBName(const QPoint &)));
 }
 
 ConfigDataBase::ConfigDataBase(QString db_address, QString db_username, QString db_password, QVector<QString> db_list, QWidget *parent) :
@@ -30,7 +33,35 @@ ConfigDataBase::ConfigDataBase(QString db_address, QString db_username, QString 
         ui->listWidget_db_name_list->addItem(db_list.value(i));
     }
     connect(ui->config_add_dbname, SIGNAL(clicked()), this, SLOT(addDBName()));
+    connect(ui->listWidget_db_name_list, SIGNAL(customContextMenuRequested(const QPoint &)),
+            this, SLOT(addRightMenuToRemoveDBName(const QPoint &)));
 }
+
+void ConfigDataBase::addRightMenuToRemoveDBName(const QPoint &) {
+    QMenu *right_menu = new QMenu(ui->listWidget_db_name_list);
+    QAction *del_dbname = new QAction(tr("删除数据库"), ui->listWidget_db_name_list);
+
+    connect(del_dbname, SIGNAL(triggered(bool)), this, SLOT(removeSelDBName()));
+
+    if (ui->listWidget_db_name_list->selectedItems().size() > 0) {
+        right_menu->addAction(del_dbname);
+    }
+
+    right_menu->exec(QCursor::pos());
+
+    delete right_menu;
+    delete del_dbname;
+}
+
+void ConfigDataBase::removeSelDBName() {
+    QList<QListWidgetItem *> delItems = ui->listWidget_db_name_list->selectedItems();
+    if(delItems.empty()) return;
+
+    for (QList<QListWidgetItem *>::iterator it = delItems.begin(); it != delItems.end(); ++it) {
+        delete ui->listWidget_db_name_list->takeItem(ui->listWidget_db_name_list->row(*it));
+    }
+    repaint();
+ }
 
 void ConfigDataBase::addDBName() {
     QString new_db_name = ui->config_db_name->text();
