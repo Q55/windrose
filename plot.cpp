@@ -245,7 +245,7 @@ Plot::Plot( QWidget *parent ):
     // MidButton for the panning
     // RightButton: zoom out by 1
     // Ctrl+RighButton: zoom out to full size
-    zoomer = new CustZoomer( canvas() );
+    zoomer = new QwtPlotZoomer(canvas()); //CustZoomer( canvas() );
     zoomer->setMousePattern( QwtEventPattern::MouseSelect2, Qt::RightButton, Qt::ControlModifier );
     zoomer->setMousePattern( QwtEventPattern::MouseSelect3, Qt::RightButton );
     const QColor c( Qt::darkBlue );
@@ -318,21 +318,5 @@ void Plot::setCurveStyle(QwtPlotCurve::CurveStyle style)
 }
 
 
-//void Plot::showContour( bool on )
-//{
-//    d_spectrogram->setDisplayMode( QwtPlotSpectrogram::ContourMode, on );
-//    replot();
-//}
-
-
-//for spectrogram
-//void Plot::showSpectrogram( bool on )
-//{
-//    d_spectrogram->setDisplayMode( QwtPlotSpectrogram::ImageMode, on );
-//    d_spectrogram->setDefaultContourPen(
-//        on ? QPen( Qt::black, 0 ) : QPen( Qt::NoPen ) );
-
-//    replot();
-//}
 
 

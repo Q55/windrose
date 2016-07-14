@@ -11,10 +11,11 @@ ConfigDataBase::ConfigDataBase(QWidget *parent) :
     ui->setupUi(this);
 
     this->setWindowTitle("配置数据库");
-    this->setFixedSize(QSize(343, 243));
+    this->setFixedSize(QSize(343, 264));
     connect(ui->config_add_dbname, SIGNAL(clicked()), this, SLOT(addDBName()));
     connect(ui->listWidget_db_name_list, SIGNAL(customContextMenuRequested(const QPoint &)),
             this, SLOT(addRightMenuToRemoveDBName(const QPoint &)));
+
 }
 
 ConfigDataBase::ConfigDataBase(QString db_address, QString db_username, QString db_password, QVector<QString> db_list, QWidget *parent) :
@@ -23,7 +24,7 @@ ConfigDataBase::ConfigDataBase(QString db_address, QString db_username, QString 
 {
     ui->setupUi(this);
     this->setWindowTitle("配置数据库");
-        this->setFixedSize(QSize(343, 243));
+        this->setFixedSize(QSize(343, 264));
 
     ui->config_db_address->setText(db_address);
     ui->config_db_username->setText(db_username);

@@ -1,5 +1,8 @@
 <RCC>
-  <qresource prefix="qss">
-    <file>optstyle.qss</file>
-  </qresource>
+    <qresource prefix="/qss">
+        <file>optstyle.qss</file>
+    </qresource>
+    <qresource prefix="/image">
+        <file>bg.jpg</file>
+    </qresource>
 </RCC>

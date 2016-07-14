@@ -146,7 +146,7 @@ Dialog::Dialog(QWidget *parent) :
     //pre_sel_colrepeatlist_map.clear();
 
     //for test zyn
-//    setBackgroud();
+    setBackgroud();
 
     // pre-processing
     //initial Table list
@@ -216,6 +216,16 @@ Dialog::Dialog(QWidget *parent) :
 
     // forecast
     connect(ui->pushButton_forcast, SIGNAL(clicked()), this, SLOT(forecastStart()));
+
+    ui->tableWidget_col_data_details->setColumnWidth(0,50);
+    for(int i=0;i<5;i++)
+    {
+        QTableWidgetItem * header_item2 = new QTableWidgetItem(QString("数据列%1").arg(i+1));
+        ui->tableWidget_col_data_details->setHorizontalHeaderItem(i+1,header_item2);
+    }
+
+    setWindowFlags(Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint);
+    setFixedSize(932,710);
 }
 
 
@@ -224,8 +234,10 @@ void Dialog::configDataBasePopDialog() {
     ConfigDataBase *config_db_dlg = new ConfigDataBase(
                 dpclass.getDBAddress(),
                 dpclass.getDBUsername(),
-                dpclass.getDBPassword(),
+                "",
                 dpclass.getDBNameList());
+
+
     config_db_dlg->show();
 
     connect(config_db_dlg, SIGNAL(configDataBase(QString, QString, QString, QVector<QString>)),
@@ -1356,7 +1368,7 @@ void Dialog::postPrepareDataForAnalysis(int index) {
     QString msg_style = "color: rgb(44,104,7);";
 
     if (index == 0) { // enpost
-        msg = "船体位置计算无需数据列";
+        msg = "GPS坐标转换无需数据列";
         msg_style = "color: rgb(44,104,7);";
     } else if (index == 1) { // weighted fit
         msg = "曲线拟合需要2列数据";
@@ -1479,12 +1491,12 @@ void Dialog::postStartDataAnalysis() {
                             ui->lineEdit_enpost_altitude->text().toDouble(),
                             spmx, spmy, spmz, aftx, afty, aftz);
             ui->lineEdit_enpost_spmx->setText(QString::number(spmx));
-            ui->lineEdit_enpost_spmy->setText(QString::number(spmy));
+            ui->lineEdit_enpost_spmy->setText(QString::number(spmy,'g',4));
             ui->lineEdit_enpost_spmz->setText(QString::number(spmz));
             ui->lineEdit_enpost_aftx->setText(QString::number(aftx));
-            ui->lineEdit_enpost_afty->setText(QString::number(afty));
+            ui->lineEdit_enpost_afty->setText(QString::number(afty,'g',4));
             ui->lineEdit_enpost_aftz->setText(QString::number(aftz));
-            msg = "船体位置计算成功，结果见输出文件框";
+            msg = "GPS坐标转换成功，结果见输出文件框";
             msg_style = "color: rgb(44,104,7);";
             break;
         }
@@ -2110,7 +2122,7 @@ void Dialog::initStartEndDateTime()
 
 void Dialog::setBackgroud()
 {
-    QPalette p;
+/*    QPalette p;
 
 //    p = ui->preProcGroupBox->palette();
 //    p.setColor(QPalette::Window, QColor(217, 228, 241));
@@ -2208,6 +2220,33 @@ void Dialog::setBackgroud()
     p = ui->groupBox_sysPara->palette();
     p.setColor(QPalette::Window, QColor(color2));
     ui->groupBox_sysPara->setPalette(p);
+    */
+
+    setStyleSheet("QGroupBox#groupBox_filterCond::title {color:blue}"
+                  "QToolBox::tab:selected, QToolBox::tab:hover  {"
+                  "background-color: #c1d9f3;"
+                  "border-bottom-color: #8587ff; "/* same as pane color */
+                  "}"
+
+              "QToolBox::tab:!selected {"
+              "margin-top: 2px;"
+              "background-color:#e0ecf9"
+              "}"
+
+              );
+
+    ui->preProcGroupBox->setStyleSheet("QGroupBox::title {color:blue}");
+    ui->groupBox_anaPara->setStyleSheet("QGroupBox::title {color:blue}");
+//    ui->groupBox_filterCond->setStyleSheet("QGroupBox::title {color:blue}");
+    ui->groupBox_timeCond->setStyleSheet("QGroupBox::title {color:blue}");
+    ui->groupBox_dataSel->setStyleSheet("QGroupBox::title {color:blue}");
+    ui->groupBox_dataTable->setStyleSheet("QGroupBox::title {color:blue}");
+    ui->groupBox_dataAnalysis->setStyleSheet("QGroupBox::title {color:blue}e");
+    ui->groupBox_drawGraph->setStyleSheet("QGroupBox::title {color:blue}");
+    ui->groupBox_loadSug->setStyleSheet("QGroupBox::title {color:blue}");
+    ui->groupBox_sysPara->setStyleSheet("QGroupBox::title {color:blue}");
+    ui->groupBox_settingCond->setStyleSheet("QGroupBox::title {color:blue}");
+    ui->groupBox_calResult->setStyleSheet("QGroupBox::title {color:blue}");
 
 }
 
