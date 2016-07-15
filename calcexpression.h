@@ -11,7 +11,7 @@ public:
     CalcExpression(QString var_name, QString expression);
     double calcExpr(double input); // data
 
-private:
+public:
     bool isNum(const QChar &ch);
     bool isStrNum(const QString &str);
     bool isOperator(const QChar &ch);

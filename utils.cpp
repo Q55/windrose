@@ -778,13 +778,15 @@ void Utils::qt2DMaxEntropy(QVector<double> ff1, QVector<double> FF1, QVector<dou
     default: return;
     }
 
-    out.resize(out_yy->size[0]);
-    for (int i = 0; i < out.size(); ++i)
-        out[i].resize(out_yy->size[1]);
+    if (out_yy->data != 0) {
+        out.resize(out_yy->size[0]);
+        for (int i = 0; i < out.size(); ++i)
+            out[i].resize(out_yy->size[1]);
 
-    for (int i = 0; i < out_yy->size[1]; ++i) {
-        for (int j = 0; j < out_yy->size[0]; ++j) {
-            out[j][i] = out_yy->data[i * out_yy->size[0] + j];
+        for (int i = 0; i < out_yy->size[1]; ++i) {
+            for (int j = 0; j < out_yy->size[0]; ++j) {
+                out[j][i] = out_yy->data[i * out_yy->size[0] + j];
+            }
         }
     }
 

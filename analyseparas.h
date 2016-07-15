@@ -43,7 +43,7 @@ public:
         this->data_cont_check_type = 1.0; //FIXME 06-07
 
         this->consist_check = false;
-        this->var_name = "a";
+        this->var_name = "x";
         this->expression = "";
         this->consist_check_type = 1.0;//FIXME 06-07
         //this->process_type = 0;

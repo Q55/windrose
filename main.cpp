@@ -22,7 +22,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QPixmap pixmap(":/image/bg.jpg");
+    QPixmap pixmap("://icons//bg.jpg");
+//    QPixmap pixmap("bg.jpg");
     QSplashScreen splash(pixmap);
     splash.show();
     Producer::msleep(500);

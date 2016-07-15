@@ -33,7 +33,7 @@ QwtGraphPlotCustom::QwtGraphPlotCustom() {
 //    (void) new QwtPlotPanner(graph_plot->canvas());//使用鼠标左键平移
 
     //graph_plot->setFixedSize(QSize(800, 600));
-    resize(800, 600);
+    resize(900, 500);
 }
 
 void QwtGraphPlotCustom::plotForCorrelation(const QVector<double> &x, const QVector<double> &y) {

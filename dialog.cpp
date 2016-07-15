@@ -6,6 +6,7 @@
 #include "qwtgraphplotcustom.h"
 #include "qwtpolarwindroseplot.h"
 #include "qchartwindroseplot.h"
+#include "calcexpression.h"
 
 #include <QDebug>
 #include <QErrorMessage>
@@ -52,7 +53,7 @@ Dialog::Dialog(QWidget *parent) :
     ui->tableWidget_col_data_details->setHorizontalHeaderItem(0, header_item);
     for (int i = 1; i <= MAXSHOWCOLS; ++i) {
         header_item = new QTableWidgetItem(QString::number(i));
-            ui->tableWidget_col_data_details->setHorizontalHeaderItem(i, header_item);
+        ui->tableWidget_col_data_details->setHorizontalHeaderItem(i, header_item);
     }
     for (int i = 1; i <= 1000; ++i) {
         QTableWidgetItem * item = new QTableWidgetItem(QString::number(i));
@@ -226,6 +227,12 @@ Dialog::Dialog(QWidget *parent) :
 
     setWindowFlags(Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint);
     setFixedSize(932,710);
+
+    ui->comboBox_curveType->clear();
+    ui->comboBox_curveType->addItem("曲线图");
+    ui->comboBox_curveType->addItem("散点图");
+    ui->comboBox_curveType->addItem("玫瑰图");
+    ui->comboBox_curveType->addItem("直方图");
 }
 
 
@@ -933,6 +940,26 @@ void Dialog::saveConfigToMap() {
         emptyListErr->showMessage("请先选择列");
         return;
     }
+//    if (ui->groupBox_interConsis->isChecked()) {
+//        QString err_msg = "";
+//        if ((ui->lineEdit_preFormula->text()).size() > 0) {
+//            CalcExpression ce;
+//            if (!ce.isExpression(ui->lineEdit_preFormula->text())) {
+//                err_msg = "一致性检查：不是合法表达式，请检查！";
+//            }
+//        } else if (!(ui->lineEdit_preFormula->text()).contains(ui->lineEdit_preVarName->text(), Qt::CaseSensitive)) {
+//            err_msg = "变量名不匹配";
+//        }
+//        if (err_msg != "") {
+//            QMessageBox msgBox;
+//            msgBox.setWindowTitle(tr("警告"));
+//            msgBox.setText(err_msg);
+//            msgBox.setStandardButtons(QMessageBox::Ok);
+//            msgBox.setDefaultButton(QMessageBox::Ok);
+//            msgBox.exec();
+//            return;
+//        }
+//    }
 
     for (auto it = selected_items.begin(); it != selected_items.end(); ++it) {
         QString sel_col_name = (*it)->text();
@@ -1826,13 +1853,13 @@ void Dialog::postStartDataAnalysis() {
 
             // TEST: added by shiqiang, 2016.07.10
 //            ff1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_ff_Cla.pass.csv",
-//                                                                 3, 1000000, 1);
+//                                                                 3, 40, 1);
 //            FF1 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_ff_Cla.pass.csv",
-//                                                                 3, 1000000, 2);
+//                                                                 3, 40, 2);
 //            ff2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_ff_Cla.pass.csv",
-//                                                                 3, 1000000, 3);
+//                                                                 3, 50, 3);
 //            FF2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_ff_Cla.pass.csv",
-//                                                                 3, 1000000, 4);
+//                                                                 3, 50, 4);
 
             int type = ui->comboBox_2dshang_type->currentIndex();
             QVector<QVector<double> > out; // should be replaced by a more global variable--lsq, 2016.06.26

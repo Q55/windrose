@@ -293,8 +293,6 @@ FORMS    += \
     postcolrenamedialog.ui \
     configdatabase.ui
 
-RESOURCES += \
-    stylesheet.qrc
-
 RC_FILE += icon.rc
 
+RESOURCES = pixmaps/pixmaps.qrc

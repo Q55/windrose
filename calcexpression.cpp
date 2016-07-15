@@ -20,7 +20,7 @@ CalcExpression::CalcExpression(QString var_name, QString expression) {
 double CalcExpression::calcExpr(double input) {
     QVector<QString> expr_v = postfix_v;
     int index = expr_v.indexOf(this->var_name);
-    qDebug()<<"index of "<<var_name<<" = "<<index;
+    //qDebug()<<"index of "<<var_name<<" = "<<index;
     if (index < 0 || index > expr_v.size() - 1)
         return input;
     expr_v[index] = QString::number(input);
@@ -67,7 +67,7 @@ bool CalcExpression::isStrOperator(const QString &str) {
 
 bool CalcExpression::isExpression(const QString &str) {
     int flag = 0;
-    for (int i = 0; i < str.length() - 1; i++) {
+    for (int i = 0; i < str.size() - 1; i++) {
         const QChar ch = str[i];
         const QChar chb = str[i + 1];
         if (ch == '.' && !isNum(chb) || (!isNum(ch) && chb == '.')) {
