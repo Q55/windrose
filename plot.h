@@ -8,6 +8,7 @@
 #include <qwt_plot_spectrogram.h>
 #include <qwt_plot_picker.h>
 #include <qwt_plot_zoomer.h>
+#include <qwt_plot_panner.h>
 
 class QwtSymbol;
 
@@ -25,14 +26,21 @@ public:
     void appendCurve(QwtPlotCurve *);
     void setCurveStyle(QwtPlotCurve::CurveStyle);
 
+    void setBarChart(bool is_bar_chart) { is_bar_chart_ = is_bar_chart; }
+
 //public Q_SLOTS:
 //    void showContour ( bool on );
 //    void showSpectrogram ( bool on );
+
+public slots:
+    void setMouseActionByType(int);
 
 private:
     QwtPlotCurve *d_curve;
 public:
     QwtPlotZoomer* zoomer;
+    QwtPlotPanner *panner;
+    bool is_bar_chart_;
 };
 
 

@@ -23,14 +23,41 @@
 #include <qlabel.h>
 #include <qcheckbox.h>
 
+void QwtGraphPlotCustom::setMouseActionZoomer() {
+    move_->setChecked(false);
+    zoomer_->setChecked(true);
+
+    graph_plot->setMouseActionByType(0);
+}
+
+void QwtGraphPlotCustom::setMouseActionMove() {
+    move_->setChecked(true);
+    zoomer_->setChecked(false);
+
+    graph_plot->setMouseActionByType(1);
+}
 
 QwtGraphPlotCustom::QwtGraphPlotCustom() {
 
     graph_plot = new Plot(this);
     //graph_plot->setTitle( "数据分析图" );
     setCentralWidget( graph_plot );
-//    (void) new QwtPlotMagnifier(graph_plot->canvas()); //使用滚轮放大/缩小
-//    (void) new QwtPlotPanner(graph_plot->canvas());//使用鼠标左键平移
+
+    toolBar_ = new QToolBar(this);
+    zoomer_ = new QToolButton(toolBar_);
+    zoomer_->setText("缩放");
+    zoomer_->setCheckable(true);
+    toolBar_->addWidget(zoomer_);
+    move_ = new QToolButton(toolBar_);
+    move_->setText("平移");
+    move_->setCheckable(true);
+    toolBar_->addWidget(move_);
+
+    addToolBar(toolBar_);
+    //this->addToolBar(Qt::RightToolBarArea,toolBar);
+
+    connect(zoomer_, SIGNAL(clicked()), this, SLOT(setMouseActionZoomer()));
+    connect(move_, SIGNAL(clicked()), this, SLOT(setMouseActionMove()));
 
     //graph_plot->setFixedSize(QSize(800, 600));
     resize(900, 500);
@@ -277,6 +304,7 @@ void QwtGraphPlotCustom::plotForBarChart(const QVector<double> &x, const QVector
     QwtPlotBarChart *bar_chart = new QwtPlotBarChart("直方图");
     bar_chart->setSamples(samples);
     bar_chart->attach(graph_plot);
+    graph_plot->setBarChart(true);
     graph_plot->zoomer->setZoomBase();
 }
 

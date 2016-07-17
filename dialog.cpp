@@ -1861,7 +1861,7 @@ void Dialog::postStartDataAnalysis() {
 //            FF2 = Utils::getQVectorFromFile("/Users/lishiqiang/Documents/parttime/外协交流/2Dmaximumentropy/test_data_ff_Cla.pass.csv",
 //                                                                 3, 50, 4);
 
-            int type = ui->comboBox_2dshang_type->currentIndex();
+            int type = 1; //ui->comboBox_2dshang_type->currentIndex();
             QVector<QVector<double> > out; // should be replaced by a more global variable--lsq, 2016.06.26
             Utils::qt2DMaxEntropy(ff1, FF1, ff2, FF2, ui->lineEdit_2dshang_R->text().toDouble(), type, out);
             if (out.size() <= 0) {

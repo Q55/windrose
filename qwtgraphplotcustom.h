@@ -3,6 +3,7 @@
 #include <qwt_plot.h>
 #include <QMainWindow>
 #include <qwt_plot_spectrogram.h>
+#include <QToolButton>
 
 class Plot;
 class PlotSpectrogram;
@@ -30,9 +31,17 @@ public:
     void setXAxisLabel(QString xlabel);
     void setYAxisLabel(QString ylabel);
 
+public slots:
+    void setMouseActionZoomer();
+    void setMouseActionMove();
+
 public:
     Plot *graph_plot;
     PlotSpectrogram *spectrogram_plot;
+
+    QToolBar *toolBar_;
+    QToolButton *zoomer_;
+    QToolButton *move_;
 
 };
 

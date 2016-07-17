@@ -16,6 +16,7 @@ class SAXYDataTracker: public QwtPlotPicker
 {
 public:
     SAXYDataTracker(QWidget * canvas) : QwtPlotPicker( canvas ){
+        //setTrackerMode( QwtPlotPicker::AlwaysOn );
         setTrackerMode( QwtPlotPicker::ActiveOnly );
         setRubberBand( UserRubberBand  );
         setStateMachine( new QwtPickerTrackerMachine() );
@@ -207,7 +208,31 @@ public:
     }
 };
 
+// 0--zoomber, 1--movable
+void Plot::setMouseActionByType(int type) {
 
+    if (type == 0) {
+        panner->setEnabled(false);
+        zoomer->setEnabled(true);
+
+        zoomer->setMousePattern( QwtEventPattern::MouseSelect1, Qt::LeftButton );
+        zoomer->setMousePattern( QwtEventPattern::MouseSelect2, Qt::RightButton, Qt::ControlModifier );
+        zoomer->setMousePattern( QwtEventPattern::MouseSelect3, Qt::RightButton );
+        const QColor c( Qt::darkBlue );
+        zoomer->setRubberBandPen( c );
+        zoomer->setTrackerPen( c );
+    } else if (type == 1){
+        zoomer->setEnabled(false);
+        panner->setEnabled(true);
+
+        QwtPlotPanner *panner = new QwtPlotPanner( canvas() );
+        //panner->setAxisEnabled( QwtPlot::yRight, false );
+        panner->setMouseButton( Qt::LeftButton );
+        (void) new QwtPlotMagnifier( canvas() ); // 滚轮放大缩小
+    }
+
+    //replot();
+}
 
 Plot::Plot( QWidget *parent ):
     QwtPlot( parent ),
@@ -223,15 +248,13 @@ Plot::Plot( QWidget *parent ):
 //    newcanvas->setPalette(Qt::white);
 //    newcanvas->setBorderRadius(10);
 //    setCanvas( newcanvas );
+    //is_bar_chart_ = false;
     plotLayout()->setAlignCanvasToScales( true );
 
     canvas()->resize(800, 600);
+
     //plotLayout->AlignScales();
 
-    // attach curve
-//    d_curve = new QwtPlotCurve();
-//    d_curve->setPen( QColor( "Black" ) );
-//    //d_curve->setCurveAttribute(fitten);
 
 //    // when using QwtPlotCurve::ImageBuffer simple dots can be
 //    // rendered in parallel on multicore systems.
@@ -246,6 +269,7 @@ Plot::Plot( QWidget *parent ):
     // RightButton: zoom out by 1
     // Ctrl+RighButton: zoom out to full size
     zoomer = new QwtPlotZoomer(canvas()); //CustZoomer( canvas() );
+    //if (is_bar_chart_) zoomer->setTrackerMode(QwtPicker::AlwaysOn);
     zoomer->setMousePattern( QwtEventPattern::MouseSelect2, Qt::RightButton, Qt::ControlModifier );
     zoomer->setMousePattern( QwtEventPattern::MouseSelect3, Qt::RightButton );
     const QColor c( Qt::darkBlue );
@@ -253,11 +277,12 @@ Plot::Plot( QWidget *parent ):
     zoomer->setTrackerPen( c );
 
     // 平移
-    QwtPlotPanner *panner = new QwtPlotPanner( canvas() );
-    panner->setAxisEnabled( QwtPlot::yRight, false );
-    panner->setMouseButton( Qt::MidButton );
+    panner = new QwtPlotPanner( canvas() );
+    panner->setEnabled(false);
+//    panner->setAxisEnabled( QwtPlot::yRight, false );
+//    panner->setMouseButton( Qt::MidButton );
 
-    (void) new QwtPlotMagnifier( canvas() ); // 滚轮放大缩小
+//    (void) new QwtPlotMagnifier( canvas() ); // 滚轮放大缩小
 
     // Avoid jumping when labels with more/less digits appear/disappear when scrolling vertically
 //    const QFontMetrics fm( axisWidget( QwtPlot::yLeft )->font() );

@@ -272,7 +272,7 @@ QString DataProcess::addColToPostProcDataByExpr(bool is_scalar, QString data1, Q
         }
     }
 
-    int i = 0;
+    int i = 1;
     QString temp_name = new_col_name;
     while (postproc_data_map.find(temp_name) != postproc_data_map.end()) {
         temp_name = new_col_name + QString::number(i++);
