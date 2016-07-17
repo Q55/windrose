@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>Recycle Bin-1.png</file>
+        <file>application.png</file>
+        <file>sitemap-1.png</file>
+        <file>printer-7.png</file>
+        <file>diagram_v2-13.png</file>
+        <file>Cute Ball - Help.png</file>
+        <file>spreadsheet-template.png</file>
+        <file>LorryGreen.png</file>
+        <file>password-2.png</file>
+        <file>system-software-update-2.png</file>
+        <file>Database.png</file>
+        <file>splash.jpg</file>
+        <file>bigbn-off.png</file>
+        <file>bigbn-on.png</file>
+        <file>calc-bg.PNG</file>
+        <file>close-bg.png</file>
+        <file>config-bg.PNG</file>
+        <file>main-bg.png</file>
+        <file>progressbar-bg.png</file>
+        <file>progressbar-data.png</file>
+        <file>smallbn-off.png</file>
+        <file>smallbn-on.png</file>
+        <file>text-bg.png</file>
+        <file>waveform-bg.png</file>
+        <file>waveform.png</file>
+        <file>auto-manual.png</file>
+        <file>warning1.png</file>
+        <file>warning2.png</file>
+        <file>waveform-bg_2.png</file>
+        <file>bg.jpg</file>
+    </qresource>
+</RCC>
