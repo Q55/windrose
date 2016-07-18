@@ -206,6 +206,7 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->pushButton_clear_post, SIGNAL(clicked()), this, SLOT(clearPostCache()));
     connect(ui->radioButton_correlation, SIGNAL(clicked(bool)), this, SLOT(postDataAnalysisRadioButtonDisableInput(bool)));
     connect(ui->radioButton_kendall, SIGNAL(clicked(bool)), this, SLOT(postDataAnalysisRadioButtonEnableInput(bool)));
+    connect(ui->comboBox_stats_type, SIGNAL(currentIndexChanged(int)), this, SLOT(post2DShangStatsInputEnable(int)));
 
     // post draw graph
     connect(ui->pushButton_add_xdata, SIGNAL(clicked()), this, SLOT(postAddXAxisData()));
@@ -234,7 +235,6 @@ Dialog::Dialog(QWidget *parent) :
     ui->comboBox_curveType->addItem("玫瑰图");
     ui->comboBox_curveType->addItem("直方图");
 }
-
 
 void Dialog::configDataBasePopDialog() {
 
@@ -1415,6 +1415,49 @@ void Dialog::postDelYAxisData() {
     ui->yaxis_data_list->repaint();
 }
 
+void Dialog::post2DShangStatsInputEnable(int type) {
+    switch (type) {
+    case 0: { // Stats 1D
+        ui->comboBox_stats_data1->setEnabled(true);
+        ui->comboBox_stats_data2->setEnabled(false);
+        ui->lineEdit_stats_step1->setEnabled(true);
+        ui->lineEdit_stats_step2->setEnabled(false);
+        ui->lineEdit_stats_limit_min1->setEnabled(false);
+        ui->lineEdit_stats_limit_min2->setEnabled(false);
+        break;
+    }
+    case 1: {// Stats 2D
+        ui->comboBox_stats_data1->setEnabled(true);
+        ui->comboBox_stats_data2->setEnabled(true);
+        ui->lineEdit_stats_step1->setEnabled(true);
+        ui->lineEdit_stats_step2->setEnabled(true);
+        ui->lineEdit_stats_limit_min1->setEnabled(true);
+        ui->lineEdit_stats_limit_min2->setEnabled(true);
+        break;
+    }
+    case 2: {// Distr 1D
+        ui->comboBox_stats_data1->setEnabled(true);
+        ui->comboBox_stats_data2->setEnabled(true);
+        ui->lineEdit_stats_step1->setEnabled(false);
+        ui->lineEdit_stats_step2->setEnabled(false);
+        ui->lineEdit_stats_limit_min1->setEnabled(false);
+        ui->lineEdit_stats_limit_min2->setEnabled(false);
+        break;
+    }
+    case 3: {// Distr 2D
+        ui->comboBox_stats_data1->setEnabled(false);
+        ui->comboBox_stats_data2->setEnabled(false);
+        ui->lineEdit_stats_step1->setEnabled(false);
+        ui->lineEdit_stats_step2->setEnabled(false);
+        ui->lineEdit_stats_limit_min1->setEnabled(false);
+        ui->lineEdit_stats_limit_min2->setEnabled(false);
+        break;
+    }
+    default:
+        break;
+    }
+}
+
 void Dialog::postPrepareDataForAnalysis(int index) {
 //    QList<QListWidgetItem *> sel_items = ui->post_proc_after_col_list->selectedItems();
 //    QVector<QString> sel_col_list;
@@ -1503,6 +1546,7 @@ void Dialog::postPrepareDataForAnalysis(int index) {
         } else {
             ui->comboBox_stats_type->model()->setData(index, 33, Qt::UserRole - 1); // enable
         }
+        post2DShangStatsInputEnable(ui->comboBox_stats_type->currentIndex());
     } else if (index == 7) { // max shang 2
         msg = "二维最大熵需要4列数据";
         msg_style = "color: rgb(44,104,7);";

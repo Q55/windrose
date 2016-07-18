@@ -105,7 +105,7 @@ public slots:
     void postPrepareDataForAnalysis(int);
     void postDataAnalysisRadioButtonDisableInput(bool);
     void postDataAnalysisRadioButtonEnableInput(bool);
-    //void postDataAanalysisRadioButton
+    void post2DShangStatsInputEnable(int);
 
     // post draw graph
     void postAddXAxisData();
