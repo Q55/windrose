@@ -940,26 +940,58 @@ void Dialog::saveConfigToMap() {
         emptyListErr->showMessage("请先选择列");
         return;
     }
-//    if (ui->groupBox_interConsis->isChecked()) {
-//        QString err_msg = "";
-//        if ((ui->lineEdit_preFormula->text()).size() > 0) {
-//            CalcExpression ce;
-//            if (!ce.isExpression(ui->lineEdit_preFormula->text())) {
-//                err_msg = "一致性检查：不是合法表达式，请检查！";
-//            }
-//        } else if (!(ui->lineEdit_preFormula->text()).contains(ui->lineEdit_preVarName->text(), Qt::CaseSensitive)) {
-//            err_msg = "变量名不匹配";
-//        }
-//        if (err_msg != "") {
-//            QMessageBox msgBox;
-//            msgBox.setWindowTitle(tr("警告"));
-//            msgBox.setText(err_msg);
-//            msgBox.setStandardButtons(QMessageBox::Ok);
-//            msgBox.setDefaultButton(QMessageBox::Ok);
-//            msgBox.exec();
-//            return;
-//        }
-//    }
+    if (ui->groupBox_interConsis->isChecked()) {
+        QString err_msg = "";
+        if ((ui->lineEdit_preFormula->text()).size() > 0) {
+            CalcExpression ce;
+            int ret_value = ce.isExpression(ui->lineEdit_preFormula->text());
+            if ( ret_value != 0) {
+                if (ret_value == ERR_BRACKET)
+                {
+                    err_msg = "错误：计算式括号不匹配！\n";
+                }
+                else if (ret_value == ERR_DATA_INVALID)
+                {
+                    err_msg = "错误：输入运算数据无效！\n";
+                }
+                else if (ret_value == ERR_VARIABLE_MORE)
+                {
+                    err_msg = "错误：输入多个变量，无效！\n";
+                }
+                else if (ret_value == ERR_OPERATOR_INVALID)
+                {
+                    err_msg = "错误：输入的运算符无效！\n";
+                }
+                else if (ret_value == ERR_NO_VARIABLE)
+                {
+                    err_msg = "错误：计算式没有变量，无效！\n";
+                }
+                else if (ret_value == ERR_EXPRE_INVALID)
+                {
+                    err_msg = "错误：计算表达式无效！\n";
+                }
+                else
+                {
+                    err_msg = "错误：计算表达式无效！\n";
+                }
+                err_msg += "\n请输入有效的计算式! \n计算式中的变量采用单个字母字符表示，运算可选择基本的四则运算。\n示例：(x*5+3)/4-2";
+            }
+            else if (!(ui->lineEdit_preFormula->text()).contains(ui->lineEdit_preVarName->text(), Qt::CaseSensitive))
+            {
+                err_msg = "错误：变量名不匹配\n";
+                err_msg += "\n请输入有效的计算式! \n计算式中的变量采用单个字母字符表示，运算可选择基本的四则运算。\n示例：(x*5+3)/4-2";
+            }
+        }
+        if (err_msg != "") {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle(tr("警告"));
+            msgBox.setText(err_msg);
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.exec();
+            return;
+        }
+    }
 
     for (auto it = selected_items.begin(); it != selected_items.end(); ++it) {
         QString sel_col_name = (*it)->text();

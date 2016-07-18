@@ -12,7 +12,8 @@
 #include <qwt_plot_magnifier.h>
 #include <qwt_plot_panner.h>
 #include <qwt_plot_item.h>
-
+#include <qwt_picker_machine.h>
+#include <qwt_painter.h>
 //************for spectrogram***************
 #include <QVector>
 #include "plotspectrogram.h"
@@ -22,6 +23,150 @@
 #include <qslider.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
+
+class SAXYDataTracker: public QwtPlotPicker
+{
+public:
+    SAXYDataTracker(QWidget * canvas) : QwtPlotPicker( canvas ){
+        //setTrackerMode( QwtPlotPicker::AlwaysOn );
+        setTrackerMode( QwtPlotPicker::ActiveOnly );
+        setRubberBand( UserRubberBand  );
+        setStateMachine( new QwtPickerTrackerMachine() );
+        connect (this,&QwtPicker::moved,this,&SAXYDataTracker::mouseMove);
+        if(plot ())
+            connect (plot(),&QwtPlot::itemAttached,this,&SAXYDataTracker::itemAttached );
+    }
+
+protected:
+    virtual QwtText trackerTextF(const QPointF & pos) const {
+        QwtText trackerText;
+        if(!m_closePoint.isValid ())
+            return trackerText;
+        trackerText.setColor( Qt::black );
+        QColor lineColor = m_closePoint.curve()->pen ().color ();
+        QColor bkColor(lineColor);
+        bkColor.setAlpha (30);
+        trackerText.setBorderPen( m_closePoint.curve()->pen () );
+        trackerText.setBackgroundBrush( bkColor );
+        QPointF point = m_closePoint.getClosePoint ();
+        QString info = QStringLiteral("<font color=\"%1\">y:%2</font><br>")
+                       .arg(lineColor.name ()).arg(point.y ())
+                       +
+                       QStringLiteral("<font color=\"%1\">x:%2</font>")
+                                          .arg(lineColor.name ()).arg(point.x ());
+        trackerText.setText( info );
+        trackerText.setBorderRadius (5);
+        return trackerText;
+    }
+    virtual QRect trackerRect(const QFont & font) const {
+        QRect r = QwtPlotPicker::trackerRect( font );
+        r += QMargins(5,5,5,5);
+        return r;
+    }
+    virtual void drawRubberBand (QPainter *painter) const {
+        if ( !isActive() || rubberBand() == NoRubberBand ||
+            rubberBandPen().style() == Qt::NoPen )
+        {
+            return;
+        }
+        if(!m_closePoint.isValid ())
+            return;
+        QPolygon pickedPoint = pickedPoints ();
+        if(pickedPoint.count () < 1)
+            return;
+        //获取鼠标的客户坐标位置
+        const QPoint pos = pickedPoint[0];
+        const QPointF closePoint = m_closePoint.getClosePoint ();
+        const QPoint cvp = transform (closePoint);
+        QwtPainter::drawLine (painter,pos,cvp);
+        QRect r(0,0,10,10);
+        r.moveCenter (cvp);
+        QwtPainter::drawRect (painter,r);
+        //QwtPainter::drawEllipse (painter,r);
+    }
+    void calcClosestPoint(const QPoint& pos) {
+        const QwtPlotItemList curveItems =
+            plot()->itemList( QwtPlotItem::Rtti_PlotCurve );
+        if(curveItems.size () <= 0)
+            return;
+        //把屏幕坐标转换为图形的数值坐标
+        QPointF mousePoint = invTransform(pos);
+        //记录最短的距离，默认初始化为double的最大值
+        double distance = std::numeric_limits<double>::max ();
+        //记录前一次最近点的曲线指针
+        QwtPlotCurve * oldCur = m_closePoint.curve ();
+        for ( int i = 0; i < curveItems.size(); ++i )
+        {
+            QwtPlotCurve * cur = static_cast<QwtPlotCurve *>( curveItems[i] );
+            int index = cur->closestPoint (pos);
+            if(-1 == index)
+                continue;
+            QPointF p = cur->sample (index);
+            QLineF lp(p,mousePoint);
+            double l = lp.length ();
+            if(l < distance)
+            {
+                m_closePoint.setDistace(l);
+                m_closePoint.setIndex(index);
+                m_closePoint.setCurve(cur);
+                distance = l;
+            }
+        }
+        //说明最近点的曲线更换了，标记线的颜色换为当前曲线的颜色
+        if(m_closePoint.isValid () && oldCur!=m_closePoint.curve ())
+        {
+            QPen p(m_closePoint.curve ()->pen ());
+            p.setWidth (1);
+            setRubberBandPen (p);
+        }
+    }
+private:
+    // 记录最近点的信息
+    class closePoint
+    {
+    public:
+        closePoint():m_curve(nullptr)
+          ,m_index(-1)
+          ,m_distace(std::numeric_limits<double>::max ()) {}
+        QwtPlotCurve * curve() const{return this->m_curve;}
+        void setCurve(QwtPlotCurve * cur) {this->m_curve = cur;}
+        bool isValid() const {return ((this->curve() != nullptr) && (this->index() > 0));}
+        QPointF getClosePoint() const {
+            if(isValid ())
+                return this->curve()->sample (this->index());
+            return QPointF();
+        }
+        int index() const{return this->m_index;}
+        void setIndex(int i){this->m_index = i;}
+        double distace() const{return this->m_distace;}
+        void setDistace(double d){this->m_distace = d;}
+        void setInvalid() {
+            setCurve (nullptr);
+            setIndex (-1);
+            setDistace (std::numeric_limits<double>::max ());
+        }
+    private:
+        QwtPlotCurve *m_curve;
+        int m_index;
+        double m_distace;
+    };
+    closePoint m_closePoint;
+private slots:
+    //捕获鼠标移动的槽
+    void mouseMove(const QPoint &pos) { calcClosestPoint(pos); }
+public slots:
+    void itemAttached(QwtPlotItem* plotItem,bool on) {
+        if(!on)
+        {
+            if(QwtPlotItem::Rtti_PlotCurve == plotItem->rtti ())
+            {
+                QwtPlotCurve * cur = static_cast<QwtPlotCurve *>( plotItem);
+                if(cur == m_closePoint.curve())
+                    m_closePoint.setInvalid ();
+            }
+        }
+    }
+};
 
 void QwtGraphPlotCustom::setMouseActionZoomer() {
     move_->setChecked(false);
@@ -80,8 +225,9 @@ void QwtGraphPlotCustom::plotForCorrelation(const QVector<double> &x, const QVec
     curve2->setStyle(QwtPlotCurve::Lines);
     curve2->attach(graph_plot);
 
-    graph_plot->zoomer->setZoomBase();
 
+    graph_plot->zoomer->setZoomBase();
+    SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
     //scatter_plot->resize(800, 600);
 
     //scatter_plot->replot();
@@ -127,7 +273,7 @@ void QwtGraphPlotCustom::plotForWeightedFit(const QVector<double> &x, const QVec
     graph_plot->insertLegend(legend_weight, QwtPlot::RightLegend);
 
     graph_plot->zoomer->setZoomBase();
-
+    SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
     //scatter_plot->resize(800, 600);
     //scatter_plot->replot();
 }
@@ -147,6 +293,7 @@ void QwtGraphPlotCustom::plotForSpectral(const QVector<double> &f, const QVector
     curve->setSymbol(curve_symbols);
     curve->setPen(Qt::blue);
     curve->attach(graph_plot);
+    SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
     graph_plot->zoomer->setZoomBase();
 }
 
@@ -165,6 +312,7 @@ void QwtGraphPlotCustom::plotForXYData(const QVector<double> &x, const QVector<d
     curve->setSymbol(curve_symbols);
     curve->setPen(Qt::blue);
     curve->attach(graph_plot);
+    SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
     graph_plot->zoomer->setZoomBase();
 }
 
@@ -183,6 +331,7 @@ void QwtGraphPlotCustom::plotFor1DMaxEntropy(const QVector<double> &yy1, const Q
     curve->setSymbol(curve_symbols);
     curve->setPen(Qt::blue);
     curve->attach(graph_plot);
+    SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
     graph_plot->zoomer->setZoomBase();
 }
 
@@ -258,6 +407,7 @@ void QwtGraphPlotCustom::plotForCurve(const QVector<double> &x, const QVector<QV
         legend->setFont(font);
         graph_plot->insertLegend(legend, QwtPlot::RightLegend);
     }
+    SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
     graph_plot->zoomer->setZoomBase();
 }
 
@@ -289,6 +439,7 @@ void QwtGraphPlotCustom::plotForScatter(const QVector<double> &x, const QVector<
         legend->setFont(font);
         graph_plot->insertLegend(legend, QwtPlot::RightLegend);
     }
+    SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
     graph_plot->zoomer->setZoomBase();
 }
 

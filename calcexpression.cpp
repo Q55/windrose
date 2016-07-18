@@ -43,9 +43,16 @@ bool CalcExpression::isStrNum(const QString & str) {
         if (str[0] == '0' && str[1] != '.')
             return false;
     }
+    bool have_dot = false;
     for (int i = 0; i < str.length(); ++i) {
         if (!this->isNum(str[i]) && str[i] != '.')
             return false;
+        if (str[i] == '.')
+        {
+            if(have_dot)
+                return false;
+            have_dot = true;
+        }
     }
     return true;
 }
@@ -65,31 +72,152 @@ bool CalcExpression::isStrOperator(const QString &str) {
         return false;
 }
 
-bool CalcExpression::isExpression(const QString &str) {
-    int flag = 0;
-    for (int i = 0; i < str.size() - 1; i++) {
-        const QChar ch = str[i];
-        const QChar chb = str[i + 1];
-        if (ch == '.' && !isNum(chb) || (!isNum(ch) && chb == '.')) {
-            qDebug()<<"not digit around '.'";
-            return false;
-        }
-        if (isOperator(ch) && !isNum(chb) && chb != '(' || ch == '(' && !isNum(chb) && chb !='(') {
-            qDebug()<<"not digit around 'operator'";
-            return false;
-        }
-        if (isNum(ch) && !isOperator(chb) && chb != '.' && chb != ')' && !isNum(chb)) {
-            qDebug()<<"not operator after digit";
-            return false;
-        }
-        if (ch == '(') flag++;
-        if (ch == ')') flag--;
+bool CalcExpression::isArithmeticOperator(const QChar &c)
+{
+    if (c == '+' || c == '-' || c == '*' || c == '/')
+    {
+        return true;
     }
-    if (flag != 0) {
-        qDebug() <<"bracket not matched.";
+    else
+    {
         return false;
     }
-    return true;
+}
+
+bool CalcExpression::isParenthesis(const QChar &c)
+{
+    if (c == '(' || c == ')')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool CalcExpression::isAlpha(const QChar &c)
+{
+    if ( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+//*******************************************************************
+// return value:
+//0 : is a valid expression
+//-1: bracket is not matched
+//-2: variable is not valid
+//-3: variable is too more
+//-4: operator is not valid
+//-5: others: expression is not valid.
+//*********************************************************************
+int CalcExpression::isExpression(const QString &str) {
+    int  parenthesis_flag = 0;
+    bool have_variable = false;
+    bool is_operator = true;
+    qDebug() << str.size();
+    for (int i = 0; i < str.size(); i++) {
+
+        const QChar curChar = str[i];
+        QString metadata;
+        while (i < str.size() && str[i] == ' ')
+        {
+            ++i;
+        }
+        if (i == str.size())
+            break;
+//        int j = i;
+
+        if ( isAlpha(curChar) && is_operator)
+        {
+            if (!is_operator)
+            {
+                return ERR_EXPRE_INVALID;
+            }
+            if (have_variable)
+            {
+                return ERR_VARIABLE_MORE;
+            }
+            have_variable = true;
+            is_operator = false;
+            continue;
+        }
+        if ( isParenthesis( curChar ) )
+        {
+
+            if (curChar == '(') parenthesis_flag++;
+            if (curChar == ')') parenthesis_flag--;
+            if (parenthesis_flag < 0) {
+                qDebug() << "bracket not matched.";
+                return ERR_BRACKET;
+            }
+            qDebug() << parenthesis_flag;
+            continue;
+        }
+
+        if ( isArithmeticOperator(curChar) )
+        {
+            if (is_operator)
+            {
+                return ERR_EXPRE_INVALID;
+            }
+            is_operator = true;
+            continue;
+        }
+
+        if (!is_operator)
+        {
+            return ERR_EXPRE_INVALID;
+        }
+
+        while (i < str.size() && !isArithmeticOperator( str[i] ) && !isParenthesis( str[i] ) && str[i] != ' ')
+        {
+            metadata += str[i];
+            ++i;
+        }
+        --i;
+        if (!isStrNum(metadata))
+        {
+            return ERR_DATA_INVALID;
+        }
+
+        is_operator = false;
+//        const QChar nextChar = str[i + 1];
+
+//        if (curChar == '.' && !isNum(nextChar) || (!isNum(ch) && nextChar == '.')) {
+//            qDebug()<<"not digit around '.'";
+//            return false;
+//        }
+//        if (isOperator(curChar) && !isNum(nextChar) && nextChar != '(' || curChar == '(' && !isNum(nextChar) && nextChar !='(') {
+//            qDebug()<<"not digit around 'operator'";
+//            return false;
+//        }
+//        if (isNum(curChar) && !isOperator(nextChar) && nextChar != '.' && nextChar != ')' && !isNum(nextChar)) {
+//            qDebug()<<"not operator after digit";
+//            return false;
+//        }
+
+    }
+    if (parenthesis_flag != 0) {
+        qDebug() << "enter!";
+        qDebug() <<"bracket not matched.";
+        return ERR_BRACKET;
+    }
+    if (have_variable == false)
+    {
+        return ERR_NO_VARIABLE;
+    }
+    if (is_operator)
+    {
+        return ERR_EXPRE_INVALID;
+    }
+    return 0;
 }
 
 QVector<QString> CalcExpression::resolveExpression(const QString& expr) {
