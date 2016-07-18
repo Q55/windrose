@@ -106,6 +106,7 @@ public slots:
     void postDataAnalysisRadioButtonDisableInput(bool);
     void postDataAnalysisRadioButtonEnableInput(bool);
     void post2DShangStatsInputEnable(int);
+    //void addDataAnalysisResultToPostColList(QString name, QVector<double> data);
 
     // post draw graph
     void postAddXAxisData();
