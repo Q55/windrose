@@ -168,6 +168,28 @@ public slots:
     }
 };
 
+//class barChartPicker: public QwtPlotPicker
+//{
+//public:
+//    barChartPicker( QWidget *canvas ):QwtPlotPicker( canvas )
+//    {
+//        setTrackerMode( QwtPlotPicker::ActiveOnly );
+//        setRubberBand( UserRubberBand  );
+//        setStateMachine( new QwtPickerTrackerMachine() );
+////        connect (this,&QwtPicker::moved,this,&barChartPicker::mouseMove);
+////        if( plot () )
+////            connect ( plot(),&QwtPlot::itemAttached,this,&barChartPicker::itemAttached );
+//    }
+//protected:
+//    virtual QwtText trackerTextF( const QPointF &pos ) const
+//    {
+//        //QString text = QString::number(pos.x()) + QString( "%1" ).arg( pos.y(), 0, 'f', 1 );
+//        QString text = QString::number( pos.x() ) + "," + QString::number( pos.y() );
+//        QwtText qwttext( text );
+//        return qwttext;
+//    }
+//};
+
 void QwtGraphPlotCustom::setMouseActionZoomer() {
     move_->setChecked(false);
     zoomer_->setChecked(true);
@@ -226,7 +248,8 @@ void QwtGraphPlotCustom::plotForCorrelation(const QVector<double> &x, const QVec
     curve2->attach(graph_plot);
 
 
-    graph_plot->zoomer->setZoomBase();
+//    graph_plot->zoomer->setZoomBase();
+    graph_plot->zoomer->setEnabled(false);
     SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
     //scatter_plot->resize(800, 600);
 
@@ -272,7 +295,8 @@ void QwtGraphPlotCustom::plotForWeightedFit(const QVector<double> &x, const QVec
     legend_weight->setFont(font2);
     graph_plot->insertLegend(legend_weight, QwtPlot::RightLegend);
 
-    graph_plot->zoomer->setZoomBase();
+//    graph_plot->zoomer->setZoomBase();
+    graph_plot->zoomer->setEnabled(false);
     SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
     //scatter_plot->resize(800, 600);
     //scatter_plot->replot();
@@ -294,7 +318,8 @@ void QwtGraphPlotCustom::plotForSpectral(const QVector<double> &f, const QVector
     curve->setPen(Qt::blue);
     curve->attach(graph_plot);
     SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
-    graph_plot->zoomer->setZoomBase();
+    graph_plot->zoomer->setEnabled(false);
+//    graph_plot->zoomer->setZoomBase();
 }
 
 void QwtGraphPlotCustom::plotForXYData(const QVector<double> &x, const QVector<double> &y) {
@@ -313,7 +338,8 @@ void QwtGraphPlotCustom::plotForXYData(const QVector<double> &x, const QVector<d
     curve->setPen(Qt::blue);
     curve->attach(graph_plot);
     SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
-    graph_plot->zoomer->setZoomBase();
+    graph_plot->zoomer->setEnabled(false);
+//    graph_plot->zoomer->setZoomBase();
 }
 
 void QwtGraphPlotCustom::plotFor1DMaxEntropy(const QVector<double> &yy1, const QVector<double> &yy2) {
@@ -332,7 +358,8 @@ void QwtGraphPlotCustom::plotFor1DMaxEntropy(const QVector<double> &yy1, const Q
     curve->setPen(Qt::blue);
     curve->attach(graph_plot);
     SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
-    graph_plot->zoomer->setZoomBase();
+    graph_plot->zoomer->setEnabled(false);
+//    graph_plot->zoomer->setZoomBase();
 }
 
 void QwtGraphPlotCustom::plotFor2DMaxEntropyDensity(const QVector<QVector<double> > &data) {
@@ -408,7 +435,8 @@ void QwtGraphPlotCustom::plotForCurve(const QVector<double> &x, const QVector<QV
         graph_plot->insertLegend(legend, QwtPlot::RightLegend);
     }
     SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
-    graph_plot->zoomer->setZoomBase();
+    graph_plot->zoomer->setEnabled(false);
+//    graph_plot->zoomer->setZoomBase();
 }
 
 void QwtGraphPlotCustom::plotForScatter(const QVector<double> &x, const QVector<QVector<double> > &yy, const QVector<QString> &yy_names) {
@@ -440,7 +468,8 @@ void QwtGraphPlotCustom::plotForScatter(const QVector<double> &x, const QVector<
         graph_plot->insertLegend(legend, QwtPlot::RightLegend);
     }
     SAXYDataTracker *pick= new SAXYDataTracker(graph_plot->canvas());
-    graph_plot->zoomer->setZoomBase();
+    graph_plot->zoomer->setEnabled(false);
+//    graph_plot->zoomer->setZoomBase();
 }
 
 void QwtGraphPlotCustom::plotForBarChart(const QVector<double> &x, const QVector<double> &y) {
@@ -457,6 +486,7 @@ void QwtGraphPlotCustom::plotForBarChart(const QVector<double> &x, const QVector
     bar_chart->attach(graph_plot);
     graph_plot->setBarChart(true);
     graph_plot->zoomer->setZoomBase();
+//    barChartPicker *picker = new barChartPicker(graph_plot->canvas());
 }
 
 void QwtGraphPlotCustom::setXAxisLabel(QString xlabel)
