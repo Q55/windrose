@@ -1759,9 +1759,10 @@ void Dialog::postStartDataAnalysis() {
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
             graph->setWindowTitle("一维最大熵曲线图");
-            graph->plotFor1DMaxEntropy(out_data1, out_data2);
-            graph->setXAxisLabel("yy1");
-            graph->setYAxisLabel("yy2");
+            //graph->plotFor1DMaxEntropy(out_data1, out_data2);
+            graph->plotFor1DMaxEntropy(out_data2, out_data1);
+            graph->setXAxisLabel("X");
+            graph->setYAxisLabel("Y");
             graph->show();
 
             msg = "一维最大熵计算成功，结果见输出图形";
@@ -2200,6 +2201,67 @@ void Dialog::postStartDrawGraph() {
         ui->label_drawgraph_note->setText(msg);
         ui->label_drawgraph_note->setStyleSheet(msg_style);
 }
+
+//void Dialog::addDataAnalysisResultToPostColList(QString name, QVector<double> data) {
+//    auto exist_cols = dpclass.getPostProcDataMap();
+//    if (exist_cols.find(name) != exist_cols.end()) {
+//        QMessageBox msgBox;
+//        msgBox.setWindowTitle("警告");
+//        msgBox.setText("该列名已存在，请重命名");
+//        msgBox.setDefaultButton(QMessageBox::Ok);
+//        msgBox.exec();
+//        return;
+//    }
+
+//    QStringList new_name_list;
+//    for (QMap<QString, QVector<double> >::Iterator it = exist_cols.begin(); it != exist_cols.end(); ++it) {
+//        if (it.key() != orig_col_name) {
+//            new_name_list<<it.key();
+//        }
+//    }
+//    if (!new_name_list.contains(new_col_name, Qt::CaseSensitive)) {
+//        new_name_list << new_col_name;
+//        dpclass.addColToPostProcDataDirectly(new_col_name, exist_cols[orig_col_name]);
+//    }
+//    dpclass.removeColFromPostProcData(orig_col_name);
+
+//    ui->post_proc_after_col_list->clear();
+//    ui->post_proc_after_col_list->addItems(new_name_list);
+
+//    QList<QListWidgetItem *> set_item_selected = ui->post_proc_after_col_list->findItems(
+//                new_col_name, Qt::MatchFixedString);
+//    ui->post_proc_after_col_list->setCurrentItem(set_item_selected.first());
+//    ui->post_proc_after_col_list->repaint();
+
+//    // update data analysis framework
+//    postPrepareDataForAnalysis(ui->toolBox_analysis_data->currentIndex());
+
+//    // update show data details
+//    int col = 1;
+//    for (QMap<QString, QVector<double> >::Iterator it = showdata_col_list_.begin(); it != showdata_col_list_.end(); ++it) {
+//        if (it.key() == orig_col_name) {
+//            showdata_col_list_[new_col_name] = showdata_col_list_[orig_col_name];
+//            showdata_col_list_.erase(it);
+//            ui->tableWidget_col_data_details->horizontalHeaderItem(col)->setText(new_col_name);
+//            break;
+//        }
+//        col++;
+//    }
+
+//    // update graph col list
+//    for (int i = 0; i < ui->xaxis_data_list->count(); ++i) {
+//        if (orig_col_name == ui->xaxis_data_list->item(i)->text()) {
+//            ui->xaxis_data_list->item(i)->setText(new_col_name);
+//            break;
+//        }
+//    }
+//    for (int i = 0; i < ui->yaxis_data_list->count(); ++i) {
+//        if (orig_col_name == ui->yaxis_data_list->item(i)->text()) {
+//            ui->yaxis_data_list->item(i)->setText(new_col_name);
+//            break;
+//        }
+//    }
+//}
 
 void Dialog::initComboboxMap()
 {
