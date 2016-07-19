@@ -82,9 +82,9 @@ void Plot::setMouseActionByType(int type) {
         zoomer->setMousePattern( QwtEventPattern::MouseSelect1, Qt::LeftButton );
         zoomer->setMousePattern( QwtEventPattern::MouseSelect2, Qt::RightButton, Qt::ControlModifier );
         zoomer->setMousePattern( QwtEventPattern::MouseSelect3, Qt::RightButton );
-        const QColor c( Qt::darkBlue );
-        zoomer->setRubberBandPen( c );
-        zoomer->setTrackerPen( c );
+//        const QColor c( Qt::darkBlue );
+//        zoomer->setRubberBandPen( c );
+//        zoomer->setTrackerPen( c );
     } else if (type == 1){
         zoomer->setEnabled(false);
         panner->setEnabled(true);
