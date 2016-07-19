@@ -106,7 +106,7 @@ public slots:
     void postDataAnalysisRadioButtonDisableInput(bool);
     void postDataAnalysisRadioButtonEnableInput(bool);
     void post2DShangStatsInputEnable(int);
-    //void addDataAnalysisResultToPostColList(QString name, QVector<double> data);
+    void addDataAnalysisResultToPostColList(QString name, QVector<double> data);
 
     // post draw graph
     void postAddXAxisData();
@@ -156,6 +156,7 @@ private:
     QMap<QString, QVector<double> > showdata_col_list_;
     double kendall_val_;
     QVector<QVector<double> > stats_2D_output_;
+    QMap<QString, QVector<QVector<double> > > stats2D_result_list_;
 };
 
 #endif // PREPROCESSWIDGET_H

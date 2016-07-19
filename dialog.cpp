@@ -1125,6 +1125,7 @@ void Dialog::clearPreCache(){
         dpclass.clearFreqList();
         dpclass.clearPostproc_data_map();
         postPrepareDataForAnalysis(ui->toolBox_analysis_data->currentIndex());
+        stats2D_result_list_.clear();
 
         //pre_sel_colrepeatlist_map.clear();
         pre_selcol_count_map.clear();
@@ -1176,6 +1177,7 @@ void Dialog::clearPostCache() {
     if (ret == QMessageBox::Ok) {
         dpclass.clearPostproc_data_map();
         postPrepareDataForAnalysis(ui->toolBox_analysis_data->currentIndex());
+        stats2D_result_list_.clear();
 
         ui->post_proc_after_col_list->clear();
         ui->tableWidget_col_data_details->clear();
@@ -1445,7 +1447,11 @@ void Dialog::post2DShangStatsInputEnable(int type) {
         break;
     }
     case 3: {// Distr 2D
-        ui->comboBox_stats_data1->setEnabled(false);
+        ui->comboBox_stats_data1->setEnabled(true);
+        ui->comboBox_stats_data1->clear();
+        for (QMap<QString, QVector<QVector<double> > >::Iterator it = stats2D_result_list_.begin(); it != stats2D_result_list_.end(); ++it) {
+            ui->comboBox_stats_data1->addItem(it.key());
+        }
         ui->comboBox_stats_data2->setEnabled(false);
         ui->lineEdit_stats_step1->setEnabled(false);
         ui->lineEdit_stats_step2->setEnabled(false);
@@ -1540,12 +1546,12 @@ void Dialog::postPrepareDataForAnalysis(int index) {
             ui->comboBox_stats_data1->addItem(it.key());
             ui->comboBox_stats_data2->addItem(it.key());
         }
-        QModelIndex index = ui->comboBox_stats_type->model()->index(3, 0);
-        if (stats_2D_output_.size() <= 0) {
-            ui->comboBox_stats_type->model()->setData(index, 0, Qt::UserRole - 1); // disable
-        } else {
-            ui->comboBox_stats_type->model()->setData(index, 33, Qt::UserRole - 1); // enable
-        }
+//        QModelIndex index = ui->comboBox_stats_type->model()->index(3, 0);
+//        if (stats_2D_output_.size() <= 0) {
+//            ui->comboBox_stats_type->model()->setData(index, 0, Qt::UserRole - 1); // disable
+//        } else {
+//            ui->comboBox_stats_type->model()->setData(index, 33, Qt::UserRole - 1); // enable
+//        }
         post2DShangStatsInputEnable(ui->comboBox_stats_type->currentIndex());
     } else if (index == 7) { // max shang 2
         msg = "二维最大熵需要4列数据";
@@ -1756,10 +1762,28 @@ void Dialog::postStartDataAnalysis() {
                                   ui->lineEdit_maxshang1_whsample->text().toDouble(),
                                   ui->lineEdit_maxshang1_whmax->text().toDouble(),
                                   out_data1, out_data2); // output: yy1, yy2
+            if (out_data1.size() <= 0 || out_data2.size() <= 0) {
+                msg = "结果序列X或Y元素个数为0";
+                msg_style = "color: rgb(231,66,67);";
+                break;
+            }
+
+            // add output result to process-col-list, by shiqiang, 2016.07.19
+            int count = 1;
+            QString colname1 = ui->comboBox_maxshang1->currentText() + "_MaxShang1_X" + QString::number(count);
+            QString colname2 = ui->comboBox_maxshang1->currentText() + "_MaxShang1_Y" + QString::number(count);
+            auto exist_cols = dpclass.getPostProcDataMap();
+            while(exist_cols.find(colname1) != exist_cols.end() || exist_cols.find(colname2) != exist_cols.end()) {
+                count++;
+                colname1 = ui->comboBox_maxshang1->currentText() + "_MaxShang1_X" + QString::number(count);
+                colname2 = ui->comboBox_maxshang1->currentText() + "_MaxShang1_Y" + QString::number(count);
+            }
+            addDataAnalysisResultToPostColList(colname1, out_data2);
+            addDataAnalysisResultToPostColList(colname2, out_data1);
 
             QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
             graph->setWindowTitle("一维最大熵曲线图");
-            //graph->plotFor1DMaxEntropy(out_data1, out_data2);
+            graph->plotFor1DMaxEntropy(out_data1, out_data2);
             graph->plotFor1DMaxEntropy(out_data2, out_data1);
             graph->setXAxisLabel("X");
             graph->setYAxisLabel("Y");
@@ -1788,6 +1812,20 @@ void Dialog::postStartDataAnalysis() {
                     break;
                 }
 
+                // add output result to process-col-list, by shiqiang, 2016.07.19
+                int count = 1;
+                QString colname1 = ui->comboBox_stats_data1->currentText() + "_Stats1D_X" + QString::number(count);
+                QString colname2 = ui->comboBox_stats_data1->currentText() + "_Stats1D_Y" + QString::number(count);
+                auto exist_cols = dpclass.getPostProcDataMap();
+                while(exist_cols.find(colname1) != exist_cols.end() || exist_cols.find(colname2) != exist_cols.end()) {
+                    count++;
+                    colname1 = ui->comboBox_stats_data1->currentText() + "_Stats1D_X" + QString::number(count);
+                    colname2 = ui->comboBox_stats_data1->currentText() + "_Stats1D_Y" + QString::number(count);
+                }
+                addDataAnalysisResultToPostColList(colname1, out_data1);
+                addDataAnalysisResultToPostColList(colname2, out_data2);
+
+                // draw graph using output result
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
                 graph->setWindowTitle("stats 1D输出结果: X-Y曲线图");
                 graph->plotForXYData(out_data1, out_data2);
@@ -1813,19 +1851,33 @@ void Dialog::postStartDataAnalysis() {
                 }
 
                 stats_2D_output_.clear();
+                QVector<QVector<double> > out;
                 Utils::qtStats2D(in_data1, in_data2, ui->lineEdit_stats_limit_min1->text().toDouble(),
                                  ui->lineEdit_stats_limit_min2->text().toDouble(),
                                  ui->lineEdit_stats_step1->text().toDouble(),
-                                 ui->lineEdit_stats_step2->text().toDouble(), stats_2D_output_);
-                if (stats_2D_output_.size() <= 0) {
+                                 ui->lineEdit_stats_step2->text().toDouble(), out);
+//                Utils::qtStats2D(in_data1, in_data2, ui->lineEdit_stats_limit_min1->text().toDouble(),
+//                                 ui->lineEdit_stats_limit_min2->text().toDouble(),
+//                                 ui->lineEdit_stats_step1->text().toDouble(),
+//                                 ui->lineEdit_stats_step2->text().toDouble(), stats_2D_output_);
+                if (out.size() <= 0) {
                     msg = "输出结果为空";
                     msg_style = "color: rgb(231,66,67);";
                     break;
                 }
 
-                QModelIndex index = ui->comboBox_stats_type->model()->index(3, 0);
-                if (stats_2D_output_.size() > 0)
-                    ui->comboBox_stats_type->model()->setData(index, 33, Qt::UserRole - 1); // enable
+                // store result. added by shiqiang, 2016.07.19
+                int count = 1;
+                QString resultname = ui->comboBox_stats_data2->currentText() + "_Stats2D" + QString::number(count);
+                while(stats2D_result_list_.find(resultname) != stats2D_result_list_.end()) {
+                    count++;
+                    resultname = ui->comboBox_stats_data2->currentText() + "_Stats2D" + QString::number(count);
+                }
+                stats2D_result_list_[resultname] = out;
+
+//                QModelIndex index = ui->comboBox_stats_type->model()->index(3, 0);
+//                if (stats_2D_output_.size() > 0)
+//                    ui->comboBox_stats_type->model()->setData(index, 33, Qt::UserRole - 1); // enable
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
                 graph->setWindowTitle("stats 2D输出结果: 密度图");
@@ -1860,6 +1912,20 @@ void Dialog::postStartDataAnalysis() {
                     break;
                 }
 
+                // add output result to process-col-list, by shiqiang, 2016.07.19
+                int count = 1;
+                QString colname1 = ui->comboBox_stats_data2->currentText() + "_DistrF1_X" + QString::number(count);
+                QString colname2 = ui->comboBox_stats_data2->currentText() + "_DistrF1_Y" + QString::number(count);
+                auto exist_cols = dpclass.getPostProcDataMap();
+                while(exist_cols.find(colname1) != exist_cols.end() || exist_cols.find(colname2) != exist_cols.end()) {
+                    count++;
+                    colname1 = ui->comboBox_stats_data2->currentText() + "_DistrF1_X" + QString::number(count);
+                    colname2 = ui->comboBox_stats_data2->currentText() + "_DistrF1_Y" + QString::number(count);
+                }
+                addDataAnalysisResultToPostColList(colname1, out_data1);
+                addDataAnalysisResultToPostColList(colname2, out_data2);
+
+
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // lines
                 graph->setWindowTitle("Distr F1输出结果: X-Y曲线图");
                 graph->plotForXYData(out_data1, out_data2);
@@ -1873,13 +1939,14 @@ void Dialog::postStartDataAnalysis() {
                 break;
             }
             case 3: { // Distr F2
-                if (stats_2D_output_.size() == 0) {
-                    QErrorMessage *stats2d_first_msg = new QErrorMessage(this);
-                    stats2d_first_msg->showMessage("请先执行Stats2D以准备数据");
+                QVector<QVector<double> > indata = stats2D_result_list_[ui->comboBox_stats_data1->currentText()];
+                if (indata.size() == 0) {
+                    QErrorMessage *distrf2_first_msg = new QErrorMessage(this);
+                    distrf2_first_msg->showMessage("输入数据为空，请先准备输入数据");
                     break;
                 }
                 QVector<QVector<double> > out;
-                Utils::qtDistrF2(stats_2D_output_, out);
+                Utils::qtDistrF2(indata, out);
 
                 if (out.size() <= 0) {
                     msg = "输出结果为空";
@@ -2202,66 +2269,30 @@ void Dialog::postStartDrawGraph() {
         ui->label_drawgraph_note->setStyleSheet(msg_style);
 }
 
-//void Dialog::addDataAnalysisResultToPostColList(QString name, QVector<double> data) {
-//    auto exist_cols = dpclass.getPostProcDataMap();
-//    if (exist_cols.find(name) != exist_cols.end()) {
-//        QMessageBox msgBox;
-//        msgBox.setWindowTitle("警告");
-//        msgBox.setText("该列名已存在，请重命名");
-//        msgBox.setDefaultButton(QMessageBox::Ok);
-//        msgBox.exec();
-//        return;
-//    }
+void Dialog::addDataAnalysisResultToPostColList(QString name, QVector<double> data) {
+    auto exist_cols = dpclass.getPostProcDataMap();
+    if (exist_cols.find(name) != exist_cols.end()) {
+        return;
+    }
 
-//    QStringList new_name_list;
-//    for (QMap<QString, QVector<double> >::Iterator it = exist_cols.begin(); it != exist_cols.end(); ++it) {
-//        if (it.key() != orig_col_name) {
-//            new_name_list<<it.key();
-//        }
-//    }
-//    if (!new_name_list.contains(new_col_name, Qt::CaseSensitive)) {
-//        new_name_list << new_col_name;
-//        dpclass.addColToPostProcDataDirectly(new_col_name, exist_cols[orig_col_name]);
-//    }
-//    dpclass.removeColFromPostProcData(orig_col_name);
+    QStringList new_name_list;
+    for (QMap<QString, QVector<double> >::Iterator it = exist_cols.begin(); it != exist_cols.end(); ++it) {
+            new_name_list<<it.key();
+    }
+    new_name_list<<name;
+    dpclass.addColToPostProcDataDirectly(name, data);
 
-//    ui->post_proc_after_col_list->clear();
-//    ui->post_proc_after_col_list->addItems(new_name_list);
+    ui->post_proc_after_col_list->clear();
+    ui->post_proc_after_col_list->addItems(new_name_list);
 
-//    QList<QListWidgetItem *> set_item_selected = ui->post_proc_after_col_list->findItems(
-//                new_col_name, Qt::MatchFixedString);
-//    ui->post_proc_after_col_list->setCurrentItem(set_item_selected.first());
-//    ui->post_proc_after_col_list->repaint();
+    QList<QListWidgetItem *> set_item_selected = ui->post_proc_after_col_list->findItems(
+                name, Qt::MatchFixedString);
+    ui->post_proc_after_col_list->setCurrentItem(set_item_selected.first());
+    ui->post_proc_after_col_list->repaint();
 
-//    // update data analysis framework
-//    postPrepareDataForAnalysis(ui->toolBox_analysis_data->currentIndex());
-
-//    // update show data details
-//    int col = 1;
-//    for (QMap<QString, QVector<double> >::Iterator it = showdata_col_list_.begin(); it != showdata_col_list_.end(); ++it) {
-//        if (it.key() == orig_col_name) {
-//            showdata_col_list_[new_col_name] = showdata_col_list_[orig_col_name];
-//            showdata_col_list_.erase(it);
-//            ui->tableWidget_col_data_details->horizontalHeaderItem(col)->setText(new_col_name);
-//            break;
-//        }
-//        col++;
-//    }
-
-//    // update graph col list
-//    for (int i = 0; i < ui->xaxis_data_list->count(); ++i) {
-//        if (orig_col_name == ui->xaxis_data_list->item(i)->text()) {
-//            ui->xaxis_data_list->item(i)->setText(new_col_name);
-//            break;
-//        }
-//    }
-//    for (int i = 0; i < ui->yaxis_data_list->count(); ++i) {
-//        if (orig_col_name == ui->yaxis_data_list->item(i)->text()) {
-//            ui->yaxis_data_list->item(i)->setText(new_col_name);
-//            break;
-//        }
-//    }
-//}
+    // update data analysis framework
+    postPrepareDataForAnalysis(ui->toolBox_analysis_data->currentIndex());
+}
 
 void Dialog::initComboboxMap()
 {

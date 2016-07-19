@@ -614,11 +614,12 @@ void Utils::qtStats1D(QVector<double> in_data1, double step, QVector<double> &yy
 
     Statistics_1d(data, step, out_yy);
 
-    for (int i = 0; i < out_yy->size[0]; ++i)
-        yy1.push_back(out_yy->data[i]);
-
-    for (int i = 0; i < out_yy->size[0]; ++i) {
-        yy2.push_back(out_yy->data[out_yy->size[0] + i]);
+    if (out_yy->data != 0) {
+        for (int i = 0; i < out_yy->size[0]; ++i)
+            yy1.push_back(out_yy->data[i]);
+        for (int i = 0; i < out_yy->size[0]; ++i) {
+            yy2.push_back(out_yy->data[out_yy->size[0] + i]);
+        }
     }
 
     emxDestroyArray_real_T(out_yy);
@@ -649,9 +650,11 @@ void Utils::qtStats2D(QVector<double> in_data1, QVector<double> in_data2, double
     for (int i = 0; i < out.size(); ++i)
         out[i].resize(out_yy->size[1]);
 
-    for (int i = 0; i < out_yy->size[1]; ++i) { // 42
-        for (int j = 0; j < out_yy->size[0]; ++j) { //34
-            out[j][i] = out_yy->data[i * out_yy->size[0] + j];
+    if (out_yy->data != 0) {
+        for (int i = 0; i < out_yy->size[1]; ++i) { // 42
+            for (int j = 0; j < out_yy->size[0]; ++j) { //34
+                out[j][i] = out_yy->data[i * out_yy->size[0] + j];
+            }
         }
     }
 
@@ -676,11 +679,12 @@ void Utils::qtDistrF1(QVector<double> in_data1, QVector<double> in_data2, QVecto
 
     distr_F1(in_data, out_yy);
 
-    for (int i = 0; i < out_yy->size[0]; ++i)
-        out_FF1.push_back(out_yy->data[i]);
-
-    for (int i = 0; i < out_yy->size[0]; ++i)
-        out_FF2.push_back(out_yy->data[i + out_yy->size[0]]);
+    if (out_yy->data != 0) {
+        for (int i = 0; i < out_yy->size[0]; ++i)
+            out_FF1.push_back(out_yy->data[i]);
+        for (int i = 0; i < out_yy->size[0]; ++i)
+            out_FF2.push_back(out_yy->data[i + out_yy->size[0]]);
+    }
 
     emxDestroyArray_real_T(in_data);
     emxDestroyArray_real_T(out_yy);
@@ -723,9 +727,11 @@ void Utils::qtDistrF2(QVector<QVector<double> > in_ff, QVector<QVector<double> >
     for (int i = 0; i < out_FF.size(); ++i)
         out_FF[i].resize(out->size[1]);
 
-    for (int i = 0; i < out->size[1]; ++i) { // 42
-        for (int j = 0; j < out->size[0]; ++j) { //34
-            out_FF[j][i] = out->data[i * out->size[0] + j];
+    if (out->data != 0) {
+        for (int i = 0; i < out->size[1]; ++i) { // 42
+            for (int j = 0; j < out->size[0]; ++j) { //34
+                out_FF[j][i] = out->data[i * out->size[0] + j];
+            }
         }
     }
 
