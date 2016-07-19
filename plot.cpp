@@ -51,7 +51,14 @@ public:
     CustZoomer( QWidget *canvas ):
         QwtPlotZoomer( canvas )
     {
-        setTrackerMode( AlwaysOn );
+        //setTrackerMode( AlwaysOn );
+
+        //2016-07-19 TEST FOR DEBUG
+        setMousePattern( QwtEventPattern::MouseSelect2, Qt::RightButton, Qt::ControlModifier );
+        setMousePattern( QwtEventPattern::MouseSelect3, Qt::RightButton );
+        const QColor c( Qt::darkBlue );
+        setRubberBandPen( c );
+        setTrackerPen( c );
     }
 
     virtual QwtText trackerTextF( const QPointF &pos ) const
@@ -131,8 +138,9 @@ Plot::Plot( QWidget *parent ):
     zoomer->setMousePattern( QwtEventPattern::MouseSelect2, Qt::RightButton, Qt::ControlModifier );
     zoomer->setMousePattern( QwtEventPattern::MouseSelect3, Qt::RightButton );
     const QColor c( Qt::darkBlue );
-    zoomer->setRubberBandPen( c );
-    zoomer->setTrackerPen( c );
+    const QColor qbackground( canvas()->palette().color(QPalette::Background) );
+    zoomer->setRubberBandPen( c);
+    zoomer->setTrackerPen( qbackground );
 
     // 平移
     panner = new QwtPlotPanner( canvas() );
