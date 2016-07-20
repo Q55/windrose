@@ -140,7 +140,7 @@ Dialog::Dialog(QWidget *parent) :
     initComboboxMap();
     pre_selcol_count_map.clear();
     kendall_val_ = 0.4954;
-    stats_2D_output_.clear();
+    stats2D_result_list_.clear();
 
     //init start and end datetime. by zyn. 2016-07-07
     initStartEndDateTime();
@@ -1418,6 +1418,14 @@ void Dialog::postDelYAxisData() {
 }
 
 void Dialog::post2DShangStatsInputEnable(int type) {
+    QMap<QString, QVector<double> > all_data_map = dpclass.getPostProcDataMap();
+    ui->comboBox_stats_data1->clear();
+    ui->comboBox_stats_data2->clear();
+    for (QMap<QString, QVector<double> >::Iterator it = all_data_map.begin(); it != all_data_map.end(); ++it) {
+        ui->comboBox_stats_data1->addItem(it.key());
+        ui->comboBox_stats_data2->addItem(it.key());
+    }
+
     switch (type) {
     case 0: { // Stats 1D
         ui->comboBox_stats_data1->setEnabled(true);
@@ -1448,15 +1456,20 @@ void Dialog::post2DShangStatsInputEnable(int type) {
     }
     case 3: {// Distr 2D
         ui->comboBox_stats_data1->setEnabled(true);
-        ui->comboBox_stats_data1->clear();
-        for (QMap<QString, QVector<QVector<double> > >::Iterator it = stats2D_result_list_.begin(); it != stats2D_result_list_.end(); ++it) {
-            ui->comboBox_stats_data1->addItem(it.key());
-        }
         ui->comboBox_stats_data2->setEnabled(false);
         ui->lineEdit_stats_step1->setEnabled(false);
         ui->lineEdit_stats_step2->setEnabled(false);
         ui->lineEdit_stats_limit_min1->setEnabled(false);
         ui->lineEdit_stats_limit_min2->setEnabled(false);
+        ui->comboBox_stats_data1->clear();
+        if (stats2D_result_list_.size() <= 0) {
+            QErrorMessage *distrf2_first_msg = new QErrorMessage(this);
+            distrf2_first_msg->showMessage("输入数据为空，请先准备输入数据");
+            break;
+        }
+        for (QMap<QString, QVector<QVector<double> > >::Iterator it = stats2D_result_list_.begin(); it != stats2D_result_list_.end(); ++it) {
+            ui->comboBox_stats_data1->addItem(it.key());
+        }
         break;
     }
     default:
@@ -1850,7 +1863,6 @@ void Dialog::postStartDataAnalysis() {
                     break;
                 }
 
-                stats_2D_output_.clear();
                 QVector<QVector<double> > out;
                 Utils::qtStats2D(in_data1, in_data2, ui->lineEdit_stats_limit_min1->text().toDouble(),
                                  ui->lineEdit_stats_limit_min2->text().toDouble(),
@@ -1862,6 +1874,16 @@ void Dialog::postStartDataAnalysis() {
 //                                 ui->lineEdit_stats_step2->text().toDouble(), stats_2D_output_);
                 if (out.size() <= 0) {
                     msg = "输出结果为空";
+                    msg_style = "color: rgb(231,66,67);";
+                    break;
+                }
+                double max_val = 0.0;
+                for (int i = 0; i < out.size(); ++i)
+                    for (int j = 0; j < out[0].size(); ++j)
+                        if (max_val < out[i][j])
+                            max_val = out[i][j];
+                if (max_val <= 0) {
+                    msg = "结果矩阵最大值<=0，请检查输入列是否合适";
                     msg_style = "color: rgb(231,66,67);";
                     break;
                 }
@@ -1881,7 +1903,7 @@ void Dialog::postStartDataAnalysis() {
 
                 QwtGraphPlotCustom *graph = new QwtGraphPlotCustom(); // sticks + lines
                 graph->setWindowTitle("stats 2D输出结果: 密度图");
-                graph->plotFor2DMaxEntropyDensity(stats_2D_output_);
+                graph->plotFor2DMaxEntropyDensity(out);
                 graph->show();
 
                 msg = "Stats2D计算成功，结果见输出图形";
@@ -1950,6 +1972,16 @@ void Dialog::postStartDataAnalysis() {
 
                 if (out.size() <= 0) {
                     msg = "输出结果为空";
+                    msg_style = "color: rgb(231,66,67);";
+                    break;
+                }
+                double max_val = 0.0;
+                for (int i = 0; i < out.size(); ++i)
+                    for (int j = 0; j < out[0].size(); ++j)
+                        if (max_val < out[i][j])
+                            max_val = out[i][j];
+                if (max_val <= 0) {
+                    msg = "结果矩阵最大值<=0，请检查输入列是否合适";
                     msg_style = "color: rgb(231,66,67);";
                     break;
                 }
