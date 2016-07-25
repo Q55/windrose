@@ -23,7 +23,7 @@ public:
     };
     AnalyseParas() {
 
-        this->frequency = 1;
+        this->frequency = 1.0;
         this->time_interval = 1;
         this->analyse_type = 0;
         this->filter_type = 0;
@@ -74,7 +74,7 @@ public:
     QString tb_name;
     QString col_name;
 
-    int frequency;
+    double frequency;
     int time_interval;
     int analyse_type;
     int filter_type;

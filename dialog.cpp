@@ -18,6 +18,7 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <QSettings>
 
 void loadStyleSheet(const QString qssName)//加入下面函数
 {
@@ -282,14 +283,30 @@ void Dialog::dealConfigDataBase(QString db_address, QString db_username, QString
         if (temp.size() <= 0) {
             QMessageBox msgBox;
             msgBox.setWindowTitle(tr("警告"));
-            msgBox.setText("数据库查询失败或数据库为空，请检查用户名、密码和数据库名称是否正确！");
+            msgBox.setText(QString("数据库查询失败或%1库表为空，请检查用户名、密码和数据库名称是否正确！").arg(namelist.value(i)));
             msgBox.setDefaultButton(QMessageBox::Ok);
             msgBox.exec();
             return;
         }
         ui->comboBox_db_list->addItem(namelist.value(i));
     }
-
+    if(ui->comboBox_db_list->count())
+    {
+        QSettings settings("config.ini",QSettings::IniFormat);
+        settings.beginGroup("database");
+        QStringList users = settings.value("users").toString().split('/');
+        if(!users.contains(db_username))
+        {
+            users.append(db_username);
+            settings.setValue("users",users.join('/'));
+        }
+        QStringList tables;
+        for(int i=0;i<namelist.size();i++)
+        {
+            tables << namelist.at(i);
+        }
+        settings.setValue("tables",tables.join('/'));
+    }
     ui->comboBox_db_list->repaint();
 }
 

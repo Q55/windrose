@@ -34,6 +34,11 @@ public:
 public slots:
     void setMouseActionZoomer();
     void setMouseActionMove();
+    void renamePlotXAxis();
+    void renamePlotYAxis();
+    void exportPlot();
+private:
+    void setXAxisTimeFormat();
 
 public:
     Plot *graph_plot;
@@ -42,7 +47,9 @@ public:
     QToolBar *toolBar_;
     QToolButton *zoomer_;
     QToolButton *move_;
-
+    QToolButton *renameX_;
+    QToolButton *renameY_;
+    QToolButton *export_;
 };
 
 #endif // SCATTERPLOT_H

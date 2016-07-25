@@ -197,7 +197,15 @@ void Plot::setYAxisTitle(QString ylabel)
 {
     setAxisTitle(QwtPlot::yLeft, ylabel);
 }
+void Plot::setXAxisTitle(QwtText xlabel)
+{
+    setAxisTitle(QwtPlot::xBottom, xlabel);
+}
 
+void Plot::setYAxisTitle(QwtText ylabel)
+{
+    setAxisTitle(QwtPlot::yLeft, ylabel);
+}
 void Plot::appendCurve(QwtPlotCurve *append_curve)
 {
     append_curve->attach(this);

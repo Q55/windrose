@@ -3,6 +3,8 @@
 #include "dataprocess.h"
 #include <QMessageBox>
 #include <QMenu>
+#include <QSettings>
+#include <QCompleter>
 
 ConfigDataBase::ConfigDataBase(QWidget *parent) :
     QDialog(parent),
@@ -27,11 +29,17 @@ ConfigDataBase::ConfigDataBase(QString db_address, QString db_username, QString 
         this->setFixedSize(QSize(350, 313));
 
     ui->config_db_address->setText(db_address);
+    /*
     ui->config_db_username->setText(db_username);
     ui->config_db_password->setText(db_password);
 
     for (int i = 0; i < db_list.size(); ++i) {
         ui->listWidget_db_name_list->addItem(db_list.value(i));
+    }
+    */
+    loadConfig();
+    for (int i = 0; i < table.size(); ++i) {
+        ui->listWidget_db_name_list->addItem(table.value(i));
     }
     connect(ui->config_add_dbname, SIGNAL(clicked()), this, SLOT(addDBName()));
     connect(ui->listWidget_db_name_list, SIGNAL(customContextMenuRequested(const QPoint &)),
@@ -128,4 +136,36 @@ void ConfigDataBase::accept() {
 ConfigDataBase::~ConfigDataBase()
 {
     delete ui;
+}
+void ConfigDataBase::loadConfig()
+{
+    if(QFile::exists("config.ini"))
+    {
+        QSettings settings("config.ini",QSettings::IniFormat);
+        settings.beginGroup("database");
+        user = settings.value("users").toString().split('/');
+        table = settings.value("tables").toString().split('/');
+        settings.endGroup();
+
+    }
+    else
+    {
+        user.append("root");
+        table << "111" << "112" << "118";
+
+        QSettings settings("config.ini",QSettings::IniFormat);
+        settings.beginGroup("database");
+        settings.setValue("users",user);
+        settings.setValue("tables",table.join('/'));
+        settings.endGroup();
+    }
+
+    QCompleter *completer = new QCompleter(user, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+
+    ui->config_db_username->setCompleter(completer);
+}
+void ConfigDataBase::saveConfig()
+{
+
 }

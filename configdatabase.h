@@ -15,6 +15,8 @@ public:
     explicit ConfigDataBase(QWidget *parent = 0);
     ConfigDataBase(QString db_address, QString db_username, QString db_password, QVector<QString> db_list, QWidget *parent = 0);
     ~ConfigDataBase();
+    void loadConfig();
+    void saveConfig();
 
 signals:
     void configDataBase(QString, QString, QString, QVector<QString>);
@@ -27,6 +29,7 @@ public slots:
 
 private:
     Ui::ConfigDataBase *ui;
+    QStringList user,table;
 };
 
 #endif // CONFIGDATABASE_H

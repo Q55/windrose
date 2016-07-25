@@ -24,6 +24,13 @@
 #include <qlabel.h>
 #include <qcheckbox.h>
 
+#include <qwt_plot_renderer.h>
+#include <QFileDialog>
+#include <QInputDialog>
+#include <QGridLayout>
+#include <qwt_text.h>
+#include <qwt_date_scale_draw.h>
+
 class SAXYDataTracker: public QwtPlotPicker
 {
 public:
@@ -213,6 +220,7 @@ QwtGraphPlotCustom::QwtGraphPlotCustom() {
     //graph_plot->setTitle( "数据分析图" );
     setCentralWidget( graph_plot );
 
+
     toolBar_ = new QToolBar(this);
     zoomer_ = new QToolButton(toolBar_);
     zoomer_->setText("缩放");
@@ -223,13 +231,31 @@ QwtGraphPlotCustom::QwtGraphPlotCustom() {
     move_->setCheckable(true);
     toolBar_->addWidget(move_);
 
+    renameX_ = new QToolButton(toolBar_);
+    renameX_->setText("X轴重命名");
+    renameX_->setCheckable(false);
+    toolBar_->addWidget(renameX_);
+    renameY_ = new QToolButton(toolBar_);
+    renameY_->setText("Y轴重命名");
+    renameY_->setCheckable(false);
+    toolBar_->addWidget(renameY_);
+    export_ = new QToolButton(toolBar_);
+    export_->setText("导出");
+    export_->setCheckable(false);
+    toolBar_->addWidget(export_);
+
     addToolBar(toolBar_);
     //this->addToolBar(Qt::RightToolBarArea,toolBar);
 
     connect(zoomer_, SIGNAL(clicked()), this, SLOT(setMouseActionZoomer()));
     connect(move_, SIGNAL(clicked()), this, SLOT(setMouseActionMove()));
+    connect(export_,SIGNAL(clicked()),this,SLOT(exportPlot()));
+    connect(renameX_,SIGNAL(clicked()),this,SLOT(renamePlotXAxis()));
+    connect(renameY_,SIGNAL(clicked()),this,SLOT(renamePlotYAxis()));
 
     //graph_plot->setFixedSize(QSize(800, 600));
+
+
     resize(900, 500);
 }
 
@@ -498,10 +524,54 @@ void QwtGraphPlotCustom::plotForBarChart(const QVector<double> &x, const QVector
 
 void QwtGraphPlotCustom::setXAxisLabel(QString xlabel)
 {
-    graph_plot->setXAxisTitle(xlabel);
+    QwtText name = QwtText(xlabel);
+    name.setFont(QFont("微软雅黑",10));
+    graph_plot->setXAxisTitle(name);
 }
 
 void QwtGraphPlotCustom::setYAxisLabel(QString ylabel)
 {
-    graph_plot->setYAxisTitle(ylabel);
+    QwtText name = QwtText(ylabel);
+    name.setFont(QFont("微软雅黑",10));
+    graph_plot->setYAxisTitle(name);
+}
+void QwtGraphPlotCustom::exportPlot()
+{
+    QwtPlotRenderer renderer;
+
+    // flags to make the document look like the widget
+    renderer.setDiscardFlag(QwtPlotRenderer::DiscardBackground, false);
+    QString fileName = QFileDialog::getSaveFileName(this,tr("保存图像"), "c://", tr("Image Files (*.png *.jpg *.bmp)"));
+    if(fileName.size())
+    {
+        renderer.renderDocument(graph_plot, fileName, QSizeF(300, 200), 85);
+    }
+}
+void QwtGraphPlotCustom::renamePlotXAxis()
+{
+    bool ok;
+    QString xlabel = QInputDialog::getText(this,tr("修改X轴名称"),tr("X轴名称"),QLineEdit::Normal,graph_plot->axisTitle(QwtPlot::xBottom).text(),&ok);
+    if (ok && !xlabel.isEmpty())
+    {
+        graph_plot->setXAxisTitle(xlabel);
+    }
+}
+void QwtGraphPlotCustom::renamePlotYAxis()
+{
+    bool ok;
+    QString ylabel = QInputDialog::getText(this,tr("修改Y轴名称"),tr("Y轴名称"),QLineEdit::Normal,graph_plot->axisTitle(QwtPlot::yLeft).text(),&ok);
+    if (ok && !ylabel.isEmpty())
+    {
+        graph_plot->setYAxisTitle(ylabel);
+    }
+}
+void QwtGraphPlotCustom::setXAxisTimeFormat()
+{
+    QwtDateScaleDraw *timeScale = new QwtDateScaleDraw(Qt::LocalTime);
+    graph_plot->setAxisScaleDraw(QwtPlot::xBottom, timeScale);
+    QString *scaleFormat = new QString("yyyy-MM-dd hh:mm:ss");
+    timeScale->setDateFormat(QwtDate::Second, *scaleFormat);
+//    delete scaleFormat;
+    graph_plot->setAxisLabelRotation( QwtPlot::xBottom, -50.0 );
+    graph_plot->setAxisLabelAlignment( QwtPlot::xBottom, Qt::AlignLeft | Qt::AlignBottom );
 }

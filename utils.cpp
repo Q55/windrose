@@ -155,11 +155,11 @@ QVector<double> Utils::calcDirAvg(QVector<double> data, int freq, int internal_t
 QVector<double> Utils::rangeCheck(QVector<double> data, double max, double min, double process_type) {
     QVector<double> result;
     emxArray_real_T *deal_data, *b_max, *b_min, *check_list;
-    double check = 2.0;
-    if (process_type == 0.0) // 标注--0   插值--1
-        check = 1.0;
-    else if (process_type == 1.0)
-        check = 2.0;
+//    double check = 2.0;
+//    if (process_type == 0.0) // 标注--0   插值--1
+//        check = 1.0;
+//    else if (process_type == 1.0)
+//        check = 2.0;
 
     range_check_initialize();
 
@@ -181,10 +181,11 @@ QVector<double> Utils::rangeCheck(QVector<double> data, double max, double min, 
     // prepare for check list
     check_list = emxCreateND_real_T(2, iv1);
     for (int i = 0; i < check_list->size[1U]; i++)
-        check_list->data[check_list->size[0] * i] = check;
+        check_list->data[check_list->size[0] * i] = process_type; //check;
 
     // call range_check() function.
-    range_check(deal_data, b_max, b_min, check_list, check);
+    range_check(deal_data, b_max, b_min, check_list, process_type);
+    //range_check(deal_data, b_max, b_min, check_list, check);
 
     // output the result.
     for (int i = 0; i < deal_data->size[0U]; i++){

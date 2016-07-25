@@ -23,6 +23,8 @@ public:
     void setSamples( const QVector<QPointF> &samples );
     void setXAxisTitle(QString xlabel);
     void setYAxisTitle(QString ylabel);
+    void setXAxisTitle(QwtText xlabel);
+    void setYAxisTitle(QwtText ylabel);
     void appendCurve(QwtPlotCurve *);
     void setCurveStyle(QwtPlotCurve::CurveStyle);
 
