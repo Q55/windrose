@@ -54,6 +54,22 @@ QVector<double> DataProcess::queryRawDataBySelTableColName(QString db_name, QStr
     return result;
 }
 
+QVector<QDateTime> DataProcess::queryDateTimeListBySelTable(QString db_name, QString tb_name, QDateTime start_time, QDateTime end_time) {
+    QString sql = "select * from " + tb_name + " where DateTime between '" + start_time.toString("yyyy-MM-dd HH:mm:ss") +
+                "' and '" + end_time.toString("yyyy-MM-dd HH:mm:ss") + "';";
+    qDebug()<<sql;
+    QueryDB qdb;
+    QSqlQuery query = qdb.queryDB(db_name, db_address_, db_username_, db_password_, sql);
+    QVector<QDateTime> result;
+    while(query.next()) {
+        result.push_back(query.value(0).toDateTime());
+    }
+//    qDebug()<<result.size();
+//    for(int i = 0; i < result.size(); ++i)
+//        qDebug() <<result.at(i);
+    return result;
+}
+
 QVector<double> DataProcess::getFromRawDataMap(QString list)
 {
     return raw_data_map[list];
@@ -90,8 +106,18 @@ void DataProcess::preProccess(QMap<QString, AnalyseParas> analyse_paras) {
         if (it.value().range_filter)
             result = Utils::rangeCheck(result, it.value().max, it.value().min, it.value().range_filter_check_type);
         // time cont
-        if (it.value().time_cont)
-            result = Utils::timeCont(result, it.value().frequency, 1, it.value().time_cont_time_step, it.value().time_cont_check_type);
+        if (it.value().time_cont) {
+            QVector<QDateTime> temp = queryDateTimeListBySelTable(it.value().db_name, it.value().tb_name,
+                                                                it.value().start_time, it.value().end_time);
+            QVector<int> timelist;
+            QDateTime starttime = it.value().start_time;
+            for (int i = 0; i < temp.size(); ++i) {
+                timelist.push_back((it.value().start_time).secsTo(temp.at(i)));
+            }
+//            for (int i = 0; i < timelist.size(); ++i)
+//                qDebug()<<i<<","<<timelist.at(i);
+            result = Utils::timeCont(result, timelist, it.value().frequency, 1, it.value().time_cont_time_step, it.value().time_cont_check_type);
+        }
         // range cont
         if (it.value().data_cont)
             result = Utils::rangeCont(result, it.value().data_cont_gsd, it.value().data_cont_time_step, it.value().data_cont_check_type);

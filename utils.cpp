@@ -248,13 +248,19 @@ QVector<double> Utils::rangeCont(QVector<double> data, double gsd, double time_s
     return result;
 }
 
-QVector<double> Utils::timeCont(QVector<double> data, int freq, double time_row, double time_step, double process_type) {
+QVector<double> Utils::timeCont(QVector<double> data, QVector<int> timelist, int freq,
+                                double time_row, double time_step, double process_type) {
 
     //QVector<double> data = {1,5,6,10,11,12,13,18,19,20};
     QVector<double> result;
     QVector<double> time_col;
-    for (int i = 0; i < data.size(); ++i)
-        time_col.push_back(1 / freq * i);
+    if (timelist.size() <= 0 || timelist.size() != data.size()) {
+        for (int i = 0; i < data.size(); ++i)
+            time_col.push_back(1 / freq * i);
+    } else {
+        for (int i = 0; i < timelist.size(); ++i)
+            time_col.push_back((double)(timelist.at(i)));
+    }
 //    time_col.clear();
 //    time_col = {1,5,6,10,11,12,13,18,19,20};
     double check = 2.0;

@@ -22,7 +22,8 @@ public:
 
     static QVector<double> rangeCheck(QVector<double> data, double max, double min, double process_type);
 
-    static QVector<double> timeCont(QVector<double> data, int freq, double time_row, double time_step, double process_type);
+    static QVector<double> timeCont(QVector<double> data, QVector<int> timelist, int freq, double time_row,
+                                    double time_step, double process_type);
 
     static QVector<double> rangeCont(QVector<double> data, double gsd, double time_step, double process_type);
 
